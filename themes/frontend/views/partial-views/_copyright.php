@@ -1,0 +1,1 @@
+&copy; <?php echo date('Y');?> <strong>Visit 365</strong>. All rights reserved.
