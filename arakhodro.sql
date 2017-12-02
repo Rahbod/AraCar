@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost
-Source Server Version : 50714
+Source Server         : local
+Source Server Version : 50616
 Source Host           : localhost:3306
 Source Database       : arakhodro
 
 Target Server Type    : MYSQL
-Target Server Version : 50714
+Target Server Version : 50616
 File Encoding         : 65001
 
-Date: 2017-12-02 13:34:42
+Date: 2017-12-02 13:57:49
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -934,6 +934,25 @@ INSERT INTO `ym_site_setting` VALUES ('2', 'default_title', 'عنوان پیش �
 INSERT INTO `ym_site_setting` VALUES ('3', 'keywords', 'کلمات کلیدی سایت', '');
 INSERT INTO `ym_site_setting` VALUES ('4', 'site_description', 'شرح وبسایت', '');
 INSERT INTO `ym_site_setting` VALUES ('5', 'social_links', 'شبکه های اجتماعی', '{\"facebook\":\"http:\\/\\/facebook.com\",\"telegram\":\"http:\\/\\/telegram.me\"}');
+
+-- ----------------------------
+-- Table structure for ym_slideshow
+-- ----------------------------
+DROP TABLE IF EXISTS `ym_slideshow`;
+CREATE TABLE `ym_slideshow` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) DEFAULT NULL,
+  `description` text,
+  `image` varchar(100) DEFAULT NULL,
+  `link` varchar(2000) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of ym_slideshow
+-- ----------------------------
+INSERT INTO `ym_slideshow` VALUES ('23', 'اسلایدشو 1', null, 'FMj571503764133.jpg', '');
+INSERT INTO `ym_slideshow` VALUES ('24', 'اسلایدشو 2', null, 'gDIi81503764382.jpg', 'http://google.com');
 
 -- ----------------------------
 -- Table structure for ym_tags
