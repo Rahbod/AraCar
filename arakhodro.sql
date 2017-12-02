@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : local
-Source Server Version : 50616
+Source Server         : localhost
+Source Server Version : 50714
 Source Host           : localhost:3306
 Source Database       : arakhodro
 
 Target Server Type    : MYSQL
-Target Server Version : 50616
+Target Server Version : 50714
 File Encoding         : 65001
 
-Date: 2017-12-02 13:32:47
+Date: 2017-12-02 13:34:42
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -117,9 +117,9 @@ INSERT INTO `ym_brands` VALUES ('10', 'W9Sqg1511007182.png', 'مرسدس بنز'
 DROP TABLE IF EXISTS `ym_cars`;
 CREATE TABLE `ym_cars` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `create_date` varchar(20) COLLATE utf8_persian_ci DEFAULT NULL,
-  `update_date` varchar(20) COLLATE utf8_persian_ci DEFAULT NULL,
-  `expire_date` varchar(20) COLLATE utf8_persian_ci DEFAULT NULL,
+  `create_date` varchar(20) COLLATE utf8_persian_ci DEFAULT NULL COMMENT 'تاریخ ایجاد',
+  `update_date` varchar(20) COLLATE utf8_persian_ci DEFAULT NULL COMMENT 'تاریخ آخرین اصلاح',
+  `expire_date` varchar(20) COLLATE utf8_persian_ci DEFAULT NULL COMMENT 'تاریخ اتمام',
   `user_id` int(10) unsigned NOT NULL COMMENT 'آگهی دهنده',
   `brand_id` int(10) unsigned DEFAULT NULL COMMENT 'برند',
   `model_id` int(10) unsigned DEFAULT NULL COMMENT 'مدل',
@@ -183,7 +183,7 @@ CREATE TABLE `ym_counter_save` (
 -- ----------------------------
 -- Records of ym_counter_save
 -- ----------------------------
-INSERT INTO `ym_counter_save` VALUES ('counter', '10');
+INSERT INTO `ym_counter_save` VALUES ('counter', '11');
 INSERT INTO `ym_counter_save` VALUES ('day_time', '2458090');
 INSERT INTO `ym_counter_save` VALUES ('max_count', '1');
 INSERT INTO `ym_counter_save` VALUES ('max_time', '1509438600');
@@ -202,7 +202,7 @@ CREATE TABLE `ym_counter_users` (
 -- ----------------------------
 -- Records of ym_counter_users
 -- ----------------------------
-INSERT INTO `ym_counter_users` VALUES ('837ec5754f503cfaaee0929fd48974e7', '1512208463');
+INSERT INTO `ym_counter_users` VALUES ('837ec5754f503cfaaee0929fd48974e7', '1512208543');
 
 -- ----------------------------
 -- Table structure for ym_countries
@@ -894,6 +894,27 @@ INSERT INTO `ym_places` VALUES ('442', 'کهک', '19', '[\"\\u062e\\u0631\\u06cc
 INSERT INTO `ym_places` VALUES ('443', 'خلجستان', '19', '[\"\\u062e\\u0631\\u06cc\\u062f \\u0648 \\u0641\\u0631\\u0648\\u0634 \\u0644\\u0648\\u0627\\u0632\\u0645 \\u062f\\u0633\\u062a \\u062f\\u0648\\u0645\",\"\\u0641\\u0631\\u0648\\u0634 \\u0644\\u0648\\u0627\\u0632\\u0645 \\u062f\\u0631 \\u062e\\u0644\\u062c\\u0633\\u062a\\u0627\\u0646\",\"\\u062e\\u0631\\u06cc\\u062f \\u0644\\u0648\\u0627\\u0632\\u0645 \\u062f\\u0631 \\u062e\\u0644\\u062c\\u0633\\u062a\\u0627\\u0646\",\"\\u0628\\u0647\\u062a\\u0631\\u06cc\\u0646 \\u0631\\u0648\\u0634 \\u0641\\u0631\\u0648\\u0634 \\u0627\\u06cc\\u0646\\u062a\\u0631\\u0646\\u062a\\u06cc \\u062f\\u0631 \\u062e\\u0644\\u062c\\u0633\\u062a\\u0627\\u0646\",\"\\u0628\\u0648\\u0631\\u0633 \\u062a\\u0628\\u0644\\u06cc\\u063a\\u0627\\u062a \\u062f\\u0631 \\u062e\\u0644\\u062c\\u0633\\u062a\\u0627\\u0646\",\"\\u062f\\u06cc\\u0648\\u0627\\u0631 \\u062e\\u0644\\u062c\\u0633\\u062a\\u0627\\u0646\",\"\\u062a\\u0627\\u0628\\u0644\\u0648 \\u062e\\u0644\\u062c\\u0633\\u062a\\u0627\\u0646\",\"\\u0622\\u06af\\u0647\\u06cc \\u0647\\u0627\\u06cc \\u062e\\u0644\\u062c\\u0633\\u062a\\u0627\\u0646\",\"\\u0644\\u06cc\\u0633\\u062a \\u0645\\u0634\\u0627\\u063a\\u0644 \\u062f\\u0631 \\u062e\\u0644\\u062c\\u0633\\u062a\\u0627\\u0646\",\"\\u0646\\u06cc\\u0627\\u0632\\u0645\\u0646\\u062f\\u06cc \\u0647\\u0627\\u06cc \\u062e\\u0644\\u062c\\u0633\\u062a\\u0627\\u0646\",\"\\u062e\\u0631\\u06cc\\u062f \\u0648 \\u0641\\u0631\\u0648\\u0634 \\u0644\\u0648\\u0627\\u0632\\u0645 \\u0646\\u0648 \\u062f\\u0631 \\u062e\\u0644\\u062c\\u0633\\u062a\\u0627\\u0646\",\"\\u0645\\u0631\\u06a9\\u0632 \\u062a\\u0628\\u0644\\u06cc\\u063a\\u0627\\u062a \\u062e\\u0644\\u062c\\u0633\\u062a\\u0627\\u0646\",\"\\u0633\\u0627\\u06cc\\u062a \\u062e\\u0631\\u06cc\\u062f \\u0648 \\u0641\\u0631\\u0648\\u0634 \\u062e\\u0644\\u062c\\u0633\\u062a\\u0627\\u0646\",\"\\u062e\\u0631\\u06cc\\u062f \\u0648 \\u0641\\u0631\\u0648\\u0634 \\u0644\\u0648\\u0627\\u0632\\u0645 \\u062f\\u0631 \\u062e\\u0644\\u062c\\u0633\\u062a\\u0627\\u0646\",\"\\u062f\\u0631\\u062c \\u0622\\u06af\\u0647\\u06cc \\u0631\\u0627\\u06cc\\u06af\\u0627\\u0646\",\"\\u062b\\u0628\\u062a \\u0622\\u06af\\u0647\\u06cc \\u0631\\u0627\\u06cc\\u06af\\u0627\\u0646\",\"\\u0646\\u06cc\\u0627\\u0632\\u0645\\u0646\\u062f\\u06cc\\u0647\\u0627\",\"\\u0646\\u06cc\\u0627\\u0632\\u0645\\u0646\\u062f\\u06cc \\u0647\\u0627\",\"\\u0646\\u06cc\\u0627\\u0632\\u0645\\u0646\\u062f\\u06cc\"]', 'khalajestan');
 
 -- ----------------------------
+-- Table structure for ym_plans
+-- ----------------------------
+DROP TABLE IF EXISTS `ym_plans`;
+CREATE TABLE `ym_plans` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'شناسه',
+  `title` varchar(255) COLLATE utf8_persian_ci DEFAULT NULL COMMENT 'عنوان',
+  `price` int(11) DEFAULT NULL COMMENT 'تعرفه',
+  `rules` varchar(1024) COLLATE utf8_persian_ci DEFAULT NULL COMMENT 'قوانین',
+  `status` decimal(1,0) DEFAULT '1' COMMENT 'وضعیت',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
+
+-- ----------------------------
+-- Records of ym_plans
+-- ----------------------------
+INSERT INTO `ym_plans` VALUES ('1', 'رایگان', '0', null, '1');
+INSERT INTO `ym_plans` VALUES ('2', 'برنزی', '10000', null, '1');
+INSERT INTO `ym_plans` VALUES ('3', 'نقره ای', '15000', null, '1');
+INSERT INTO `ym_plans` VALUES ('4', 'طلایی', '20000', null, '1');
+
+-- ----------------------------
 -- Table structure for ym_site_setting
 -- ----------------------------
 DROP TABLE IF EXISTS `ym_site_setting`;
@@ -913,25 +934,6 @@ INSERT INTO `ym_site_setting` VALUES ('2', 'default_title', 'عنوان پیش �
 INSERT INTO `ym_site_setting` VALUES ('3', 'keywords', 'کلمات کلیدی سایت', '');
 INSERT INTO `ym_site_setting` VALUES ('4', 'site_description', 'شرح وبسایت', '');
 INSERT INTO `ym_site_setting` VALUES ('5', 'social_links', 'شبکه های اجتماعی', '{\"facebook\":\"http:\\/\\/facebook.com\",\"telegram\":\"http:\\/\\/telegram.me\"}');
-
--- ----------------------------
--- Table structure for ym_slideshow
--- ----------------------------
-DROP TABLE IF EXISTS `ym_slideshow`;
-CREATE TABLE `ym_slideshow` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(100) DEFAULT NULL,
-  `description` text,
-  `image` varchar(100) DEFAULT NULL,
-  `link` varchar(2000) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of ym_slideshow
--- ----------------------------
-INSERT INTO `ym_slideshow` VALUES ('23', 'اسلایدشو 1', null, 'FMj571503764133.jpg', '');
-INSERT INTO `ym_slideshow` VALUES ('24', 'اسلایدشو 2', null, 'gDIi81503764382.jpg', 'http://google.com');
 
 -- ----------------------------
 -- Table structure for ym_tags
@@ -1098,6 +1100,26 @@ CREATE TABLE `ym_user_notifications` (
 
 -- ----------------------------
 -- Records of ym_user_notifications
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for ym_user_plans
+-- ----------------------------
+DROP TABLE IF EXISTS `ym_user_plans`;
+CREATE TABLE `ym_user_plans` (
+  `user_id` int(10) unsigned DEFAULT NULL COMMENT 'پلن',
+  `plan_id` int(10) unsigned DEFAULT NULL COMMENT 'پلن',
+  `expire_date` varchar(20) COLLATE utf8_persian_ci DEFAULT NULL COMMENT 'تاریخ اتمام',
+  `join_date` varchar(20) COLLATE utf8_persian_ci DEFAULT NULL COMMENT 'تاریخ عضویت',
+  `price` int(11) DEFAULT NULL COMMENT 'مبلغ پرداخت شده',
+  KEY `user_id` (`user_id`),
+  KEY `plan_id` (`plan_id`),
+  CONSTRAINT `ym_user_plans_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `ym_users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `ym_user_plans_ibfk_2` FOREIGN KEY (`plan_id`) REFERENCES `ym_plans` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
+
+-- ----------------------------
+-- Records of ym_user_plans
 -- ----------------------------
 
 -- ----------------------------

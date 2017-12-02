@@ -4676,3 +4676,6 @@ ul.wysihtml5-toolbar > li {
   display: inline-block;
 
 }
+.input-group-addon:first-child{
+  border-right: 1px solid #d2d6de !important;
+}
