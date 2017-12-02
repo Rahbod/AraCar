@@ -226,4 +226,8 @@
         margin-left: 0;
     }
 }
-@media (min-width: 1200px){}
+@media (min-width: 1200px) and (max-width: 1400px){
+    .header .nav > li > a{
+        padding: 20px 10px;
+    }
+}

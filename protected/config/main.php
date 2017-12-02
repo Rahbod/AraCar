@@ -20,6 +20,7 @@ return array(
 		'ext.dropZoneUploader.*',
 		'application.modules.places.models.*',
 		'application.modules.lists.models.*',
+		'application.modules.car.models.*',
 	),
 
 	'modules'=>array(
@@ -36,6 +37,7 @@ return array(
 		'setting',
 		'pages',
 		'places',
+		'slideshow',
 		'lists',
 		'car',
 	),
@@ -70,6 +72,7 @@ return array(
 			'showScriptName'=>false,
 			'appendParams'=>true,
 			'rules'=>array(
+				'sell' => 'site/sell',
 				'<action:(about|contactus|help|publishers|search)>' => 'site/<action>',
 				'<action:(logout|dashboard|googleLogin|library|transactions|downloaded|login|register)>' => 'users/public/<action>',
 				'/help'=>'site/help',

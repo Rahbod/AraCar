@@ -46,11 +46,12 @@ class SiteController extends Controller
     {
         Yii::app()->theme = "frontend";
         $this->layout = "public";
-
-        $expertises = Expertises::model()->findAll();
-
+        Yii::app()->getModule("slideshow");
+        $slideShow = Slideshow::model()->findAll();
+        $topBrands = Brands::model()->findAll(array('limit' => 10));
         $this->render('index', array(
-            'expertises' => $expertises,
+            'slideShow' => $slideShow,
+            'topBrands' => $topBrands
         ));
     }
 
