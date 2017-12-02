@@ -4,6 +4,17 @@ $(function () {
             $(this).remove();
         });
     },5000);
+
+    $(".nicescroll").each(function () {
+        var options = $(this).data();
+
+        $.each(options, function (key, value) {
+            if (typeof value == "string" && value.indexOf("js:") != -1)
+                options[key] = JSON.parse(value.substr(3));
+        });
+
+        $(this).niceScroll(options);
+    });
 });
 
 

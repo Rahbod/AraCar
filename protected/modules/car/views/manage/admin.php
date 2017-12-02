@@ -17,7 +17,7 @@ $this->menu=array(
         <a href="<?= $this->createUrl('create') ?>" class="btn btn-default btn-sm">افزودن آگهی جدید</a>
     </div>
     <div class="box-body">
-        <?php $this->renderPartial("//layouts/_flashMessage"); ?>
+        <?php $this->renderPartial("//partial-views/_flashMessage"); ?>
         <div class="table-responsive">
             <?php $this->widget('zii.widgets.grid.CGridView', array(
                 'id'=>'cars-grid',

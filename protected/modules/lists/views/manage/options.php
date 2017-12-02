@@ -22,7 +22,7 @@ $this->breadcrumbs=array(
         </a>
 	</div>
 	<div class="box-body">
-		<?php $this->renderPartial("//layouts/_flashMessage"); ?>
+		<?php $this->renderPartial("//partial-views/_flashMessage"); ?>
 		<?php $this->renderPartial("_option_form", array('model' => new Lists(), 'parentID' => $list->id)); ?>
 
 		<div class="table-responsive">

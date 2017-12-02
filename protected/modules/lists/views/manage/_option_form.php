@@ -7,7 +7,7 @@
 <div class="well" id="add-form">
 	<h4>افزودن گزینه جدید</h4><br>
     <div class="alert hidden"></div>
-	<?php $this->renderPartial("//layouts/_flashMessage"); ?>
+	<?php $this->renderPartial("//partial-views/_flashMessage"); ?>
 	<?php $form=$this->beginWidget('CActiveForm', array(
 		'id'=>'option-form-add',
 		'enableAjaxValidation'=>false,
@@ -49,7 +49,7 @@
 <div class="well hidden" id="edit-form">
 	<h4>ویرایش گزینه <span id="option-title"></span></h4><br>
     <div class="alert hidden"></div>
-	<?php $this->renderPartial("//layouts/_flashMessage"); ?>
+	<?php $this->renderPartial("//partial-views/_flashMessage"); ?>
 	<?php $form=$this->beginWidget('CActiveForm', array(
 		'id'=>'option-form-edit',
 		'enableAjaxValidation'=>false,

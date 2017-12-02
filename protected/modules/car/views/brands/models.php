@@ -28,7 +28,7 @@ $this->breadcrumbs=array(
             <i class="fa fa-info-circle"></i>
             مدل های برند <b class="text-primary"><?= $model->title ?></b> را تعریف کنید.
         </p>
-        <?php $this->renderPartial("//layouts/_flashMessage"); ?>
+        <?php $this->renderPartial("//partial-views/_flashMessage"); ?>
         <div class="table-responsive">
             <?php $this->widget('ext.yiiSortableModel.widgets.SortableCGridView', array(
                 'orderField' => 'order',

@@ -22,8 +22,8 @@ else
 		'validateOnSubmit' => true
 	);
 ?>
-<?php $this->renderPartial('//layouts/_flashMessage') ?>
-<?php $this->renderPartial('//layouts/_loading') ?>
+<?php $this->renderPartial('//partial-views/_flashMessage') ?>
+<?php $this->renderPartial('//partial-views/_loading') ?>
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>($model->isNewRecord?'create-model-detail-form':'update-model-detail-form'),
     'action' => $model->isNewRecord?$this->createUrl('modelDetailAdd').'?ajax=create-model-detail-form':$this->createUrl('modelDetailEdit').'/'.$model->id.'?ajax=update-model-detail-form',

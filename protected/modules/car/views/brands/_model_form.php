@@ -22,8 +22,8 @@ else
         'validateOnSubmit' => true
     );
 ?>
-<?php $this->renderPartial('//layouts/_loading') ?>
-<?php $this->renderPartial('//layouts/_flashMessage') ?>
+<?php $this->renderPartial('//partial-views/_loading') ?>
+<?php $this->renderPartial('//partial-views/_flashMessage') ?>
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>($model->isNewRecord?'create-model-form':'update-model-form'),
     'action' => $model->isNewRecord?array('brands/modelAdd?ajax=create-model-form'):array('brands/modelEdit/'.$model->id),

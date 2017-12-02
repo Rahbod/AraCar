@@ -52,8 +52,8 @@
 
 <body class="skin-blue sidebar-mini">
     <div class="wrapper">
-        <?php require_once '_header.php'; ?>
-        <?php require_once '_sidebar.php'; ?>
+        <?php $this->renderPartial('//partial-views/_header') ?>
+        <?php $this->renderPartial('//partial-views/_sidebar') ?>
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
@@ -78,7 +78,7 @@
         </div><!-- /.content-wrapper -->
 
 <!-- Require the footer -->
-<?php require_once('_footer.php') ?>
+<?php $this->renderPartial('//partial-views/_footer') ?>
 
 </body>
 </html>

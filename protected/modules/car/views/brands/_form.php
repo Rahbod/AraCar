@@ -4,7 +4,7 @@
 /* @var $logo UploadedFiles */
 /* @var $form CActiveForm */
 ?>
-<?php $this->renderPartial("//layouts/_flashMessage"); ?>
+<?php $this->renderPartial("//partial-views/_flashMessage"); ?>
 
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'brands-form',

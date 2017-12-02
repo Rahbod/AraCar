@@ -90,12 +90,16 @@ a:focus{
 .slideshow img{
     max-height: 400px;
 }
-.slideshow .ls-items{
+.slideshow-container{
+    position: relative;
+}
+.slideshow-container .ls-items{
     position: absolute;
     top: 140px;
     right: 80px;
+    z-index:100;
 }
-.slideshow .ls-item{
+.slideshow-container .ls-item{
     background: #fff;
     border-radius: 5px;
     text-align: center;
@@ -104,32 +108,32 @@ a:focus{
     height:120px;
     margin-left: 30px;
 }
-.slideshow .ls-item:last-child{
+.slideshow-container .ls-item:last-child{
     margin-left: 0;
 }
-.slideshow .ls-item h4{
+.slideshow-container .ls-item h4{
     margin: 0 0 5px;
     line-height: 25px;
 }
-.slideshow .ls-item span{
+.slideshow-container .ls-item span{
     color: #bbb;
     font-size: 11px;
 }
-.slideshow .ls-item i[class$="-icon"]{
+.slideshow-container .ls-item i[class$="-icon"]{
     width: 35px;
     height:35px;
     margin: 20px 0 5px;
     display: inline-block;
 }
-.slideshow .ls-item .star-icon{
+.slideshow-container .ls-item .star-icon{
     background: url("../svg/star.svg") no-repeat center;
     background-size: 35px;
 }
-.slideshow .ls-item .edit-icon{
+.slideshow-container .ls-item .edit-icon{
     background: url("../svg/edit.svg") no-repeat center;
     background-size: 35px;
 }
-.slideshow .ls-item .clock-icon{
+.slideshow-container .ls-item .clock-icon{
     background: url("../svg/clock.svg") no-repeat center;
     background-size: 35px;
 }
