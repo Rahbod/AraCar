@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50714
 File Encoding         : 65001
 
-Date: 2017-11-30 13:33:11
+Date: 2017-12-02 13:34:42
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -183,11 +183,11 @@ CREATE TABLE `ym_counter_save` (
 -- ----------------------------
 -- Records of ym_counter_save
 -- ----------------------------
-INSERT INTO `ym_counter_save` VALUES ('counter', '10');
-INSERT INTO `ym_counter_save` VALUES ('day_time', '2458088');
+INSERT INTO `ym_counter_save` VALUES ('counter', '11');
+INSERT INTO `ym_counter_save` VALUES ('day_time', '2458090');
 INSERT INTO `ym_counter_save` VALUES ('max_count', '1');
 INSERT INTO `ym_counter_save` VALUES ('max_time', '1509438600');
-INSERT INTO `ym_counter_save` VALUES ('yesterday', '1');
+INSERT INTO `ym_counter_save` VALUES ('yesterday', '0');
 
 -- ----------------------------
 -- Table structure for ym_counter_users
@@ -202,7 +202,7 @@ CREATE TABLE `ym_counter_users` (
 -- ----------------------------
 -- Records of ym_counter_users
 -- ----------------------------
-INSERT INTO `ym_counter_users` VALUES ('837ec5754f503cfaaee0929fd48974e7', '1512036140');
+INSERT INTO `ym_counter_users` VALUES ('837ec5754f503cfaaee0929fd48974e7', '1512208543');
 
 -- ----------------------------
 -- Table structure for ym_countries
@@ -904,11 +904,15 @@ CREATE TABLE `ym_plans` (
   `rules` varchar(1024) COLLATE utf8_persian_ci DEFAULT NULL COMMENT 'قوانین',
   `status` decimal(1,0) DEFAULT '1' COMMENT 'وضعیت',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
 
 -- ----------------------------
 -- Records of ym_plans
 -- ----------------------------
+INSERT INTO `ym_plans` VALUES ('1', 'رایگان', '0', null, '1');
+INSERT INTO `ym_plans` VALUES ('2', 'برنزی', '10000', null, '1');
+INSERT INTO `ym_plans` VALUES ('3', 'نقره ای', '15000', null, '1');
+INSERT INTO `ym_plans` VALUES ('4', 'طلایی', '20000', null, '1');
 
 -- ----------------------------
 -- Table structure for ym_site_setting

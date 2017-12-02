@@ -16,6 +16,7 @@ class UsersModule extends CWebModule
 	}
 
     public $controllerMap = array(
+        'plans' => 'users.controllers.UsersPlansController',
         'manage' => 'users.controllers.UsersManageController',
         'roles' => 'users.controllers.UsersRolesController',
         'credit' => 'users.controllers.UsersCreditController',

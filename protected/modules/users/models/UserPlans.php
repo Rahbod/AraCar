@@ -1,20 +1,27 @@
 <?php
 
 /**
- * This is the model class for table "{{doctor_expertises}}".
+ * This is the model class for table "{{user_plans}}".
  *
- * The followings are the available columns in table '{{doctor_expertises}}':
- * @property string $doctor_id
- * @property string $expertise_id
+ * The followings are the available columns in table '{{user_plans}}':
+ * @property string $user_id
+ * @property string $plan_id
+ * @property string $expire_date
+ * @property string $join_date
+ * @property integer $price
+ *
+ * The followings are the available model relations:
+ * @property Users $user
+ * @property Plans $plan
  */
-class DoctorExpertises extends CActiveRecord
+class UserPlans extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return '{{doctor_expertises}}';
+		return '{{user_plans}}';
 	}
 
 	/**
@@ -25,11 +32,12 @@ class DoctorExpertises extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('doctor_id, expertise_id', 'required'),
-			array('doctor_id, expertise_id', 'length', 'max'=>10),
+			array('price', 'numerical', 'integerOnly'=>true),
+			array('user_id, plan_id', 'length', 'max'=>10),
+			array('expire_date, join_date', 'length', 'max'=>20),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('doctor_id, expertise_id', 'safe', 'on'=>'search'),
+			array('user_id, plan_id, expire_date, join_date, price', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -41,6 +49,8 @@ class DoctorExpertises extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'user' => array(self::BELONGS_TO, 'Users', 'user_id'),
+			'plan' => array(self::BELONGS_TO, 'Plans', 'plan_id'),
 		);
 	}
 
@@ -50,8 +60,11 @@ class DoctorExpertises extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'doctor_id' => 'دکتر',
-			'expertise_id' => 'تخصص',
+			'user_id' => 'پلن',
+			'plan_id' => 'پلن',
+			'expire_date' => 'تاریخ اتمام',
+			'join_date' => 'تاریخ عضویت',
+			'price' => 'مبلغ پرداخت شده',
 		);
 	}
 
@@ -73,8 +86,11 @@ class DoctorExpertises extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('doctor_id',$this->doctor_id,true);
-		$criteria->compare('expertise_id',$this->expertise_id,true);
+		$criteria->compare('user_id',$this->user_id,true);
+		$criteria->compare('plan_id',$this->plan_id,true);
+		$criteria->compare('expire_date',$this->expire_date,true);
+		$criteria->compare('join_date',$this->join_date,true);
+		$criteria->compare('price',$this->price);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -85,7 +101,7 @@ class DoctorExpertises extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return DoctorExpertises the static model class
+	 * @return UserPlans the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
