@@ -15,11 +15,11 @@ $this->breadcrumbs=array(
            onclick="if(!confirm('آیا از حذف این مورد اطمینان دارید؟')) return false;"
            class="btn btn-danger btn-sm">حذف لیست</a>
         <a href="<?= $this->createUrl('admin') ?>" class="btn btn-primary btn-sm pull-left">
-        <a href="<?= $this->createUrl('admin') ?>" class="btn btn-primary btn-sm pull-left">
             <span class="hidden-xs">بازگشت</span>
             <i class="fa fa-arrow-left"></i>
         </a>
     </div>
     <div class="box-body">
-        <?php $this->renderPartial('_form', array('model'=>$model)); ?>    </div>
+        <?php $this->renderPartial('_form', array('model'=>$model)); ?>
+    </div>
 </div>

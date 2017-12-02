@@ -14,19 +14,20 @@
 ?>
 	<?php echo $form->errorSummary($model); ?>
 
-	<div class="row">
+	<div class="form-group">
 		<?php echo $form->labelEx($model,'title'); ?>
-		<?php echo $form->textField($model,'title',array('size'=>60,'maxlength'=>100)); ?>
+		<?php echo $form->textField($model,'title',array('size'=>60,'maxlength'=>100,'class' => 'form-control')); ?>
 		<?php echo $form->error($model,'title'); ?>
 	</div>
 	<!--
-	<div class="row">
+	<div class="form-group">
 		<?php echo $form->labelEx($model,'description'); ?>
-		<?php echo $form->textArea($model,'description',array('rows'=>6, 'cols'=>50)); ?>
+		<?php echo $form->textArea($model,'description',array('form-groups'=>6, 'cols'=>50)); ?>
 		<?php echo $form->error($model,'description'); ?>
 	</div>
 -->
-	<div class="row">
+	<div class="form-group">
+		<?php echo $form->labelEx($model,'image'); ?>
 		<?php $this->widget('ext.dropZoneUploader.dropZoneUploader', array(
 			'id' => 'uploaderFile',
 			'model' => $model,
@@ -50,13 +51,13 @@
 		?>
 	</div>
 
-	<div class="row">
+	<div class="form-group">
 		<?php echo $form->labelEx($model,'link'); ?>
-		<?php echo $form->textField($model,'link',array('size'=>60,'maxlength'=>2000)); ?>
+		<?php echo $form->textField($model,'link',array('size'=>60,'maxlength'=>2000,'class' => 'form-control')); ?>
 		<?php echo $form->error($model,'link'); ?>
 	</div>
 
-	<div class="row buttons">
+	<div class="form-group buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'ثبت' : 'ذخیره',array('class' => 'btn btn-success')); ?>
 	</div>
 

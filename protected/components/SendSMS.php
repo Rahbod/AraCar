@@ -24,7 +24,8 @@ class SendSMS extends CComponent
         try {
             @$this->_client = new SoapClient('http://n.sms.ir/ws/SendReceive.asmx?wsdl',array('encoding' => 'UTF-8'));
         }catch (Exception $e){
-            throw new CHttpException(501, $e->getMessage());
+            if(!Yii::app()->request->isAjaxRequest)
+                throw new CHttpException(501, $e->getMessage());
         }
     }
 

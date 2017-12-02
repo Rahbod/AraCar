@@ -52,6 +52,12 @@ $(document).ready(function() {
     }).on("show.bs.modal", "#suggest-way-modal", function () {
         $(this).find(".tab-content > .tab-pane:not(:first-of-type)").removeClass("active in");
         $(this).find(".tab-content > .tab-pane:first-of-type").addClass("active in");
+    }).on("show.bs.modal", "#login-modal", function () {
+        $(this).find("form input[type=text], form input[type=tel], form input[type=password], form input[type=email], form textarea").val("");
+        $(this).find("form .error").removeClass("error");
+        $(this).find("form .errorMessage").hide();
+        $(this).find(".tab-content > .tab-pane:not(:first-of-type)").removeClass("active in");
+        $(this).find(".tab-content > .tab-pane:first-of-type").addClass("active in");
     });
 
     $(".nicescroll").each(function () {
