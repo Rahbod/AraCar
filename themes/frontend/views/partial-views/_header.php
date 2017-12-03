@@ -3,7 +3,7 @@
 /* @var $class string */
 ?>
 
-<div class="header">
+<div class="header<?= $this->layout == '//layouts/inner'?' inner-page':'' ?>">
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
         <div class="row">
             <ul class="nav navbar-nav">
@@ -37,9 +37,21 @@
         </div>
     </div>
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-        <div class="logo-box">
-            <img src="<?= Yii::app()->theme->baseUrl.'/images/logo.png' ?>">
-        </div>
-        <a href="<?= Yii::app()->createUrl('/sell') ?>" class="new-link"></a>
+        <a href="<?= Yii::app()->getBaseUrl(true) ?>">
+            <div class="logo-box">
+                <img src="<?= Yii::app()->theme->baseUrl.'/images/logo.png' ?>">
+            </div>
+        </a>
+        <?php
+        if(Yii::app()->user->isGuest || Yii::app()->user->type == 'admin'):
+            ?>
+            <a href="#" class="new-link" data-toggle="modal" data-target="#login-modal" data-title="ثبت آگهی جدید"></a>
+            <?php
+        else:
+            ?>
+            <a href="<?= Yii::app()->createUrl('/sell') ?>" class="new-link" data-placement="bottom" title="ثبت آگهی جدید"></a>
+            <?
+        endif;
+        ?>
     </div>
 </div>

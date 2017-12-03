@@ -94,8 +94,6 @@ class UserIdentity extends CUserIdentity
                 $this->setState('last_name', $record->userDetails->last_name);
                 $this->setState('avatar', (is_null($record->userDetails->avatar) ? '' : $record->userDetails->avatar));
                 $this->setState('auth_mode', $record->auth_mode);
-                if($record->clinicsCount)
-                    $this->setState('clinicCount', $record->clinicsCount);
                 $this->errorCode = self::ERROR_NONE;
             }
         }

@@ -90,6 +90,7 @@ a:focus{
 .slideshow img{
     max-height: 400px;
 }
+
 .slideshow-container{
     position: relative;
     z-index:1;
@@ -1151,7 +1152,7 @@ input[type="checkbox"]:checked + label::before {
     display: inline-block!important;
 }
 
-.center-box form{
+.center-box form.sell-form{
     padding: 40px 0;
 }
 
@@ -1245,7 +1246,7 @@ input.form-control.white-bg {
 }
 
 .image-uploader{
-    background: #f1f1f1 url("../svg/image.svg") no-repeat center;
+    background: #f1f1f1 url("../svg/image.svg") no-repeat scroll center 70px;
     background-size: 55px;
     border:3px dashed #d7d7d7;
     border-radius: 10px;
@@ -1261,12 +1262,22 @@ input.form-control.white-bg {
     z-index:3;
     position: relative;
     cursor: pointer;
+    text-align: center;
+    overflow-y: auto;
 }
-.day-statistics + .image-uploader{
+.image-uploader .dz-error-message {
+    top: 0 !important;
+    bottom: 30px;
+    z-index: 501 !important;
+    background-color: #fff;
+    display: block !important;
+    visibility: visible;
+}
+.day-statistics + .form-group > .image-uploader{
     margin-top: 67px;
 }
 .image-uploader:hover{
-    background: #f5f5f5 url("../svg/image.svg") no-repeat center;
+    background-color: #f8f8f8;
     background-size: 55px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
@@ -1277,19 +1288,18 @@ input.form-control.white-bg {
     font-size: 11px;
     font-weight: bold;
     position: absolute;
-    top: calc(50% + 28px);
+    top: calc(40% + 28px);
     left: 0;
     right: 0;
     text-align: center;
 }
 .image-uploader.dropzone .dz-preview {
-    width: 100% !important;
-    height: 100% !important;
     margin: 0;
     background-color: transparent !important;
     overflow: hidden;
-    display: block;
+    display: inline-block;
     border-radius: 10px !important;
+    margin: 4px;
 }
 .image-uploader.dropzone .dz-preview .dz-image{
     width: auto !important;
@@ -1304,7 +1314,7 @@ input.form-control.white-bg {
     color: white;
     font-weight: bold;
     background-color: #ee5522cc;
-    padding: 8px 10px;
+    padding: 4px 10px;
     border-radius: 0 0 10px 10px;
     -webkit-transition: all 0.3s linear;
     -moz-transition: all 0.3s linear;
@@ -1357,6 +1367,7 @@ input.form-control.white-bg {
     bottom: 0;
     right: 7px;
     line-height: 25px;
+    text-align: right;
 }
 .input-group.white-bg input.form-control{
     border-left: none !important;
@@ -2271,7 +2282,7 @@ input.form-control.white-bg {
     padding: 5px 0;
 }
 .auth-tab.register-tab p{
-    margin-bottom: 25px;
+    margin-bottom: 15px;
 }
 .auth-tab.register-tab .register-form{
     margin: 0 -6px;
@@ -2347,7 +2358,7 @@ input.form-control.white-bg {
     background: url('../svg/lock.svg') no-repeat scroll center transparent;
     background-size: 24px;
 }
-#login-modal .btn.btn-custom {
+.auth-tab .btn.btn-custom {
     background-color: transparent;
     -webkit-border-radius: 50px;
     -moz-border-radius: 50px;
@@ -2362,27 +2373,27 @@ input.form-control.white-bg {
     -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
 }
-#login-modal .btn.btn-custom.next-in {
+.auth-tab .btn.btn-custom.next-in {
     padding: 0 15px 0 71px !important;
     position: relative;
 }
-#login-modal .btn.btn-custom.blue {
+.auth-tab .btn.btn-custom.blue {
     border: 2px solid #1aa4de;
     color: #1aa4de;
 }
-#login-modal .btn.btn-custom.green {
+.auth-tab .btn.btn-custom.green {
     border: 2px solid #b2de1a;
     color: #b2de1a;
 }
-#login-modal .btn.btn-custom.blue .next-span {
+.auth-tab .btn.btn-custom.blue .next-span {
     background-color: #1aa4de;
     color: #fff;
 }
-#login-modal .btn.btn-custom.green .next-span {
+.auth-tab .btn.btn-custom.green .next-span {
     background-color: #b2de1a;
     color: #fff;
 }
-#login-modal .btn.btn-custom .next-span {
+.auth-tab .btn.btn-custom .next-span {
     position: absolute;
     top: 6px;
     bottom: 6px;
@@ -2393,14 +2404,120 @@ input.form-control.white-bg {
     border-radius: 50px;
     line-height: 33px;
 }
-#login-modal .close{
+.auth-tab .close{
     margin-top: 5px;
 }
-#login-modal .svg-user-login{
+.auth-tab .svg-user-login{
     margin-left: 5px;
 }
 #login-modal h4{
     font-size: 16px;
+}
+
+.svg-icons.mail-icon {
+    background: url("../svg/mail.svg") no-repeat scroll center transparent;
+    background-size: 30px !important;
+}
+#login-modal .form-group{
+    margin-bottom: 5px !important;
+    padding-bottom: 0 !important;
+    position: relative;
+}
+#login-modal .form-group .errorMessage{
+    position: relative;
+    line-height: 25px;
+}
+
+
+/*********************** LOADING **********************/
+.loading-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+    z-index: 10;
+}
+
+.loading-container .overly {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.7);
+    display: block;
+    opacity: 1;
+}
+
+.loading-container .spinner {
+    margin: 0 auto;
+    width: 70px;
+    text-align: center;
+    z-index: 11;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+}
+
+.loading-container .spinner > div {
+    width: 13px;
+    height: 13px;
+    background-color: #505050;
+
+    border-radius: 100%;
+    display: inline-block;
+    -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+    animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+}
+
+.loading-container .spinner .bounce1 {
+    -webkit-animation-delay: -0.32s;
+    animation-delay: -0.32s;
+}
+
+.loading-container .spinner .bounce2 {
+    -webkit-animation-delay: -0.16s;
+    animation-delay: -0.16s;
+}
+
+@-webkit-keyframes sk-bouncedelay {
+    0%, 80%, 100% {
+        -webkit-transform: scale(0)
+    }
+    40% {
+        -webkit-transform: scale(1.0)
+    }
+}
+
+@keyframes sk-bouncedelay {
+    0%, 80%, 100% {
+        -webkit-transform: scale(0);
+        transform: scale(0);
+    }
+    40% {
+        -webkit-transform: scale(1.0);
+        transform: scale(1.0);
+    }
+}
+
+/*****************************************************/
+.text-gray{
+    color: #aaa !important;
+}
+
+.tooltip > .tooltip-inner{
+    font-family: IRANSans !important;
+}
+
+.disabled{
+    color: #ccc !important;
 }
 .ui-widget.ui-widget-content{
     height:auto;

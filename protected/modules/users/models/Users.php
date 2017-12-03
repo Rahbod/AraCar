@@ -23,20 +23,9 @@
  * @property UserDetails $userDetails
  * @property UserTransactions[] $transactions
  * @property UserRoles $role
- * @property ClinicPersonnels $clinicPersonnels
- * @property Clinics[] $clinics
- * @property int $clinicsCount
- * @property Clinics $clinic
- * @property Expertises[] $expertises
- * @property DoctorSchedules[] $doctorSchedules
- * @property DoctorLeaves[] $doctorLeaves
- * @property Visits[] $visits
- * @property Visits[] $doctorVisits
  */
 class Users extends CActiveRecord
 {
-    public $clinic;
-
     /**
      * @return string the associated database table name
      */
@@ -61,6 +50,7 @@ class Users extends CActiveRecord
     public $newPassword;
     public $roleId;
     public $type;
+    public $verifyCode;
 
     /**
      * @param array $values
@@ -90,6 +80,7 @@ class Users extends CActiveRecord
         // will receive user inputs.
         return array(
             array('email, password', 'required', 'on' => 'insert,create'),
+            array('verifyCode', 'activeCaptcha', 'on' => 'insert,create'),
             array('national_code', 'length', 'is' => 10, 'message'=>'کد ملی باید 10 رقم باشد.'),
             array('national_code, mobile', 'numerical', 'integerOnly' => true, 'message'=>'{attribute} باید عددی باشد.'),
             array('email', 'required', 'on' => 'update'),
@@ -106,11 +97,12 @@ class Users extends CActiveRecord
             array('create_date', 'length', 'max' => 20),
             array('type, first_name, last_name, phone, mobile, national_code', 'safe'),
 
-            // Reserve Register rules
-            array('national_code, mobile, first_name, last_name', 'required', 'on' => 'reserve_register'),
-            array('email', 'email', 'on' => 'reserve_register'),
-            array('email, national_code', 'unique', 'on' => 'reserve_register'),
-            array('mobile', 'checkUnique', 'on' => 'reserve_register'),
+            // Register rules
+            array('mobile, first_name, last_name, repeatPassword', 'required', 'on' => 'create'),
+            array('repeatPassword', 'compare', 'compareAttribute' => 'password', 'on' => 'create', 'message' => 'کلمه های عبور همخوانی ندارند'),
+            array('email', 'email', 'on' => 'create'),
+            array('email', 'unique', 'on' => 'create'),
+            array('mobile', 'checkUnique', 'on' => 'create'),
 
             // change password rules
             array('oldPassword ,newPassword ,repeatPassword', 'required', 'on' => 'change_password'),
@@ -127,6 +119,15 @@ class Users extends CActiveRecord
         );
     }
 
+    public function activeCaptcha()
+    {
+        $code = Yii::app()->controller->createAction('captcha')->verifyCode;
+        if (empty($code))
+            $this->addError('verifyCode', 'کد امنیتی نمی تواند خالی باشد.');
+        elseif ($code != $this->verifyCode)
+            $this->addError('verifyCode', 'کد امنیتی نامعتبر است.');
+    }
+    
     /**
      * Check this username is exist in database or not
      */
@@ -160,15 +161,6 @@ class Users extends CActiveRecord
             'transactions' => array(self::HAS_MANY, 'UserTransactions', 'user_id'),
             'role' => array(self::BELONGS_TO, 'UserRoles', 'role_id'),
             'sessions' => array(self::HAS_MANY, 'Sessions', 'user_id', 'on' => 'user_type = "user"'),
-            'addresses' => array(self::HAS_MANY, 'ShopAddresses', 'user_id', 'on' => 'addresses.deleted = 0'),
-            'clinicPersonnels' => array(self::HAS_MANY, 'ClinicPersonnels', 'user_id'),
-            'clinics' => array(self::MANY_MANY, 'Clinics', '{{clinic_personnels}}(user_id, clinic_id)'),
-            'clinicsCount' => array(self::STAT, 'Clinics', '{{clinic_personnels}}(user_id, clinic_id)'),
-            'expertises' => array(self::MANY_MANY, 'Expertises', '{{doctor_expertises}}(doctor_id, expertise_id)'),
-            'doctorSchedules' => array(self::HAS_MANY, 'DoctorSchedules', 'doctor_id', 'order' => 'doctorSchedules.week_day'),
-            'doctorLeaves' => array(self::HAS_MANY, 'DoctorLeaves', 'doctor_id', 'order' => 'doctorLeaves.date'),
-            'visits' => array(self::HAS_MANY, 'Visits', 'user_id'),
-            'doctorVisits' => array(self::HAS_MANY, 'Visits', 'doctor_id'),
         );
     }
 
@@ -195,6 +187,7 @@ class Users extends CActiveRecord
             'mobile' => 'تلفن همراه',
             'first_name' => 'نام',
             'last_name' => 'نام خانوادگی',
+            'verifyCode' => 'کد امنیتی',
         );
     }
 

@@ -116,7 +116,7 @@ class Controller extends AuthController
                     )
                 ),
                 array(
-                    'label' => '<i class="fa fa-bars"></i><span>آگهی ها</span> <i class="fa fa-angle-left pull-left"></i>',
+                    'label' => '<i class="fa fa-car"></i><span>آگهی ها</span> <i class="fa fa-angle-left pull-left"></i>',
                     'url' => '#',
                     'itemOptions' => array('class' => 'treeview', 'tabindex' => "-1"),
                     'submenuOptions' => array('class' => 'treeview-menu'),

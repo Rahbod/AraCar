@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    $('[data-title]').tooltip();
     if($('.select-picker').length && $.fn.selectpicker)
         $('.select-picker').selectpicker();
     $(document).on("click", ".content-box .filter-box .head .toggle-icon", function () {
@@ -50,6 +51,12 @@ $(document).ready(function() {
             parent.find(".carousel-item").not($(this)).removeClass("active");
         $(this).toggleClass("active");
     }).on("show.bs.modal", "#suggest-way-modal", function () {
+        $(this).find(".tab-content > .tab-pane:not(:first-of-type)").removeClass("active in");
+        $(this).find(".tab-content > .tab-pane:first-of-type").addClass("active in");
+    }).on("show.bs.modal", "#login-modal", function () {
+        $(this).find("form input[type=text], form input[type=tel], form input[type=password], form input[type=email], form textarea").val("");
+        $(this).find("form .error").removeClass("error");
+        $(this).find("form .errorMessage").hide();
         $(this).find(".tab-content > .tab-pane:not(:first-of-type)").removeClass("active in");
         $(this).find(".tab-content > .tab-pane:first-of-type").addClass("active in");
     });

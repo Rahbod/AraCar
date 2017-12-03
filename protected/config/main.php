@@ -72,8 +72,9 @@ return array(
 			'showScriptName'=>false,
 			'appendParams'=>true,
 			'rules'=>array(
-				'<action:(about|contactus|help)>' => 'site/<action>',
-				'<action:(logout|dashboard|googleLogin|transactions|login|register)>' => 'users/public/<action>',
+				'sell' => 'car/public/sell',
+				'<action:(about|contactus|help|publishers|search)>' => 'site/<action>',
+				'<action:(logout|dashboard|googleLogin|library|transactions|downloaded|login|register)>' => 'users/public/<action>',
 				'/help'=>'site/help',
 				'users/<id:\d+>'=>'users/public/viewProfile',
 				'<module:\w+>/<id:\d+>'=>'<module>/manage/view',

@@ -909,3 +909,105 @@ in D:\Important\Xamppp\htdocs\clinic\index.php (11)
 in D:\Important\Xamppp\htdocs\clinic\protected\modules\clinics\controllers\ClinicsManageController.php (208)
 in D:\Important\Xamppp\htdocs\clinic\protected\components\AuthController.php (108)
 in D:\Important\Xamppp\htdocs\clinic\index.php (11)
+2017/12/02 19:06:29 [warning] [application] Failed to set unsafe attribute "username" of "UserLoginForm".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersPublicController.php (606)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2017/12/02 19:08:30 [warning] [application] Failed to set unsafe attribute "username" of "UserLoginForm".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersPublicController.php (607)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2017/12/02 19:08:37 [warning] [application] Failed to set unsafe attribute "username" of "UserLoginForm".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersPublicController.php (607)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2017/12/02 19:09:15 [warning] [application] Failed to set unsafe attribute "username" of "UserLoginForm".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersPublicController.php (605)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2017/12/02 19:09:23 [warning] [application] Failed to set unsafe attribute "username" of "UserLoginForm".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersPublicController.php (605)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2017/12/02 19:09:32 [warning] [application] Failed to set unsafe attribute "username" of "UserLoginForm".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersPublicController.php (605)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2017/12/02 19:42:14 [warning] [application] Failed to set unsafe attribute "repeatPassword" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersPublicController.php (650)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2017/12/02 19:42:18 [warning] [application] Failed to set unsafe attribute "repeatPassword" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersPublicController.php (650)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2017/12/02 19:43:59 [warning] [application] Failed to set unsafe attribute "repeatPassword" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersPublicController.php (650)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2017/12/02 19:46:59 [warning] [application] Failed to set unsafe attribute "repeatPassword" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersPublicController.php (642)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2017/12/02 19:47:07 [warning] [application] Failed to set unsafe attribute "repeatPassword" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersPublicController.php (642)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2017/12/02 19:48:00 [warning] [application] Failed to set unsafe attribute "repeatPassword" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersPublicController.php (642)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2017/12/02 19:48:02 [warning] [application] Failed to set unsafe attribute "repeatPassword" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersPublicController.php (642)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2017/12/02 19:48:05 [warning] [application] Failed to set unsafe attribute "repeatPassword" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersPublicController.php (642)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2017/12/02 19:48:09 [warning] [application] Failed to set unsafe attribute "repeatPassword" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersPublicController.php (642)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2017/12/02 20:07:17 [warning] [application] Failed to set unsafe attribute "repeatPassword" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersPublicController.php (642)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2017/12/02 20:09:48 [warning] [application] Failed to set unsafe attribute "repeatPassword" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersPublicController.php (642)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2017/12/02 20:11:13 [warning] [application] Failed to set unsafe attribute "repeatPassword" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersPublicController.php (642)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2017/12/02 20:13:03 [warning] [application] Failed to set unsafe attribute "repeatPassword" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersPublicController.php (642)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2017/12/02 20:14:46 [warning] [application] Failed to set unsafe attribute "repeatPassword" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersPublicController.php (642)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2017/12/02 20:16:56 [warning] [application] Failed to set unsafe attribute "repeatPassword" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersPublicController.php (642)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2017/12/02 20:17:22 [warning] [application] Failed to set unsafe attribute "repeatPassword" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersPublicController.php (642)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2017/12/02 20:17:41 [warning] [application] Failed to set unsafe attribute "repeatPassword" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersPublicController.php (642)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2017/12/02 20:24:25 [warning] [application] Failed to set unsafe attribute "repeatPassword" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersPublicController.php (642)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2017/12/02 20:24:40 [warning] [application] Failed to set unsafe attribute "repeatPassword" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersPublicController.php (642)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2017/12/02 20:25:24 [warning] [application] Failed to set unsafe attribute "repeatPassword" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersPublicController.php (642)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2017/12/02 20:26:00 [warning] [application] Failed to set unsafe attribute "repeatPassword" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersPublicController.php (642)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2017/12/02 20:26:34 [warning] [application] Failed to set unsafe attribute "repeatPassword" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersPublicController.php (642)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2017/12/02 20:27:09 [warning] [application] Failed to set unsafe attribute "repeatPassword" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersPublicController.php (642)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2017/12/02 20:27:44 [warning] [application] Failed to set unsafe attribute "repeatPassword" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersPublicController.php (642)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2017/12/02 20:30:58 [warning] [application] Failed to set unsafe attribute "repeatPassword" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersPublicController.php (642)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2017/12/02 20:31:48 [warning] [application] Failed to set unsafe attribute "repeatPassword" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersPublicController.php (642)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2017/12/02 20:34:56 [warning] [application] Failed to set unsafe attribute "repeatPassword" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersPublicController.php (642)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2017/12/02 20:35:05 [warning] [application] Failed to set unsafe attribute "repeatPassword" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersPublicController.php (642)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
