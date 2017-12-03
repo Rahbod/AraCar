@@ -14,6 +14,10 @@ class dropZoneUploader extends CWidget
     private $_scripts;
 
     /**
+     * @var string Container Class
+     */
+    public $containerClass = '';
+    /**
      * @var string The URL that handles the file upload
      */
     public $url = null;
@@ -298,7 +302,7 @@ class dropZoneUploader extends CWidget
     {
         $class = $this->maxFiles == 1 ? 'single':'';
         $this->registerClientScript();
-        echo CHtml::openTag('div', CMap::mergeArray(array('class' => 'dropzone '.$class, 'id' => $this->id ),$this->htmlOptions));
+        echo CHtml::openTag('div', CMap::mergeArray(array('class' => $this->containerClass.' dropzone '.$class, 'id' => $this->id ),$this->htmlOptions));
         echo CHtml::closeTag('div');
     }
 }

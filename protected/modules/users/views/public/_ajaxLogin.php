@@ -9,7 +9,8 @@ if(!isset($loading_parent) || empty($loading_parent))
 </div>
 <div class="button-box">
     <p>عضو سایت هستید؟
-        برای ثبت سفارش خود وارد شوید</p>
+        برای ثبت آگهی خود لطفا وارد شوید
+    </p>
     <?php
     $model = new UserLoginForm();
     Yii::app()->user->returnUrl = Yii::app()->request->url;
@@ -54,8 +55,9 @@ if(!isset($loading_parent) || empty($loading_parent))
         )
     )); ?>
         <p id="login-error" class="errorMessage"></p>
+        <p id="UserLoginForm_authenticate_field_em_" class="errorMessage"></p>
         <div class="form-group">
-            <?php echo $form->textField($model, 'verification_field_value', array('class' => 'ltr text-right form-control', 'placeholder' => 'شماره موبایل / پست الکترونیکی')); ?>
+            <?php echo $form->textField($model, 'verification_field_value', array('class' => 'ltr text-right form-control', 'placeholder' => $model->getAttributeLabel('verification_field_value'))); ?>
             <?php echo $form->error($model, 'verification_field_value'); ?>
         </div>
 
@@ -66,7 +68,7 @@ if(!isset($loading_parent) || empty($loading_parent))
 
         <div class="form-group text-right">
             <?= $form->checkBox($model,'rememberMe',array('id'=>'remember-me', 'class' => 'form-control')); ?>
-            <?= CHtml::label('مرا به خاطر بسپار','remember-me') ?>
+            <?= CHtml::label('مرا به خاطر بسپار','remember-me',array('class'=>'text-gray')) ?>
         </div>
 
         <button type="submit" class="btn btn-custom blue next-in pull-left" id="login-submit-btn">

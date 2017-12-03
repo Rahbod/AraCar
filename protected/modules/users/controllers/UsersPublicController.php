@@ -596,7 +596,7 @@ class UsersPublicController extends Controller
 
         $model = new UserLoginForm;
         // Login codes
-        if (isset($_GET['ajax']) && $_GET['ajax'] === 'users-login-modal-form') {
+        if (isset($_GET['ajax']) && ($_GET['ajax'] === 'users-login-modal-form' || $_GET['ajax'] === 'users-login-form')) {
             $errors = CActiveForm::validate($model);
             if (CJSON::decode($errors)) {
                 echo $errors;

@@ -35,7 +35,8 @@ class UserLoginForm extends CFormModel
             array('email', 'email', 'on' => 'OAuth'),
             array('verification_field_value', 'email', 'on' => 'emailAuth'),
             array('verification_field_value', 'numerical', 'integerOnly' => true, 'on' => 'mobileAuth, nationalAuth'),
-            array('verification_field_value', 'length', 'is' => 10, 'on' => 'mobileAuth, nationalAuth'),
+            array('verification_field_value', 'length', 'is' => 10, 'on' => 'nationalAuth'),
+            array('verification_field_value', 'length', 'is' => 11, 'on' => 'mobileAuth'),
 			// multiple username
 			array('verification_field_value, verification_field', 'safe'),
 			array('verification_field_value', 'check', 'fields' => ['national_code', 'mobile', 'email']),
@@ -46,28 +47,35 @@ class UserLoginForm extends CFormModel
 
 	public function check($attribute, $params)
 	{
-		$criteria = new CDbCriteria();
-		$criteria->compare('national_code', $this->{$attribute});
-		$criteria->limit = 1;
-		$national_code = Users::model()->count($criteria);
-		$criteria = new CDbCriteria();
-		$criteria->compare('mobile', $this->{$attribute});
-		$criteria->limit = 1;
-		$mobile = UserDetails::model()->count($criteria);
-		$criteria = new CDbCriteria();
-		$criteria->compare('email', $this->{$attribute});
-		$criteria->limit = 1;
-		$email = Users::model()->count($criteria);
-		if($national_code){
-			$this->verification_field = 'national_code';
-			$this->scenario = 'nationalAuth';
-		}else if($mobile){
-			$this->verification_field = 'mobile';
-			$this->scenario = 'mobileAuth';
-		}else if($email){
-			$this->verification_field = 'email';
-			$this->scenario = 'emailAuth';
-		}
+        $criteria = new CDbCriteria();
+        $criteria->compare('email', $this->{$attribute});
+        $criteria->limit = 1;
+        $email = Users::model()->find($criteria);
+        if($email){
+            $this->email = $email->email;
+            $this->verification_field = 'email';
+            $this->scenario = 'emailAuth';
+        }else{
+            $criteria = new CDbCriteria();
+            $criteria->compare('mobile', $this->{$attribute});
+            $criteria->limit = 1;
+            $mobile = UserDetails::model()->find($criteria);
+            if($mobile){
+                $this->email = $mobile->user->email;
+                $this->verification_field = 'mobile';
+                $this->scenario = 'mobileAuth';
+            }else{
+                $criteria = new CDbCriteria();
+                $criteria->compare('national_code', $this->{$attribute});
+                $criteria->limit = 1;
+                $national_code = Users::model()->find($criteria);
+                if($national_code){
+                    $this->email = $national_code->email;
+                    $this->verification_field = 'national_code';
+                    $this->scenario = 'nationalAuth';
+                }
+            }
+        }
 	}
 
 	/**
@@ -81,7 +89,7 @@ class UserLoginForm extends CFormModel
 			'rememberMe'=>'مرا بخاطر بسپار',
             'email' => 'پست الکترونیک',
             'authenticate_field' => 'Authenticate Field',
-            'verification_field_value' => 'شماره موبایل / پست الکترونیکی',
+            'verification_field_value' => 'پست الکترونیکی',
 		);
 	}
 

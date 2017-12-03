@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    $('[data-title]').tooltip();
     if($('.select-picker').length && $.fn.selectpicker)
         $('.select-picker').selectpicker();
     $(document).on("click", ".content-box .filter-box .head .toggle-icon", function () {

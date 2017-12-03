@@ -11,6 +11,7 @@
  * @property string $user_id
  * @property string $brand_id
  * @property string $model_id
+ * @property string $year_id
  * @property string $room_color_id
  * @property string $body_color_id
  * @property string $body_state_id
@@ -29,6 +30,7 @@
  * @property string $creation_date
  *
  * The followings are the available model relations:
+ * @property CarImages[] $images
  * @property Lists $plateType
  * @property Users $user
  * @property Brands $brand
@@ -44,6 +46,7 @@
  */
 class Cars extends CActiveRecord
 {
+    public $images;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -60,18 +63,19 @@ class Cars extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('user_id, brand_id, model_id, room_color_id, body_color_id, body_state_id, state_id, city_id, fuel_id, gearbox_id, car_type_id, plate_type_id, purchase_type_id, creation_date', 'required'),
+			array('user_id, brand_id, model_id, year_id, room_color_id, body_color_id, body_state_id, state_id, city_id, fuel_id, gearbox_id, car_type_id, plate_type_id, purchase_type_id, creation_date, images', 'required'),
 			array('create_date, update_date, expire_date', 'length', 'max'=>20),
-			array('user_id, brand_id, model_id, room_color_id, body_color_id, body_state_id, state_id, city_id, fuel_id, gearbox_id, car_type_id, plate_type_id, purchase_type_id', 'length', 'max'=>10),
+			array('user_id, brand_id, model_id, year_id, room_color_id, body_color_id, body_state_id, state_id, city_id, fuel_id, gearbox_id, car_type_id, plate_type_id, purchase_type_id', 'length', 'max'=>10),
 			array('purchase_details', 'length', 'max'=>1024),
 			array('distance', 'length', 'max'=>6),
 			array('creation_date', 'length', 'max'=>4),
 			array('status', 'length', 'max'=>1),
 			array('visit_district', 'length', 'max'=>255),
 			array('description', 'safe'),
+			array('images', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, create_date, update_date, expire_date, user_id, brand_id, model_id, room_color_id, body_color_id, body_state_id, state_id, city_id, fuel_id, gearbox_id, car_type_id, plate_type_id, purchase_type_id, purchase_details, distance, status, visit_district, description, creation_date', 'safe', 'on'=>'search'),
+			array('id, create_date, update_date, expire_date, user_id, brand_id, model_id, year_id, room_color_id, body_color_id, body_state_id, state_id, city_id, fuel_id, gearbox_id, car_type_id, plate_type_id, purchase_type_id, purchase_details, distance, status, visit_district, description, creation_date', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -83,6 +87,7 @@ class Cars extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'images' => array(self::HAS_MANY, 'CarImages', 'car_id'),
 			'plateType' => array(self::BELONGS_TO, 'Lists', 'plate_type_id'),
 			'user' => array(self::BELONGS_TO, 'Users', 'user_id'),
 			'gearbox' => array(self::BELONGS_TO, 'Lists', 'gearbox_id'),
@@ -104,6 +109,7 @@ class Cars extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
+			'images' => 'تصاویر',
 			'id' => 'ID',
 			'create_date' => 'تاریخ ثبت',
 			'update_date' => 'تاریخ ویرایش',
@@ -111,6 +117,7 @@ class Cars extends CActiveRecord
 			'user_id' => 'آگهی دهنده',
 			'brand_id' => 'برند',
 			'model_id' => 'مدل',
+			'year_id' => 'سال تولید',
 			'room_color_id' => 'رنگ داخل',
 			'body_color_id' => 'رنگ بدنه',
 			'body_state_id' => 'وضعیت بدنه',
@@ -156,6 +163,7 @@ class Cars extends CActiveRecord
 		$criteria->compare('user_id',$this->user_id,true);
 		$criteria->compare('brand_id',$this->brand_id,true);
 		$criteria->compare('model_id',$this->model_id,true);
+		$criteria->compare('year_id',$this->year_id,true);
 		$criteria->compare('room_color_id',$this->room_color_id,true);
 		$criteria->compare('body_color_id',$this->body_color_id,true);
 		$criteria->compare('body_state_id',$this->body_state_id,true);
@@ -192,5 +200,41 @@ class Cars extends CActiveRecord
 	public function getTitle(){
         $separator = Yii::app()->language == 'fa_ir'?'،':',';
 		return $this->brand && $this->model?"{$this->creation_date}{$separator} {$this->brand->title}{$separator} {$this->model->title}":null;
+	}
+
+
+	/**
+	 * Returns create advertise count in last month
+	 * @return int
+	 */
+	public static function getMonthlySell()
+	{
+		$cr = new CDbCriteria();
+		$startDate = JalaliDate::toGregorian(JalaliDate::date('Y', time(), false), JalaliDate::date('m', time(), false), 1);
+		$startTime = strtotime($startDate[0] . '/' . $startDate[1] . '/' . $startDate[2]);
+		if (JalaliDate::date('m', time(), false) <= 6)
+			$endTime = $startTime + (60 * 60 * 24 * 31);
+		else
+			$endTime = $startTime + (60 * 60 * 24 * 30);
+		$cr->addCondition('create_date >= :start_date AND create_date <= :end_date');
+		$cr->params[':start_date'] = $startTime;
+		$cr->params[':end_date'] = $endTime;
+		return self::model()->count($cr);
+	}
+
+    /**
+	 * Returns create advertise count in last month
+	 * @return int
+	 */
+	public static function getDailySell()
+	{
+		$cr = new CDbCriteria();
+		$startDate = JalaliDate::toGregorian(JalaliDate::date('Y', time(), false), JalaliDate::date('m', time(), false), JalaliDate::date('d', time(), false));
+		$startTime = strtotime($startDate[0] . '/' . $startDate[1] . '/' . $startDate[2]);
+        $endTime = strtotime($startDate[0] . '/' . $startDate[1] . '/' . $startDate[2].' 23:59:59');
+		$cr->addCondition('create_date >= :start_date AND create_date <= :end_date');
+		$cr->params[':start_date'] = $startTime;
+		$cr->params[':end_date'] = $endTime;
+		return self::model()->count($cr);
 	}
 }

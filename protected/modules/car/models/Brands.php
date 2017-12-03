@@ -140,4 +140,9 @@ class Brands extends CActiveRecord
 		$criteria->order = 'id DESC';
 		return 0;
 	}
+
+	public static function getList()
+	{
+		return CHtml::listData(self::model()->findAll(), 'id', 'title');
+	}
 }

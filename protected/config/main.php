@@ -72,7 +72,7 @@ return array(
 			'showScriptName'=>false,
 			'appendParams'=>true,
 			'rules'=>array(
-				'sell' => 'site/sell',
+				'sell' => 'car/public/sell',
 				'<action:(about|contactus|help|publishers|search)>' => 'site/<action>',
 				'<action:(logout|dashboard|googleLogin|library|transactions|downloaded|login|register)>' => 'users/public/<action>',
 				'/help'=>'site/help',
