@@ -120,7 +120,7 @@ if(!$model->car_type_id)
                 <?php echo $form->error($model,'gearbox_id'); ?>
 			</div>
 			<div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                <?php echo $form->dropDownList($model,'body_state_id', Lists::getList('body_types'),array(
+                <?php echo $form->dropDownList($model,'body_state_id', Lists::getList('body_states'),array(
                     'class'=>'form-control select-picker',
                     'prompt' => $model->getAttributeLabel('body_state_id'),
                 )); ?>
