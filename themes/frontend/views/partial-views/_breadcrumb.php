@@ -1,5 +1,5 @@
 <?php
-/** @var $this Controller */
+/* @var $this Controller */
 ?>
 <div class="page-header inner-page">
     <div class="top">

@@ -5,6 +5,7 @@
  *
  * @var $userDetails UserDetails
  * @var $brands Brands[]
+ * @var $chassis array
  */
 class Controller extends AuthController
 {
@@ -46,6 +47,8 @@ class Controller extends AuthController
     public $siteAppUrls = array();
     public $pageSizes = array(10 => 10, 20 => 20, 50 => 50, 100 => 100);
     public $brands;
+    public $chassis;
+    public $prices;
 
     public function getPageSizeDropDownTag()
     {
@@ -90,6 +93,12 @@ class Controller extends AuthController
             ->where('name = "default_title"')
             ->queryScalar();
         $this->brands = Brands::model()->findAll(new CDbCriteria(['order' => 'title ASC']));
+        $this->chassis = Lists::getList('body_types');
+        $this->prices = [
+            '5-10',  '10-15', '15-20', '20-25',  '25-30',   '30-35',   '35-40',   '40-45',   '45-50',
+            '50-60', '60-70', '70-80', '90-100', '100-110', '110-120', '120-130', '130-140', '140-150', '150-160', '160-170', '170-180', '180-190', '190-200',
+            '200-300', '300-400', '400-500', '500-600', '600-700', '700-800', '800-900'
+        ];
         return true;
     }
 

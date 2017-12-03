@@ -15,6 +15,7 @@
  * @property string $room_color_id
  * @property string $body_color_id
  * @property string $body_state_id
+ * @property string $body_type_id
  * @property string $state_id
  * @property string $city_id
  * @property string $fuel_id
@@ -40,6 +41,7 @@
  * @property Lists $roomColor
  * @property Lists $bodyColor
  * @property Lists $bodyState
+ * @property Lists $bodyType
  * @property Lists $state
  * @property Lists $city
  * @property Lists $fuel
@@ -63,7 +65,7 @@ class Cars extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('user_id, brand_id, model_id, year_id, room_color_id, body_color_id, body_state_id, state_id, city_id, fuel_id, gearbox_id, car_type_id, plate_type_id, purchase_type_id, creation_date, images', 'required'),
+			array('user_id, brand_id, model_id, year_id, room_color_id, body_color_id, body_state_id, body_type_id, state_id, city_id, fuel_id, gearbox_id, car_type_id, plate_type_id, purchase_type_id, creation_date, images', 'required'),
 			array('create_date, update_date, expire_date', 'length', 'max'=>20),
 			array('user_id, brand_id, model_id, year_id, room_color_id, body_color_id, body_state_id, state_id, city_id, fuel_id, gearbox_id, car_type_id, plate_type_id, purchase_type_id', 'length', 'max'=>10),
 			array('purchase_details', 'length', 'max'=>1024),
@@ -97,6 +99,7 @@ class Cars extends CActiveRecord
 			'roomColor' => array(self::BELONGS_TO, 'Lists', 'room_color_id'),
 			'bodyColor' => array(self::BELONGS_TO, 'Lists', 'body_color_id'),
 			'bodyState' => array(self::BELONGS_TO, 'Lists', 'body_state_id'),
+            'bodyType' => array(self::BELONGS_TO, 'Lists', 'body_type_id'),
 			'state' => array(self::BELONGS_TO, 'Lists', 'state_id'),
 			'city' => array(self::BELONGS_TO, 'Lists', 'city_id'),
 			'fuel' => array(self::BELONGS_TO, 'Lists', 'fuel_id'),
@@ -121,6 +124,7 @@ class Cars extends CActiveRecord
 			'room_color_id' => 'رنگ داخل',
 			'body_color_id' => 'رنگ بدنه',
 			'body_state_id' => 'وضعیت بدنه',
+            'body_type_id' => 'نوع شاسی',
 			'state_id' => 'استان',
 			'city_id' => 'شهر',
 			'fuel_id' => 'نوع سوخت',
@@ -167,6 +171,7 @@ class Cars extends CActiveRecord
 		$criteria->compare('room_color_id',$this->room_color_id,true);
 		$criteria->compare('body_color_id',$this->body_color_id,true);
 		$criteria->compare('body_state_id',$this->body_state_id,true);
+        $criteria->compare('body_type_id',$this->body_type_id,true);
 		$criteria->compare('state_id',$this->state_id,true);
 		$criteria->compare('city_id',$this->city_id,true);
 		$criteria->compare('fuel_id',$this->fuel_id,true);

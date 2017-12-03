@@ -75,6 +75,7 @@ return array(
 				'sell' => 'car/public/sell',
 				'<action:(about|contactus|help|publishers|search)>' => 'site/<action>',
 				'<action:(logout|dashboard|googleLogin|library|transactions|downloaded|login|register)>' => 'users/public/<action>',
+				'car/<action:(brand)>/<title:.*>' => 'car/search/<action>',
 				'/help'=>'site/help',
 				'users/<id:\d+>'=>'users/public/viewProfile',
 				'<module:\w+>/<id:\d+>'=>'<module>/manage/view',

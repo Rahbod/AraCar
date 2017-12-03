@@ -24,6 +24,7 @@ class CarSearchController extends Controller
 		return array(
 			'frontend' => array(
 				'brand',
+				'all',
 			)
 		);
 	}
@@ -49,8 +50,62 @@ class CarSearchController extends Controller
 			'criteria' => $criteria,
 		]);
 
-		$this->render('cars-list', array(
+		$this->render('brand', array(
 			'brand' => Brands::model()->findByAttributes(['slug' => $brand]),
+			'dataProvider' => $dataProvider,
+		));
+	}
+
+    /**
+	 * Search cars by other fields
+	 */
+	public function actionAll()
+	{
+        Yii::app()->theme = 'frontend';
+
+        $query = null;
+        $method = null;
+		if (Yii::app()->request->getQuery('body')) {
+            $query = Yii::app()->request->getQuery('body');
+            $method = 'body';
+        } elseif (Yii::app()->request->getQuery('price')) {
+            $query = Yii::app()->request->getQuery('price');
+            $method = 'price';
+        }elseif (Yii::app()->request->getQuery('special')) {
+            $query = Yii::app()->request->getQuery('special');
+            $method = 'special';
+        }
+
+		$criteria = new CDbCriteria();
+
+        switch($method) {
+            case "body":
+                $criteria->with[] = 'bodyType';
+                $criteria->compare('bodyType.title', $query, true);
+                break;
+
+            case "price":
+                $price = explode('-', $query);
+                $criteria->addCondition('purchase_type_id = :type');
+                $criteria->params[':type'] = 0;
+                if (count($price) == 2)
+                    $criteria->addBetweenCondition('purchase_details', ($price[0] * 1000000), ($price[1] * 1000000));
+                else {
+                    $criteria->addCondition('purchase_details >= :price');
+                    $criteria->params[':price'] = (1000 * 1000000);
+                }
+                break;
+
+            case "special":
+                $criteria->with[] = 'plateType';
+                $criteria->compare('plateType.title', str_replace('-', ' ', $query), true);
+                break;
+        }
+		$dataProvider = new CActiveDataProvider('Cars', [
+			'criteria' => $criteria,
+		]);
+
+		$this->render('cars-list', array(
 			'dataProvider' => $dataProvider,
 		));
 	}

@@ -2549,6 +2549,15 @@ input.form-control.white-bg {
     min-width:642px;
     width: auto;
 }
+.navbar-nav .dropdown-menu.price-menu{
+    min-width:842px;
+    font-size: 12px;
+    width: auto;
+}
+.navbar-nav .dropdown-menu.special-menu{
+    min-width:242px;
+    width: auto;
+}
 .navbar-nav .dropdown-menu ul.linear-menu{
     padding: 0;
     margin: 0;
@@ -2558,6 +2567,9 @@ input.form-control.white-bg {
 .navbar-nav .dropdown-menu ul.linear-menu li{
     float: right;
     width: 200px;
+}
+.navbar-nav .dropdown-menu.special-menu ul.linear-menu li{
+    float: none;
 }
 .navbar-nav .dropdown-menu ul.linear-menu li a{
     display: block;

@@ -7,9 +7,6 @@
  */
 $cs = Yii::app()->clientScript;
 $baseUrl = Yii::app()->theme->baseUrl;
-Yii::app()->clientScript->registerCoreScript('jquery.ui');
-$cssCoreUrl = $cs->getCoreScriptUrl();
-$cs->registerCssFile($cssCoreUrl . '/jui/css/base/jquery-ui.css');
 ?>
 
 
@@ -89,7 +86,7 @@ $cs->registerCssFile($cssCoreUrl . '/jui/css/base/jquery-ui.css');
             <div class="input-group">
                 <?= CHtml::textField('Search[brand]', null, [
                     'class' => 'form-control custom-search auto-complete',
-                    'placeholder' => 'مدل وسیله نقلیه را تایپ نمایید...',
+                    'placeholder' => 'برند، مدل وسیله نقلیه را تایپ نمایید...',
                     'data-model' => Models::class,
                     'data-field' => 'title',
                 ]);?>
