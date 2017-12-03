@@ -11,7 +11,6 @@
  * @property string $user_id
  * @property string $brand_id
  * @property string $model_id
- * @property string $year_id
  * @property string $room_color_id
  * @property string $body_color_id
  * @property string $body_state_id
@@ -46,6 +45,14 @@
  */
 class Cars extends CActiveRecord
 {
+    const PURCHASE_TYPE_CASH = 0;
+    const PURCHASE_TYPE_INSTALMENT = 1;
+
+    const STATUS_DELETED = -1;
+    const STATUS_PENDING = 0;
+    const STATUS_APPROVED = 1;
+    const STATUS_REFUSED = 2;
+
     public $images;
 	/**
 	 * @return string the associated database table name
@@ -55,6 +62,18 @@ class Cars extends CActiveRecord
 		return '{{cars}}';
 	}
 
+    public $purchase_types = [
+        self::PURCHASE_TYPE_CASH => 'نقدی',
+        self::PURCHASE_TYPE_INSTALMENT => 'اقساطی'
+    ];
+
+	public $statusLabels = [
+        self::STATUS_DELETED => 'حذف شده',
+        self::STATUS_PENDING => 'در انتظار بررسی',
+        self::STATUS_APPROVED => 'تایید شده',
+        self::STATUS_REFUSED => 'رد شده',
+    ];
+
 	/**
 	 * @return array validation rules for model attributes.
 	 */
@@ -63,11 +82,12 @@ class Cars extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('user_id, brand_id, model_id, year_id, room_color_id, body_color_id, body_state_id, state_id, city_id, fuel_id, gearbox_id, car_type_id, plate_type_id, purchase_type_id, creation_date, images', 'required'),
+			array('user_id, brand_id, model_id, room_color_id, body_color_id, body_state_id, state_id, city_id, fuel_id, gearbox_id, car_type_id, plate_type_id, purchase_type_id, creation_date, images', 'required'),
 			array('create_date, update_date, expire_date', 'length', 'max'=>20),
-			array('user_id, brand_id, model_id, year_id, room_color_id, body_color_id, body_state_id, state_id, city_id, fuel_id, gearbox_id, car_type_id, plate_type_id, purchase_type_id', 'length', 'max'=>10),
+			array('user_id, brand_id, model_id, room_color_id, body_color_id, body_state_id, state_id, city_id, fuel_id, gearbox_id, car_type_id, plate_type_id', 'length', 'max'=>10),
+			array('purchase_type_id', 'length', 'max'=>1),
 			array('purchase_details', 'length', 'max'=>1024),
-			array('distance', 'length', 'max'=>6),
+			array('distance', 'length', 'max'=>7),
 			array('creation_date', 'length', 'max'=>4),
 			array('status', 'length', 'max'=>1),
 			array('visit_district', 'length', 'max'=>255),
@@ -75,7 +95,7 @@ class Cars extends CActiveRecord
 			array('images', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, create_date, update_date, expire_date, user_id, brand_id, model_id, year_id, room_color_id, body_color_id, body_state_id, state_id, city_id, fuel_id, gearbox_id, car_type_id, plate_type_id, purchase_type_id, purchase_details, distance, status, visit_district, description, creation_date', 'safe', 'on'=>'search'),
+			array('id, create_date, update_date, expire_date, user_id, brand_id, model_id, room_color_id, body_color_id, body_state_id, state_id, city_id, fuel_id, gearbox_id, car_type_id, plate_type_id, purchase_type_id, purchase_details, distance, status, visit_district, description, creation_date', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -97,9 +117,9 @@ class Cars extends CActiveRecord
 			'roomColor' => array(self::BELONGS_TO, 'Lists', 'room_color_id'),
 			'bodyColor' => array(self::BELONGS_TO, 'Lists', 'body_color_id'),
 			'bodyState' => array(self::BELONGS_TO, 'Lists', 'body_state_id'),
-			'state' => array(self::BELONGS_TO, 'Lists', 'state_id'),
-			'city' => array(self::BELONGS_TO, 'Lists', 'city_id'),
-			'fuel' => array(self::BELONGS_TO, 'Lists', 'fuel_id'),
+            'fuel' => array(self::BELONGS_TO, 'Lists', 'fuel_id'),
+            'state' => array(self::BELONGS_TO, 'Towns', 'state_id'),
+            'city' => array(self::BELONGS_TO, 'Places', 'city_id'),
 		);
 	}
 
@@ -117,23 +137,22 @@ class Cars extends CActiveRecord
 			'user_id' => 'آگهی دهنده',
 			'brand_id' => 'برند',
 			'model_id' => 'مدل',
-			'year_id' => 'سال تولید',
-			'room_color_id' => 'رنگ داخل',
-			'body_color_id' => 'رنگ بدنه',
-			'body_state_id' => 'وضعیت بدنه',
-			'state_id' => 'استان',
-			'city_id' => 'شهر',
-			'fuel_id' => 'نوع سوخت',
-			'gearbox_id' => 'نوع گیربکس',
-			'car_type_id' => 'نوع خودرو',
-			'plate_type_id' => 'نوع پلاک',
-			'purchase_type_id' => 'نوع پرداخت',
-			'purchase_details' => 'جزییات پرداخت',
-			'distance' => 'کارکرد',
-			'status' => 'وضعیت آگهی',
-			'visit_district' => 'محله بازدید',
-			'description' => 'توضیحات',
-			'creation_date' => 'سال تولید',
+            'creation_date' => 'سال تولید',
+            'fuel_id' => 'نوع سوخت',
+            'gearbox_id' => 'نوع گیربکس',
+            'body_state_id' => 'وضعیت بدنه',
+            'body_color_id' => 'رنگ بدنه',
+            'room_color_id' => 'رنگ داخل',
+            'plate_type_id' => 'نوع پلاک',
+            'distance' => 'کارکرد',
+            'car_type_id' => 'نوع خودرو',
+            'purchase_details' => 'جزییات پرداخت',
+            'purchase_type_id' => 'نوع پرداخت',
+            'description' => 'توضیحات',
+            'state_id' => 'استان',
+            'city_id' => 'شهر',
+            'status' => 'وضعیت آگهی',
+            'visit_district' => 'محله بازدید',
 			'title' => 'عنوان',
 		);
 	}
@@ -163,7 +182,6 @@ class Cars extends CActiveRecord
 		$criteria->compare('user_id',$this->user_id,true);
 		$criteria->compare('brand_id',$this->brand_id,true);
 		$criteria->compare('model_id',$this->model_id,true);
-		$criteria->compare('year_id',$this->year_id,true);
 		$criteria->compare('room_color_id',$this->room_color_id,true);
 		$criteria->compare('body_color_id',$this->body_color_id,true);
 		$criteria->compare('body_state_id',$this->body_state_id,true);
@@ -237,4 +255,8 @@ class Cars extends CActiveRecord
 		$cr->params[':end_date'] = $endTime;
 		return self::model()->count($cr);
 	}
+
+    public function getStatusLabel(){
+        return $this->statusLabels[$this->status];
+    }
 }

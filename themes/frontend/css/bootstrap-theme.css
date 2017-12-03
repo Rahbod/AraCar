@@ -1368,10 +1368,21 @@ input.form-control.white-bg {
     line-height: 25px;
     text-align: right;
 }
+.input-group input.form-control{
+    border-left: none !important;
+}
+
+.input-group .input-group-addon{
+    border: 1px solid #f1f1f1 !important;
+    border-right: none !important;
+    background-color: #f1f1f1 !important;
+    padding: 7px 8px !important;
+    color: #999 !important;
+}
 .input-group.white-bg input.form-control{
     border-left: none !important;
 }
-.input-group .input-group-addon{
+.input-group.white-bg .input-group-addon{
     border: 2px solid #cbcbcb !important;
     border-right: none !important;
     background-color: #fff !important;
@@ -2517,4 +2528,7 @@ input.form-control.white-bg {
 
 .disabled{
     color: #ccc !important;
+}
+.ltr{
+    direction: ltr !important;
 }

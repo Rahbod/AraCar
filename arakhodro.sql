@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50616
 File Encoding         : 65001
 
-Date: 2017-12-03 12:59:10
+Date: 2017-12-03 19:00:31
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -126,7 +126,6 @@ CREATE TABLE `ym_cars` (
   `user_id` int(10) unsigned NOT NULL COMMENT 'آگهی دهنده',
   `brand_id` int(10) unsigned DEFAULT NULL COMMENT 'برند',
   `model_id` int(10) unsigned DEFAULT NULL COMMENT 'مدل',
-  `year_id` int(10) unsigned DEFAULT NULL,
   `room_color_id` int(10) unsigned DEFAULT NULL COMMENT 'رنگ داخل',
   `body_color_id` int(10) unsigned DEFAULT NULL COMMENT 'رنگ بدنه',
   `body_state_id` int(10) unsigned DEFAULT NULL COMMENT 'وضعیت بدنه',
@@ -136,13 +135,14 @@ CREATE TABLE `ym_cars` (
   `gearbox_id` int(10) unsigned DEFAULT NULL COMMENT 'نوع گیربکس',
   `car_type_id` int(10) unsigned DEFAULT NULL COMMENT 'نوع خودرو',
   `plate_type_id` int(10) unsigned DEFAULT NULL COMMENT 'نوع پلاک',
-  `purchase_type_id` int(10) unsigned DEFAULT NULL COMMENT 'نوع پرداخت',
+  `purchase_type_id` decimal(1,0) unsigned DEFAULT NULL COMMENT 'نوع پرداخت',
   `purchase_details` varchar(1024) COLLATE utf8_persian_ci NOT NULL COMMENT 'جزییات پرداخت',
   `distance` decimal(6,0) DEFAULT NULL,
   `status` decimal(1,0) unsigned DEFAULT NULL COMMENT 'وضعیت آگهی',
   `visit_district` varchar(255) COLLATE utf8_persian_ci DEFAULT NULL COMMENT 'محله بازدید',
   `description` text COLLATE utf8_persian_ci COMMENT 'توضیحات',
   `creation_date` decimal(4,0) NOT NULL,
+  `body_type_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `brand_id` (`brand_id`),
@@ -156,8 +156,8 @@ CREATE TABLE `ym_cars` (
   KEY `gearbox_id` (`gearbox_id`),
   KEY `car_type_id` (`car_type_id`),
   KEY `plate_type_id` (`plate_type_id`),
-  KEY `year_id` (`year_id`),
-  CONSTRAINT `ym_cars_ibfk_13` FOREIGN KEY (`year_id`) REFERENCES `ym_model_details` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
+  KEY `body_type_id` (`body_type_id`),
+  CONSTRAINT `ym_cars_ibfk_13` FOREIGN KEY (`body_type_id`) REFERENCES `ym_lists` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
   CONSTRAINT `ym_cars_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `ym_users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `ym_cars_ibfk_10` FOREIGN KEY (`gearbox_id`) REFERENCES `ym_lists` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
   CONSTRAINT `ym_cars_ibfk_11` FOREIGN KEY (`car_type_id`) REFERENCES `ym_lists` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
@@ -167,14 +167,15 @@ CREATE TABLE `ym_cars` (
   CONSTRAINT `ym_cars_ibfk_4` FOREIGN KEY (`room_color_id`) REFERENCES `ym_lists` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
   CONSTRAINT `ym_cars_ibfk_5` FOREIGN KEY (`body_color_id`) REFERENCES `ym_lists` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
   CONSTRAINT `ym_cars_ibfk_6` FOREIGN KEY (`body_state_id`) REFERENCES `ym_lists` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
-  CONSTRAINT `ym_cars_ibfk_7` FOREIGN KEY (`state_id`) REFERENCES `ym_lists` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
-  CONSTRAINT `ym_cars_ibfk_8` FOREIGN KEY (`city_id`) REFERENCES `ym_lists` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
+  CONSTRAINT `ym_cars_ibfk_7` FOREIGN KEY (`state_id`) REFERENCES `ym_towns` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
+  CONSTRAINT `ym_cars_ibfk_8` FOREIGN KEY (`city_id`) REFERENCES `ym_places` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
   CONSTRAINT `ym_cars_ibfk_9` FOREIGN KEY (`fuel_id`) REFERENCES `ym_lists` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
 
 -- ----------------------------
 -- Records of ym_cars
 -- ----------------------------
+INSERT INTO `ym_cars` VALUES ('2', '1512314228', null, null, '45', '10', '16', '45', '48', '78', '19', '274', '35', '33', '12', '10', '1', '1,500,000,000', '150', null, 'میدان صدوقی', '', '2017', null);
 
 -- ----------------------------
 -- Table structure for ym_car_images
@@ -225,7 +226,7 @@ CREATE TABLE `ym_counter_users` (
 -- ----------------------------
 -- Records of ym_counter_users
 -- ----------------------------
-INSERT INTO `ym_counter_users` VALUES ('837ec5754f503cfaaee0929fd48974e7', '1512293129');
+INSERT INTO `ym_counter_users` VALUES ('837ec5754f503cfaaee0929fd48974e7', '1512314228');
 
 -- ----------------------------
 -- Table structure for ym_countries

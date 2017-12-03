@@ -121,4 +121,32 @@ class Models extends SortableCActiveRecord
         $this->slug = str_ireplace(' ', '-', strtolower($this->slug));
         return parent::beforeSave();
     }
+
+    public static function getList($id)
+    {
+        return CHtml::listData(self::model()->findAllByAttributes(array('brand_id'=>$id)), 'id', 'title');
+    }
+
+    public function getYears($mode = 'list')
+    {
+        $list=[];
+        if($this->brand->country->slug == 'iran'){
+            $start = 1340;
+            $end = (int)JalaliDate::date('Y',time(),false);
+            for($i = $end; $i>=$start; $i--)
+                if($mode == 'list')
+                    $list[$i] = Controller::parseNumbers($i);
+                else
+                    $list[] = array('id' => $i, 'title' => Controller::parseNumbers($i));
+        }else{
+            $start = 1930;
+            $end = (int)date('Y');
+            for($i = $end; $i>=$start; $i--)
+                if($mode == 'list')
+                    $list[$i] = Controller::parseNumbers($i);
+                else
+                    $list[] = array('id' => $i, 'title' => Controller::parseNumbers($i));
+        }
+        return $list;
+    }
 }
