@@ -28,6 +28,7 @@
  * @property string $visit_district
  * @property string $description
  * @property string $creation_date
+ * @property string $title
  * @property [] $oldImages
  *
  * The followings are the available model relations:

@@ -17,10 +17,10 @@ $imagePath = Yii::getPathOfAlias('webroot').'/uploads/cars/';
     <div class="item-content">
         <div class="row">
             <div class="col-lg-6 col-md-6 item-col">
-                <div class="item-title text-blue ">1393 | پژوپارس دوگانه سوز</div>
-                <div class="item-attribute">30,000,000 تومان</div>
-                <div class="item-attribute">69,000 کیلومتر</div>
-                <div class="item-attribute">سفید گلگیر تعویض</div>
+                <div class="item-title text-blue "><?= $data->title ?></div>
+                <div class="item-attribute"><?= Controller::parseNumbers(number_format($data->purchase_details)) ?> تومان</div>
+                <div class="item-attribute"><?= Controller::parseNumbers(number_format($data->distance)) ?> کیلومتر</div>
+                <div class="item-attribute"><?= $data->bodyState->title  ?></div>
             </div>
             <div class="col-lg-3 col-md-3 item-col">
                 <div class="item-attribute">تیپ 1</div>
