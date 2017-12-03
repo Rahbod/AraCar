@@ -1,7 +1,6 @@
 <?php
-/**
- * @var $this Controller
- */
+/* @var $this Controller */
+/* @var $class string */
 ?>
 
 <div class="header<?= $this->layout == '//layouts/inner'?' inner-page':'' ?>">
@@ -19,7 +18,16 @@
                 <?
                 endif;
                 ?>
-                <li><a href="#">برند</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">برند</a>
+                    <div class="dropdown-menu">
+                        <ul class="linear-menu">
+                            <?php foreach($this->brands as $brand):?>
+                                <li><a href="<?= $this->createUrl('/car/search/brand', ['title' => $brand->slug])?>"><?= $brand->title?></a></li>
+                            <?php endforeach;?>
+                        </ul>
+                    </div>
+                </li>
                 <li><a href="#">شاسی</a></li>
                 <li><a href="#">قیمت</a></li>
                 <li><a href="#">موارد خاص</a></li>

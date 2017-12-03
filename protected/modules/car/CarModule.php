@@ -5,9 +5,10 @@ class CarModule extends CWebModule
 	public $controllerMap = array(
 		'manage' => 'car.controllers.CarManageController',
 		'brands' => 'car.controllers.CarBrandsController',
-		'public' => 'car.controllers.CarPublicController'
+		'public' => 'car.controllers.CarPublicController',
+		'search' => 'car.controllers.CarSearchController',
 	);
-	
+
 	public function init()
 	{
 		// this method is called when the module is being created

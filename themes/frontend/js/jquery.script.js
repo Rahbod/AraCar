@@ -48,8 +48,6 @@ $(document).ready(function() {
             $('html, body').animate({
                 scrollTop: ($(href).offset().top)
             },2000);
-    }).on("keyup", ".digitFormat", function () {
-        $(this).digitFormat();
     }).on("click", ".carousel-item", function () {
         var parent = $(this).parents(".carousel");
         if(!parent.data("multiple"))
@@ -135,6 +133,35 @@ $(document).ready(function() {
                 $($(this).data('min-input')).val(ui.values[0]);
                 $($(this).data('max-input')).val(ui.values[1]);
             }
+        });
+    });
+
+    $('.auto-complete').each(function () {
+        var model = $(this).data('model'),
+            field = $(this).data('field');
+        $(this).autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: 'site/autoComplete',
+                    type: "POST",
+                    dataType: "JSON",
+                    data: {
+                        query: request.term,
+                        model: model,
+                        field: field
+                    },
+                    success: function (data) {
+                        var list = $.map(data, function (el) {
+                            return el;
+                        });
+                        response(list);
+                    },
+                    error: function () {
+                        response([]);
+                    }
+                });
+            },
+            minLength: 3
         });
     });
 
