@@ -3,7 +3,7 @@
 /* @var $class string */
 ?>
 
-<div class="header<?= $this->layout == '//layouts/inner'?' inner-page':'' ?>">
+<div class="header<?= $this->layout == '//layouts/inner' || $this->layout == '//layouts/panel'?' inner-page':'' ?>">
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
         <div class="row">
             <ul class="nav navbar-nav">
@@ -14,7 +14,7 @@
                 <?php
                 else:
                     ?>
-                    <li class="login-link"><a href="#">یوسف مبشری</a></li>
+                    <li class="login-link"><a href="<?= $this->createUrl('/dashboard') ?>"><?= Yii::app()->user->first_name.' '.Yii::app()->user->last_name ?></a></li>
                 <?
                 endif;
                 ?>

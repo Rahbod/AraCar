@@ -93,18 +93,19 @@ class UsersPublicController extends Controller
      */
     public function actionDashboard()
     {
-        Yii::app()->theme = 'frontend';
-        $this->layout = '//layouts/panel';
-
-        if(isset(Yii::app()->user->clinic))
-            $this->redirect(array('/clinics/panel'));
-
         /* @var $user Users */
         $user = Users::model()->findByPk(Yii::app()->user->id);
-
+        Yii::app()->theme = 'frontend';
+        $this->layout = '//layouts/panel';
+        $this->pageTitle = 'پروفایل من';
+        $this->pageHeader = $user->userDetails->getShowName();
+        $this->pageDescription = $user->userDetails->mobile.' / '.$user->email;
+        $sells = Cars::model()->findAllByAttributes(array(
+            'user_id' => $user->id
+        ));
         $this->render('dashboard', array(
-
             'user' => $user,
+            'sells' => $sells,
         ));
     }
 
@@ -458,26 +459,6 @@ class UsersPublicController extends Controller
         //
 
         $this->render('transactions', array(
-            'model' => $model
-        ));
-    }
-
-    /**
-     * List all transactions
-     */
-    public function actionVisits()
-    {
-        Yii::app()->theme = 'frontend';
-        $this->layout = '//layouts/panel';
-
-        $model = new Visits('search');
-        $model->unsetAttributes();
-        if (isset($_GET['Visits']))
-            $model->attributes = $_GET['Visits'];
-        $model->user_id = Yii::app()->user->getId();
-        //
-
-        $this->render('visits', array(
             'model' => $model
         ));
     }

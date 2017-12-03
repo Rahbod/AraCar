@@ -46,6 +46,7 @@ class Controller extends AuthController
     public $siteAppUrls = array();
     public $pageSizes = array(10 => 10, 20 => 20, 50 => 50, 100 => 100);
     public $brands;
+    public $leftLink;
 
     public function getPageSizeDropDownTag()
     {

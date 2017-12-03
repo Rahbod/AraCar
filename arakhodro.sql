@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50616
 File Encoding         : 65001
 
-Date: 2017-12-03 19:00:31
+Date: 2017-12-03 20:23:35
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -170,12 +170,13 @@ CREATE TABLE `ym_cars` (
   CONSTRAINT `ym_cars_ibfk_7` FOREIGN KEY (`state_id`) REFERENCES `ym_towns` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
   CONSTRAINT `ym_cars_ibfk_8` FOREIGN KEY (`city_id`) REFERENCES `ym_places` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
   CONSTRAINT `ym_cars_ibfk_9` FOREIGN KEY (`fuel_id`) REFERENCES `ym_lists` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
 
 -- ----------------------------
 -- Records of ym_cars
 -- ----------------------------
-INSERT INTO `ym_cars` VALUES ('2', '1512314228', null, null, '45', '10', '16', '45', '48', '78', '19', '274', '35', '33', '12', '10', '1', '1,500,000,000', '150', null, 'میدان صدوقی', '', '2017', null);
+INSERT INTO `ym_cars` VALUES ('2', '1512314228', null, null, '45', '10', '16', '45', '48', '78', '19', '274', '35', '33', '12', '10', '1', '1500000000', '150000', '0', 'میدان صدوقی', '', '2017', null);
+INSERT INTO `ym_cars` VALUES ('3', '1512319875', null, null, '45', '10', '16', '46', '48', '81', '8', '124', '37', '33', '12', '8', '0', '616000000', '153000', '0', 'میدان صدوقی', '', '2012', null);
 
 -- ----------------------------
 -- Table structure for ym_car_images
@@ -186,13 +187,15 @@ CREATE TABLE `ym_car_images` (
   `car_id` int(10) unsigned NOT NULL,
   `filename` varchar(255) COLLATE utf8_persian_ci NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `car_id` (`car_id`),
+  UNIQUE KEY `car_id` (`car_id`,`filename`),
   CONSTRAINT `ym_car_images_ibfk_1` FOREIGN KEY (`car_id`) REFERENCES `ym_cars` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
 
 -- ----------------------------
 -- Records of ym_car_images
 -- ----------------------------
+INSERT INTO `ym_car_images` VALUES ('2', '3', 'tAg1g1512318779.jpg');
+INSERT INTO `ym_car_images` VALUES ('1', '3', 'WrLAG1512318779.jpg');
 
 -- ----------------------------
 -- Table structure for ym_counter_save
@@ -226,7 +229,7 @@ CREATE TABLE `ym_counter_users` (
 -- ----------------------------
 -- Records of ym_counter_users
 -- ----------------------------
-INSERT INTO `ym_counter_users` VALUES ('837ec5754f503cfaaee0929fd48974e7', '1512314228');
+INSERT INTO `ym_counter_users` VALUES ('837ec5754f503cfaaee0929fd48974e7', '1512319999');
 
 -- ----------------------------
 -- Table structure for ym_countries
@@ -955,7 +958,7 @@ CREATE TABLE `ym_site_setting` (
 -- ----------------------------
 -- Records of ym_site_setting
 -- ----------------------------
-INSERT INTO `ym_site_setting` VALUES ('1', 'site_title', 'عنوان سایت', 'کتابخانه تخصصی ادبیات');
+INSERT INTO `ym_site_setting` VALUES ('1', 'site_title', 'عنوان سایت', 'آرا خودرو');
 INSERT INTO `ym_site_setting` VALUES ('2', 'default_title', 'عنوان پیش فرض صفحات', '');
 INSERT INTO `ym_site_setting` VALUES ('3', 'keywords', 'کلمات کلیدی سایت', '');
 INSERT INTO `ym_site_setting` VALUES ('4', 'site_description', 'شرح وبسایت', '');

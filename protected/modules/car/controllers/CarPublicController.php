@@ -77,6 +77,7 @@ class CarPublicController extends Controller
 		Yii::app()->theme = "frontend";
 		$this->layout= '//layouts/inner';
 		$this->pageTitle = 'فروش خودرو';
+		$this->pageHeader = 'فروش خودرو';
 		$this->pageDescription = 'درج آگهی فروش با چند کلیک ساده';
 
 		$model=new Cars();
@@ -87,12 +88,12 @@ class CarPublicController extends Controller
 			$model->attributes=$_POST['Cars'];
             $model->user_id = Yii::app()->user->getId();
             $model->create_date = time();
-            $model->status = 
+            $model->status = Cars::STATUS_PENDING;
             $images = new UploadedFiles($this->tempPath, $model->images);
             if($model->save()){
                 $images->move($this->imagePath);
 				Yii::app()->user->setFlash('success', '<span class="icon-check"></span>&nbsp;&nbsp;اطلاعات با موفقیت ذخیره شد.');
-				$this->redirect(array('admin'));
+				$this->redirect(array('/dashboard'));
 			}else
 				Yii::app()->user->setFlash('failed', 'در ثبت اطلاعات خطایی رخ داده است! لطفا مجددا تلاش کنید.');
 		}
@@ -111,6 +112,7 @@ class CarPublicController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
+        $model->oldImages = $model->images;
         $images = new UploadedFiles($this->imagePath, $model->images);
 		if(isset($_POST['Cars']))
 		{

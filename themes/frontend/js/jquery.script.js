@@ -62,6 +62,8 @@ $(document).ready(function() {
         $(this).find("form .errorMessage").hide();
         $(this).find(".tab-content > .tab-pane:not(:first-of-type)").removeClass("active in");
         $(this).find(".tab-content > .tab-pane:first-of-type").addClass("active in");
+    }).on("keyup", '.digitFormat', function () {
+        $(this).digitFormat();
     });
 
     $(".nicescroll").each(function () {
