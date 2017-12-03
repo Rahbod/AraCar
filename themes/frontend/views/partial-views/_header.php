@@ -23,16 +23,45 @@
                     <div class="dropdown-menu">
                         <ul class="linear-menu">
                             <?php foreach($this->brands as $brand):?>
-                                <li><a href="<?= $this->createUrl('/car/search/brand', ['title' => $brand->slug])?>"><?= $brand->title?></a></li>
+                                <li><a href="<?= $this->createUrl('/car/brand/' . $brand->slug)?>"><?= $brand->title?></a></li>
                             <?php endforeach;?>
                         </ul>
                     </div>
                 </li>
-                <li><a href="#">شاسی</a></li>
-                <li><a href="#">قیمت</a></li>
-                <li><a href="#">موارد خاص</a></li>
-                <li><a href="#">بررسی خودرو</a></li>
-                <li><a href="#">قیمت صفر</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">شاسی</a>
+                    <div class="dropdown-menu">
+                        <ul class="linear-menu">
+                            <?php foreach($this->chassis as $chassis):?>
+                                <li><a href="<?= $this->createUrl('/car/search/all?body=' . str_replace(' ', '-', $chassis))?>"><?= $chassis?></a></li>
+                            <?php endforeach;?>
+                        </ul>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">قیمت</a>
+                    <div class="dropdown-menu price-menu">
+                        <ul class="linear-menu">
+                            <!--<li><a href="--><?//= $this->createUrl('/car/search/all?price=0-5')?><!--">تا 5 میلیون تومان</a></li>-->
+                            <?php foreach($this->prices as $price):?>
+                                <li><a href="<?= $this->createUrl('/car/search/all?price=' . $price)?>"><?= "از ".implode(' تا ', explode('-', $price))." میلیون تومان"?></a></li>
+                            <?php endforeach;?>
+                            <li><a href="<?= $this->createUrl('/car/search/all?price=900-1000')?>">از 900 تا یک میلیارد تومان</a></li>
+                            <li><a href="<?= $this->createUrl('/car/search/all?price=1000')?>">از یک میلیارد به بالا</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">موارد خاص</a>
+                    <div class="dropdown-menu special-menu">
+                        <ul class="linear-menu">
+                            <li><a href="<?= $this->createUrl('/car/search/all?special=' . str_replace(' ', '-', 'منطقه آزاد'))?>">منطقه آزاد</a></li>
+                            <li><a href="<?= $this->createUrl('/car/search/all?special=' . str_replace(' ', '-', 'گذر موقت'))?>">گذر موقت</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <?/*<li><a href="#">بررسی خودرو</a></li>
+                <li><a href="#">قیمت صفر</a></li>*/?>
             </ul>
         </div>
     </div>

@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : local
-Source Server Version : 50616
+Source Server         : localhost
+Source Server Version : 50714
 Source Host           : localhost:3306
 Source Database       : arakhodro
 
 Target Server Type    : MYSQL
-Target Server Version : 50616
+Target Server Version : 50714
 File Encoding         : 65001
 
-Date: 2017-12-03 20:23:35
+Date: 2017-12-03 18:14:14
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -129,6 +129,7 @@ CREATE TABLE `ym_cars` (
   `room_color_id` int(10) unsigned DEFAULT NULL COMMENT 'رنگ داخل',
   `body_color_id` int(10) unsigned DEFAULT NULL COMMENT 'رنگ بدنه',
   `body_state_id` int(10) unsigned DEFAULT NULL COMMENT 'وضعیت بدنه',
+  `body_type_id` int(10) unsigned DEFAULT NULL COMMENT 'نوع شاسی',
   `state_id` int(10) unsigned DEFAULT NULL COMMENT 'استان',
   `city_id` int(10) unsigned DEFAULT NULL COMMENT 'شهر',
   `fuel_id` int(10) unsigned DEFAULT NULL COMMENT 'نوع سوخت',
@@ -142,7 +143,6 @@ CREATE TABLE `ym_cars` (
   `visit_district` varchar(255) COLLATE utf8_persian_ci DEFAULT NULL COMMENT 'محله بازدید',
   `description` text COLLATE utf8_persian_ci COMMENT 'توضیحات',
   `creation_date` decimal(4,0) NOT NULL,
-  `body_type_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `brand_id` (`brand_id`),
@@ -157,11 +157,11 @@ CREATE TABLE `ym_cars` (
   KEY `car_type_id` (`car_type_id`),
   KEY `plate_type_id` (`plate_type_id`),
   KEY `body_type_id` (`body_type_id`),
-  CONSTRAINT `ym_cars_ibfk_13` FOREIGN KEY (`body_type_id`) REFERENCES `ym_lists` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
   CONSTRAINT `ym_cars_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `ym_users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `ym_cars_ibfk_10` FOREIGN KEY (`gearbox_id`) REFERENCES `ym_lists` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
   CONSTRAINT `ym_cars_ibfk_11` FOREIGN KEY (`car_type_id`) REFERENCES `ym_lists` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
   CONSTRAINT `ym_cars_ibfk_12` FOREIGN KEY (`plate_type_id`) REFERENCES `ym_lists` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
+  CONSTRAINT `ym_cars_ibfk_13` FOREIGN KEY (`body_type_id`) REFERENCES `ym_lists` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
   CONSTRAINT `ym_cars_ibfk_2` FOREIGN KEY (`brand_id`) REFERENCES `ym_brands` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
   CONSTRAINT `ym_cars_ibfk_3` FOREIGN KEY (`model_id`) REFERENCES `ym_models` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
   CONSTRAINT `ym_cars_ibfk_4` FOREIGN KEY (`room_color_id`) REFERENCES `ym_lists` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
