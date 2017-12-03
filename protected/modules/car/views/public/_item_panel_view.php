@@ -31,8 +31,8 @@ $imagePath = Yii::getPathOfAlias('webroot').'/uploads/cars/';
             <div class="col-lg-3 col-md-3 item-col">
                 <div class="item-attribute text-success"><b>فعال</b></div>
                 <div class="item-attribute">1</div>
-                <div class="item-attribute text-blue">1396/06/03</div>
-                <div class="item-attribute text-blue">1396/07/03</div>
+                <div class="item-attribute text-blue"><?= JalaliDate::date('Y/m/d', $data->create_date) ?></div>
+                <div class="item-attribute text-blue"><?= $data->expire_date?JalaliDate::date('Y/m/d', $data->expire_date):'-' ?></div>
             </div>
         </div>
     </div>
