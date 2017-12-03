@@ -126,6 +126,35 @@ $(document).ready(function() {
         });
     });
 
+    $('.auto-complete').each(function () {
+        var model = $(this).data('model'),
+            field = $(this).data('field');
+        $(this).autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: 'site/autoComplete',
+                    type: "POST",
+                    dataType: "JSON",
+                    data: {
+                        query: request.term,
+                        model: model,
+                        field: field
+                    },
+                    success: function (data) {
+                        var list = $.map(data, function (el) {
+                            return el;
+                        });
+                        response(list);
+                    },
+                    error: function () {
+                        response([]);
+                    }
+                });
+            },
+            minLength: 3
+        });
+    });
+
     //$('.currency-format').currencyFormat();
 
     $("body").on("keyup", ".brand-search-trigger", function () {
@@ -146,13 +175,13 @@ $(document).ready(function() {
 $.fn.currencyFormat = function() {
     var value = $(this).val(),
         temp,
-        str ='';
+        str = '';
 
     console.log();
 
     temp = value.split("").reverse().join("");
     temp = temp.match(/.{1,3}/g);
-    for (var i = temp.length; i > 0;i--) {
+    for (var i = temp.length; i > 0; i--) {
         if (i == 1)
             str += (temp[i - 1].split("").reverse().join(""));
         else

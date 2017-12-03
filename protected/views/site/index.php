@@ -7,6 +7,9 @@
  */
 $cs = Yii::app()->clientScript;
 $baseUrl = Yii::app()->theme->baseUrl;
+Yii::app()->clientScript->registerCoreScript('jquery.ui');
+$cssCoreUrl = $cs->getCoreScriptUrl();
+$cs->registerCssFile($cssCoreUrl . '/jui/css/base/jquery-ui.css');
 ?>
 
 
@@ -82,12 +85,19 @@ $baseUrl = Yii::app()->theme->baseUrl;
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left-side">
         <div class="search-box">
             <h4>جستجوی وسیله نقلیه</h4>
+            <?= CHtml::form(['car/search/brand']);?>
             <div class="input-group">
-                <input type="text" class="form-control custom-search" placeholder="برند، مدل وسیله نقلیه را تایپ نمایید...">
+                <?= CHtml::textField('Search[brand]', null, [
+                    'class' => 'form-control custom-search auto-complete',
+                    'placeholder' => 'مدل وسیله نقلیه را تایپ نمایید...',
+                    'data-model' => Models::class,
+                    'data-field' => 'title',
+                ]);?>
             <span class="input-group-btn">
-                <button class="btn" type="button"><i class="search-icon"></i></button>
+                <?= CHtml::htmlButton('<i class="search-icon"></i>', ['class' => 'btn', 'type' => 'submit']);?>
             </span>
             </div>
+            <?= CHtml::endForm();?>
         </div>
         <div class="desc-box">
             <i class="dollar-car-icon"></i>

@@ -92,6 +92,7 @@ a:focus{
 }
 .slideshow-container{
     position: relative;
+    z-index:1;
 }
 .slideshow-container .ls-items{
     position: absolute;
@@ -2400,4 +2401,51 @@ input.form-control.white-bg {
 }
 #login-modal h4{
     font-size: 16px;
+}
+.ui-widget.ui-widget-content{
+    height:auto;
+    border-radius: 5px;
+    background: #fff;
+    box-shadow: 0 0 3px #ccc;
+    overflow: hidden;
+}
+.ui-menu .ui-menu-item{
+    padding: 9px 12px;
+    font-family: IRANSans;
+    border-bottom: 1px solid #ccc;
+    font-size: 12px;
+    font-weight: normal;
+}
+.ui-menu .ui-menu-item:last-child{
+    border-bottom: none;
+}
+.ui-widget-content .ui-state-focus{
+    background: #f1f1f1;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-bottom: 1px solid #ccc;
+    margin: 0;
+}
+.navbar-nav .dropdown-menu{
+    padding: 10px 20px;
+    min-width:642px;
+    width: auto;
+}
+.navbar-nav .dropdown-menu ul.linear-menu{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    overflow: hidden;
+}
+.navbar-nav .dropdown-menu ul.linear-menu li{
+    float: right;
+    width: 200px;
+}
+.navbar-nav .dropdown-menu ul.linear-menu li a{
+    display: block;
+    padding: 10px 0;
+}
+.navbar-nav .dropdown-menu ul.linear-menu li a:hover{
+    color: #1272d1;
 }

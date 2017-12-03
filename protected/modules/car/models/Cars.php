@@ -191,6 +191,6 @@ class Cars extends CActiveRecord
 
 	public function getTitle(){
         $separator = Yii::app()->language == 'fa_ir'?'،':',';
-		return $this->brand && $this->model?"{$this->creation_date}{$separator} {$this->brand->title}{$separator} {$this->model->title}":null;
+		return $this->brand && $this->model?"<span>{$this->creation_date}</span> | <span>{$this->brand->title}{$separator} {$this->model->title}</span>":null;
 	}
 }
