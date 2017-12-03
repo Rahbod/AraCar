@@ -43,8 +43,8 @@
  * @property Lists $bodyColor
  * @property Lists $bodyState
  * @property Lists $bodyType
- * @property Lists $state
- * @property Lists $city
+ * @property Places $state
+ * @property Places $city
  * @property Lists $fuel
  */
 class Cars extends CActiveRecord
