@@ -32,7 +32,7 @@
  * @property [] $oldImages
  *
  * The followings are the available model relations:
- * @property CarImages[] $images
+ * @property CarImages[] $carImages
  * @property Lists $plateType
  * @property Users $user
  * @property Brands $brand
@@ -113,7 +113,7 @@ class Cars extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'images' => array(self::HAS_MANY, 'CarImages', 'car_id'),
+			'carImages' => array(self::HAS_MANY, 'CarImages', 'car_id'),
 			'plateType' => array(self::BELONGS_TO, 'Lists', 'plate_type_id'),
 			'user' => array(self::BELONGS_TO, 'Users', 'user_id'),
 			'gearbox' => array(self::BELONGS_TO, 'Lists', 'gearbox_id'),

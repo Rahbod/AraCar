@@ -7,9 +7,9 @@ $imagePath = Yii::getPathOfAlias('webroot').'/uploads/cars/';
 <article>
     <div class="item-image">
         <?php
-        if($data->images):
+        if($data->carImages):
         ?>
-            <img src="<?= Yii::app()->getBaseUrl(true).$data->images[0]->filename ?>">
+            <img src="<?= Yii::app()->getBaseUrl(true).'/uploads/cars/'.$data->carImages[0]->filename ?>">
         <?php
         endif;
         ?>

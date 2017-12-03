@@ -112,8 +112,8 @@ class CarPublicController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
-        $model->oldImages = $model->images;
-        $images = new UploadedFiles($this->imagePath, $model->images);
+        $model->oldImages = $model->carImages;
+        $images = new UploadedFiles($this->imagePath, $model->carImages);
 		if(isset($_POST['Cars']))
 		{
             // store model image value in oldImage variable
