@@ -142,7 +142,7 @@
                     'dataProvider'=>$dataProvider,
                     'itemView'=>'_car_item',
                     'itemsCssClass' => 'advertising-list'
-                ));?>
+                )); ?>
                 <a href="#" class="load-more">موارد بیشتر</a>
                 <a href="#" class="load-more on-loading">در حال بارگذاری</a>
             </div>
