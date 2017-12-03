@@ -78,16 +78,19 @@ class CarPublicController extends Controller
 		$this->layout= '//layouts/inner';
 		$this->pageTitle = 'فروش خودرو';
 		$this->pageDescription = 'درج آگهی فروش با چند کلیک ساده';
-		
-		
+
 		$model=new Cars();
 
 		$images = [];
 		if(isset($_POST['Cars']))
 		{
 			$model->attributes=$_POST['Cars'];
+            $model->user_id = Yii::app()->user->getId();
+            $model->create_date = time();
+            $model->status = 
             $images = new UploadedFiles($this->tempPath, $model->images);
             if($model->save()){
+                $images->move($this->imagePath);
 				Yii::app()->user->setFlash('success', '<span class="icon-check"></span>&nbsp;&nbsp;اطلاعات با موفقیت ذخیره شد.');
 				$this->redirect(array('admin'));
 			}else
@@ -108,11 +111,14 @@ class CarPublicController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
-
+        $images = new UploadedFiles($this->imagePath, $model->images);
 		if(isset($_POST['Cars']))
 		{
-			$model->attributes=$_POST['Cars'];
-			if($model->save()){
+            // store model image value in oldImage variable
+            $oldImages = $model->images;
+            $model->attributes = $_POST['Cars'];
+            if($model->save()){
+                $images->update($oldImages, $model->images, $this->tempPath, true);
 				Yii::app()->user->setFlash('success', '<span class="icon-check"></span>&nbsp;&nbsp;اطلاعات با موفقیت ذخیره شد.');
 				$this->redirect(array('admin'));
 			}else
@@ -190,10 +196,38 @@ class CarPublicController extends Controller
 	}
 
     public function actionGetBrandModels(){
-        if(isset($_GET['bid']) && !empty((int)$_GET['bid'])){
-            $id = $_GET['bid'];
-            $list = Models::model()->findAllByAttributes(['brand_id' => $id]);
-            
-        }
+        if(isset($_GET['id']) && !empty((int)$_GET['id'])){
+            $id = $_GET['id'];
+            $models = Models::model()->findAllByAttributes(['brand_id' => $id]);
+            $list=[];
+            foreach($models as $item)
+                $list[] = array('id' => $item->id, 'title' => $item->title);
+            echo CJSON::encode(['status'=> true, 'list' => $list]);
+        }else if(!isset($_GET['id']))
+            echo CJSON::encode(['status'=> false, 'message' => 'خطا در دریافت اطلاعات.']);
+        Yii::app()->end();
+    }
+    
+    public function actionGetModelYears(){
+        if(isset($_GET['id']) && !empty((int)$_GET['id'])){
+            $id = $_GET['id'];
+            $model = Models::model()->findByPk($id);
+            echo CJSON::encode(['status'=> true, 'list' => $model->getYears('ajax')]);
+        }else
+            echo CJSON::encode(['status'=> false, 'message' => 'خطا در دریافت اطلاعات.']);
+        Yii::app()->end();
+    }
+
+    public function actionGetStateCities(){
+        if(isset($_GET['id']) && !empty((int)$_GET['id'])){
+            $id = $_GET['id'];
+            $models = Places::model()->findAllByAttributes(['town_id' => $id]);
+            $list=[];
+            foreach($models as $item)
+                $list[] = array('id' => $item->id, 'title' => $item->name);
+            echo CJSON::encode(['status'=> true, 'list' => $list]);
+        }else
+            echo CJSON::encode(['status'=> false, 'message' => 'خطا در دریافت اطلاعات.']);
+        Yii::app()->end();
     }
 }

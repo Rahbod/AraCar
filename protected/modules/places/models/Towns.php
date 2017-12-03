@@ -11,6 +11,7 @@
  *
  * The followings are the available model relations:
  * @property Places[] $places
+// * @property Tags[] $tags
  */
 class Towns extends CActiveRecord
 {
@@ -48,6 +49,7 @@ class Towns extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'places' => array(self::HAS_MANY, 'Places', 'town_id'),
+			'tags' => array(self::HAS_MANY, 'Tags', 'tag_id'),
 		);
 	}
 
@@ -107,7 +109,7 @@ class Towns extends CActiveRecord
 
     public function getTowns()
     {
-        return CMap::mergeArray(array(''=>'-'),CHtml::listData($this->findAll(),'id','name'));
+        return CHtml::listData($this->findAll(),'id','name');
     }
 
 
@@ -122,17 +124,17 @@ class Towns extends CActiveRecord
     }
 
     protected function beforeSave(){
-        if($this->tags){
-            foreach($this->tags as $tag){
-                $model = AdvertiseTags::model()->findByAttributes(array('title' => $tag));
-                if(!$model){
-                    $model = new AdvertiseTags();
-                    $model->title = $tag;
-                    $model->save();
-                }
-            }
-            $this->tags = !empty($this->tags) && is_array($this->tags) ? CJSON::encode($this->tags) : null;
-        }
+//        if($this->tags){
+//            foreach($this->tags as $tag){
+//                $model = Tags::model()->findByAttributes(array('title' => $tag));
+//                if(!$model){
+//                    $model = new Tags();
+//                    $model->title = $tag;
+//                    $model->save();
+//                }
+//            }
+//            $this->tags = !empty($this->tags) && is_array($this->tags) ? CJSON::encode($this->tags) : null;
+//        }
         return true;
     }
 }

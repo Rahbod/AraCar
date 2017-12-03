@@ -9,8 +9,8 @@
             </div>
         </div>
     </div>
+    
     <div class="bottom overflow-fix">
-        <?php if(isset($this->breadcrumbs)):?>
             <?php $this->widget('zii.widgets.CBreadcrumbs', array(
                 'links'=>$this->breadcrumbs,
                 'homeLink' => '<li class="breadcrumb-item">'.CHtml::link(Yii::app()->name, Yii::app()->homeUrl).'</li>',
@@ -20,6 +20,5 @@
                 'inactiveLinkTemplate' => '<li class="breadcrumb-item"><span>{label}</span></li>',
                 'separator' => ''
             )); ?>
-        <?php endif?>
     </div>
 </div>

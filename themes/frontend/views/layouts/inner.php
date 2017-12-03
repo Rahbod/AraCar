@@ -38,7 +38,9 @@
 </head>
 <body>
 <?php $this->renderPartial('//partial-views/_header');?>
+<?php if(isset($this->breadcrumbs) && $this->breadcrumbs):?>
 <?php $this->renderPartial('//partial-views/_breadcrumb');?>
+<?php endif; ?>
 <?php echo $content;?>
 <?php $this->renderPartial('//partial-views/_login_popup');?>
 <?php $this->renderPartial('//partial-views/_footer');?>

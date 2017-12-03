@@ -2,6 +2,9 @@ $(document).ready(function() {
     $('[data-title]').tooltip();
     if($('.select-picker').length && $.fn.selectpicker)
         $('.select-picker').selectpicker();
+
+    $('.digitFormat').digitFormat();
+
     $(document).on("click", ".content-box .filter-box .head .toggle-icon", function () {
         $(this).toggleClass("plus").toggleClass("minus");
     }).on('keyup', '.range-min-input', function(){
@@ -179,21 +182,17 @@ $(document).ready(function() {
     });
 });
 
-$.fn.currencyFormat = function() {
-    var value = $(this).val(),
-        temp,
-        str = '';
-
-    console.log();
-
-    temp = value.split("").reverse().join("");
-    temp = temp.match(/.{1,3}/g);
-    for (var i = temp.length; i > 0; i--) {
-        if (i == 1)
-            str += (temp[i - 1].split("").reverse().join(""));
+$.fn.digitFormat = function () {
+    return this.each(function (event) {
+        if($(this).val() == "")
+            $(this).removeClass("ltr");
         else
-            str += (temp[i - 1].split("").reverse().join("")) + '/';
-    }
-
-    $(this).val(str);
+            $(this).addClass("ltr");
+        if (event.which >= 37 && event.which <= 40) return;
+        $(this).val(function (index, value) {
+            return value
+                .replace(/\D/g, "")
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        });
+    });
 };
