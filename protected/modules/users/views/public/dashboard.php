@@ -59,9 +59,15 @@ $this->leftLink = '<a href="#"><div class="pull-left page-info bg-success upgrad
             </div>
             <div class="tab-pane fade" id="parking-tab">
                 <div class="row">
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                        <h5 class="text-blue pull-left">تعداد خودرو های پارکینگ <?= $user->countParked ?></h5>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <h5 class="text-blue pull-left">تعداد خودرو های پارکینگ <span id="count-parked"><?= $user->countParked ?></span></h5>
                     </div>
+                </div>
+                <div class="alert alert-success view-alert hidden">
+                    <p>
+                        <span>خودرو با موفقیت از پارکینگ شما خارج شد.</span>
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    </p>
                 </div>
                 <?php $this->widget('zii.widgets.CListView', array(
                     'id'=>'brands-list',
