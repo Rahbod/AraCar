@@ -1011,3 +1011,18 @@ in D:\Important\Xamppp\htdocs\aracar\index.php (11)
 2017/12/02 20:35:05 [warning] [application] Failed to set unsafe attribute "repeatPassword" of "Users".
 in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersPublicController.php (642)
 in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2017/12/04 21:06:30 [warning] [application] Failed to set unsafe attribute "verifyCode" of "ContactMessages".
+in D:\Important\Xamppp\htdocs\aracar\protected\controllers\SiteController.php (86)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2017/12/04 21:10:58 [warning] [application] Failed to set unsafe attribute "verifyCode" of "ContactMessages".
+in D:\Important\Xamppp\htdocs\aracar\protected\controllers\SiteController.php (86)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2017/12/04 21:25:13 [warning] [application] Failed to set unsafe attribute "verifyCode" of "ContactMessages".
+in D:\Important\Xamppp\htdocs\aracar\protected\controllers\SiteController.php (86)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2017/12/04 21:26:06 [warning] [application] Failed to set unsafe attribute "verifyCode" of "ContactMessages".
+in D:\Important\Xamppp\htdocs\aracar\protected\controllers\SiteController.php (86)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2017/12/04 21:42:26 [warning] [application] Failed to set unsafe attribute "verifyCode" of "ContactMessages".
+in D:\Important\Xamppp\htdocs\aracar\protected\controllers\SiteController.php (86)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)

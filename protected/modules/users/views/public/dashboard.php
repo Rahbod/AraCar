@@ -7,8 +7,6 @@ $this->breadcrumbs =[
     'تغییر مشخصات' => array('/profile'),
     'کلمه عبور' => array('/changePassword'),
 ];
-
-$this->leftLink = '<a href="#"><div class="pull-left page-info bg-success upgrade-user-btn"><i class="honor-icon"></i><b>ارتقای عضویت</b></div></a>';
 ?>
 
 <div class="content-box white-bg">

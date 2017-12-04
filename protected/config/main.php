@@ -21,6 +21,7 @@ return array(
 		'application.modules.places.models.*',
 		'application.modules.lists.models.*',
 		'application.modules.car.models.*',
+		'application.modules.setting.models.*',
 	),
 
 	'modules'=>array(
@@ -38,6 +39,8 @@ return array(
 		'pages',
 		'places',
 		'slideshow',
+		'map',
+		'contact',
 		'lists',
 		'car',
 	),
@@ -73,7 +76,7 @@ return array(
 			'appendParams'=>true,
 			'rules'=>array(
 				'sell' => 'car/public/sell',
-				'<action:(about|contactus|help|publishers|search)>' => 'site/<action>',
+				'<action:(about|contact|help|publishers|search)>' => 'site/<action>',
 				'<action:(logout|dashboard|googleLogin|transactions|login|register|changePassword|profile)>' => 'users/public/<action>',
 				'car/<action:(brand)>/<title:.*>' => 'car/search/<action>',
 				'/help'=>'site/help',
@@ -136,13 +139,13 @@ return array(
 	// using Yii::app()->params['paramName']
 	'params'=>array(
 		// @todo change webmail of emails
-		'adminEmail'=>'webmaster@ketabic.ir',
-		'noReplyEmail' => 'noreply@visit365.ir',
+		'adminEmail'=>'info@carcadeh.ir',
+		'noReplyEmail' => 'noreply@carcadeh.ir',
 		'SMTP' => array(
-			'Host' => 'mail.visit365.ir',
+			'Host' => 'mail.carcadeh.ir',
 			'Secure' => 'ssl',
 			'Port' => '465',
-			'Username' => 'noreply@visit365.ir',
+			'Username' => 'noreply@carcadeh.ir',
 			'Password' => '@#visit1396',
 		),
 		'mailTheme'=>

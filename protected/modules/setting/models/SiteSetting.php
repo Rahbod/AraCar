@@ -97,4 +97,26 @@ class SiteSetting extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+    /**
+     * @param $name
+     * @param bool $scalar
+     * @return string|SiteSetting
+     */
+	public static function getOption($name, $scalar = true)
+	{
+		return $scalar?self::model()->findByAttributes(array('name' => $name))->value:self::model()->findByAttributes(array('name' => $name));
+	}
+
+	public static function setOption($name, $value, $title = null)
+	{
+		$model = self::getOption($name, false);
+		if($model === null){
+			$model = new SiteSetting();
+			$model->name = $name;
+            $model->title = $title;
+		}
+		$model->value = $value;
+		return $model->save();
+	}
 }

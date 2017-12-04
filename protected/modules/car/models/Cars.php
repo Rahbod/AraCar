@@ -183,7 +183,7 @@ class Cars extends CActiveRecord
      * @return CActiveDataProvider the data provider that can return the models
      * based on the search/filter conditions.
      */
-    public function search()
+    public function search($deleted = false)
     {
         // @todo Please modify the following code to remove attributes that should not be searched.
 
@@ -213,6 +213,11 @@ class Cars extends CActiveRecord
         $criteria->compare('visit_district', $this->visit_district, true);
         $criteria->compare('description', $this->description, true);
         $criteria->compare('creation_date', $this->creation_date, true);
+        if($deleted)
+            $criteria->addCondition('status = :deleted');
+        else
+            $criteria->addCondition('status <> :deleted');
+        $criteria->params[':deleted'] = Cars::STATUS_DELETED;
         $criteria->order = 'id DESC';
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -282,7 +287,7 @@ class Cars extends CActiveRecord
     protected function beforeSave()
     {
         $this->distance = str_replace(',', '', $this->distance);
-        if($this->purchase_type_id == self::PURCHASE_TYPE_CASH)
+        if($this->purchase_type_id == self::PURCHASE_TYPE_CASH && !is_array($this->purchase_details))
             $this->purchase_details = str_replace(',', '', $this->purchase_details);
         else
             $this->purchase_details = CJSON::encode($this->purchase_details);
@@ -299,7 +304,7 @@ class Cars extends CActiveRecord
                 $model->filename = $image;
                 @$model->save();
             }
-        }else{
+        }else if($this->oldImages){
             $newImages = array_diff($this->oldImages, $this->images);
             foreach($newImages as $image){
                 if(file_exists(Yii::getPathOfAlias('webroot') . '/uploads/cars/' . $image)){
@@ -356,5 +361,12 @@ class Cars extends CActiveRecord
         return $activeProvider?new CActiveDataProvider('Cars', array(
             'criteria' => $cr
         )):$this->findAll($cr);
+    }
+
+    public function getStatusLabels($withDelete = true)
+    {
+        if(!$withDelete)
+            unset($this->statusLabels[Cars::STATUS_DELETED]);
+        return $this->statusLabels;
     }
 }
