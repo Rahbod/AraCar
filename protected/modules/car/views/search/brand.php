@@ -1,6 +1,7 @@
 <?php
 /* @var $this CarSearchController */
 /* @var $brand Brands */
+/* @var $filters array */
 /* @var $model Brands */
 /* @var $dataProvider CActiveDataProvider */
 ?>
@@ -21,29 +22,30 @@
             </div>
         </div>
     </div>
-    <div class="bottom">
-        <div class="center-box">
-            <div class="row">
-                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12"></div>
-                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                    <span>انتخاب شما</span>
-                    <div class="filters">
-                        <div class="filter">تهران<i></i></div>
-                        <div class="filter">دنده ای<i></i></div>
-                        <div class="filter">بدون رنگ<i></i></div>
-                        <div class="filter">از 100.000.000 تا 220.000.000 تومان<i></i></div>
-                        <a href="#" class="clear-filters-link">پاک کردن همه</a>
+    <?php if(count($filters)):?>
+        <div class="bottom">
+            <div class="center-box">
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12"></div>
+                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                        <span>انتخاب شما</span>
+                        <div class="filters">
+                            <?php foreach($filters as $filter => $value):?>
+                                <div class="filter"><?= $value?><a href="<?php ?>"><i></i></a></div>
+                            <?php endforeach;?>
+                            <a href="#" class="clear-filters-link">پاک کردن همه</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    <?php endif;?>
 </div>
 <div class="content-box">
     <div class="center-box">
         <div class="row">
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                <?php $this->renderPartial('_filter_box', array('selectedBrands' => [$brand->id]));?>
+                <?php $this->renderPartial('_filter_box', array('filters' => $filters, 'selectedBrand' => $brand));?>
             </div>
             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
                 <?php $this->widget('zii.widgets.CListView', array(

@@ -72,6 +72,8 @@ $(document).ready(function() {
         $(this).find(".tab-content > .tab-pane:first-of-type").addClass("active in");
     }).on("keyup", '.digitFormat', function () {
         $(this).digitFormat();
+    }).on("change", '.digitFormat', function () {
+        $(this).digitFormat();
     });
 
     $(".nicescroll").each(function () {
@@ -142,6 +144,8 @@ $(document).ready(function() {
             slide: function (event, ui) {
                 $($(this).data('min-input')).val(ui.values[0]);
                 $($(this).data('max-input')).val(ui.values[1]);
+                $('.digitFormat').digitFormat();
+                changePriceFilterBtnUrl(ui.values[0], ui.values[1]);
             }
         });
     });
