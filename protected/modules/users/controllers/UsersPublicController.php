@@ -11,7 +11,7 @@ class UsersPublicController extends Controller
             'frontend' => array(
                 'dashboard',
                 'logout',
-                'setting',
+                'changePassword',
                 'notifications',
                 'verify',
                 'forgetPassword',
@@ -19,7 +19,6 @@ class UsersPublicController extends Controller
                 'authCallback',
                 'downloaded',
                 'transactions',
-                'visits',
                 'index',
                 'sessions',
                 'removeSession',
@@ -93,13 +92,13 @@ class UsersPublicController extends Controller
      */
     public function actionDashboard()
     {
-        /* @var $user Users */
-        $user = Users::model()->findByPk(Yii::app()->user->id);
         Yii::app()->theme = 'frontend';
         $this->layout = '//layouts/panel';
+        /* @var $user Users */
+        $user = Users::model()->findByPk(Yii::app()->user->id);
         $this->pageTitle = 'پروفایل من';
         $this->pageHeader = $user->userDetails->getShowName();
-        $this->pageDescription = $user->userDetails->mobile.' / '.$user->email;
+        $this->pageDescription = $user->userDetails->getShowDescription();
         $sells = Cars::model()->findAllByAttributes(array(
             'user_id' => $user->id
         ));
@@ -112,11 +111,14 @@ class UsersPublicController extends Controller
     /**
      * Change password
      */
-    public function actionSetting()
+    public function actionChangePassword()
     {
         Yii::app()->theme = 'frontend';
         $this->layout = '//layouts/panel';
         $model = Users::model()->findByPk(Yii::app()->user->getId());
+        $this->pageTitle = 'تغییر کلمه عبور';
+        $this->pageHeader = 'تغییر کلمه عبور';
+        $this->pageDescription = 'جهت تغییر کلمه عبور فرم زیر را تکمیل فرمایید.';
         $model->setScenario('change_password');
 
         if (isset($_POST['Users'])) {
@@ -132,7 +134,7 @@ class UsersPublicController extends Controller
             }
         }
 
-        $this->render('setting', array(
+        $this->render('change_password', array(
             'model' => $model,
         ));
     }
@@ -145,9 +147,17 @@ class UsersPublicController extends Controller
         Yii::app()->theme = 'frontend';
         $this->layout = '//layouts/panel';
 
+        /* @var $user Users */
+        $user = Users::model()->findByPk(Yii::app()->user->id);
+        $this->pageTitle = 'پروفایل من';
+        $this->pageHeader = 'تغییر مشخصات پروفایل';
+        $this->pageDescription = 'جهت تغییر اطلاعات حساب کاربری خود فرم زیر را پر کنید.';
+
         $tmpDIR = Yii::getPathOfAlias("webroot") . '/uploads/temp/';
         $tmpUrl = Yii::app()->createAbsoluteUrl('/uploads/temp/');
         $avatarDIR = Yii::getPathOfAlias("webroot") . '/uploads/users/';
+        if(!is_dir($avatarDIR))
+            mkdir($avatarDIR);
         $avatarUrl = Yii::app()->createAbsoluteUrl('/uploads/users');
 
         /* @var $model UserDetails */
@@ -400,7 +410,7 @@ class UsersPublicController extends Controller
                 }
             }
 
-            $this->render('change_password', array(
+            $this->render('recover_password', array(
                 'model' => $model
             ));
         } else

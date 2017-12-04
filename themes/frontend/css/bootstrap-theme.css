@@ -575,7 +575,7 @@ a:focus{
     background: #adc50d;
     color: #fff;
     border-radius: 5px;
-    padding: 15px;
+    padding: 8px 15px;
     border:none;
 }
 .btn-hover-success:hover,
@@ -864,7 +864,8 @@ input[type="checkbox"]:checked + label::before {
     color: #949494;
 }
 
-.page-header .bottom .breadcrumb.blue > li a{
+.page-header .bottom .breadcrumb.blue > li.active a,
+.page-header .bottom .breadcrumb.blue > li:hover a{
     padding: 8px 15px;
     background-color: #1172d1;
     color: #fff !important;

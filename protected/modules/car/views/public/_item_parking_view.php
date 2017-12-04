@@ -4,7 +4,8 @@
 /* @var $form CActiveForm */
 $imagePath = Yii::getPathOfAlias('webroot').'/uploads/cars/';
 ?>
-<article>
+<article class="relative">
+    <?php $this->renderPartial('//partial-views/_loading') ?>
     <div class="item-image">
         <?php
         if($data->car->carImages):
@@ -26,31 +27,35 @@ $imagePath = Yii::getPathOfAlias('webroot').'/uploads/cars/';
     </div>
     <div class="item-actions">
         <?php
-        echo CHtml::ajaxLink('P<span>افزودن این خودرو به پارکینگ خود</span><span>حذف این خودرو از پارکینگ</span>',array('/car/public/authJson'),array(
+        echo CHtml::ajaxLink('حذف از پارکینگ<i class="addon-icon icon icon-remove"></i>',array('/car/public/authJson'),array(
             'type' => 'POST',
             'dataType' => 'JSON',
-            'data' => array('method' => 'park','hash'=>base64_encode($car->id)),
+            'data' => array('method' => 'park','hash'=>base64_encode($data->car->id)),
             'beforeSend' => 'js: function(data){
-                            $(".view-alert").addClass("hidden").removeClass("alert-success alert-warning").find("span").text("");
-                        }',
+                article.find(\'.loading-container\').show();
+            }',
             'success' => 'js: function(data){
-                            if(data.status){
-                                if($(".add-to-park").hasClass("parked"))
-                                    $(".add-to-park").removeClass("parked");
-                                else
-                                    $(".add-to-park").addClass("parked");
-                                $(".view-alert").addClass("alert-success").find("span").text(data.message);
-                            }
-                            else{
-                                $(".view-alert").addClass("alert-warning").find("span").text(data.message); 
-                            }   
-                            $(".view-alert").removeClass("hidden");
-                        }'
-        ),array('class' => 'add-to-park'.($parked?' parked':'')));
+                console.log(article);
+                article.find(\'.loading-container\').show();
+                if(data.status){
+                    article.remove();
+                    $("#parking-tab #count-parked").text((parseInt($("#parking-tab #count-parked").text()) - 1));
+                    $("#parking-tab .view-alert").addClass("alert-success").find("span").text(data.message);
+                }
+                else{
+                    $("#parking-tab .view-alert").addClass("alert-warning").find("span").text(data.message); 
+                }   
+                $("#parking-tab .view-alert").removeClass("hidden");
+            }'
+        ),array('class' => 'btn btn-default remove-parked'));
         ?>
-        <a href="<?= $this->createUrl('/car/public/delete/'.$data->car->id) ?>" class="btn btn-default">
-            حذف از پارکینگ
-            <i class="addon-icon icon icon-remove"></i>
-        </a>
     </div>
 </article>
+<script>
+    var article;
+    $(function () {
+        $('body').on("click",".remove-parked", function () {
+            article = $(this).parents("article");
+        });
+    })
+</script>

@@ -142,6 +142,11 @@ class UserDetails extends CActiveRecord
         else
             return $this->user->email;
     }
+	
+	public function getShowDescription()
+    {
+		return $this->mobile.' / '.$this->user->email;
+    }
 
 	public function getAvatar()
 	{

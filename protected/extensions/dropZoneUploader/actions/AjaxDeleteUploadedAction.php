@@ -42,6 +42,7 @@ class AjaxDeleteUploadedAction extends CAction
 
     public function run()
     {
+        /* @var $model CActiveRecord */
         $this->init();
         if (Yii::app()->request->isAjaxRequest) {
             $deleteFlag = false;
@@ -61,7 +62,10 @@ class AjaxDeleteUploadedAction extends CAction
                     $model = $ownerModel->findByAttributes(array($this->attribute => $fileName));
                 if ($model) {
                     if ($this->storedMode === self::STORED_FIELD_MODE)
-                        $deleteFlag = $ownerModel->updateByPk($model->id, array($this->attribute => null))?true:false;
+                    {
+                        $model->{$this->attribute} = null;
+                        $deleteFlag = $model->save(false)?true:false;
+                    }
                     elseif ($this->storedMode === self::STORED_JSON_MODE)
                     {
                         $list = $model->{$this->attribute};
@@ -75,7 +79,8 @@ class AjaxDeleteUploadedAction extends CAction
                             else{
                                 unset($list[$key]);
                                 $list = $list && is_array($list)?CJSON::encode($list):null;
-                                $deleteFlag = $ownerModel->updateByPk($model->id, array($this->attribute => $list))?true:false;
+                                $model->{$this->attribute} = $list;
+                                $deleteFlag = $model->save(false)?true:false;
                             }
                         }
                     }
