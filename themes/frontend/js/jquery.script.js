@@ -32,8 +32,16 @@ $(document).ready(function() {
         $(this).parents('.image-container').find('.main-image-container img').attr('src', src);
     }).on('click', '.advertise-info-box #show-full-phone', function (e) {
         e.preventDefault();
-        $(this).parent().find('.visible-num').removeClass('hidden');
-        $(this).parent().find('.hidden-num').addClass('hidden');
+        $.ajax({
+            url: $(this).data("url"),
+            type: "POST",
+            data:{method: "getContact", hash: $(this).data("hash")},
+            dataType: "JSON",
+            success: function (data) {
+                if(data.status)
+                    $('#phone-number').text(data.phone).addClass('text-success text-bold');
+            }
+        });
         $(this).addClass('hidden');
     }).on('show.bs.collapse', '.car-list.accordion', function (e) {
         $(".car-list.accordion .collapse.in").each(function () {

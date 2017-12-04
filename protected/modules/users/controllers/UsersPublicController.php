@@ -593,9 +593,8 @@ class UsersPublicController extends Controller
             if ($model->validate() && $model->login()) {
                 if (Yii::app()->user->returnUrl != Yii::app()->request->baseUrl . '/' &&
                     Yii::app()->user->returnUrl != 'logout')
-                    $redirect = Yii::app()->createUrl('/'.Yii::app()->user->returnUrl);
+                    $redirect = Yii::app()->user->returnUrl;
                 else
-//                    $redirect = Yii::app()->createAbsoluteUrl('/dashboard');
                     $redirect = Yii::app()->getBaseUrl(true);
                 if (isset($_GET['ajax'])) {
                     echo CJSON::encode(array('status' => true, 'url' => $redirect, 'msg' => 'در حال انتقال ...'));

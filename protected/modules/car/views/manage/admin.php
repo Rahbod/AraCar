@@ -44,17 +44,54 @@ $this->menu=array(
                 ),
                 'pagerCssClass' => 'blank',
                 'columns'=>array(
-            		'title',
-                    'brand_id',
-                    'model_id',
-                    'state_id',
-                    'city_id',
-                    'status',
-                    'create_date',
-                    'update_date',
-                    'expire_date',
+            		'title:html',
+                    [
+                        'name' => 'state_id',
+                        'value' => '$data->state->name'
+                    ],
+                    [
+                        'name' => 'city_id',
+                        'value' => '$data->city->name'
+                    ],
+                    [
+                        'name' => 'status',
+                        'value' => function($data){
+                            $class = '';
+                            if($data->status == Cars::STATUS_DELETED)
+                                $class = 'danger';
+                            else if($data->status == Cars::STATUS_APPROVED)
+                                $class = 'success';
+                            else if($data->status == Cars::STATUS_PENDING)
+                                $class = 'info';
+                            else if($data->status == Cars::STATUS_REFUSED)
+                                $class = 'warning';
+                            return "<div class='label label-{$class}'>{$data->statusLabel}</div>";
+                        },
+                        'type' => 'raw'
+                    ],
+                    [
+                        'name' => 'create_date',
+                        'value' => 'JalaliDate::date("Y/m/d",$data->create_date)'
+                    ],
+                    [
+                        'name' => 'create_date',
+                        'value' => 'JalaliDate::date("Y/m/d",$data->create_date)'
+                    ],
+                    [
+                        'name' => 'update_date',
+                        'value' => '$data->update_date?JalaliDate::date("Y/m/d",$data->update_date):"-"'
+                    ],
+                    [
+                        'name' => 'expire_date',
+                        'value' => '$data->expire_date?JalaliDate::date("Y/m/d",$data->expire_date):"-"'
+                    ],
                     array(
                         'class'=>'CButtonColumn',
+                        'buttons' => array(
+                            'view' => array(
+                                'url' => '$data->getViewUrl()'
+                            )
+                        )
                     ),
                 ),
             )); ?>

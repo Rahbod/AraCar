@@ -7,9 +7,9 @@ $imagePath = Yii::getPathOfAlias('webroot').'/uploads/cars/';
 <article>
     <div class="item-image">
         <?php
-        if($data->images):
+        if($data->carImages):
         ?>
-            <img src="<?= Yii::app()->getBaseUrl(true).$data->images[0]->filename ?>">
+            <img src="<?= Yii::app()->getBaseUrl(true).'/uploads/cars/'.$data->carImages[0]->filename ?>">
         <?php
         endif;
         ?>
@@ -23,7 +23,7 @@ $imagePath = Yii::getPathOfAlias('webroot').'/uploads/cars/';
                 <div class="item-attribute"><?= $data->bodyState->title  ?></div>
             </div>
             <div class="col-lg-3 col-md-3 item-col">
-                <div class="item-attribute">تیپ 1</div>
+                <div class="item-attribute">آرا دوست</div>
                 <div class="item-attribute">به روزرسانی مجاز</div>
                 <div class="item-attribute">تاریخ درج</div>
                 <div class="item-attribute">تاریخ انقضا</div>
@@ -38,19 +38,19 @@ $imagePath = Yii::getPathOfAlias('webroot').'/uploads/cars/';
     </div>
     <div class="item-actions">
         <a href="#" class="btn btn-default">
-            ارتقا آگهی
+            ارتقا خودرو
             <i class="addon-icon icon icon-bolt"></i>
         </a>
-        <a href="#" class="btn btn-default">
+        <a href="<?= $this->createUrl('/car') ?>" class="btn btn-default">
             به روزرسانی
             <i class="addon-icon icon icon-refresh"></i>
         </a>
         <a href="#" class="btn btn-default">
-            ویرایش آگهی
+            ویرایش خودرو
             <i class="addon-icon icon icon-edit"></i>
         </a>
-        <a href="#" class="btn btn-default">
-            حذف آگهی
+        <a href="<?= $this->createUrl('/car/public/delete/'.$data->id) ?>" class="btn btn-default">
+            حذف خودرو
             <i class="addon-icon icon icon-remove"></i>
         </a>
     </div>

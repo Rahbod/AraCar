@@ -9,10 +9,10 @@
     <div class="buttons">
         <div class="row">
             <div class="col-md-6">
-                <a href="<?php echo $this->createUrl('/site');?>" class="btn btn-danger btn-block">صفحه اصلی <i class="arrow-icon right"></i></a>
+                <a href="<?php echo Yii::app()->getBaseUrl(true);?>" class="btn btn-danger btn-block">صفحه اصلی <i class="arrow-icon right"></i></a>
             </div>
             <div class="col-md-6">
-                <button onclick="history.back();" class="btn btn-info btn-block"><i class="arrow-icon left"></i> بازگشت</button>
+                <button id="back-btn" onclick="history.back();" class="btn btn-info btn-block"><i class="arrow-icon left"></i> بازگشت</button>
             </div>
         </div>
     </div>
@@ -23,9 +23,15 @@
             <?php $this->renderPartial('//partial-views/_copyright');?>
         </div>
         <div>
-            <a href="<?php echo $this->createUrl('/help');?>">راهنما</a> / <a href="<?php echo $this->createUrl('/contact');?>">تماس با ما</a>
+            <a href="<?php echo $this->createUrl('/help')?>">راهنما</a> / <a href="#">تماس با ما</a>
         </div>
     </div>
     <!-- ./Copyright -->
 
 </div>
+<script>
+    $(function () {
+        if(history.length <= 1)
+            $("#back-btn").attr("disabled", true);
+    });
+</script>

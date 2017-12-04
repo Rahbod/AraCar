@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost
-Source Server Version : 50714
+Source Server         : local
+Source Server Version : 50616
 Source Host           : localhost:3306
 Source Database       : arakhodro
 
 Target Server Type    : MYSQL
-Target Server Version : 50714
+Target Server Version : 50616
 File Encoding         : 65001
 
-Date: 2017-12-03 18:14:14
+Date: 2017-12-04 13:03:24
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -129,7 +129,6 @@ CREATE TABLE `ym_cars` (
   `room_color_id` int(10) unsigned DEFAULT NULL COMMENT 'رنگ داخل',
   `body_color_id` int(10) unsigned DEFAULT NULL COMMENT 'رنگ بدنه',
   `body_state_id` int(10) unsigned DEFAULT NULL COMMENT 'وضعیت بدنه',
-  `body_type_id` int(10) unsigned DEFAULT NULL COMMENT 'نوع شاسی',
   `state_id` int(10) unsigned DEFAULT NULL COMMENT 'استان',
   `city_id` int(10) unsigned DEFAULT NULL COMMENT 'شهر',
   `fuel_id` int(10) unsigned DEFAULT NULL COMMENT 'نوع سوخت',
@@ -143,6 +142,10 @@ CREATE TABLE `ym_cars` (
   `visit_district` varchar(255) COLLATE utf8_persian_ci DEFAULT NULL COMMENT 'محله بازدید',
   `description` text COLLATE utf8_persian_ci COMMENT 'توضیحات',
   `creation_date` decimal(4,0) NOT NULL,
+  `body_type_id` int(10) unsigned DEFAULT NULL,
+  `seen` int(10) unsigned DEFAULT '0',
+  `plan_title` varchar(255) COLLATE utf8_persian_ci DEFAULT NULL,
+  `plan_rules` text COLLATE utf8_persian_ci,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `brand_id` (`brand_id`),
@@ -175,8 +178,8 @@ CREATE TABLE `ym_cars` (
 -- ----------------------------
 -- Records of ym_cars
 -- ----------------------------
-INSERT INTO `ym_cars` VALUES ('2', '1512314228', null, null, '45', '10', '16', '45', '48', '78', null, '19', '274', '35', '33', '12', '10', '1', '1500000000', '150000', '0', 'میدان صدوقی', '', '2017');
-INSERT INTO `ym_cars` VALUES ('3', '1512319875', null, null, '45', '10', '16', '46', '48', '81', null, '8', '124', '37', '33', '12', '8', '0', '616000000', '153000', '0', 'میدان صدوقی', '', '2012');
+INSERT INTO `ym_cars` VALUES ('2', '1512314228', '1512314228', null, '45', '10', '16', '45', '48', '16', '16', '274', '35', '33', '12', '10', '1', '1500000000', '150000', '0', 'میدان صدوقی', '', '2017', null, '67', null, null);
+INSERT INTO `ym_cars` VALUES ('3', '1512319875', '1512319875', null, '45', '10', '16', '46', '48', '21', '21', '124', '37', '33', '12', '8', '0', '616000000', '153000', '0', 'میدان صدوقی', '', '2012', null, '48', null, null);
 
 -- ----------------------------
 -- Table structure for ym_car_images
@@ -189,11 +192,12 @@ CREATE TABLE `ym_car_images` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `car_id` (`car_id`,`filename`),
   CONSTRAINT `ym_car_images_ibfk_1` FOREIGN KEY (`car_id`) REFERENCES `ym_cars` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
 
 -- ----------------------------
 -- Records of ym_car_images
 -- ----------------------------
+INSERT INTO `ym_car_images` VALUES ('3', '2', 'tAg1g1512318779.jpg');
 INSERT INTO `ym_car_images` VALUES ('2', '3', 'tAg1g1512318779.jpg');
 INSERT INTO `ym_car_images` VALUES ('1', '3', 'WrLAG1512318779.jpg');
 
@@ -210,8 +214,8 @@ CREATE TABLE `ym_counter_save` (
 -- ----------------------------
 -- Records of ym_counter_save
 -- ----------------------------
-INSERT INTO `ym_counter_save` VALUES ('counter', '12');
-INSERT INTO `ym_counter_save` VALUES ('day_time', '2458091');
+INSERT INTO `ym_counter_save` VALUES ('counter', '13');
+INSERT INTO `ym_counter_save` VALUES ('day_time', '2458092');
 INSERT INTO `ym_counter_save` VALUES ('max_count', '1');
 INSERT INTO `ym_counter_save` VALUES ('max_time', '1509438600');
 INSERT INTO `ym_counter_save` VALUES ('yesterday', '1');
@@ -229,7 +233,7 @@ CREATE TABLE `ym_counter_users` (
 -- ----------------------------
 -- Records of ym_counter_users
 -- ----------------------------
-INSERT INTO `ym_counter_users` VALUES ('837ec5754f503cfaaee0929fd48974e7', '1512319999');
+INSERT INTO `ym_counter_users` VALUES ('837ec5754f503cfaaee0929fd48974e7', '1512379918');
 
 -- ----------------------------
 -- Table structure for ym_countries
@@ -1148,6 +1152,27 @@ CREATE TABLE `ym_user_notifications` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for ym_user_parking
+-- ----------------------------
+DROP TABLE IF EXISTS `ym_user_parking`;
+CREATE TABLE `ym_user_parking` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) unsigned NOT NULL,
+  `car_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_id` (`user_id`,`car_id`),
+  KEY `car_id` (`car_id`),
+  CONSTRAINT `ym_user_parking_ibfk_2` FOREIGN KEY (`car_id`) REFERENCES `ym_cars` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `ym_user_parking_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `ym_users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
+
+-- ----------------------------
+-- Records of ym_user_parking
+-- ----------------------------
+INSERT INTO `ym_user_parking` VALUES ('14', '45', '2');
+INSERT INTO `ym_user_parking` VALUES ('15', '45', '3');
+
+-- ----------------------------
 -- Table structure for ym_user_plans
 -- ----------------------------
 DROP TABLE IF EXISTS `ym_user_plans`;
@@ -1196,14 +1221,13 @@ CREATE TABLE `ym_user_role_permissions` (
   PRIMARY KEY (`id`),
   KEY `role_id` (`role_id`),
   CONSTRAINT `ym_user_role_permissions_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `ym_user_roles` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=245 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=247 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
 
 -- ----------------------------
 -- Records of ym_user_role_permissions
 -- ----------------------------
-INSERT INTO `ym_user_role_permissions` VALUES ('242', '1', 'users', 'UsersCreditController', 'buy,bill,captcha,verify');
-INSERT INTO `ym_user_role_permissions` VALUES ('243', '1', 'users', 'UsersPublicController', 'dashboard,logout,setting,notifications,downloaded,transactions,sessions,removeSession');
-INSERT INTO `ym_user_role_permissions` VALUES ('244', '1', 'car', 'CarPublicController', 'sell');
+INSERT INTO `ym_user_role_permissions` VALUES ('245', '1', 'car', 'CarPublicController', 'sell,delete,upload,deleteUpload,authJson,index,view,getBrandModels,getModelYears,json');
+INSERT INTO `ym_user_role_permissions` VALUES ('246', '1', 'users', 'UsersPublicController', 'dashboard,logout,setting,notifications,downloaded,transactions,sessions,removeSession,verify,forgetPassword,recoverPassword,authCallback,visits,index,ResendVerification,profile,upload,deleteUpload,viewProfile,getUserByCode,login,captcha');
 
 -- ----------------------------
 -- Table structure for ym_user_transactions
