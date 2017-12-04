@@ -1,17 +1,17 @@
 $(document).ready(function() {
     $('[data-title]').tooltip();
-    if($('.select-picker').length && $.fn.selectpicker)
+    if ($('.select-picker').length && $.fn.selectpicker)
         $('.select-picker').selectpicker();
 
     $('.digitFormat').digitFormat();
 
     $(document).on("click", ".content-box .filter-box .head .toggle-icon", function () {
         $(this).toggleClass("plus").toggleClass("minus");
-    }).on('keyup', '.range-min-input', function(){
+    }).on('keyup', '.range-min-input', function () {
         $(this).parent().find('.range-slider').slider("option", "values", [parseInt($(this).val()), parseInt($('.range-max-input').val())]);
-    }).on('keyup', '.range-max-input', function(){
+    }).on('keyup', '.range-max-input', function () {
         $(this).parent().find('.range-slider').slider("option", "values", [parseInt($('.range-min-input').val()), parseInt($(this).val())]);
-    }).on('keyup', '.filter-box.by-brand .text-field', function() {
+    }).on('keyup', '.filter-box.by-brand .text-field', function () {
         var query = $(this).val();
 
         if (query == '')
@@ -25,12 +25,12 @@ $(document).ready(function() {
                     $(this).removeClass('hidden');
             });
         }
-    }).on('click', '.advertise-info-box .image-container .image-slider-item', function(e) {
+    }).on('click', '.advertise-info-box .image-container .image-slider-item', function (e) {
         e.preventDefault();
         var src = $(this).find('img').attr('src');
 
         $(this).parents('.image-container').find('.main-image-container img').attr('src', src);
-    }).on('click', '.advertise-info-box #show-full-phone', function(e) {
+    }).on('click', '.advertise-info-box #show-full-phone', function (e) {
         e.preventDefault();
         $.ajax({
             url: $(this).data("url"),
@@ -43,22 +43,22 @@ $(document).ready(function() {
             }
         });
         $(this).addClass('hidden');
-    }).on('show.bs.collapse', '.car-list.accordion', function(e) {
-        $(".car-list.accordion .collapse.in").each(function(){
+    }).on('show.bs.collapse', '.car-list.accordion', function (e) {
+        $(".car-list.accordion .collapse.in").each(function () {
             $(this).collapse('hide');
         });
-    }).on('click', '.linear-link', function(e) {
+    }).on('click', '.linear-link', function (e) {
         e.preventDefault();
         var href = $(this).attr('href');
-        if($(href).parents(".nicescroll").length)
+        if ($(href).parents(".nicescroll").length)
             $(href).parents(".nicescroll").getNiceScroll(0).doScrollTop($(href).offset().top, 2000);
-        else if(href.substr(1,href.length))
+        else if (href.substr(1, href.length))
             $('html, body').animate({
                 scrollTop: ($(href).offset().top)
-            },2000);
+            }, 2000);
     }).on("click", ".carousel-item", function () {
         var parent = $(this).parents(".carousel");
-        if(!parent.data("multiple"))
+        if (!parent.data("multiple"))
             parent.find(".carousel-item").not($(this)).removeClass("active");
         $(this).toggleClass("active");
     }).on("show.bs.modal", "#suggest-way-modal", function () {
@@ -171,20 +171,18 @@ $(document).ready(function() {
                     }
                 });
             },
-            minLength: 3
+            minLength: 2
         });
     });
-
-    //$('.currency-format').currencyFormat();
 
     $("body").on("keyup", ".brand-search-trigger", function () {
         var $table = $(this).parents('.panel').find('.car-list');
         var rex = new RegExp($(this).val(), 'i');
         $table.find('.brand-list').hide();
-        $table.find('.brand-list').filter(function() {
+        $table.find('.brand-list').filter(function () {
             return rex.test($(this).find(".list-title").text());
         }).show();
-        if ( $table.find('.brand-list:visible').length === 0 ) {
+        if ($table.find('.brand-list:visible').length === 0) {
             $table.find('.not-found').show();
         } else {
             $table.find('.not-found').hide();

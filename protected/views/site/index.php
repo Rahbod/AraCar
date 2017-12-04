@@ -86,7 +86,7 @@ $baseUrl = Yii::app()->theme->baseUrl;
             <div class="input-group">
                 <?= CHtml::textField('Search[brand]', null, [
                     'class' => 'form-control custom-search auto-complete',
-                    'placeholder' => 'برند، مدل وسیله نقلیه را تایپ نمایید...',
+                    'placeholder' => 'مدل وسیله نقلیه را تایپ نمایید...',
                     'data-model' => Models::class,
                     'data-field' => 'title',
                 ]);?>

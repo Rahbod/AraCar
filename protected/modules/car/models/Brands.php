@@ -13,6 +13,7 @@
  * The followings are the available model relations:
  * @property Countries $country
  * @property Cars[] $cars
+ * @property integer $carsCount
  * @property Models[] $models
  */
 class Brands extends CActiveRecord
@@ -53,6 +54,7 @@ class Brands extends CActiveRecord
 		return array(
 			'country' => array(self::BELONGS_TO, 'Countries', 'country_id'),
 			'cars' => array(self::HAS_MANY, 'Cars', 'brand_id'),
+			'carsCount' => array(self::STAT, 'Cars', 'brand_id'),
 			'models' => array(self::HAS_MANY, 'Models', 'brand_id'),
 		);
 	}
