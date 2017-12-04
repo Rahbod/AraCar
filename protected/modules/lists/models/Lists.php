@@ -211,9 +211,11 @@ class Lists extends CActiveRecord
 		return $count?$this->count($criteria):$this->findAll($criteria);
 	}
 
-	public static function getList($name)
+	public static function getList($name, $returnObject = false)
 	{
 		$data = Lists::model()->findByAttributes(['name' => $name]);
-		return $data?CHtml::listData($data->getOptions(), 'id', 'title'):[];
+		if ($returnObject)
+			return $data->getOptions();
+		return $data ? CHtml::listData($data->getOptions(), 'id', 'title') : [];
 	}
 }

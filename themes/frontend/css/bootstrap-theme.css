@@ -471,6 +471,8 @@ a:focus{
 }
 .content-box .filter-box .context .list{
     padding: 15px 0;
+    max-height: 290px;
+    overflow: hidden;
 }
 .list{
     list-style: none;
@@ -480,6 +482,10 @@ a:focus{
 .list li a{
     display: block;
     padding: 10px 0;
+}
+.list li a:hover,
+.list li a.selected{
+    color: #1272d1;
 }
 .list li a span{
     float: left;
@@ -2554,7 +2560,7 @@ input.form-control.white-bg {
 .ltr{
     direction: ltr !important;
 }
-.ui-widget.ui-widget-content{
+.ui-widget.ui-widget-content.ui-autocomplete{
     height:auto;
     border-radius: 5px;
     background: #fff;
@@ -2571,7 +2577,7 @@ input.form-control.white-bg {
 .ui-menu .ui-menu-item:last-child{
     border-bottom: none;
 }
-.ui-widget-content .ui-state-focus{
+.ui-widget-content.ui-autocomplete .ui-state-focus{
     background: #f1f1f1;
     border-top: none;
     border-right: none;

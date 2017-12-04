@@ -13,6 +13,7 @@
  *
  * The followings are the available model relations:
  * @property Cars[] $cars
+ * @property integer $carsCount
  * @property ModelDetails[] $details
  * @property Brands $brand
  * @property Lists $bodyType
@@ -55,6 +56,7 @@ class Models extends SortableCActiveRecord
         // class name for the relations automatically generated below.
         return array(
             'cars' => array(self::HAS_MANY, 'Cars', 'model_id'),
+            'carsCount' => array(self::STAT, 'Cars', 'model_id'),
             'details' => array(self::HAS_MANY, 'ModelDetails', 'model_id'),
             'brand' => array(self::BELONGS_TO, 'Brands', 'brand_id'),
             'bodyType' => array(self::BELONGS_TO, 'Lists', 'body_type_id'),
