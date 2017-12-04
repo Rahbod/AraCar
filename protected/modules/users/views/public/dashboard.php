@@ -13,7 +13,8 @@ $this->leftLink = '<a href="#"><div class="pull-left page-info bg-success upgrad
 <div class="content-box white-bg">
     <div class="center-box">
         <ul class="nav nav-pills">
-<!--            <li class="active"><a class="btn btn-default btn-wide" data-toggle="tab" href="#sell-tab">آگهی فروش</a></li>-->
+            <li class="active"><a class="btn btn-default btn-wide" data-toggle="tab" href="#sell-tab">آگهی فروش</a></li>
+            <li><a class="btn btn-default btn-wide" data-toggle="tab" href="#parking-tab">پارکینگ</a></li>
 <!--            <li><a class="btn btn-default btn-wide" data-toggle="tab" href="#exchange-tab">معاوضه</a></li>-->
 <!--            <li><a class="btn btn-default btn-wide" data-toggle="tab" href="#">گوش به زنگ</a></li>-->
         </ul>
@@ -34,7 +35,7 @@ $this->leftLink = '<a href="#"><div class="pull-left page-info bg-success upgrad
                     'id'=>'brands-list',
                     'dataProvider'=>new CArrayDataProvider($sells),
                     'itemsCssClass'=>'advertise-panel-list',
-                    'template' => '{summary} {items} {pager}',
+                    'template' => '{items} {pager}',
                     'ajaxUpdate' => true,
                     'afterAjaxUpdate' => "function(id, data){
                         $('html, body').animate({
@@ -54,6 +55,38 @@ $this->leftLink = '<a href="#"><div class="pull-left page-info bg-success upgrad
                     ),
                     'pagerCssClass' => 'blank',
                     'itemView' => 'car.views.public._item_panel_view'
+                )); ?>
+            </div>
+            <div class="tab-pane fade" id="parking-tab">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <h5 class="text-blue pull-left">تعداد خودرو های پارکینگ <?= $user->countParked ?></h5>
+                    </div>
+                </div>
+                <?php $this->widget('zii.widgets.CListView', array(
+                    'id'=>'brands-list',
+                    'dataProvider'=>new CArrayDataProvider($user->parked),
+                    'itemsCssClass'=>'advertise-panel-list',
+                    'template' => '{items} {pager}',
+                    'ajaxUpdate' => true,
+                    'afterAjaxUpdate' => "function(id, data){
+                        $('html, body').animate({
+                            scrollTop: ($('#'+id).offset().top-130)
+                        },1000,'easeOutCubic');
+                    }",
+                    'pager' => array(
+                        'header' => '',
+                        'firstPageLabel' => '<<',
+                        'lastPageLabel' => '>>',
+                        'prevPageLabel' => '<',
+                        'nextPageLabel' => '>',
+                        'cssFile' => false,
+                        'htmlOptions' => array(
+                            'class' => 'pagination pagination-sm',
+                        ),
+                    ),
+                    'pagerCssClass' => 'blank',
+                    'itemView' => 'car.views.public._item_parking_view'
                 )); ?>
             </div>
             <div class="tab-pane fade" id="exchange-tab">

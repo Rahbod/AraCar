@@ -78,6 +78,7 @@ return array(
 				'car/<action:(brand)>/<title:.*>' => 'car/search/<action>',
 				'/help'=>'site/help',
 				'users/<id:\d+>'=>'users/public/viewProfile',
+				'car/<id:\d+>'=>'car/public/view',
 				'<module:\w+>/<id:\d+>'=>'<module>/manage/view',
 				'<module:\w+>/<controller:\w+>'=>'<module>/<controller>/index',
 				'<controller:\w+>/<action:\w+>/<id:\d+>/<title:(.*)>'=>'<controller>/<action>',

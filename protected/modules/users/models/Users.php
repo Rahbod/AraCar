@@ -23,6 +23,8 @@
  * @property UserDetails $userDetails
  * @property UserTransactions[] $transactions
  * @property UserRoles $role
+ * @property UserParking[] $parked
+ * @property int $countParked
  */
 class Users extends CActiveRecord
 {
@@ -161,6 +163,8 @@ class Users extends CActiveRecord
             'transactions' => array(self::HAS_MANY, 'UserTransactions', 'user_id'),
             'role' => array(self::BELONGS_TO, 'UserRoles', 'role_id'),
             'sessions' => array(self::HAS_MANY, 'Sessions', 'user_id', 'on' => 'user_type = "user"'),
+            'countParked' => array(self::STAT, 'UserParking', 'user_id'),
+            'parked' => array(self::HAS_MANY, 'UserParking', 'user_id'),
         );
     }
 
