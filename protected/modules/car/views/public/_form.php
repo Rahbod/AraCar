@@ -72,7 +72,7 @@ if(!$model->car_type_id)
 	</div>
 	<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
 		<p class="form-title">
-			شما نیز با تکمیل فرم زیر خودرو را به صرعت بفروشید
+			شما نیز با تکمیل فرم زیر خودرو را به سرعت بفروشید
 		</p>
 		<div class="row">
 			<div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
@@ -228,7 +228,7 @@ if(!$model->car_type_id)
                 <?php echo $form->error($model,'description'); ?>
 			</div>
 			<div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-				<button type="submit" class="btn btn-primary pull-left">ادامه</button>
+				<button type="submit" class="btn btn-primary pull-left">ثبت آگهی</button>
 			</div>
 		</div>
 	</div>
