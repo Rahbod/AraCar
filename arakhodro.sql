@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50616
 File Encoding         : 65001
 
-Date: 2017-12-04 13:03:24
+Date: 2017-12-04 21:44:04
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -67,30 +67,32 @@ CREATE TABLE `ym_admin_role_permissions` (
   PRIMARY KEY (`id`),
   KEY `role_id` (`role_id`),
   CONSTRAINT `ym_admin_role_permissions_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `ym_admin_roles` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1448 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1563 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
 
 -- ----------------------------
 -- Records of ym_admin_role_permissions
 -- ----------------------------
-INSERT INTO `ym_admin_role_permissions` VALUES ('1429', '2', 'base', 'TagsController', 'index,create,update,admin,delete,list');
-INSERT INTO `ym_admin_role_permissions` VALUES ('1430', '2', 'admins', 'AdminsDashboardController', 'index');
-INSERT INTO `ym_admin_role_permissions` VALUES ('1431', '2', 'admins', 'AdminsManageController', 'index,views,create,update,admin,sessions,removeSession,changePass,delete');
-INSERT INTO `ym_admin_role_permissions` VALUES ('1432', '2', 'admins', 'AdminsRolesController', 'create,update,admin,delete');
-INSERT INTO `ym_admin_role_permissions` VALUES ('1433', '2', 'car', 'CarBrandsController', 'index,create,update,admin,delete,upload,deleteUpload,models,modelAdd,modelEdit,modelDelete,modelDetailAdd,modelDetailEdit,modelDetailDelete,order,uploadModelImage,deleteUploadModelImage');
-INSERT INTO `ym_admin_role_permissions` VALUES ('1434', '2', 'car', 'CarManageController', 'index,create,update,admin,delete');
-INSERT INTO `ym_admin_role_permissions` VALUES ('1435', '2', 'lists', 'ListsManageController', 'index,create,update,admin,delete,options,addOption,editOption');
-INSERT INTO `ym_admin_role_permissions` VALUES ('1436', '2', 'pages', 'PageCategoriesManageController', 'index,view,create,update,admin,delete');
-INSERT INTO `ym_admin_role_permissions` VALUES ('1437', '2', 'pages', 'PagesManageController', 'index,create,update,admin,delete');
-INSERT INTO `ym_admin_role_permissions` VALUES ('1438', '2', 'places', 'PlacesCitiesController', 'create,update,admin,delete');
-INSERT INTO `ym_admin_role_permissions` VALUES ('1439', '2', 'places', 'PlacesCountriesController', 'create,update,admin,delete,index,view');
-INSERT INTO `ym_admin_role_permissions` VALUES ('1440', '2', 'places', 'PlacesTownsController', 'create,update,admin,delete,index,view');
-INSERT INTO `ym_admin_role_permissions` VALUES ('1441', '2', 'setting', 'SettingManageController', 'changeSetting,socialLinks');
-INSERT INTO `ym_admin_role_permissions` VALUES ('1442', '2', 'users', 'UsersCreditController', 'reportCreditBuys,reportBonBuys');
-INSERT INTO `ym_admin_role_permissions` VALUES ('1443', '2', 'users', 'UsersExpertisesController', 'create,update,admin,delete,index,upload');
-INSERT INTO `ym_admin_role_permissions` VALUES ('1444', '2', 'users', 'UsersManageController', 'index,view,create,update,admin,delete,userTransactions,transactions');
-INSERT INTO `ym_admin_role_permissions` VALUES ('1445', '2', 'users', 'UsersRolesController', 'create,update,admin,delete');
-INSERT INTO `ym_admin_role_permissions` VALUES ('1446', '2', 'users', 'UsersPlansController', 'update,admin');
-INSERT INTO `ym_admin_role_permissions` VALUES ('1447', '2', 'slideshow', 'SlideShowManageController', 'create,update,admin,delete,upload,deleteUpload');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1542', '2', 'base', 'TagsController', 'index,create,update,admin,delete,list');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1543', '2', 'admins', 'AdminsDashboardController', 'index');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1544', '2', 'admins', 'AdminsManageController', 'index,views,create,update,admin,sessions,removeSession,changePass,delete');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1545', '2', 'admins', 'AdminsRolesController', 'create,update,admin,delete');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1546', '2', 'car', 'CarBrandsController', 'index,create,update,admin,delete,upload,deleteUpload,models,modelAdd,modelEdit,modelDelete,modelDetailAdd,modelDetailEdit,modelDetailDelete,order,uploadModelImage,deleteUploadModelImage');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1547', '2', 'car', 'CarManageController', 'index,create,update,admin,recycleBin,restore,delete,changeStatus');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1548', '2', 'lists', 'ListsManageController', 'index,create,update,admin,delete,options,addOption,editOption');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1549', '2', 'map', 'MapManageController', 'create,update');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1550', '2', 'pages', 'PageCategoriesManageController', 'index,view,create,update,admin,delete');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1551', '2', 'pages', 'PagesManageController', 'index,create,update,admin,delete');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1552', '2', 'places', 'PlacesCitiesController', 'create,update,admin,delete');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1553', '2', 'places', 'PlacesCountriesController', 'create,update,admin,delete,index,view');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1554', '2', 'places', 'PlacesTownsController', 'create,update,admin,delete,index,view');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1555', '2', 'setting', 'SettingManageController', 'changeSetting,socialLinks');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1556', '2', 'slideshow', 'SlideShowManageController', 'create,update,admin,delete,upload,deleteUpload');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1557', '2', 'users', 'UsersManageController', 'index,view,create,update,admin,delete,userTransactions,transactions');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1558', '2', 'users', 'UsersPlansController', 'update,admin');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1559', '2', 'users', 'UsersRolesController', 'create,update,admin,delete');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1560', '2', 'contact', 'ContactDepartmentController', 'index,create,update,admin,delete,deleteSelected');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1561', '2', 'contact', 'ContactMessagesController', 'index,create,update,admin,delete,deleteSelected,view');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1562', '2', 'contact', 'ContactReceiversController', 'index,create,update,admin,delete');
 
 -- ----------------------------
 -- Table structure for ym_brands
@@ -138,7 +140,7 @@ CREATE TABLE `ym_cars` (
   `purchase_type_id` decimal(1,0) unsigned DEFAULT NULL COMMENT 'نوع پرداخت',
   `purchase_details` varchar(1024) COLLATE utf8_persian_ci NOT NULL COMMENT 'جزییات پرداخت',
   `distance` decimal(6,0) DEFAULT NULL,
-  `status` decimal(1,0) unsigned DEFAULT NULL COMMENT 'وضعیت آگهی',
+  `status` decimal(1,0) DEFAULT NULL COMMENT 'وضعیت آگهی',
   `visit_district` varchar(255) COLLATE utf8_persian_ci DEFAULT NULL COMMENT 'محله بازدید',
   `description` text COLLATE utf8_persian_ci COMMENT 'توضیحات',
   `creation_date` decimal(4,0) NOT NULL,
@@ -178,8 +180,8 @@ CREATE TABLE `ym_cars` (
 -- ----------------------------
 -- Records of ym_cars
 -- ----------------------------
-INSERT INTO `ym_cars` VALUES ('2', '1512314228', '1512314228', null, '45', '10', '16', '45', '48', '16', '16', '274', '35', '33', '12', '10', '1', '1500000000', '150000', '0', 'میدان صدوقی', '', '2017', null, '67', null, null);
-INSERT INTO `ym_cars` VALUES ('3', '1512319875', '1512319875', null, '45', '10', '16', '46', '48', '21', '21', '124', '37', '33', '12', '8', '0', '616000000', '153000', '0', 'میدان صدوقی', '', '2012', null, '48', null, null);
+INSERT INTO `ym_cars` VALUES ('2', '1512314228', '1512398407', null, '45', '10', '16', '45', '48', '16', '16', '274', '35', '33', '12', '10', '0', '150000000', '150000', '1', 'میدان صدوقی', '', '2017', null, '73', null, null);
+INSERT INTO `ym_cars` VALUES ('3', '1512319875', '1512398409', null, '45', '10', '16', '46', '48', '21', '21', '124', '37', '33', '12', '8', '0', '616000000', '153000', '1', 'میدان صدوقی', '', '2012', null, '54', null, null);
 
 -- ----------------------------
 -- Table structure for ym_car_images
@@ -200,6 +202,83 @@ CREATE TABLE `ym_car_images` (
 INSERT INTO `ym_car_images` VALUES ('3', '2', 'tAg1g1512318779.jpg');
 INSERT INTO `ym_car_images` VALUES ('2', '3', 'tAg1g1512318779.jpg');
 INSERT INTO `ym_car_images` VALUES ('1', '3', 'WrLAG1512318779.jpg');
+
+-- ----------------------------
+-- Table structure for ym_contact_department
+-- ----------------------------
+DROP TABLE IF EXISTS `ym_contact_department`;
+CREATE TABLE `ym_contact_department` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) COLLATE utf8_persian_ci NOT NULL COMMENT 'عنوان',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
+
+-- ----------------------------
+-- Records of ym_contact_department
+-- ----------------------------
+INSERT INTO `ym_contact_department` VALUES ('5', 'مدیریت');
+
+-- ----------------------------
+-- Table structure for ym_contact_messages
+-- ----------------------------
+DROP TABLE IF EXISTS `ym_contact_messages`;
+CREATE TABLE `ym_contact_messages` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_persian_ci DEFAULT NULL COMMENT 'نام و نام خانوادگی',
+  `email` varchar(255) NOT NULL,
+  `tel` varchar(255) DEFAULT NULL,
+  `subject` varchar(255) CHARACTER SET utf8 COLLATE utf8_persian_ci DEFAULT NULL,
+  `body` varchar(1000) CHARACTER SET utf8 COLLATE utf8_persian_ci DEFAULT NULL,
+  `date` varchar(20) DEFAULT NULL,
+  `department_id` int(10) unsigned DEFAULT NULL,
+  `seen` tinyint(1) unsigned DEFAULT '0',
+  `reply` tinyint(1) unsigned DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `department_id` (`department_id`),
+  CONSTRAINT `ym_contact_messages_ibfk_1` FOREIGN KEY (`department_id`) REFERENCES `ym_contact_department` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of ym_contact_messages
+-- ----------------------------
+INSERT INTO `ym_contact_messages` VALUES ('5', 'تست', 'yusef@s.s', '09358389265', 'asd', 'adff', '1512411146', '5', '0', '0');
+
+-- ----------------------------
+-- Table structure for ym_contact_receivers
+-- ----------------------------
+DROP TABLE IF EXISTS `ym_contact_receivers`;
+CREATE TABLE `ym_contact_receivers` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) COLLATE utf8_persian_ci DEFAULT NULL,
+  `email` varchar(128) COLLATE utf8_persian_ci DEFAULT NULL,
+  `department_id` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `department_id` (`department_id`),
+  CONSTRAINT `ym_contact_receivers_ibfk_1` FOREIGN KEY (`department_id`) REFERENCES `ym_contact_department` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
+
+-- ----------------------------
+-- Records of ym_contact_receivers
+-- ----------------------------
+INSERT INTO `ym_contact_receivers` VALUES ('1', 'یوسف مبشری', 'yusef.mobasheri@gmail.com', '5');
+
+-- ----------------------------
+-- Table structure for ym_contact_replies
+-- ----------------------------
+DROP TABLE IF EXISTS `ym_contact_replies`;
+CREATE TABLE `ym_contact_replies` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `message_id` int(10) unsigned NOT NULL,
+  `body` text COLLATE utf8_persian_ci NOT NULL COMMENT 'متن پاسخ',
+  `date` varchar(20) COLLATE utf8_persian_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `message_id` (`message_id`),
+  CONSTRAINT `ym_contact_replies_ibfk_1` FOREIGN KEY (`message_id`) REFERENCES `ym_contact_messages` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
+
+-- ----------------------------
+-- Records of ym_contact_replies
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for ym_counter_save
@@ -233,7 +312,7 @@ CREATE TABLE `ym_counter_users` (
 -- ----------------------------
 -- Records of ym_counter_users
 -- ----------------------------
-INSERT INTO `ym_counter_users` VALUES ('837ec5754f503cfaaee0929fd48974e7', '1512379918');
+INSERT INTO `ym_counter_users` VALUES ('837ec5754f503cfaaee0929fd48974e7', '1512411178');
 
 -- ----------------------------
 -- Table structure for ym_countries
@@ -281,7 +360,7 @@ CREATE TABLE `ym_google_maps` (
 -- ----------------------------
 -- Records of ym_google_maps
 -- ----------------------------
-INSERT INTO `ym_google_maps` VALUES ('1', '', '35.72781914695719', '51.41998856328428', '19');
+INSERT INTO `ym_google_maps` VALUES ('1', '', '35.7852900556299', '51.381168365478516', '13');
 
 -- ----------------------------
 -- Table structure for ym_lists
@@ -957,16 +1036,20 @@ CREATE TABLE `ym_site_setting` (
   `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_persian_ci NOT NULL,
   `value` text CHARACTER SET utf8 COLLATE utf8_persian_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ym_site_setting
 -- ----------------------------
 INSERT INTO `ym_site_setting` VALUES ('1', 'site_title', 'عنوان سایت', 'آرا خودرو');
 INSERT INTO `ym_site_setting` VALUES ('2', 'default_title', 'عنوان پیش فرض صفحات', '');
-INSERT INTO `ym_site_setting` VALUES ('3', 'keywords', 'کلمات کلیدی سایت', '');
+INSERT INTO `ym_site_setting` VALUES ('3', 'keywords', 'کلمات کلیدی سایت', '[\"\"]');
 INSERT INTO `ym_site_setting` VALUES ('4', 'site_description', 'شرح وبسایت', '');
-INSERT INTO `ym_site_setting` VALUES ('5', 'social_links', 'شبکه های اجتماعی', '{\"facebook\":\"http:\\/\\/facebook.com\",\"telegram\":\"http:\\/\\/telegram.me\"}');
+INSERT INTO `ym_site_setting` VALUES ('5', 'social_links', 'شبکه های اجتماعی', '{\"facebook\":\"http:\\/\\/facebook.com\",\"twitter\":\"http:\\/\\/twitter.com\",\"telegram\":\"http:\\/\\/telegram.me\",\"youtube\":\"http:\\/\\/youtube.com\",\"instagram\":\"http:\\/\\/instagram.com\"}');
+INSERT INTO `ym_site_setting` VALUES ('6', 'address', 'آدرس', 'تهران - خیابان مصطفی خمینی، بین چهار راه سیروس و چهار راه مولوی، نبش کوچه غفاری - پلاک 182');
+INSERT INTO `ym_site_setting` VALUES ('7', 'tel', 'تلفن', '+98 2165744222');
+INSERT INTO `ym_site_setting` VALUES ('8', 'fax', 'فکس', '+98 2165744222');
+INSERT INTO `ym_site_setting` VALUES ('9', 'master_email', 'ایمیل اصلی سایت', 'info@carcadeh.ir');
 
 -- ----------------------------
 -- Table structure for ym_slideshow
@@ -1121,7 +1204,7 @@ CREATE TABLE `ym_user_details` (
 -- Records of ym_user_details
 -- ----------------------------
 INSERT INTO `ym_user_details` VALUES ('43', 'مسعود', 'قراگوزلو', '09373252746', '3718895691', 'بلوار سوم خرداد', 'amKd41493797323.jpg', '09123456789', null);
-INSERT INTO `ym_user_details` VALUES ('45', 'یوسف', 'مبشری', '09373252746', '3718895691', 'بلوار سوم خرداد', null, '09358389265', null);
+INSERT INTO `ym_user_details` VALUES ('45', 'یوسف', 'مبشری', '09373252746', '3715146164', 'بلوار سوم خرداد', null, '09358389265', null);
 INSERT INTO `ym_user_details` VALUES ('48', 'محسن', 'زنگنه', null, '', '', 'i2jSp1495908412.jpg', '09362865267', null);
 INSERT INTO `ym_user_details` VALUES ('68', 'امیر', 'امینی', null, null, null, null, null, null);
 INSERT INTO `ym_user_details` VALUES ('70', 'امیر', 'طهماسبی', null, null, null, null, null, null);
@@ -1164,13 +1247,12 @@ CREATE TABLE `ym_user_parking` (
   KEY `car_id` (`car_id`),
   CONSTRAINT `ym_user_parking_ibfk_2` FOREIGN KEY (`car_id`) REFERENCES `ym_cars` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `ym_user_parking_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `ym_users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
 
 -- ----------------------------
 -- Records of ym_user_parking
 -- ----------------------------
-INSERT INTO `ym_user_parking` VALUES ('14', '45', '2');
-INSERT INTO `ym_user_parking` VALUES ('15', '45', '3');
+INSERT INTO `ym_user_parking` VALUES ('31', '45', '2');
 
 -- ----------------------------
 -- Table structure for ym_user_plans
