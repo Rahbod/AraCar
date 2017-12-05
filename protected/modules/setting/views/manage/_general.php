@@ -2,8 +2,11 @@
 /* @var $this SettingManageController */
 /* @var $model SiteSetting */
 ?>
-
-<div class="form">
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">تنظیمات عمومی</h3>
+    </div>
+    <div class="box-body">
     <?
     $form = $this->beginWidget('CActiveForm',array(
         'id'=> 'general-setting',
@@ -12,43 +15,39 @@
     ));
     ?>
 
-    <?php if(Yii::app()->user->hasFlash('success')):?>
-        <div class="alert alert-success fade in">
-            <button class="close close-sm" type="button" data-dismiss="alert"><i class="icon-remove"></i></button>
-            <?php echo Yii::app()->user->getFlash('success');?>
-        </div>
-    <?php elseif(Yii::app()->user->hasFlash('failed')):?>
-        <div class="alert alert-danger fade in">
-            <button class="close close-sm" type="button" data-dismiss="alert"><i class="icon-remove"></i></button>
-            <?php echo Yii::app()->user->getFlash('failed');?>
-        </div>
-    <?php endif;?>
+    <?php $this->renderPartial('//partial-views/_flashMessage') ?>
 
-    <? foreach($model as $field){
-        if($field->name != 'social_links'):?>
-            <?php if($field->name == 'commission'): ?>
-                <div class="row">
-                    <div class="row">
-                        <?php echo CHtml::label($field->title ,'' ,array('class' => 'col-lg-3 control-label')); ?>
-                        <?php echo CHtml::textField("SiteSetting[$field->name]" ,$field->value ,array('size' => 10)); ?> تومان
-                    </div>
+    <?php
+    foreach($model as $field):
+        if($field->name != 'social_links'):
+            if($field->name == 'keywords'):?>
+                <div class="form-group">
+                    <?php echo CHtml::label($field->title,''); ?>
+                    <?
+                    $this->widget("ext.tagIt.tagIt",array(
+                        'name' => "SiteSetting[$field->name]",
+                        'data' => (!empty($field->value))?CJSON::decode($field->value):''
+                    ));
+                    ?>
+                    <p style="clear: both;font-size: 12px;color: #aaa">عبارت را وارد کرده و اینتر بزنید.</p>
+                    <?php echo $form->error($field,'name'); ?>
                 </div>
-            <?php else: ?>
-                <div class="row">
-                    <div class="row">
-                        <?php echo CHtml::label($field->title ,'' ,array('class' => 'col-lg-3 control-label')); ?>
-                        <?php echo CHtml::textarea("SiteSetting[$field->name]" ,$field->value ,array('size' => 60 ,'class' => 'col-lg-9 form-control')); ?>
-                    </div>
+            <?php else:?>
+                <div class="form-group">
+                    <?php echo CHtml::label($field->title,''); ?>
+                    <?php echo CHtml::textField("SiteSetting[$field->name]",$field->value,array('size'=>60,'class'=>'form-control')); ?>
+                    <?php echo $form->error($field,'name'); ?>
                 </div>
-            <?php endif; ?>
-            <?
+            <?php
+            endif;
         endif;
-    }
+    endforeach;
     ?>
-    <div class="row buttons">
+    <div class="form-group buttons">
         <?php echo CHtml::submitButton('ذخیره',array('class' => 'btn btn-success')); ?>
     </div>
     <?
     $this->endWidget();
     ?>
+    </div>
 </div>

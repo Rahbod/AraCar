@@ -130,18 +130,6 @@ class Brands extends CActiveRecord
 		$criteria->order = 'id DESC';
 		return 0;
 	}
-	
-	public function getCarCounts()
-	{
-		$criteria=new CDbCriteria;
-		$criteria->compare('id',$this->id,true);
-		$criteria->compare('logo',$this->logo,true);
-		$criteria->compare('title',$this->title,true);
-		$criteria->compare('slug',$this->slug,true);
-		$criteria->compare('country_id',$this->country_id,true);
-		$criteria->order = 'id DESC';
-		return 0;
-	}
 
 	public static function getList()
 	{

@@ -63,8 +63,8 @@ class SiteController extends Controller
     {
         Yii::app()->theme = 'frontend';
         $this->layout = '//layouts/error';
-        if ($error = Yii::app()->errorHandler->error) {
-            if (Yii::app()->request->isAjaxRequest)
+        if($error = Yii::app()->errorHandler->error){
+            if(Yii::app()->request->isAjaxRequest)
                 echo $error['message'];
             else
                 $this->render('error', $error);
@@ -76,19 +76,44 @@ class SiteController extends Controller
      */
     public function actionContact()
     {
-        $model = new ContactForm;
-        if (isset($_POST['ContactForm'])) {
+        Yii::app()->getModule('contact');
+        Yii::app()->theme = 'frontend';
+        $this->layout = '//layouts/inner';
+        $model = new ContactForm();
+        if(isset($_POST['ContactForm'])){
             $model->attributes = $_POST['ContactForm'];
-            if ($model->validate()) {
-                $name = '=?UTF-8?B?' . base64_encode($model->name) . '?=';
-                $subject = '=?UTF-8?B?' . base64_encode($model->subject) . '?=';
-                $headers = "From: $name <{$model->email}>\r\n" .
-                    "Reply-To: {$model->email}\r\n" .
-                    "MIME-Version: 1.0\r\n" .
-                    "Content-Type: text/plain; charset=UTF-8";
-
-                mail(Yii::app()->params['adminEmail'], $subject, $model->body, $headers);
-                Yii::app()->user->setFlash('contact', 'Thank you for contacting us. We will respond to you as soon as possible.');
+            $contactModel = new ContactMessages();
+            $contactModel->attributes = $_POST['ContactForm'];
+            $dep = ContactDepartment::model()->findByPk($contactModel->department_id);
+            if($model->validate() && $contactModel->save()){
+                $siteName = Yii::app()->name;
+                $subject = 'وبسايت مستر کیتچنز - پیغام در بخش ' . $dep->title . ($model->subject && !empty($model->subject)?' - ' . $model->subject:'');
+                $body = "<div style='padding:15px;white-space: pre-line'>"
+                    . "<p>متن پیام:</p>"
+                    . "<p>" . $model->body . "</p>"
+                    . "<p>"
+                    . "<strong>نام فرستنده : </strong>" . $model->name . "<br>"
+                    . "<strong>شماره تماس : </strong>" . $model->tel
+                    . "</p><br><br>
+                    <p>"
+                    . "<strong>برای ارسال پاسخ روی لینک زیر کلیک کنید: </strong><br>" .
+                    CHtml::link(Yii::app()->createAbsoluteUrl('/contact/messages/view?id=' . $contactModel->id),
+                        Yii::app()->createAbsoluteUrl('/contact/messages/view?id=' . $contactModel->id), array(
+                            'style' => 'color:#1aa4de;font-size:12px'
+                        ))
+                    . "</p>
+                    <hr>
+                    <span style='font-size:10px'>
+                    ارسال شده توسط وبسايت {$siteName}
+                    </span>
+                    </div>                  
+                    ";
+                $receivers = [];
+                $receivers[] = SiteSetting::getOption('master_email');
+                foreach($contactModel->department->receivers as $receiver)
+                    $receivers[] = $receiver->email;
+                Mailer::mail($receivers, $subject, $body, $model->email);
+                Yii::app()->user->setFlash('success', 'باتشکر. پیغام شما با موفقیت ارسال شد.');
                 $this->refresh();
             }
         }
@@ -124,7 +149,7 @@ class SiteController extends Controller
 
     public function actionAutoComplete()
     {
-        if (isset($_POST['query']) and isset($_POST['model']) and isset($_POST['field'])) {
+        if(isset($_POST['query']) and isset($_POST['model']) and isset($_POST['field'])){
             $model = $_POST['model'];
             $query = $_POST['query'];
             $field = $_POST['field'];
@@ -132,7 +157,7 @@ class SiteController extends Controller
             /* @var CActiveRecord $model */
             $list = $model::model()->findAll($field . ' REGEXP :field', [':field' => Persian2Arabic::parse($query)]);
             echo CJSON::encode(CHtml::listData($list, 'id', $field));
-        } else
+        }else
             return null;
     }
 }

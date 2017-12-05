@@ -34,9 +34,16 @@ class Mailer
             $mail->SetFrom($SMTP['Username'], Yii::app()->name);
         } else
             $mail->SetFrom($from, Yii::app()->name);
-
-        $mail->AddAddress($to);
-        $mail->isHTML(true);                                  // Set email format to HTML
+        $mail->AddReplyTo($from);
+        if(is_array($to)){
+            $mail->AddAddress(array_shift($to));
+            foreach($to as $receiver){ // send message to all admins emails
+                $mail->AddBCC($receiver);
+            }
+        }
+        else
+            $mail->AddAddress($to);
+        $mail->isHTML(true); // Set email format to HTML
         $mail->Body = $message;
         $mail->Subject = $subject;
         foreach ($attachments as $attachment) {

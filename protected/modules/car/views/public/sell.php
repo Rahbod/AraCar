@@ -7,6 +7,7 @@
 $this->breadcrumbs = array(
 	'فروش خودرو'
 );
+
 ?>
 <div class="content-box white-bg">
 	<div class="center-box">

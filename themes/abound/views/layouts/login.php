@@ -29,7 +29,6 @@
     $cs->registerCssFile($baseUrl . '/css/font-awesome.css');
     $cs->registerCssFile($baseUrl . '/css/ionicons.css');
     $cs->registerCssFile($baseUrl . '/css/AdminLTE.css');
-    $cs->registerCssFile($baseUrl . '/plugins/iCheck/all.css');
     $cs->registerCssFile($baseUrl . '/css/skins/skin-blue.min.css');
     $cs->registerCssFile($baseUrl . '/css/bootstrap-rtl.min.css');
     $cs->registerCssFile($baseUrl . '/css/rtl.css');
@@ -37,7 +36,6 @@
     $cs->registerCoreScript('jquery');
     $cs->registerCoreScript('jquery.ui');
     $cs->registerScriptFile($baseUrl . '/js/bootstrap.min.js');
-    $cs->registerScriptFile($baseUrl . '/plugins/iCheck/icheck.min.js');
     $cs->registerScriptFile($baseUrl . '/js/app.min.js', CClientScript::POS_END);
     $cs->registerScriptFile($baseUrl . '/js/login-script.js');
     $cs->registerScriptFile($baseUrl . '/js/script.js');

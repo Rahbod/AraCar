@@ -21,8 +21,11 @@
             'separator' => ''
         )); ?>
         <?php
-        if($this->leftLink)
-            echo $this->leftLink;
+        if($this->layout == '//layouts/panel' || Yii::app()->request->url == Yii::app()->request->baseUrl.'/sell'):
+        ?>
+            <a href="#"><div class="pull-left page-info bg-success upgrade-user-btn"><i class="honor-icon"></i><b>ارتقای عضویت</b></div></a>
+        <?php
+        endif;
         ?>
     </div>
 </div>

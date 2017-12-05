@@ -7,6 +7,7 @@ body {
     font-size: 13px;
     color: #313131;
     background: #f5f5f5;
+    overflow-x: hidden!important;;
 }
 
 a,
@@ -1162,7 +1163,6 @@ input[type="checkbox"]:checked + label::before {
 .content-box.white-bg{
     background-color: #fff !important;
     padding-bottom: 80px;
-    margin-bottom: 100px;
 }
 .shadow-bottom{
     -webkit-box-shadow: 0 3px 2px rgba(0, 0, 0, 0.1);
@@ -1906,25 +1906,25 @@ input.form-control.white-bg {
     padding-top: 30px;
     position: relative;
 }
-.contact-box .social-icons{
+.social-networks .social-icons{
     display: block;
     height: 34px;
     margin-top: 10px;
 }
-.contact-box .social-icons .svg-icons{
+.social-networks .social-icons .svg-icons{
     margin: 0 5px;
     float: left;
 }
-.contact-box .social-icons {
+.social-networks .social-icons {
     display: block;
     height: 34px;
-    margin-top: 10px;
+    margin-top: 15px;
     direction: ltr;
 }
-.contact-box .social-icons > a{
+.social-networks .social-icons > a{
     display: inline-block;
 }
-.contact-box .svg-icons {
+.social-networks .svg-icons {
     display: inline-block;
     overflow: hidden;
     background-size: 30px !important;
@@ -1934,7 +1934,7 @@ input.form-control.white-bg {
     margin: 0 4px;
     border: 2px solid #fff;
 }
-.contact-box .social-networks{
+.social-networks{
     height: 60px;
     display: block;
     overflow: hidden;
@@ -1965,7 +1965,7 @@ input.form-control.white-bg {
     width: 100%;
 }
 .contact-form .form-group{
-    padding-bottom: 15px !important;
+    padding-bottom: 20px !important;
 }
 .contact-form .form-control{
     color: rgba(61, 61, 61, 0.66);
@@ -1973,6 +1973,7 @@ input.form-control.white-bg {
     height: auto;
 }
 .contact-form .btn.dropdown-toggle.btn-default,
+.contact-form textarea.form-control,
 .contact-form input.form-control{
     background-color: #fff!important;
     border: none !important;
@@ -1992,7 +1993,7 @@ input.form-control.white-bg {
     margin-bottom: 0;
 }
 .contact-form textarea.form-control{
-    height: 213px;
+    height: 228px;
     resize: none;
 }
 .contact-form .col-lg-8 .form-group{
@@ -2590,6 +2591,7 @@ input.form-control.white-bg {
     padding: 10px 20px;
     min-width:642px;
     width: auto;
+    border-radius: 0 !important;
 }
 .navbar-nav .dropdown-menu.price-menu{
     min-width:842px;
@@ -2636,4 +2638,26 @@ input.form-control.white-bg {
     padding: 10px;
     border-radius: 0;
     border: none;
+}
+footer{
+    background-color: #e6e6e6;
+    display: block;
+    overflow: hidden;
+}
+#google-map{
+    width: 100%;
+    height: 100%;
+}
+.copyright-box{
+    height: 60px;
+    display: block;
+    overflow: hidden;
+    padding: 10px 0;
+}
+.copyright-box b{
+    color: #aaa;
+    font-size: 14px;
+}
+.copyright-box > span{
+    color: #666;
 }
