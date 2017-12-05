@@ -45,7 +45,7 @@ class CarSearchController extends Controller
 
         $criteria = new CDbCriteria();
         $criteria->with = ['brand'];
-        $criteria->compare('brand.title', $brand, true);
+        $criteria->compare('brand.slug', $brand, true);
         $dataProvider = new CActiveDataProvider('Cars', [
             'criteria' => $criteria,
         ]);
@@ -123,7 +123,7 @@ class CarSearchController extends Controller
     public function createFilterUrl($query, $value)
     {
         $url = "?{$query}={$value}";
-        if($queryString = Yii::app()->request->getQueryString()) {
+        if ($queryString = Yii::app()->request->getQueryString()) {
             $queryStringArray = explode('&', $queryString);
             unset($queryStringArray[key(preg_grep("/{$query}/", $queryStringArray))]);
             if (count($queryStringArray) != 0)

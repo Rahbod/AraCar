@@ -2,7 +2,7 @@
 /* @var $this CarPublicController */
 /* @var $car Cars */
 /* @var $similar Cars[] */
-/* @var $mainImage CarImages */
+
 // load owl carousel plugin
 $cs = Yii::app()->clientScript;
 $baseUrl = Yii::app()->theme->baseUrl;
@@ -20,9 +20,6 @@ $breadcrumbs= [
 $brand = $car->brand;
 $model = $car->model;
 $images = $car->carImages;
-$mainImage = false;
-if($images)
-	$mainImage = $images[0];
 
 $imagePath = Yii::getPathOfAlias('webroot').DIRECTORY_SEPARATOR.$this->imagePath.DIRECTORY_SEPARATOR;
 $imageUrl = Yii::app()->getBaseUrl(true).'/'.$this->imagePath.'/';
@@ -62,9 +59,9 @@ $parked = UserParking::model()->findByAttributes(['user_id' => $car->user_id, 'c
 				<div class="image-container">
 					<div class="main-image-container">
 						<?php
-						if($mainImage && $mainImage->filename && file_exists($imagePath.$mainImage->filename)):
+						if($car->mainImage && $car->mainImage->filename && file_exists($imagePath.$car->mainImage->filename)):
 						?>
-							<img src="<?= $imageUrl.$mainImage->filename ?>" alt="<?= $car->getTitle(false)?>">
+							<img src="<?= $imageUrl.$car->mainImage->filename ?>" alt="<?= $car->getTitle(false)?>">
 						<?php
 						endif;
 						?>

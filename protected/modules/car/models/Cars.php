@@ -33,6 +33,7 @@
  * @property string $plan_rules
  * @property string $title
  * @property [] $oldImages
+ * @property CarImages $mainImage
  *
  * The followings are the available model relations:
  * @property CarImages[] $carImages
@@ -356,5 +357,12 @@ class Cars extends CActiveRecord
         return $activeProvider?new CActiveDataProvider('Cars', array(
             'criteria' => $cr
         )):$this->findAll($cr);
+    }
+
+    public function getMainImage()
+    {
+        if ($this->carImages)
+            return $this->carImages[0];
+        return null;
     }
 }
