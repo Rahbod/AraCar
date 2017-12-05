@@ -2591,6 +2591,7 @@ input.form-control.white-bg {
     padding: 10px 20px;
     min-width:642px;
     width: auto;
+    border-radius: 0 !important;
 }
 .navbar-nav .dropdown-menu.price-menu{
     min-width:842px;

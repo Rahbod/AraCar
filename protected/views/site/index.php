@@ -119,7 +119,7 @@ $cs->registerScriptFile($baseUrl.'/js/owl.carousel.min.js', CClientScript::POS_E
             if($brand->logo && file_exists($logoPath.$brand->logo)):
         ?>
             <div class="item">
-                <a href="#"><img src="<?= Yii::app()->getBaseUrl(true).'/uploads/brands/'.$brand->logo ?>"><span><?= 0 ?></span></a>
+                <a href="<?= Yii::app()->createUrl('/car/brand/'.$brand->slug) ?>"><img src="<?= Yii::app()->getBaseUrl(true).'/uploads/brands/'.$brand->logo ?>"><span><?= Controller::parseNumbers(number_format($brand->carsCount)) ?></span></a>
             </div>
         <?php
             endif;
