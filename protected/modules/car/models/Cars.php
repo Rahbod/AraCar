@@ -33,6 +33,7 @@
  * @property string $plan_rules
  * @property string $title
  * @property [] $oldImages
+ * @property CarImages $mainImage
  *
  * The followings are the available model relations:
  * @property CarImages[] $carImages
@@ -368,5 +369,12 @@ class Cars extends CActiveRecord
         if(!$withDelete)
             unset($this->statusLabels[Cars::STATUS_DELETED]);
         return $this->statusLabels;
+    }
+
+    public function getMainImage()
+    {
+        if ($this->carImages)
+            return $this->carImages[0];
+        return null;
     }
 }

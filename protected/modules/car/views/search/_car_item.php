@@ -1,7 +1,9 @@
 <?php /* @var $data Cars */ ?>
-<div class="advertising-item special">
+<div class="advertising-item">
     <div class="image-container">
-        <img src="<?= Yii::app()->baseUrl . '/uploads/car/';?>">
+        <?php if($data->mainImage):?>
+            <img src="<?= Yii::app()->baseUrl . '/uploads/cars/' . $data->mainImage->filename;?>">
+        <?php endif;?>
     </div>
     <div class="info-container">
         <h2><?= $data->getTitle()?> | <span class="time"><?= JalaliDate::differenceTime($data->update_date)?></span></h2>

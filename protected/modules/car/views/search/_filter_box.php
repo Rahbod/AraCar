@@ -46,7 +46,7 @@ if(Yii::app()->request->getQueryString())
             <ul class="brands-list">
                 <?php foreach($this->brands as $brand):?>
                     <?php /* @var Brands $brand */ ?>
-                    <li<?= $brand->id == $selectedBrand->id ? ' class="selected"' : ''?>>
+                    <li<?= (isset($selectedBrand) and $brand->id == $selectedBrand->id) ? ' class="selected"' : ''?>>
                         <?php if(count($queryStrings) == 0):?>
                             <label><a href="<?= $this->createUrl('brand', ['title' => $brand->slug])?>"><span class="title"><?= $brand->title?></span><span><?= $brand->carsCount?></span></a></label>
                         <?php else:?>
