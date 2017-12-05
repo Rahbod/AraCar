@@ -1594,7 +1594,7 @@ input.form-control.white-bg {
     height: 20px;
 }
 .honor-icon{
-    background: url("../images/honor.png") no-repeat scroll center transparent;
+    background: url("../svg/honor.svg") no-repeat scroll center transparent;
     background-size: cover;
     width: 17px;
     height: 25px;

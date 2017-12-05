@@ -69,7 +69,28 @@ if(!!$model->isNewRecord)
 		<?php echo $form->error($model,'images'); ?>
 		<div class="uploader-message error"></div>
 	</div>
-
+    <div class="form-group well">
+        <h4><?php echo $form->labelEx($model,'details'); ?></h4>
+        <?php
+        foreach(ModelDetails::$detailFields as $group => $items):
+            ?>
+            <div class="row">
+                <?php
+                foreach($items as $item):
+                ?>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <?php echo CHtml::label($item['title'],$item['name']) ?>
+                        <?php echo CHtml::textField("ModelDetails[details][{$group}][{$item['name']}]",$model->getDetail($group,$item['name']),array('class' => 'form-control')) ?>
+                    </div>
+                <?php
+                endforeach;
+                ?>
+            </div>
+            <hr>
+            <?php
+        endforeach;
+        ?>
+    </div>
 	<div class="form-group buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'افزودن' : 'ویرایش',array('class' => 'btn btn-success')); ?>
 	</div>

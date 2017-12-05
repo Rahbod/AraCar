@@ -16,39 +16,152 @@
 class ModelDetails extends CActiveRecord
 {
     public static $detailFields = [
-        [
-            'title' => 'ویژگی ها',
-            'name' => 'attributes',
-
+        'paper' => [
+            [
+                'title' => 'ویژگی ها',
+                'name' => 'attributes',
+            ],
+            [
+                'title' => 'گیربکس',
+                'name' => 'gearbox',
+            ]
+        ],
+        'engine' => [
+            [
+                'title' => 'حجم موتور',
+                'name' => 'engine'
+            ],
+            [
+                'title' => 'دیفرانسیل',
+                'name' => 'differential'
+            ],
+            [
+                'title' => 'سیلندر',
+                'name' => 'cylinder'
+            ],
+            [
+                'title' => 'تعداد سوپاپ',
+                'name' => 'valves'
+            ],
+            [
+                'title' => 'اسب بخار',
+                'name' => 'hp'
+            ],
+            [
+                'title' => 'گشتاور',
+                'name' => 'torque'
+            ]
+        ],
+        'ruler' => [
+            [
+                'title' => 'طول',
+                'name' => 'length'
+            ],
+            [
+                'title' => 'عرض',
+                'name' => 'width'
+            ],
+            [
+                'title' => 'ارتفاع',
+                'name' => 'height'
+            ],
+            [
+                'title' => 'وزن',
+                'name' => 'weight'
+            ],
+            [
+                'title' => 'سایز تایر',
+                'name' => 'tire'
+            ]
+        ],
+        'speedometer' => [
+            [
+                'title' => 'حداکثر سرعت',
+                'name' => 'speed'
+            ],
+            [
+                'title' => 'شتاب',
+                'name' => 'acceleration'
+            ]
+        ],
+        'fuel' => [
+            [
+                'title' => 'سوخت',
+                'name' => 'fuel'
+            ],
+            [
+                'title' => 'ظرفیت مخزن',
+                'name' => 'capacity'
+            ],
+            [
+                'title' => 'استاندارد محیط زیست',
+                'name' => 'standard'
+            ]
+        ],
+        'belt' => [
+            [
+                'title' => 'کیسه های هوا',
+                'name' => 'airbags'
+            ],
+            [
+                'title' => 'ترمز',
+                'name' => 'brakes'
+            ]
+        ],
+        'fin' => [
+            [
+                'title' => 'صندلی',
+                'name' => 'chair',
+            ],
+            [
+                'title' => 'تهویه مطبوع',
+                'name' => 'airconditioning'
+            ],
+            [
+                'title' => 'پنجره',
+                'name' => 'windows'
+            ],
+            [
+                'title' => 'آینه',
+                'name' => 'mirror'
+            ],
+            [
+                'title' => 'چراغ',
+                'name' => 'light'
+            ],
+            [
+                'title' => 'متفرقه',
+                'name' => 'etc'
+            ]
         ]
     ];
 
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
-		return '{{model_details}}';
-	}
+    /**
+     * @return string the associated database table name
+     */
+    public function tableName()
+    {
+        return '{{model_details}}';
+    }
 
-	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
-		return array(
-			array('model_id, product_year', 'required'),
-			array('product_year', 'checkYear', 'on' => 'insert'),
-			array('model_id', 'length', 'max'=>10),
-			array('product_year', 'length', 'is'=>4),
-			array('images, details', 'safe'),
-			// The following rule is used by search().
-			// @todo Please remove those attributes that should not be searched.
-			array('id, model_id, product_year, images, details', 'safe', 'on'=>'search'),
-		);
-	}
+    /**
+     * @return array validation rules for model attributes.
+     */
+    public function rules()
+    {
+        // NOTE: you should only define rules for those attributes that
+        // will receive user inputs.
+        return array(
+            array('model_id, product_year', 'required'),
+            array('product_year', 'checkYear', 'on' => 'insert'),
+            array('model_id', 'length', 'max' => 10),
+            array('product_year', 'length', 'is' => 4),
+            array('images, details', 'safe'),
+            // The following rule is used by search().
+            // @todo Please remove those attributes that should not be searched.
+            array('id, model_id, product_year, images, details', 'safe', 'on' => 'search'),
+        );
+    }
 
     public function checkYear($attribute, $params)
     {
@@ -65,68 +178,68 @@ class ModelDetails extends CActiveRecord
         }
     }
 
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
-	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
-		return array(
+    /**
+     * @return array relational rules.
+     */
+    public function relations()
+    {
+        // NOTE: you may need to adjust the relation name and the related
+        // class name for the relations automatically generated below.
+        return array(
             'model' => array(self::BELONGS_TO, 'Models', 'model_id')
-		);
-	}
+        );
+    }
 
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
-	public function attributeLabels()
-	{
-		return array(
-			'id' => 'ID',
-			'model_id' => 'Model',
-			'product_year' => 'سال تولید',
-			'images' => 'تصاویر',
-			'details' => 'جزییات',
-		);
-	}
+    /**
+     * @return array customized attribute labels (name=>label)
+     */
+    public function attributeLabels()
+    {
+        return array(
+            'id' => 'ID',
+            'model_id' => 'Model',
+            'product_year' => 'سال تولید',
+            'images' => 'تصاویر',
+            'details' => 'جزییات',
+        );
+    }
 
-	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 *
-	 * Typical usecase:
-	 * - Initialize the model fields with values from filter form.
-	 * - Execute this method to get CActiveDataProvider instance which will filter
-	 * models according to data in model fields.
-	 * - Pass data provider to CGridView, CListView or any similar widget.
-	 *
-	 * @return CActiveDataProvider the data provider that can return the models
-	 * based on the search/filter conditions.
-	 */
-	public function search()
-	{
-		// @todo Please modify the following code to remove attributes that should not be searched.
+    /**
+     * Retrieves a list of models based on the current search/filter conditions.
+     *
+     * Typical usecase:
+     * - Initialize the model fields with values from filter form.
+     * - Execute this method to get CActiveDataProvider instance which will filter
+     * models according to data in model fields.
+     * - Pass data provider to CGridView, CListView or any similar widget.
+     *
+     * @return CActiveDataProvider the data provider that can return the models
+     * based on the search/filter conditions.
+     */
+    public function search()
+    {
+        // @todo Please modify the following code to remove attributes that should not be searched.
 
-		$criteria=new CDbCriteria;
+        $criteria = new CDbCriteria;
 
-		$criteria->compare('model_id',$this->model_id);
-		$criteria->compare('product_year',$this->product_year,true);
-		$criteria->order = 'product_year DESC';
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
-	}
+        $criteria->compare('model_id', $this->model_id);
+        $criteria->compare('product_year', $this->product_year, true);
+        $criteria->order = 'product_year DESC';
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+        ));
+    }
 
-	/**
-	 * Returns the static model of the specified AR class.
-	 * Please note that you should have this exact method in all your CActiveRecord descendants!
-	 * @param string $className active record class name.
-	 * @return ModelDetails the static model class
-	 */
-	public static function model($className=__CLASS__)
-	{
-		return parent::model($className);
-	}
+    /**
+     * Returns the static model of the specified AR class.
+     * Please note that you should have this exact method in all your CActiveRecord descendants!
+     * @param string $className active record class name.
+     * @return ModelDetails the static model class
+     */
+    public static function model($className = __CLASS__)
+    {
+        return parent::model($className);
+    }
 
     protected function beforeSave()
     {
@@ -140,5 +253,10 @@ class ModelDetails extends CActiveRecord
         parent::afterFind();
         $this->images = $this->images?CJSON::decode($this->images):null;
         $this->details = $this->details?CJSON::decode($this->details):null;
+    }
+
+    public function getDetail($group, $name)
+    {
+        return $this->details && isset($this->details[$group]) && isset($this->details[$group][$name]) && !empty($this->details[$group][$name])?$this->details[$group][$name]:null;
     }
 }
