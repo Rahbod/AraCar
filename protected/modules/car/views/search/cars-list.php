@@ -1,7 +1,6 @@
 <?php
 /* @var $this CarSearchController */
-/* @var $brand Brands */
-/* @var $model Brands */
+/* @var $filters array */
 /* @var $dataProvider CActiveDataProvider */
 ?>
 
@@ -27,13 +26,14 @@
     <div class="center-box">
         <div class="row">
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                <?php $this->renderPartial('_filter_box', array());?>
+                <?php $this->renderPartial('_filter_box', array('filters' => $filters));?>
             </div>
             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
                 <?php $this->widget('zii.widgets.CListView', array(
                     'dataProvider'=>$dataProvider,
                     'itemView'=>'_car_item',
-                    'itemsCssClass' => 'advertising-list'
+                    'itemsCssClass' => 'advertising-list',
+                    'template' => '{items}'
                 )); ?>
                 <a href="#" class="load-more">موارد بیشتر</a>
                 <a href="#" class="load-more on-loading">در حال بارگذاری</a>

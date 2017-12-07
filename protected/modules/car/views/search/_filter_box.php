@@ -5,20 +5,17 @@
 $queryStrings = [];
 if(Yii::app()->request->getQueryString())
     $queryStrings = explode('&', Yii::app()->request->getQueryString());
+
+$price = [
+    'min' => 0,
+    'max' => 100,
+];
+if(isset($filters['price'])) {
+    $prices = explode('-', $filters['price']);
+    $price['min'] = $prices[0];
+    $price['max'] = $prices[1];
+}
 ?>
-<div class="filter-box">
-    <div class="head">
-        <span>استان</span>
-        <i class="toggle-icon <?= isset($filters['state']) ? 'minus' : 'plus'?>" data-toggle="collapse" data-target="#context-1"></i>
-    </div>
-    <div class="context collapse<?= isset($filters['state']) ? ' in' : ''?>" aria-expanded="true" id="context-1">
-        <ul class="list nicescroll" data-cursorcolor="#b7b7b7" data-cursorborder="none" data-railpadding='js:{"top":0,"right":-12,"bottom":0,"left":0}' data-autohidemode="leave">
-            <?php foreach(Towns::model()->findAll() as $town):?>
-                <li><a href="<?= $this->createFilterUrl('state', $town->slug)?>" class="<?= (isset($filters['state']) and $town->slug == $filters['state']) ? 'selected' : ''?>"><?= $town->name?><span><?= $town->carsCount?></span></a></li>
-            <?php endforeach;?>
-        </ul>
-    </div>
-</div>
 <div class="filter-box">
     <div class="head">
         <span>قیمت</span>
@@ -26,12 +23,12 @@ if(Yii::app()->request->getQueryString())
     </div>
     <div class="context collapse<?= isset($filters['price']) ? ' in' : ''?>" aria-expanded="true" id="context-2">
         <div class="range-slider-container">
-            <div class="range-slider" data-min="1000000" data-max="3000000" data-values="[1500000, 2500000]" data-step="1000" data-min-input=".range-min-input" data-max-input=".range-max-input"></div>
-            <input type="text" class="range-min-input digitFormat text-field" value="1500000">
+            <div class="range-slider" data-min="0" data-max="1000000000" data-values="[<?= $price['min'] * 1000000?>, <?= $price['max'] * 1000000?>]" data-step="1000000" data-min-input=".range-min-input" data-max-input=".range-max-input"></div>
+            <input type="text" class="range-min-input digitFormat text-field" value="<?= $price['min'] * 1000000?>">
             <span class="currency">تومان</span>
-            <input type="text" class="range-max-input digitFormat text-field" value="2500000">
+            <input type="text" class="range-max-input digitFormat text-field" value="<?= $price['max'] * 1000000?>">
             <span class="currency">تومان</span>
-            <a href="<?= $this->createFilterUrl('price', '1-2.5')?>" class="btn-blue center-block text-center">اعمال فیلتر قیمت</a>
+            <a href="<?= $this->createFilterUrl('price', isset($filters['price']) ? $filters['price'] : '0')?>" class="btn-blue center-block text-center">اعمال فیلتر قیمت</a>
         </div>
     </div>
 </div>
@@ -73,13 +70,26 @@ if(Yii::app()->request->getQueryString())
 </div>
 <div class="filter-box">
     <div class="head">
+        <span>استان</span>
+        <i class="toggle-icon <?= isset($filters['state']) ? 'minus' : 'plus'?>" data-toggle="collapse" data-target="#context-1"></i>
+    </div>
+    <div class="context collapse<?= isset($filters['state']) ? ' in' : ''?>" aria-expanded="true" id="context-1">
+        <ul class="list nicescroll" data-cursorcolor="#b7b7b7" data-cursorborder="none" data-railpadding='js:{"top":0,"right":-12,"bottom":0,"left":0}' data-autohidemode="leave">
+            <?php foreach(Towns::model()->findAll() as $town):?>
+                <li><a href="<?= $this->createFilterUrl('state', $town->slug)?>" class="<?= (isset($filters['state']) and $town->slug == $filters['state']) ? 'selected' : ''?>"><?= $town->name?><span><?= $town->carsCount?></span></a></li>
+            <?php endforeach;?>
+        </ul>
+    </div>
+</div>
+<div class="filter-box">
+    <div class="head">
         <span>شاسی</span>
         <i class="toggle-icon <?= isset($filters['body']) ? 'minus' : 'plus'?>" data-toggle="collapse" data-target="#context-4"></i>
     </div>
     <div class="context collapse<?= isset($filters['body']) ? ' in' : ''?>" aria-expanded="true" id="context-4">
         <ul class="list nicescroll" data-cursorcolor="#b7b7b7" data-cursorborder="none" data-railpadding='js:{"top":0,"right":-12,"bottom":0,"left":0}' data-autohidemode="leave">
             <?php foreach(Lists::getList('body_types', true) as $body):?>
-                <li><a href="<?= $this->createFilterUrl('body', $body->id)?>" class="<?= (isset($filters['body']) and $body->id == $filters['body']) ? 'selected' : ''?>"><?= $body->title?></a></li>
+                <li><a href="<?= $this->createFilterUrl('body', $body->id)?>" class="<?= (isset($filters['body']) and ($body->id == $filters['body'] or $body->title == str_replace('-', ' ', urldecode($filters['body'])))) ? 'selected' : ''?>"><?= $body->title?></a></li>
             <?php endforeach;?>
         </ul>
     </div>
@@ -144,7 +154,7 @@ if(Yii::app()->request->getQueryString())
     <div class="context collapse<?= isset($filters['plate']) ? ' in' : ''?>" aria-expanded="true" id="context-10">
         <ul class="list nicescroll" data-cursorcolor="#b7b7b7" data-cursorborder="none" data-railpadding='js:{"top":0,"right":-12,"bottom":0,"left":0}' data-autohidemode="leave">
             <?php foreach(Lists::getList('plate_types', true) as $plate):?>
-                <li><a href="<?= $this->createFilterUrl('plate', $plate->id)?>" class="<?= (isset($filters['plate']) and $plate->id == $filters['plate']) ? 'selected' : ''?>"><?= $plate->title?></a></li>
+                <li><a href="<?= $this->createFilterUrl('plate', $plate->id)?>" class="<?= (isset($filters['plate']) and ($plate->id == $filters['plate'] or $plate->title == str_replace('-', ' ', urldecode($filters['plate'])))) ? 'selected' : ''?>"><?= $plate->title?></a></li>
             <?php endforeach;?>
         </ul>
     </div>
@@ -165,19 +175,19 @@ if(Yii::app()->request->getQueryString())
 <?php Yii::app()->clientScript->registerScript('changePriceFilterBtnUrl', '
     function changePriceFilterBtnUrl(min, max) {
         var queryStrings = ' . (count($queryStrings) == 0 ? "[]" : CJSON::encode($queryStrings)) . ',
-            hasPrice = false;
+            hasPrice = false
+            filteredQueryStrings = [];
 
         min = min / 1000000;
         max = max / 1000000;
-
         $.each(queryStrings, function(index, item) {
-            if(item.match(/price/))
-                queryStrings.filter(e => e !== index);
+            if(!item.match(/price/))
+                filteredQueryStrings[filteredQueryStrings.length] = item;
         });
 
-        if(queryStrings.length == 0)
+        if(filteredQueryStrings.length == 0)
             $(".filter-box .range-slider-container .btn-blue").attr("href", "?price=" + min + "-" + max);
         else
-            $(".filter-box .range-slider-container .btn-blue").attr("href", "?" + queryStrings.join("&") + "&price=" + min + "-" + max);
+            $(".filter-box .range-slider-container .btn-blue").attr("href", "?" + filteredQueryStrings.join("&") + "&price=" + min + "-" + max);
     }
 ', CClientScript::POS_BEGIN);?>

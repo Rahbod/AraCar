@@ -115,7 +115,17 @@ class CarSearchController extends Controller
             'criteria' => $criteria,
         ]);
 
+        $filters = [];
+        if ($queryString = Yii::app()->request->getQueryString()) {
+            $queryStrings = explode('&', $queryString);
+            foreach ($queryStrings as $queryString) {
+                $arr = explode('=', $queryString);
+                $filters[$arr[0]] = $arr[1];
+            }
+        }
+
         $this->render('cars-list', array(
+            'filters' => $filters,
             'dataProvider' => $dataProvider,
         ));
     }

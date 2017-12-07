@@ -51,7 +51,8 @@
                 <?php $this->widget('zii.widgets.CListView', array(
                     'dataProvider'=>$dataProvider,
                     'itemView'=>'_car_item',
-                    'itemsCssClass' => 'advertising-list'
+                    'itemsCssClass' => 'advertising-list',
+                    'template' => '{items}'
                 )); ?>
                 <a href="#" class="load-more">موارد بیشتر</a>
                 <a href="#" class="load-more on-loading">در حال بارگذاری</a>

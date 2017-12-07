@@ -55,8 +55,8 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">موارد خاص</a>
                     <div class="dropdown-menu special-menu">
                         <ul class="linear-menu">
-                            <li><a href="<?= $this->createUrl('/car/search/all?special=' . str_replace(' ', '-', 'منطقه آزاد'))?>">منطقه آزاد</a></li>
-                            <li><a href="<?= $this->createUrl('/car/search/all?special=' . str_replace(' ', '-', 'گذر موقت'))?>">گذر موقت</a></li>
+                            <li><a href="<?= $this->createUrl('/car/search/all?plate=' . str_replace(' ', '-', 'منطقه آزاد'))?>">منطقه آزاد</a></li>
+                            <li><a href="<?= $this->createUrl('/car/search/all?plate=' . str_replace(' ', '-', 'گذر موقت'))?>">گذر موقت</a></li>
                         </ul>
                     </div>
                 </li>
