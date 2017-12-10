@@ -1473,7 +1473,7 @@ input.form-control.white-bg {
 .panel-default .panel-body .car-header .logo img{
     height: 65px;
     margin-top: -15px;
-    margin-bottom: -10px;
+    margin-bottom: 5px;
 }
 .panel-default .panel-body .car-header .car-title{
 
@@ -1489,9 +1489,6 @@ input.form-control.white-bg {
 .panel-title{
     line-height: 40px;
 }
-.compare-panel{
-    height: 800px;
-}
 
 .grayscale-static,
 .grayscale {
@@ -1506,8 +1503,6 @@ input.form-control.white-bg {
     background-color: #e6e6e6;
     padding: 30px;
     padding-left: 45px;
-    height:373px;
-    overflow-y: auto;
     border-radius: 0 0 5px 5px;
 }
 .car-details{
@@ -1575,11 +1570,39 @@ input.form-control.white-bg {
     width: 35px;
     height: 35px;
 }
-.svg-khatkesh{
+.svg-ruler{
     background: url("../svg/khatkesh.svg") no-repeat scroll center transparent;
     background-size: 70px;
     width: 40px;
     height: 60px;
+}
+.svg-fuel{
+    background: url("../images/fuel.png") no-repeat scroll center transparent;
+    background-size: 32px auto;
+    width: 40px;
+    height: 40px;
+    opacity: 0.8 !important;
+}
+.svg-comfort{
+    background: url("../images/comfort.png") no-repeat scroll center transparent;
+    background-size: 32px auto;
+    width: 40px;
+    height: 40px;
+    opacity: 0.8 !important;
+}
+.svg-safety{
+    background: url("../images/safety.png") no-repeat scroll center transparent;
+    background-size: 32px auto;
+    width: 40px;
+    height: 40px;
+    opacity: 0.8 !important;
+}
+.svg-fuel{
+    background: url("../images/fuel.png") no-repeat scroll center transparent;
+    background-size: 32px auto;
+    width: 40px;
+    height: 40px;
+    opacity: 0.8 !important;
 }
 .svg-back-alt{
     background: url("../svg/back-alt.svg") no-repeat scroll center transparent;
@@ -2660,4 +2683,7 @@ footer{
 }
 .copyright-box > span{
     color: #666;
+}
+.compare-panel .btn-sm{
+    padding: 11px 15px;
 }

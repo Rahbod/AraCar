@@ -49,6 +49,7 @@ class Controller extends AuthController
     public $brands;
     public $chassis;
     public $prices;
+    public $leftBox;
 
     public function getPageSizeDropDownTag()
     {

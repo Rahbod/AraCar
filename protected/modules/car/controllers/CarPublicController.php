@@ -9,6 +9,8 @@ class CarPublicController extends Controller
     public $layout = '//layouts/public';
     public $tempPath = 'uploads/temp';
     public $imagePath = 'uploads/cars';
+    public $brandImagePath = 'uploads/brands';
+    public $modelImagePath = 'uploads/brands/models';
 
 
     /**
@@ -17,7 +19,7 @@ class CarPublicController extends Controller
     public function filters()
     {
         return array(
-            'checkAccess - index, view, getBrandModels, getModelYears, json', // perform access control for CRUD operations
+            'checkAccess - research, view, getBrandModels, getModelYears, json', // perform access control for CRUD operations
         );
     }
 
@@ -29,7 +31,7 @@ class CarPublicController extends Controller
         return array(
             'frontend' => array(
                 'sell', 'delete', 'upload', 'deleteUpload', 'authJson', // auth required
-                'index', 'view', 'getBrandModels', 'getModelYears', 'json', // allow for all
+                'research', 'view', 'getBrandModels', 'getModelYears', 'json', // allow for all
             )
         );
     }
@@ -160,11 +162,75 @@ class CarPublicController extends Controller
     }
 
     /**
-     * Lists all models.
+     * @param bool $params
+     * @throws CHttpException
      */
-    public function actionIndex()
+    public function actionResearch($params = false)
     {
-        echo 1;
+        Yii::app()->theme = 'frontend';
+        $this->layout = '//layouts/inner';
+        $this->pageTitle = 'بررسی و مقایسه خودرو';
+        $this->pageHeader = 'بررسی / مقایسه خودرو';
+        $brand1 = null;
+        $brand2 = null;
+        $model1 = null;
+        $model2 = null;
+        $year1 = null;
+        $year2 = null;
+
+        $b1 = null;
+        $m1 = null;
+        $y1 = null;
+        $b2 = null;
+        $m2 = null;
+        $y2 = null;
+        $vs = null;
+        if($params && $params = explode('/', $params)){
+            $vs = array_search('vs', $params);
+            if($vs === false){
+                $b1 = isset($params[0]) && !empty($params[0])?$params[0]:null;
+                $m1 = isset($params[1]) && !empty($params[1])?$params[1]:null;
+                $y1 = isset($params[2]) && !empty($params[2])?$params[2]:null;
+                $b2 = null;
+                $m2 = null;
+                $y2 = null;
+            }else{
+                $b1 = $vs != 0 && isset($params[0]) && !empty($params[0])?$params[0]:null;
+                $m1 = $vs > 1 && isset($params[1]) && !empty($params[1])?$params[1]:null;
+                $y1 = $vs > 2 && isset($params[2]) && !empty($params[2])?$params[2]:null;
+                $b2 = isset($params[$vs+1]) && !empty($params[$vs+1])?$params[$vs+1]:null;
+                $m2 = isset($params[$vs+2]) && !empty($params[$vs+2])?$params[$vs+2]:null;
+                $y2 = isset($params[$vs+3]) && !empty($params[$vs+3])?$params[$vs+3]:null;
+            }
+            $brand1 = $b1?Brands::model()->findByAttributes(array('slug' => $b1)):null;
+            $brand2 = $b2?Brands::model()->findByAttributes(array('slug' => $b2)):null;
+            $model1 = $brand1 && $m1?Models::model()->findByAttributes(array('brand_id' => $brand1->id, 'slug' => $m1)):null;
+            $model2 = $brand2 && $m2?Models::model()->findByAttributes(array('brand_id' => $brand2->id, 'slug' => $m2)):null;
+            $year1 = $model1 && $y1?ModelDetails::model()->findByAttributes(array('model_id' => $model1->id, 'product_year' => $y1)):null;
+            $year2 = $model2 && $y2?ModelDetails::model()->findByAttributes(array('model_id' => $model2->id, 'product_year' => $y2)):null;
+        }
+
+        $criteria = new CDbCriteria();
+        $criteria->addCondition('models.id IS NOT NULL and lastYear.id IS NOT NULL');
+        $criteria->with = array('models', 'models.lastYear');
+        $criteria->order = 't.title';
+        $brands = Brands::model()->findAll($criteria);
+        $this->render('research', compact(
+            'brands',
+            'brand1',
+            'brand2',
+            'model1',
+            'model2',
+            'year1',
+            'year2',
+            'b1',
+            'm1',
+            'y1',
+            'b2',
+            'm2',
+            'y2',
+            'vs'
+        ));
     }
 
     /**
