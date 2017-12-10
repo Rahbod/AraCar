@@ -1159,6 +1159,8 @@ input[type="checkbox"]:checked + label::before {
 }
 .content-box{
     min-height: 400px;
+    position: relative;
+    z-index:1;
 }
 .content-box.white-bg{
     background-color: #fff !important;

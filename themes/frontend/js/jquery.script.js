@@ -8,9 +8,25 @@ $(document).ready(function() {
     $(document).on("click", ".content-box .filter-box .head .toggle-icon", function () {
         $(this).toggleClass("plus").toggleClass("minus");
     }).on('keyup', '.range-min-input', function () {
-        $(this).parent().find('.range-slider').slider("option", "values", [parseInt($(this).val()), parseInt($('.range-max-input').val())]);
+        var strMin = $(this).val(),
+            strMax = $('.range-max-input').val();
+        for (var i = 0; i < ($(this).val().match(/,/g) || []).length; i++)
+            strMin = strMin.replace(/,/, '');
+
+        for (var j = 0; j < ($('.range-max-input').val().match(/,/g) || []).length; j++)
+            strMax = strMax.replace(/,/, '');
+        $(this).parent().find('.range-slider').slider("option", "values", [parseInt(strMin), parseInt(strMax)]);
+        changePriceFilterBtnUrl(parseInt(strMin), parseInt(strMax));
     }).on('keyup', '.range-max-input', function () {
-        $(this).parent().find('.range-slider').slider("option", "values", [parseInt($('.range-min-input').val()), parseInt($(this).val())]);
+        var strMax = $(this).val(),
+            strMin = $('.range-min-input').val();
+        for (var i = 0; i < ($(this).val().match(/,/g) || []).length; i++)
+            strMax = strMax.replace(/,/, '');
+
+        for (var j = 0; j < ($('.range-min-input').val().match(/,/g) || []).length; j++)
+            strMin = strMin.replace(/,/, '');
+        $(this).parent().find('.range-slider').slider("option", "values", [parseInt(strMin), parseInt(strMax)]);
+        changePriceFilterBtnUrl(parseInt(strMin), parseInt(strMax));
     }).on('keyup', '.filter-box.by-brand .text-field', function () {
         var query = $(this).val();
 
@@ -35,10 +51,10 @@ $(document).ready(function() {
         $.ajax({
             url: $(this).data("url"),
             type: "POST",
-            data:{method: "getContact", hash: $(this).data("hash")},
+            data: {method: "getContact", hash: $(this).data("hash")},
             dataType: "JSON",
             success: function (data) {
-                if(data.status)
+                if (data.status)
                     $('#phone-number').text(data.phone).addClass('text-success text-bold');
             }
         });
