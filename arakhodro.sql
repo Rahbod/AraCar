@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50616
 File Encoding         : 65001
 
-Date: 2017-12-04 21:44:04
+Date: 2017-12-16 20:18:36
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -180,8 +180,8 @@ CREATE TABLE `ym_cars` (
 -- ----------------------------
 -- Records of ym_cars
 -- ----------------------------
-INSERT INTO `ym_cars` VALUES ('2', '1512314228', '1512398407', null, '45', '10', '16', '45', '48', '16', '16', '274', '35', '33', '12', '10', '0', '150000000', '150000', '1', 'میدان صدوقی', '', '2017', null, '73', null, null);
-INSERT INTO `ym_cars` VALUES ('3', '1512319875', '1512398409', null, '45', '10', '16', '46', '48', '21', '21', '124', '37', '33', '12', '8', '0', '616000000', '153000', '1', 'میدان صدوقی', '', '2012', null, '54', null, null);
+INSERT INTO `ym_cars` VALUES ('2', '1512457776', '1512398407', null, '45', '10', '16', '45', '48', '16', '16', '274', '35', '33', '12', '10', '0', '150000000', '150000', '1', 'میدان صدوقی', '', '2017', null, '73', null, null);
+INSERT INTO `ym_cars` VALUES ('3', '1512457776', '1512398409', null, '45', '10', '16', '46', '48', '21', '21', '124', '37', '33', '12', '8', '0', '616000000', '153000', '1', 'میدان صدوقی', '', '2012', null, '56', null, null);
 
 -- ----------------------------
 -- Table structure for ym_car_images
@@ -293,11 +293,11 @@ CREATE TABLE `ym_counter_save` (
 -- ----------------------------
 -- Records of ym_counter_save
 -- ----------------------------
-INSERT INTO `ym_counter_save` VALUES ('counter', '13');
-INSERT INTO `ym_counter_save` VALUES ('day_time', '2458092');
+INSERT INTO `ym_counter_save` VALUES ('counter', '17');
+INSERT INTO `ym_counter_save` VALUES ('day_time', '2458104');
 INSERT INTO `ym_counter_save` VALUES ('max_count', '1');
 INSERT INTO `ym_counter_save` VALUES ('max_time', '1509438600');
-INSERT INTO `ym_counter_save` VALUES ('yesterday', '1');
+INSERT INTO `ym_counter_save` VALUES ('yesterday', '0');
 
 -- ----------------------------
 -- Table structure for ym_counter_users
@@ -312,7 +312,7 @@ CREATE TABLE `ym_counter_users` (
 -- ----------------------------
 -- Records of ym_counter_users
 -- ----------------------------
-INSERT INTO `ym_counter_users` VALUES ('837ec5754f503cfaaee0929fd48974e7', '1512411178');
+INSERT INTO `ym_counter_users` VALUES ('837ec5754f503cfaaee0929fd48974e7', '1513436660');
 
 -- ----------------------------
 -- Table structure for ym_countries
@@ -503,13 +503,14 @@ CREATE TABLE `ym_model_details` (
   PRIMARY KEY (`id`),
   KEY `model_id` (`model_id`),
   CONSTRAINT `ym_model_details_ibfk_1` FOREIGN KEY (`model_id`) REFERENCES `ym_models` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
 
 -- ----------------------------
 -- Records of ym_model_details
 -- ----------------------------
 INSERT INTO `ym_model_details` VALUES ('6', '16', '2017', '[\"osuzM1511007235.jpg\"]', null);
-INSERT INTO `ym_model_details` VALUES ('7', '17', '2017', '[\"myIMS1512224550.jpg\"]', null);
+INSERT INTO `ym_model_details` VALUES ('7', '17', '2017', '[\"myIMS1512224550.jpg\"]', '{\"paper\":{\"attributes\":\"\",\"gearbox\":\"2\"},\"engine\":{\"engine\":\"3\",\"differential\":\"4\",\"cylinder\":\"5\",\"valves\":\"6\",\"hp\":\"7\",\"torque\":\"8\"},\"ruler\":{\"length\":\"9\",\"width\":\"10\",\"height\":\"12\",\"weight\":\"\",\"tire\":\"13\"},\"speedometer\":{\"speed\":\"14\",\"acceleration\":\"15\"},\"fuel\":{\"fuel\":\"16\",\"capacity\":\"17\",\"standard\":\"18\"},\"belt\":{\"airbags\":\"19\",\"brakes\":\"20\"},\"fin\":{\"chair\":\"21\",\"airconditioning\":\"22\",\"windows\":\"\",\"mirror\":\"23\",\"light\":\"24\",\"etc\":\"25\"}}');
+INSERT INTO `ym_model_details` VALUES ('8', '17', '2016', '[\"iP61o1512461597.jpg\"]', '{\"paper\":{\"attributes\":\"lj\",\"gearbox\":\"nqjklnjkln\"},\"engine\":{\"engine\":\"knkj\",\"differential\":\"njk\",\"cylinder\":\"njk\",\"valves\":\"nk\",\"hp\":\"n\",\"torque\":\"kjn\"},\"ruler\":{\"length\":\"kjn\",\"width\":\"jkn\",\"height\":\"kjnjknk\",\"weight\":\"nkj\",\"tire\":\"12\"},\"speedometer\":{\"speed\":\"\",\"acceleration\":\"\"},\"fuel\":{\"fuel\":\"\",\"capacity\":\"n\",\"standard\":\"kln\"},\"belt\":{\"airbags\":\"jkn\",\"brakes\":\"kjn\"},\"fin\":{\"chair\":\"kn\",\"airconditioning\":\"kjn\",\"windows\":\"kn\",\"mirror\":\"kn\",\"light\":\"kn\",\"etc\":\"kn\"}}');
 
 -- ----------------------------
 -- Table structure for ym_pages
@@ -1259,11 +1260,13 @@ INSERT INTO `ym_user_parking` VALUES ('31', '45', '2');
 -- ----------------------------
 DROP TABLE IF EXISTS `ym_user_plans`;
 CREATE TABLE `ym_user_plans` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(10) unsigned DEFAULT NULL COMMENT 'پلن',
   `plan_id` int(10) unsigned DEFAULT NULL COMMENT 'پلن',
   `expire_date` varchar(20) COLLATE utf8_persian_ci DEFAULT NULL COMMENT 'تاریخ اتمام',
   `join_date` varchar(20) COLLATE utf8_persian_ci DEFAULT NULL COMMENT 'تاریخ عضویت',
   `price` int(11) DEFAULT NULL COMMENT 'مبلغ پرداخت شده',
+  PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `plan_id` (`plan_id`),
   CONSTRAINT `ym_user_plans_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `ym_users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,

@@ -19,7 +19,7 @@ class CarPublicController extends Controller
     public function filters()
     {
         return array(
-            'checkAccess - research, view, getBrandModels, getModelYears, json', // perform access control for CRUD operations
+            'checkAccess - research, view, getBrandModels, getModelYears, getStateCities, json', // perform access control for CRUD operations
         );
     }
 
@@ -31,7 +31,7 @@ class CarPublicController extends Controller
         return array(
             'frontend' => array(
                 'sell', 'delete', 'upload', 'deleteUpload', 'authJson', // auth required
-                'research', 'view', 'getBrandModels', 'getModelYears', 'json', // allow for all
+                'research', 'view', 'getBrandModels', 'getModelYears', 'getStateCities', 'json', // allow for all
             )
         );
     }

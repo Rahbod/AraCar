@@ -20,6 +20,9 @@ if(!$model->car_type_id)
 		'validateOnSubmit' => true
 	)
 )); ?>
+<?php
+echo $form->errorSummary($model);
+?>
 	<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 		<p class="form-title">
 		</p>
@@ -142,7 +145,14 @@ if(!$model->car_type_id)
                 )); ?>
                 <?php echo $form->error($model,'room_color_id'); ?>
             </div>
-            <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12 text-nowrap">
+            <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                <?php echo $form->dropDownList($model,'body_type_id', Lists::getList('body_types'),array(
+                    'class'=>'form-control select-picker',
+                    'prompt' => $model->getAttributeLabel('body_type_id'),
+                )); ?>
+                <?php echo $form->error($model,'body_type_id'); ?>
+            </div>
+            <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12 text-nowrap">
                 <?php echo $form->radioButtonList($model,'plate_type_id', Lists::getList('plate_types'),array(
                     'class'=>'form-control select-picker',
                     'separator'=> '',
