@@ -12,16 +12,12 @@ class UsersPublicController extends Controller
                 'dashboard',
                 'logout',
                 'changePassword',
-                'notifications',
                 'verify',
                 'forgetPassword',
                 'recoverPassword',
                 'authCallback',
-                'downloaded',
                 'transactions',
                 'index',
-                'sessions',
-                'removeSession',
                 'ResendVerification',
                 'profile',
                 'upload',
@@ -40,7 +36,7 @@ class UsersPublicController extends Controller
     public function filters()
     {
         return array(
-            'checkAccess + dashboard, setting, notifications, bookmarked, downloaded, transactions, library, sessions, removeSession',
+            'checkAccess + dashboard, setting, transactions',
             'ajaxOnly + getUserByCode'
         );
     }
@@ -417,42 +413,6 @@ class UsersPublicController extends Controller
     }
 
     /**
-     * List all notifications
-     */
-    public function actionNotifications()
-    {
-        $this->layout = '//layouts/panel';
-        Yii::app()->theme = 'frontend';
-        $criteria = new CDbCriteria();
-        $criteria->addCondition('user_id=:user_id');
-        $criteria->order = 'id DESC';
-        $criteria->params = array(
-            ':user_id' => Yii::app()->user->getId()
-        );
-        $model = UserNotifications::model()->findAll($criteria);
-        UserNotifications::model()->updateAll(array('seen' => '1'), 'user_id=:user_id', array(':user_id' => Yii::app()->user->getId()));
-        $this->render('notifications', array(
-            'model' => $model
-        ));
-    }
-
-    /**
-     * List all bookmarked
-     */
-    public function actionBookmarked()
-    {
-        Yii::app()->theme = 'frontend';
-        $this->layout = '//layouts/panel';
-
-        $user = Users::model()->findByPk(Yii::app()->user->getId());
-        /* @var $user Users */
-
-        $this->render('bookmarked', array(
-            'bookmarked' => $user->bookmarkedBooks
-        ));
-    }
-
-    /**
      * List all transactions
      */
     public function actionTransactions()
@@ -697,36 +657,19 @@ class UsersPublicController extends Controller
             $this->redirect(array('/site'));
     }
 
-    /**
-     * Show User Sessions
-     */
-    public function actionSessions()
+    public function actionUpgradePlan()
     {
         Yii::app()->theme = 'frontend';
         $this->layout = '//layouts/panel';
-        $model =new Sessions('search');
-        $model->unsetAttributes();
-        if(isset($_GET['Sessions']))
-            $model->attributes = $_GET['Sessions'];
-        $model->user_type = "user";
-        $model->user_id = Yii::app()->user->getId();
-        //
-
-        $this->render('view_sessions', array(
-            'model' => $model
-        ));
+        $plans = Plans::model()->findAll('status = 1');
+        $this->render('upgrade_plan',compact('plans'));
     }
 
-    public function actionRemoveSession($id)
+    public function actionBuyPlan($id)
     {
-        $model = Sessions::model()->findByPk($id);
-        if($model !== null)
-            $model->delete();
-        $this->redirect(array('/users/public/sessions'));
-    }
-
-    public function actionUpgrade()
-    {
-        
+        Yii::app()->theme = 'frontend';
+        $this->layout = '//layouts/panel';
+        $plan = Plans::model()->findByPk($id);
+        $this->render('upgrade_plan',compact('plan'));
     }
 }

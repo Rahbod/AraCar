@@ -24,6 +24,8 @@
  * @property UserTransactions[] $transactions
  * @property UserRoles $role
  * @property UserParking[] $parked
+ * @property UserPlans[] $plans
+ * @property UserPlans $activePlan
  * @property int $countParked
  */
 class Users extends CActiveRecord
@@ -165,6 +167,8 @@ class Users extends CActiveRecord
             'sessions' => array(self::HAS_MANY, 'Sessions', 'user_id', 'on' => 'user_type = "user"'),
             'countParked' => array(self::STAT, 'UserParking', 'user_id'),
             'parked' => array(self::HAS_MANY, 'UserParking', 'user_id'),
+            'activePlan' => array(self::HAS_ONE, 'UserPlans', 'user_id', 'on' => 'activePlan.expire_date = -1 OR activePlan.expire_date < :time', 'params' => [':time' => time()], 'order' => 'activePlan.id DESC'),
+            'plans' => array(self::HAS_MANY, 'UserPlans', 'user_id', 'order' => 'plans.id DESC'),
         );
     }
 
@@ -261,6 +265,18 @@ class Users extends CActiveRecord
             $model->mobile = $this->mobile;
             if(!$model->save())
                 $this->addErrors($model->errors);
+
+            $freePlan = Plans::model()->find('price = 0');
+            if($freePlan){
+                $model = new UserPlans;
+                $model->user_id = $this->id;
+                $model->plan_id = $freePlan->id;
+                $model->join_date = time();
+                $model->expire_date = -1;
+                $model->price = 0;
+                if(!$model->save())
+                    $this->addErrors($model->errors);
+            }
         }elseif($this->scenario == 'update'){
             $model = UserDetails::model()->findByPk($this->id);
             $model->first_name = $this->first_name;
