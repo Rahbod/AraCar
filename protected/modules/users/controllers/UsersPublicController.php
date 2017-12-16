@@ -724,4 +724,9 @@ class UsersPublicController extends Controller
             $model->delete();
         $this->redirect(array('/users/public/sessions'));
     }
+
+    public function actionUpgrade()
+    {
+        
+    }
 }
