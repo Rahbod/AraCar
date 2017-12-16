@@ -11,10 +11,7 @@
                 <div class="container-fluid">
                     <span style="padding-right: 0;">انتخاب شما</span>
                     <div class="filters">
-                        <div class="filter">تهران<i></i></div>
-                        <div class="filter">دنده ای<i></i></div>
-                        <div class="filter">بدون رنگ<i></i></div>
-                        <div class="filter">از 100.000.000 تا 220.000.000 تومان<i></i></div>
+                        <?= $this->createFiltersBar($filters);?>
                         <a href="#" class="clear-filters-link">پاک کردن همه</a>
                     </div>
                 </div>

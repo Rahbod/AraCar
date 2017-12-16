@@ -43,13 +43,6 @@ class CarSearchController extends Controller
         else
             $this->redirect(['/site']);
 
-        $criteria = new CDbCriteria();
-        $criteria->with = ['brand'];
-        $criteria->compare('brand.slug', $brand, true);
-        $dataProvider = new CActiveDataProvider('Cars', [
-            'criteria' => $criteria,
-        ]);
-
         $filters = [];
         if ($queryString = Yii::app()->request->getQueryString()) {
             $queryStrings = explode('&', $queryString);
@@ -58,6 +51,15 @@ class CarSearchController extends Controller
                 $filters[$arr[0]] = $arr[1];
             }
         }
+
+        $criteria = new CDbCriteria();
+        $criteria->alias = 'car';
+        $criteria->with = ['brand'];
+        $criteria->compare('brand.slug', $brand, true);
+        $criteria = $this->applyFilter($criteria, $filters);
+        $dataProvider = new CActiveDataProvider('Cars', [
+            'criteria' => $criteria,
+        ]);
 
         $this->render('brand', array(
             'brand' => Brands::model()->findByAttributes(['slug' => $brand]),
@@ -73,48 +75,6 @@ class CarSearchController extends Controller
     {
         Yii::app()->theme = 'frontend';
 
-        $query = null;
-        $method = null;
-        if (Yii::app()->request->getQuery('body')) {
-            $query = Yii::app()->request->getQuery('body');
-            $method = 'body';
-        } elseif (Yii::app()->request->getQuery('price')) {
-            $query = Yii::app()->request->getQuery('price');
-            $method = 'price';
-        } elseif (Yii::app()->request->getQuery('special')) {
-            $query = Yii::app()->request->getQuery('special');
-            $method = 'special';
-        }
-
-        $criteria = new CDbCriteria();
-
-        switch ($method) {
-            case "body":
-                $criteria->with[] = 'bodyType';
-                $criteria->compare('bodyType.title', $query, true);
-                break;
-
-            case "price":
-                $price = explode('-', $query);
-                $criteria->addCondition('purchase_type_id = :type');
-                $criteria->params[':type'] = 0;
-                if (count($price) == 2)
-                    $criteria->addBetweenCondition('purchase_details', ($price[0] * 1000000), ($price[1] * 1000000));
-                else {
-                    $criteria->addCondition('purchase_details >= :price');
-                    $criteria->params[':price'] = (1000 * 1000000);
-                }
-                break;
-
-            case "special":
-                $criteria->with[] = 'plateType';
-                $criteria->compare('plateType.title', str_replace('-', ' ', $query), true);
-                break;
-        }
-        $dataProvider = new CActiveDataProvider('Cars', [
-            'criteria' => $criteria,
-        ]);
-
         $filters = [];
         if ($queryString = Yii::app()->request->getQueryString()) {
             $queryStrings = explode('&', $queryString);
@@ -123,6 +83,13 @@ class CarSearchController extends Controller
                 $filters[$arr[0]] = $arr[1];
             }
         }
+
+        $criteria = new CDbCriteria();
+        $criteria->alias = 'car';
+        $criteria = $this->applyFilter($criteria, $filters);
+        $dataProvider = new CActiveDataProvider('Cars', [
+            'criteria' => $criteria,
+        ]);
 
         $this->render('cars-list', array(
             'filters' => $filters,
@@ -141,5 +108,125 @@ class CarSearchController extends Controller
         }
 
         return $url;
+    }
+
+    public function createFiltersBar($filters)
+    {
+        $result = "";
+        foreach ($filters as $filter => $value) {
+            $strTemp = '<div class="filter">';
+            switch ($filter) {
+                case "state":
+                    $model = Towns::model()->find('slug = :slug', [':slug' => $value]);
+                    $strTemp .= $model->name;
+                    break;
+
+                case "body":
+                case "plate":
+                    $model = Lists::model()->find('(id = :id OR title LIKE :title)', [':id' => urldecode($value), ':title' => str_replace('-', ' ', urldecode($value))]);
+                    $strTemp .= $model->title;
+                    break;
+
+                case "car_type":
+                case "gearbox":
+                case "body_state":
+                case "fuel":
+                case "color":
+                    $model = Lists::model()->findByPk($value);
+                    $strTemp .= $model->title;
+                    break;
+
+                case "model":
+                    $model = Models::model()->find('slug = :slug', [':slug' => $value]);
+                    $strTemp .= $model->title;
+                    break;
+
+                case "price":
+                    $prices = explode('-', $value);
+                    $strTemp .= 'از ' . number_format($prices[0] * 1000000) . ' تا ' . number_format($prices[1] * 1000000) . ' میلیون تومان';
+                    break;
+            }
+            $strTemp .= '<a href="';
+            $url = '';
+            if ($queryString = Yii::app()->request->getQueryString()) {
+                $queryStringArray = explode('&', $queryString);
+                unset($queryStringArray[key(preg_grep("/{$filter}/", $queryStringArray))]);
+                if (count($queryStringArray) != 0)
+                    $url = "?" . implode("&", $queryStringArray);
+            }
+            $strTemp .= $url . '"><i></i></a></div>';
+            $result .= $strTemp;
+        }
+        return $result;
+    }
+
+    /**
+     * Apply selected filters to search car query.
+     * @param CDbCriteria $criteria
+     * @param array $filters
+     * @return CDbCriteria
+     */
+    public function applyFilter($criteria, $filters)
+    {
+        foreach ($filters as $filter => $value) {
+            switch ($filter) {
+                case "state":
+                    $criteria->with[] = 'state';
+                    $criteria->compare('state.slug', $value, true);
+                    break;
+
+                case "body":
+                    $criteria->with[] = 'bodyType';
+                    $criteria->addCondition('(bodyType.id = :bodyTypeID OR bodyType.title LIKE :bodyTypeTitle)');
+                    $criteria->params[':bodyTypeID'] = urldecode($value);
+                    $criteria->params[':bodyTypeTitle'] = str_replace('-', ' ', urldecode($value));
+                    break;
+
+                case "car_type":
+                    $criteria->addCondition('car.car_type_id = :carTypeID');
+                    $criteria->params[':carTypeID'] = $value;
+                    break;
+
+                case "gearbox":
+                    $criteria->addCondition('car.gearbox_id = :gearboxID');
+                    $criteria->params[':gearboxID'] = $value;
+                    break;
+
+                case "body_state":
+                    $criteria->addCondition('car.body_state_id = :bodyStateID');
+                    $criteria->params[':bodyStateID'] = $value;
+                    break;
+
+                case "fuel":
+                    $criteria->addCondition('car.fuel_id = :fuelID');
+                    $criteria->params[':fuelID'] = $value;
+                    break;
+
+                case "plate":
+                    $criteria->with[] = 'plateType';
+                    $criteria->addCondition('(plateType.id = :plateTypeID OR plateType.title LIKE :plateTypeTitle)');
+                    $criteria->params[':plateTypeID'] = urldecode($value);
+                    $criteria->params[':plateTypeTitle'] = str_replace('-', ' ', urldecode($value));
+                    break;
+
+                case "color":
+                    $criteria->addCondition('car.body_color_id = :bodyColorID');
+                    $criteria->params[':bodyColorID'] = $value;
+                    break;
+
+                case "model":
+                    $criteria->with[] = 'model';
+                    $criteria->compare('model.slug', $value, true);
+                    break;
+
+                case "price":
+                    $prices = explode('-', $value);
+                    $criteria->compare('car.purchase_type_id', Cars::PURCHASE_TYPE_CASH, false);
+                    $criteria->addBetweenCondition('car.purchase_details', $prices[0] * 1000000, $prices[1] * 1000000);
+                    break;
+            }
+        }
+
+        return $criteria;
     }
 }
