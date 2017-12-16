@@ -30,10 +30,8 @@
                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
                         <span>انتخاب شما</span>
                         <div class="filters">
-                            <?php foreach($filters as $filter => $value):?>
-                                <div class="filter"><?= $value?><a href="<?php ?>"><i></i></a></div>
-                            <?php endforeach;?>
-                            <a href="#" class="clear-filters-link">پاک کردن همه</a>
+                            <?= $this->createFiltersBar($filters);?>
+                            <a href="<?= $this->createUrl('/'.Yii::app()->request->pathInfo)?>" class="clear-filters-link">پاک کردن همه</a>
                         </div>
                     </div>
                 </div>
