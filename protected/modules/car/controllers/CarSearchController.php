@@ -89,6 +89,9 @@ class CarSearchController extends Controller
         $criteria = $this->applyFilter($criteria, $filters);
         $dataProvider = new CActiveDataProvider('Cars', [
             'criteria' => $criteria,
+            'pagination' => [
+                'pageSize' => 1
+            ]
         ]);
 
         $this->render('cars-list', array(
@@ -112,6 +115,9 @@ class CarSearchController extends Controller
 
     public function createFiltersBar($filters)
     {
+        if(isset($filters['def']))
+            unset($filters['def']);
+
         $result = "";
         foreach ($filters as $filter => $value) {
             $strTemp = '<div class="filter">';
@@ -146,15 +152,20 @@ class CarSearchController extends Controller
                     $strTemp .= 'از ' . number_format($prices[0] * 1000000) . ' تا ' . number_format($prices[1] * 1000000) . ' میلیون تومان';
                     break;
             }
-            $strTemp .= '<a href="';
-            $url = '';
-            if ($queryString = Yii::app()->request->getQueryString()) {
-                $queryStringArray = explode('&', $queryString);
-                unset($queryStringArray[key(preg_grep("/{$filter}/", $queryStringArray))]);
-                if (count($queryStringArray) != 0)
-                    $url = "?" . implode("&", $queryStringArray);
+            if(Yii::app()->request->getQuery('def') != $filter) {
+                $strTemp .= '<a href="';
+                $url = '';
+                if ($queryString = Yii::app()->request->getQueryString()) {
+                    $queryStringArray = explode('&', $queryString);
+                    unset($queryStringArray[key(preg_grep("/{$filter}/", $queryStringArray))]);
+                    if (count($queryStringArray) != 0)
+                        $url = "?" . implode("&", $queryStringArray);
+                    else
+                        $url = $this->createUrl('/' . Yii::app()->request->pathInfo);
+                }
+                $strTemp .= $url . '"><i></i></a>';
             }
-            $strTemp .= $url . '"><i></i></a></div>';
+            $strTemp .= '</div>';
             $result .= $strTemp;
         }
         return $result;
