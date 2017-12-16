@@ -33,7 +33,7 @@
                     <div class="dropdown-menu">
                         <ul class="linear-menu">
                             <?php foreach($this->chassis as $chassis):?>
-                                <li><a href="<?= $this->createUrl('/car/search/all?body=' . str_replace(' ', '-', $chassis))?>"><?= $chassis?></a></li>
+                                <li><a href="<?= $this->createUrl('/car/search/all?body=' . str_replace(' ', '-', $chassis) . '&def=body')?>"><?= $chassis?></a></li>
                             <?php endforeach;?>
                         </ul>
                     </div>
@@ -44,10 +44,10 @@
                         <ul class="linear-menu">
                             <!--<li><a href="--><?//= $this->createUrl('/car/search/all?price=0-5')?><!--">تا 5 میلیون تومان</a></li>-->
                             <?php foreach($this->prices as $price):?>
-                                <li><a href="<?= $this->createUrl('/car/search/all?price=' . $price)?>"><?= "از ".implode(' تا ', explode('-', $price))." میلیون تومان"?></a></li>
+                                <li><a href="<?= $this->createUrl('/car/search/all?price=' . $price . '&def=price')?>"><?= "از ".implode(' تا ', explode('-', $price))." میلیون تومان"?></a></li>
                             <?php endforeach;?>
-                            <li><a href="<?= $this->createUrl('/car/search/all?price=900-1000')?>">از 900 تا یک میلیارد تومان</a></li>
-                            <li><a href="<?= $this->createUrl('/car/search/all?price=1000')?>">از یک میلیارد به بالا</a></li>
+                            <li><a href="<?= $this->createUrl('/car/search/all?price=900-1000&def=price')?>">از 900 تا یک میلیارد تومان</a></li>
+                            <li><a href="<?= $this->createUrl('/car/search/all?price=1000&def=price')?>">از یک میلیارد به بالا</a></li>
                         </ul>
                     </div>
                 </li>
@@ -55,8 +55,8 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">موارد خاص</a>
                     <div class="dropdown-menu special-menu">
                         <ul class="linear-menu">
-                            <li><a href="<?= $this->createUrl('/car/search/all?plate=' . str_replace(' ', '-', 'منطقه آزاد'))?>">منطقه آزاد</a></li>
-                            <li><a href="<?= $this->createUrl('/car/search/all?plate=' . str_replace(' ', '-', 'گذر موقت'))?>">گذر موقت</a></li>
+                            <li><a href="<?= $this->createUrl('/car/search/all?plate=' . str_replace(' ', '-', 'منطقه آزاد') . '&def=plate')?>">منطقه آزاد</a></li>
+                            <li><a href="<?= $this->createUrl('/car/search/all?plate=' . str_replace(' ', '-', 'گذر موقت') . '&def=plate')?>">گذر موقت</a></li>
                         </ul>
                     </div>
                 </li>
