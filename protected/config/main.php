@@ -76,6 +76,8 @@ return array(
 			'appendParams'=>true,
 			'rules'=>array(
 				'sell' => 'car/public/sell',
+				'research' => 'car/public/research',
+				'research/<params:(.*)>' => 'car/public/research',
 				'<action:(about|contact|help|publishers|search)>' => 'site/<action>',
 				'<action:(logout|dashboard|googleLogin|transactions|login|register|changePassword|profile)>' => 'users/public/<action>',
 				'car/<action:(brand)>/<title:.*>' => 'car/search/<action>',

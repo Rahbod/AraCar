@@ -7,7 +7,7 @@
  * @property string $id
  * @property string $model_id
  * @property string $product_year
- * @property string $images
+ * @property array $images
  * @property string $details
  *
  * The followings are the available model relations:
@@ -98,7 +98,7 @@ class ModelDetails extends CActiveRecord
                 'name' => 'standard'
             ]
         ],
-        'belt' => [
+        'safety' => [
             [
                 'title' => 'کیسه های هوا',
                 'name' => 'airbags'
@@ -108,7 +108,7 @@ class ModelDetails extends CActiveRecord
                 'name' => 'brakes'
             ]
         ],
-        'fin' => [
+        'comfort' => [
             [
                 'title' => 'صندلی',
                 'name' => 'chair',

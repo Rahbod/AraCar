@@ -14,6 +14,7 @@
  * @property Countries $country
  * @property Cars[] $cars
  * @property integer $carsCount
+ * @property integer $modelCount
  * @property Models[] $models
  */
 class Brands extends CActiveRecord
@@ -56,6 +57,7 @@ class Brands extends CActiveRecord
 			'cars' => array(self::HAS_MANY, 'Cars', 'brand_id'),
 			'carsCount' => array(self::STAT, 'Cars', 'brand_id'),
 			'models' => array(self::HAS_MANY, 'Models', 'brand_id'),
+			'modelCount' => array(self::STAT, 'Models', 'brand_id'),
 		);
 	}
 
