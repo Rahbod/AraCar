@@ -151,7 +151,7 @@ return array(
 			'Password' => '@#visit1396',
 		),
 		'mailTheme'=>
-			'<div style="border: 1px solid #dadada; border-radius: 4px;display: block;overflow: hidden;" ><h2 style="margin-bottom:0;box-sizing:border-box;display: block;width: 100%;background-color: #18b29e;line-height:60px;color:#fff;font-size: 24px;text-align: right;padding-right: 50px">آرا خودرو<span style="font-size: 14px;color:#f0f0f0"> - جستجو و قبت آگهی خودرو</span></h2>
+			'<div style="border: 1px solid #dadada; border-radius: 4px;display: block;overflow: hidden;" ><h2 style="margin-bottom:0;box-sizing:border-box;display: block;width: 100%;background-color: #18b29e;line-height:60px;color:#fff;font-size: 24px;text-align: right;padding-right: 50px">آرا خودرو<span style="font-size: 14px;color:#f0f0f0"> - جستجو و قیمت آگهی خودرو</span></h2>
              <div style="display: inline-block;width: 100%;font-family:tahoma;line-height: 28px;">
                 <div style="direction:rtl;display:block;overflow:hidden;border:1px solid #efefef;text-align: center;padding:15px;">{MessageBody}</div>
              </div>

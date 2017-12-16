@@ -264,14 +264,13 @@ class UsersPublicController extends Controller
 
         $token = Yii::app()->request->getQuery('token');
         $model = Users::model()->find('verification_token=:token', array(':token' => $token));
-
         if ($model) {
             if ($model->status == 'pending') {
                 if (time() <= (double)$model->create_date + 259200) {
                     $model->updateByPk($model->id, array('status' => 'active'));
                     Yii::app()->user->setFlash('success', 'حساب کاربری شما فعال گردید.');
                     $login = new UserLoginForm('OAuth');
-                    $login->email = $model->email;
+                    $login->verification_field_value = $model->email;
                     $login->OAuth = true;
                     if ($login->validate() && $login->login(true) === true)
                         $this->redirect(array('/dashboard'));
