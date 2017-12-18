@@ -66,8 +66,7 @@ class Users extends CActiveRecord
             $this->last_name = isset($values['last_name']) && !empty($values['last_name'])?$values['last_name']:null;
             $this->phone = isset($values['phone']) && !empty($values['phone'])?$values['phone']:null;
             $this->mobile = isset($values['mobile']) && !empty($values['mobile'])?$values['mobile']:null;
-        }
-        elseif($this){
+        }elseif($this){
             $this->first_name = $this->userDetails->first_name;
             $this->last_name = $this->userDetails->last_name;
             $this->phone = $this->userDetails->phone;
@@ -85,8 +84,8 @@ class Users extends CActiveRecord
         return array(
             array('email, password', 'required', 'on' => 'insert,create'),
             array('verifyCode', 'activeCaptcha', 'on' => 'insert,create'),
-            array('national_code', 'length', 'is' => 10, 'message'=>'کد ملی باید 10 رقم باشد.'),
-            array('national_code, mobile', 'numerical', 'integerOnly' => true, 'message'=>'{attribute} باید عددی باشد.'),
+            array('national_code', 'length', 'is' => 10, 'message' => 'کد ملی باید 10 رقم باشد.'),
+            array('national_code, mobile', 'numerical', 'integerOnly' => true, 'message' => '{attribute} باید عددی باشد.'),
             array('email', 'required', 'on' => 'update'),
             array('role_id', 'default', 'value' => 1),
             array('email', 'required', 'on' => 'email, OAuthInsert'),
@@ -126,12 +125,12 @@ class Users extends CActiveRecord
     public function activeCaptcha()
     {
         $code = Yii::app()->controller->createAction('captcha')->verifyCode;
-        if (empty($code))
+        if(empty($code))
             $this->addError('verifyCode', 'کد امنیتی نمی تواند خالی باشد.');
-        elseif ($code != $this->verifyCode)
+        elseif($code != $this->verifyCode)
             $this->addError('verifyCode', 'کد امنیتی نامعتبر است.');
     }
-    
+
     /**
      * Check this username is exist in database or not
      */
@@ -167,7 +166,7 @@ class Users extends CActiveRecord
             'sessions' => array(self::HAS_MANY, 'Sessions', 'user_id', 'on' => 'user_type = "user"'),
             'countParked' => array(self::STAT, 'UserParking', 'user_id'),
             'parked' => array(self::HAS_MANY, 'UserParking', 'user_id'),
-            'activePlan' => array(self::HAS_ONE, 'UserPlans', 'user_id', 'on' => 'activePlan.expire_date = -1 OR activePlan.expire_date < :time', 'params' => [':time' => time()], 'order' => 'activePlan.id DESC'),
+            'activePlan' => array(self::HAS_ONE, 'UserPlans', 'user_id', 'on' => 'activePlan.expire_date = -1 OR activePlan.expire_date > :time', 'params' => [':time' => time()], 'order' => 'activePlan.id DESC'),
             'plans' => array(self::HAS_MANY, 'UserPlans', 'user_id', 'order' => 'plans.id DESC'),
         );
     }
@@ -220,7 +219,7 @@ class Users extends CActiveRecord
         $criteria->compare('username', $this->username, true);
         $criteria->compare('status', $this->statusFilter, true);
         $criteria->compare('role_id', $this->role_id);
-        $criteria->compare('national_code',$this->national_code,true);
+        $criteria->compare('national_code', $this->national_code, true);
         $criteria->addSearchCondition('userDetails.first_name', $this->first_name);
         $criteria->addSearchCondition('userDetails.last_name', $this->last_name);
         $criteria->with = array('userDetails');
@@ -290,12 +289,31 @@ class Users extends CActiveRecord
         return true;
     }
 
-    public function generatePassword(){
-        return substr(md5($this->national_code),0,8);
+    public function generatePassword()
+    {
+        return substr(md5($this->national_code), 0, 8);
     }
 
-    public function useGeneratedPassword(){
+    public function useGeneratedPassword()
+    {
         $bCrypt = new bCrypt();
         return $bCrypt->verify($this->generatePassword(), $this->password);
+    }
+
+    /**
+     * @param $plan Plans
+     * @return bool
+     */
+    public function upgradePlan($plan)
+    {
+        $model = new UserPlans();
+        $model->plan_id = $plan->id;
+        $model->user_id = $this->id;
+        $model->join_date = time();
+        $model->expire_date = strtotime(date('Y/m/d 23:59:59', ($model->join_date + 30 * 24 * 60 * 60))); // 30 days
+        $model->price = $plan->price;
+        if($model->save())
+            return $model->id;
+        return false;
     }
 }
