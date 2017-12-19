@@ -98,7 +98,7 @@ return array(
 				'research/<params:(.*)>' => 'car/public/research',
 				'<action:(about|contact|help|publishers|search)>' => 'site/<action>',
 				'<action:(logout|dashboard|googleLogin|transactions|login|register|changePassword|profile|upgradePlan)>' => 'users/public/<action>',
-				'<action:(buyPlan|verify)>/<id:\d+>' => 'users/public/<action>',
+				'<action:(buyPlan|verifyPlan)>/<id:\d+>' => 'users/public/<action>',
 				'car/<action:(brand)>/<title:.*>' => 'car/search/<action>',
 				'/help'=>'site/help',
 				'users/<id:\d+>'=>'users/public/viewProfile',

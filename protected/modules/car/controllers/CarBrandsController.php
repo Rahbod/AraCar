@@ -300,7 +300,7 @@ class CarBrandsController extends Controller
 	{
 		$model = $this->loadModel($id, true);
 		$brID = $model->brand_id;
-		foreach($model->details as $detail){
+		foreach($model->years as $detail){
 			$images = new UploadedFiles($this->modelImagePath, $detail->images);
 			$images->removeAll(true);
 		}

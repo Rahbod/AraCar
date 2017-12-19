@@ -711,7 +711,7 @@ class UsersPublicController extends Controller
                     $transaction->model_id = $plan->id;
                     $transaction->description = "پرداخت وجه جهت ارتقای پلن کاربری به {$plan->title} در وبسایت {$siteName}";
                     if($transaction->save()){
-                        $CallbackURL = Yii::app()->getBaseUrl(true) . '/verify/' . $id;
+                        $CallbackURL = Yii::app()->getBaseUrl(true) . '/verifyPlan/' . $id;
                         if($active_gateway == 'mellat'){
                             $result = Yii::app()->mellat->PayRequest($transaction->amount * 10, $transaction->id, $CallbackURL);
                             if(!$result['error']){
