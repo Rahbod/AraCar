@@ -153,4 +153,9 @@ class Models extends SortableCActiveRecord
         }
         return $list;
     }
+
+    public function getTitleAndBrand()
+    {
+        return $this->brand->title . '، ' . $this->title;
+    }
 }

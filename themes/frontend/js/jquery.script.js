@@ -166,35 +166,6 @@ $(document).ready(function() {
         });
     });
 
-    $('.auto-complete').each(function () {
-        var model = $(this).data('model'),
-            field = $(this).data('field');
-        $(this).autocomplete({
-            source: function (request, response) {
-                $.ajax({
-                    url: 'site/autoComplete',
-                    type: "POST",
-                    dataType: "JSON",
-                    data: {
-                        query: request.term,
-                        model: model,
-                        field: field
-                    },
-                    success: function (data) {
-                        var list = $.map(data, function (el) {
-                            return el;
-                        });
-                        response(list);
-                    },
-                    error: function () {
-                        response([]);
-                    }
-                });
-            },
-            minLength: 2
-        });
-    });
-
     $("body").on("keyup", ".brand-search-trigger", function () {
         var $table = $(this).parents('.panel').find('.car-list');
         var rex = new RegExp($(this).val(), 'i');

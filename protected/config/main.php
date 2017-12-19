@@ -47,6 +47,9 @@ return array(
 
 	// application components
 	'components'=>array(
+		'request'=>array(
+			'enableCsrfValidation'=>true,
+		),
 		'yexcel' => array(
 			'class' => 'ext.yexcel.Yexcel'
 		),

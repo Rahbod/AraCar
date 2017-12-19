@@ -352,6 +352,18 @@ class Cars extends CActiveRecord
         return $cr;
     }
 
+    /**
+     * @return CDbCriteria
+     */
+    public static function duplicateQuery()
+    {
+        $criteria = new CDbCriteria();
+        $criteria->alias = 'car';
+        $criteria->addCondition('status = :status');
+        $criteria->params[':status'] = Cars::STATUS_APPROVED;
+        return $criteria;
+    }
+
 
     public function getSimilar($activeProvider = false)
     {
