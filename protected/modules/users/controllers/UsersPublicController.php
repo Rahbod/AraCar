@@ -563,6 +563,19 @@ class UsersPublicController extends Controller
                 Yii::app()->user->returnUrl = $_POST['returnUrl'];
             // validate user input and redirect to the previous page if valid
             if ($model->validate() && $model->login()) {
+                $user = Users::model()->findByPk(Yii::app()->user->getId());
+                if(!$user->activePlan){
+                    $freePlan = Plans::model()->find('price = 0');
+                    if($freePlan){
+                        $model = new UserPlans;
+                        $model->user_id = $user->id;
+                        $model->plan_id = $freePlan->id;
+                        $model->join_date = time();
+                        $model->expire_date = -1;
+                        $model->price = 0;
+                        @$model->save();
+                    }
+                }
                 if (Yii::app()->user->returnUrl != Yii::app()->request->baseUrl . '/' &&
                     Yii::app()->user->returnUrl != 'logout')
                     $redirect = Yii::app()->user->returnUrl;
