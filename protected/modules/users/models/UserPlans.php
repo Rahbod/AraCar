@@ -4,6 +4,7 @@
  * This is the model class for table "{{user_plans}}".
  *
  * The followings are the available columns in table '{{user_plans}}':
+ * @property string $id
  * @property string $user_id
  * @property string $plan_id
  * @property string $expire_date
@@ -32,12 +33,12 @@ class UserPlans extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('price', 'numerical', 'integerOnly'=>true),
-			array('user_id, plan_id', 'length', 'max'=>10),
-			array('expire_date, join_date', 'length', 'max'=>20),
+			array('price', 'numerical', 'integerOnly' => true),
+			array('user_id, plan_id', 'length', 'max' => 10),
+			array('expire_date, join_date', 'length', 'max' => 20),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('user_id, plan_id, expire_date, join_date, price', 'safe', 'on'=>'search'),
+			array('id, user_id, plan_id, expire_date, join_date, price', 'safe', 'on' => 'search'),
 		);
 	}
 
@@ -60,11 +61,12 @@ class UserPlans extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'user_id' => 'پلن',
-			'plan_id' => 'پلن',
-			'expire_date' => 'تاریخ اتمام',
-			'join_date' => 'تاریخ عضویت',
-			'price' => 'مبلغ پرداخت شده',
+			'id' => 'ID',
+			'user_id' => 'User',
+			'plan_id' => 'Plan',
+			'expire_date' => 'Expire Date',
+			'join_date' => 'Join Date',
+			'price' => 'Price',
 		);
 	}
 
@@ -84,16 +86,17 @@ class UserPlans extends CActiveRecord
 	{
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
-		$criteria=new CDbCriteria;
+		$criteria = new CDbCriteria;
 
-		$criteria->compare('user_id',$this->user_id,true);
-		$criteria->compare('plan_id',$this->plan_id,true);
-		$criteria->compare('expire_date',$this->expire_date,true);
-		$criteria->compare('join_date',$this->join_date,true);
-		$criteria->compare('price',$this->price);
-
+		$criteria->compare('id', $this->id, true);
+		$criteria->compare('user_id', $this->user_id, true);
+		$criteria->compare('plan_id', $this->plan_id, true);
+		$criteria->compare('expire_date', $this->expire_date, true);
+		$criteria->compare('join_date', $this->join_date, true);
+		$criteria->compare('price', $this->price);
+		$criteria->order = 'id DESC';
 		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
+			'criteria' => $criteria,
 		));
 	}
 
@@ -103,8 +106,17 @@ class UserPlans extends CActiveRecord
 	 * @param string $className active record class name.
 	 * @return UserPlans the static model class
 	 */
-	public static function model($className=__CLASS__)
+	public static function model($className = __CLASS__)
 	{
 		return parent::model($className);
+	}
+
+	public function isExpired()
+	{
+		if($this->expire_date === -1)
+			return false;
+		else if($this->expire_date && $this->expire_date < time())
+			return false;
+		return true;
 	}
 }

@@ -149,7 +149,7 @@ class CarBrandsController extends Controller
 		$logo = new UploadedFiles($this->logoPath, $model->logo);
 		$logo->remove($model->logo, true);
 		foreach($model->models as $m){
-			foreach($m->details as $detail){
+			foreach($m->years as $detail){
 				$images = new UploadedFiles($this->modelImagePath, $detail->images);
 				$images->removeAll(true);
 			}
@@ -300,7 +300,7 @@ class CarBrandsController extends Controller
 	{
 		$model = $this->loadModel($id, true);
 		$brID = $model->brand_id;
-		foreach($model->details as $detail){
+		foreach($model->years as $detail){
 			$images = new UploadedFiles($this->modelImagePath, $detail->images);
 			$images->removeAll(true);
 		}

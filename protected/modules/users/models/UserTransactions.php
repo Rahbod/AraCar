@@ -35,6 +35,11 @@ class UserTransactions extends CActiveRecord
 		'credit' => 'اعتبار',
 		'gateway' => 'درگاه'
 	];
+
+	public $gateways = [
+		'mellat' => 'بانک ملت',
+		'zarinpal' => 'زرین پال'
+	];
 	public $year_altField;
 	public $month_altField;
 	public $from_date_altField;

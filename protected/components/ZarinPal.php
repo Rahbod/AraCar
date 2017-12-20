@@ -5,32 +5,38 @@
 class ZarinPal extends CComponent
 {
     public $callback_url;
-    
-    private $_merchant_id = 'b5c45350-3fc8-11e7-ba1c-005056a205be';
+
+    public $merchant_id;
+
+    private $_merchant_id;
     private $_gateway_name = 'زرین پال';
     private $_status;
     private $_authority;
     private $_ref_id;
 
     public function init(){
-
+        $option = CJSON::decode(SiteSetting::getOption('gateway_variables'),false);
+        $this->_merchant_id = $option && $option->merchant_id?$option->merchant_id:$this->merchant_id;
+        if(!$this->_merchant_id)
+            die('Zarin Pal Merchant Code is not defined in admin gateway setting or main.php file.');
     }
 
-    public function request($amount, $description, $email = null, $mobile = '0')
+    public function PayRequest($amount, $description, $callback, $email = null, $mobile = '0')
     {
-        try {
+        $this->callback_url = $callback;
+        try{
             @$client = new SoapClient('https://www.zarin.link/pg/services/WebGate/wsdl', ['encoding' => 'UTF-8']);
             $result = $client->PaymentRequest(
                 [
-                    'MerchantID'  => $this->_merchant_id,
-                    'Amount'      => $amount,
+                    'MerchantID' => $this->_merchant_id,
+                    'Amount' => $amount,
                     'Description' => $description,
-                    'Email'       => $email,
-                    'Mobile'      => $mobile,
+                    'Email' => $email,
+                    'Mobile' => $mobile,
                     'CallbackURL' => $this->callback_url,
                 ]
             );
-        } catch (Exception $e) {
+        }catch(Exception $e){
             throw new CHttpException(501, $e->getMessage());
         }
         $this->_status = $result->Status;

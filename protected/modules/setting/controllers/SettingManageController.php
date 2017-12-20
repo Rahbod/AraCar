@@ -16,6 +16,7 @@ class SettingManageController extends Controller
 	{
 		return array(
 			'backend' => array(
+				'gatewaySetting',
 				'changeSetting',
                 'socialLinks'
 			)

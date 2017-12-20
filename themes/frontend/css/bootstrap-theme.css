@@ -1170,6 +1170,8 @@ input[type="checkbox"]:checked + label::before {
 .content-box.white-bg{
     background-color: #fff !important;
     padding-bottom: 80px;
+    display: block;
+    overflow: hidden;
 }
 .shadow-bottom{
     -webkit-box-shadow: 0 3px 2px rgba(0, 0, 0, 0.1);
@@ -2693,4 +2695,22 @@ footer{
 }
 .compare-panel .btn-sm{
     padding: 11px 15px;
+}
+.plans{
+    display: block;
+    overflow: hidden;
+    margin: 60px 0 100px;
+}
+
+.plan-box{
+    padding: 50px 15px;
+    text-align: center;
+    border-radius: 4px;
+    display: block;
+    height: 500px;
+    background-color: #eee;
+}
+
+.plan-box *{
+    margin: 15px 0;
 }

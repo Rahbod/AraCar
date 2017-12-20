@@ -1,12 +1,11 @@
 <?php
-
 class ContactMessagesController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
-	public $layout='//layouts/column2';
+	public $layout = '//layouts/column2';
 
 	/**
 	 * @return array actions type list
@@ -38,9 +37,9 @@ class ContactMessagesController extends Controller
 	public function actionView($id)
 	{
 		$model = $this->loadModel($id);
-		$model->updateByPk($model->id,array('seen' => 1));
-		$this->render('view',array(
-			'model'=>$model,
+		$model->updateByPk($model->id, array('seen' => 1));
+		$this->render('view', array(
+			'model' => $model,
 		));
 	}
 
@@ -50,21 +49,18 @@ class ContactMessagesController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new ContactMessages;
-		if(isset($_POST['ContactMessages']))
-		{
-			$model->attributes=$_POST['ContactMessages'];
-			if($model->save())
-			{
-				Yii::app()->user->setFlash('success','پیغام شما ارسال شد.');
+		$model = new ContactMessages;
+		if(isset($_POST['ContactMessages'])){
+			$model->attributes = $_POST['ContactMessages'];
+			if($model->save()){
+				Yii::app()->user->setFlash('success', 'پیغام شما ارسال شد.');
 				$this->refresh();
-			}
-			else
-				Yii::app()->user->setFlash('failed','خطا در هنگام ثبت!');
+			}else
+				Yii::app()->user->setFlash('failed', 'خطا در هنگام ثبت!');
 		}
 
-		$this->render('create',array(
-			'model'=>$model,
+		$this->render('create', array(
+			'model' => $model,
 		));
 	}
 
@@ -75,22 +71,19 @@ class ContactMessagesController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
-		$model=$this->loadModel($id);
+		$model = $this->loadModel($id);
 
-		if(isset($_POST['ContactMessages']))
-		{
-			$model->attributes=$_POST['ContactMessages'];
-			if($model->save())
-			{
-				Yii::app()->user->setFlash('success','ویرایش با موفقیت انجام شد');
+		if(isset($_POST['ContactMessages'])){
+			$model->attributes = $_POST['ContactMessages'];
+			if($model->save()){
+				Yii::app()->user->setFlash('success', 'ویرایش با موفقیت انجام شد');
 				$this->refresh();
-			}
-			else
-				Yii::app()->user->setFlash('failed','خطا در هنگام ویرایش!');
+			}else
+				Yii::app()->user->setFlash('failed', 'خطا در هنگام ویرایش!');
 		}
 
-		$this->render('update',array(
-			'model'=>$model,
+		$this->render('update', array(
+			'model' => $model,
 		));
 	}
 
@@ -99,30 +92,31 @@ class ContactMessagesController extends Controller
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
 	 * @param integer $id the ID of the model to be deleted
 	 */
-	public function actionDelete($id,$mode=NULL)
+	public function actionDelete($id, $mode = NULL)
 	{
 		$this->loadModel($id)->delete();
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-        if($mode!="notAjax")
+		if($mode != "notAjax")
 			if(!isset($_GET['ajax']))
-				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+				$this->redirect(isset($_POST['returnUrl'])?$_POST['returnUrl']:array('admin'));
 	}
+
 	public function actionDeleteSelected()
-    { 
-		foreach ($_POST['selectedItems'] as $modelId)
-		{
-			$this->actionDelete($modelId,"notAjax");
+	{
+		foreach($_POST['selectedItems'] as $modelId){
+			$this->actionDelete($modelId, "notAjax");
 		}
 	}
+
 	/**
 	 * Lists all models.
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('ContactMessages');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
+		$dataProvider = new CActiveDataProvider('ContactMessages');
+		$this->render('index', array(
+			'dataProvider' => $dataProvider,
 		));
 	}
 
@@ -131,13 +125,13 @@ class ContactMessagesController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new ContactMessages('search');
+		$model = new ContactMessages('search');
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['ContactMessages']))
-			$model->attributes=$_GET['ContactMessages'];
+			$model->attributes = $_GET['ContactMessages'];
 
-		$this->render('admin',array(
-			'model'=>$model,
+		$this->render('admin', array(
+			'model' => $model,
 		));
 	}
 
@@ -150,9 +144,9 @@ class ContactMessagesController extends Controller
 	 */
 	public function loadModel($id)
 	{
-		$model=ContactMessages::model()->findByPk($id);
-		if($model===null)
-			throw new CHttpException(404,'The requested page does not exist.');
+		$model = ContactMessages::model()->findByPk($id);
+		if($model === null)
+			throw new CHttpException(404, 'The requested page does not exist.');
 		return $model;
 	}
 
@@ -162,8 +156,7 @@ class ContactMessagesController extends Controller
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='contact-messages-form')
-		{
+		if(isset($_POST['ajax']) && $_POST['ajax'] === 'contact-messages-form'){
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
