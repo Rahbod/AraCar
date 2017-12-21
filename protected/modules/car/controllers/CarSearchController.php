@@ -24,13 +24,15 @@ class CarSearchController extends Controller
         return array(
             'frontend' => array(
                 'brand',
+                'model',
                 'all',
+                'autoComplete',
             )
         );
     }
 
     /**
-     * Search cars by brand and model name.
+     * Search cars by brand name.
      */
     public function actionBrand()
     {
@@ -43,17 +45,9 @@ class CarSearchController extends Controller
         else
             $this->redirect(['/site']);
 
-        $filters = [];
-        if ($queryString = Yii::app()->request->getQueryString()) {
-            $queryStrings = explode('&', $queryString);
-            foreach ($queryStrings as $queryString) {
-                $arr = explode('=', $queryString);
-                $filters[$arr[0]] = $arr[1];
-            }
-        }
+        $filters = $this->getFilters();
 
-        $criteria = new CDbCriteria();
-        $criteria->alias = 'car';
+        $criteria = Cars::duplicateQuery();
         $criteria->with = ['brand'];
         $criteria->compare('brand.slug', $brand, true);
         $criteria = $this->applyFilter($criteria, $filters);
@@ -69,23 +63,45 @@ class CarSearchController extends Controller
     }
 
     /**
+     * Search cars by model name.
+     */
+    public function actionModel()
+    {
+        Yii::app()->theme = 'frontend';
+        $model = null;
+        if (isset($_POST['Search']))
+            $model = explode('، ', $_POST['Search']['model'])[1];
+        elseif (Yii::app()->request->getQuery('model'))
+            $model = Yii::app()->request->getQuery('model');
+        else
+            $this->redirect(['/site']);
+
+        /* @var Models $model */
+        $model = Models::model()->find('title = :title', [':title' => $model]);
+
+        $filters = $this->getFilters();
+        $filters['model'] = $model->slug;
+
+        $criteria = Cars::duplicateQuery();
+        $criteria->compare('car.model_id', $model->id);
+        $criteria = $this->applyFilter($criteria, $filters);
+        $dataProvider = new CActiveDataProvider('Cars', [
+            'criteria' => $criteria,
+        ]);
+
+        $this->redirect(['/car/brand/' . $model->brand->slug . '?model=' . $model->slug]);
+    }
+
+    /**
      * Search cars by other fields
      */
     public function actionAll()
     {
         Yii::app()->theme = 'frontend';
 
-        $filters = [];
-        if ($queryString = Yii::app()->request->getQueryString()) {
-            $queryStrings = explode('&', $queryString);
-            foreach ($queryStrings as $queryString) {
-                $arr = explode('=', $queryString);
-                $filters[$arr[0]] = $arr[1];
-            }
-        }
+        $filters = $this->getFilters();
 
-        $criteria = new CDbCriteria();
-        $criteria->alias = 'car';
+        $criteria = Cars::duplicateQuery();
         $criteria = $this->applyFilter($criteria, $filters);
         $dataProvider = new CActiveDataProvider('Cars', [
             'criteria' => $criteria,
@@ -98,6 +114,33 @@ class CarSearchController extends Controller
             'filters' => $filters,
             'dataProvider' => $dataProvider,
         ));
+    }
+
+    public function actionAutoComplete()
+    {
+        if (isset($_POST['query'])) {
+            $list = Models::model()->findAll('title REGEXP :field', [':field' => Persian2Arabic::parse($_POST['query'])]);
+            echo CJSON::encode(CHtml::listData($list, 'id', 'titleAndBrand'));
+        } else
+            return null;
+    }
+
+    /**
+     * Return array of filters that exists in query string.
+     * @return array
+    */
+    protected function getFilters()
+    {
+        $filters = [];
+        if ($queryString = Yii::app()->request->getQueryString()) {
+            $queryStrings = explode('&', $queryString);
+            foreach ($queryStrings as $queryString) {
+                $arr = explode('=', $queryString);
+                $filters[$arr[0]] = $arr[1];
+            }
+        }
+
+        return $filters;
     }
 
     public function createFilterUrl($query, $value)

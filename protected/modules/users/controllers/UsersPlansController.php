@@ -46,19 +46,14 @@ class UsersPlansController extends Controller
 		if(isset($_POST['Plans']))
 		{
 			$model->attributes=$_POST['Plans'];
-            $model->rules = CJSON::encode([
-                'adsCount' => $model->adsCount,
-                'adsDuration' => $model->adsDuration,
-                'adsImagesCount' => $model->adsImageCount,
-            ]);
+            $model->rules = CJSON::encode($model->rules);
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
-		}
+                Yii::app()->user->setFlash('success', 'اطلاعات با موفقیت ذخیره شد.');
+            else
+                Yii::app()->user->setFlash('failed', 'در ثبت اطلاعات خطایی رخ داده است!');
 
-        $rules = CJSON::decode($model->rules);
-        $model->adsCount = $rules['adsCount'];
-        $model->adsDuration = $rules['adsDuration'];
-        $model->adsImageCount = $rules['adsImageCount'];
+            $model->rules = $model->rules ? CJSON::decode($model->rules) : null;
+		}
 
 		$this->render('update',array(
 			'model'=>$model,

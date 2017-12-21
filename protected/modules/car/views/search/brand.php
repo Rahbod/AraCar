@@ -2,7 +2,7 @@
 /* @var $this CarSearchController */
 /* @var $brand Brands */
 /* @var $filters array */
-/* @var $model Brands */
+/* @var $model Models */
 /* @var $dataProvider CActiveDataProvider */
 ?>
 

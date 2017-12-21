@@ -82,13 +82,11 @@ $baseUrl = Yii::app()->theme->baseUrl;
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left-side">
         <div class="search-box">
             <h4>جستجوی وسیله نقلیه</h4>
-            <?= CHtml::form(['car/search/brand']);?>
+            <?= CHtml::form(['car/search/model']);?>
             <div class="input-group">
-                <?= CHtml::textField('Search[brand]', null, [
+                <?= CHtml::textField('Search[model]', null, [
                     'class' => 'form-control custom-search auto-complete',
                     'placeholder' => 'مدل وسیله نقلیه را تایپ نمایید...',
-                    'data-model' => Models::class,
-                    'data-field' => 'title',
                 ]);?>
             <span class="input-group-btn">
                 <?= CHtml::htmlButton('<i class="search-icon"></i>', ['class' => 'btn', 'type' => 'submit']);?>
@@ -130,3 +128,29 @@ $cs->registerScriptFile($baseUrl.'/js/owl.carousel.min.js', CClientScript::POS_E
 
 <?php
 endif;
+
+Yii::app()->clientScript->registerScript('autoComplete', "
+    $('.auto-complete').autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: 'car/search/autoComplete',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    query: request.term,
+                    YII_CSRF_TOKEN: '" . Yii::app()->request->csrfToken . "'
+                },
+                success: function (data) {
+                    var list = $.map(data, function (el) {
+                        return el;
+                    });
+                    response(list);
+                },
+                error: function () {
+                    response([]);
+                }
+            });
+        },
+        minLength: 2
+    });
+");

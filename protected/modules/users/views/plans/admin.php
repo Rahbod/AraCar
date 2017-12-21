@@ -19,8 +19,12 @@ $this->breadcrumbs=array(
 				'columns'=>array(
                     'title',
                     array(
-                        'name' => 'price',
-                        'value' => '$data->price == 0 ? "رایگان" : number_format($data->price) . " تومان"'
+                        'header' => 'تعرفه (نمایشگاه)',
+                        'value' => '$data->getRule("dealership", "price") == 0 ? "رایگان" : number_format($data->getRule("dealership", "price")) . " تومان"'
+                    ),
+					array(
+                        'header' => 'تعرفه (کاربر عادی)',
+                        'value' => '$data->getRule("user", "price") == 0 ? "رایگان" : number_format($data->getRule("user", "price")) . " تومان"'
                     ),
                     array(
                         'name' => 'status',

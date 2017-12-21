@@ -15,7 +15,6 @@ class SiteController extends Controller
                 'about',
                 'contactUs',
                 'help',
-                'autoComplete',
             )
         );
     }
@@ -145,19 +144,5 @@ class SiteController extends Controller
         $this->layout = '//layouts/public';
         $model = Pages::model()->findByPk(6);
         $this->render('//site/pages/page', array('model' => $model));
-    }
-
-    public function actionAutoComplete()
-    {
-        if(isset($_POST['query']) and isset($_POST['model']) and isset($_POST['field'])){
-            $model = $_POST['model'];
-            $query = $_POST['query'];
-            $field = $_POST['field'];
-            $model = new $model();
-            /* @var CActiveRecord $model */
-            $list = $model::model()->findAll($field . ' REGEXP :field', [':field' => Persian2Arabic::parse($query)]);
-            echo CJSON::encode(CHtml::listData($list, 'id', $field));
-        }else
-            return null;
     }
 }
