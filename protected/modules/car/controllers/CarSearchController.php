@@ -71,7 +71,7 @@ class CarSearchController extends Controller
         $model = null;
         if (isset($_POST['Search']))
             $model = explode('، ', $_POST['Search']['model'])[1];
-        elseif(Yii::app()->request->getQuery('model'))
+        elseif (Yii::app()->request->getQuery('model'))
             $model = Yii::app()->request->getQuery('model');
         else
             $this->redirect(['/site']);
@@ -89,12 +89,13 @@ class CarSearchController extends Controller
             'criteria' => $criteria,
         ]);
 
-        $this->render('brand', array(
-            'model' => $model,
-            'brand' => $model->brand,
-            'filters' => $filters,
-            'dataProvider' => $dataProvider,
-        ));
+        $this->redirect(['/car/brand/' . $model->brand->slug . '?model=' . $model->slug]);
+//        $this->render('brand', array(
+//            'model' => $model,
+//            'brand' => $model->brand,
+//            'filters' => $filters,
+//            'dataProvider' => $dataProvider,
+//        ));
     }
 
     /**
