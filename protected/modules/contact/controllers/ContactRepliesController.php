@@ -44,65 +44,34 @@ class ContactRepliesController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new ContactReplies;
+		$model = new ContactReplies;
 
-		if(isset($_POST['ContactReplies']))
-		{
-			$model->attributes=$_POST['ContactReplies'];
+		if(isset($_POST['ContactReplies'])){
+			$model->attributes = $_POST['ContactReplies'];
 			$message = ContactMessages::model()->findByPk($model->message_id);
-			if($message && $model->validate())
-			{
-				$subject = 'پاسخ از وبسايت مستر کیتچنز - '.$message->subject;
-				$body = "
-                    <html>
-                    <head>
-                    <title>
-                    مستر کیتچنز
-                    </title>
-                    </head>
-                    <body style='border: 1px solid #ededed;direction:rtl;background-color:#fff;font-family:tahoma'>
-                    <div style='padding:15px; background-color:#333;'>
-                    <h3 style='color:#ffa800;margin:0'>
-                    وبسايت  مستر کیتچنز
-                    </h3>
-                    </div>
-                    <div style='padding:15px;white-space: pre-line'>"
-					. "<p>موضوع پیغام شما: \"".$message->subject."\"</p>"
+			if($message && $model->validate()){
+				$subject = "پاسخ از وبسايت " . Yii::app()->name . " - " . $message->subject;
+				$body = "<div style='padding:15px;white-space: pre-line'>"
+					. "<p>موضوع پیغام شما: \"" . $message->subject . "\"</p>"
 					. "<p>پاسخ:</p>"
 					. "<p>" . $model->body . "</p>"
 					. "<p>"
 					. "<strong>فرستنده: </strong>" . Yii::app()->name . "<br>"
-					. "</p><hr>
-                    <span style='font-size:10px'>
-                    ارسال شده توسط وبسايت مستر کیتچنز
-                    </span>
-                    </div>
-                    </body>
-                    </html>
-                    ";
-				Yii::import("application.modules.admins.models.*");
-				$mailer = Yii::createComponent('application.extensions.mailer.EMailer');
-				$mailer->IsHTML();
-				$mailer->From = Yii::app()->params['noreplyEmail'];
-				$mailer->FromName = Yii::app()->name;
-				$mailer->CharSet = 'UTF-8';
-				$mailer->Subject = $subject;
-				$mailer->Body = $body;
-				$mailer->AddAddress($message->email,$message->name);
-				if ($mailer->Send()) {
+					. "</p></div>";
+				$result = Mailer::mail($message->email, $subject . Yii::app()->name, $body, Yii::app()->params['noReplyEmail']);
+				if($result){
 					$model->save();
 					Yii::app()->user->setFlash('success', 'پاسخ شما با موفقیت ارسال شد.');
-					ContactMessages::model()->updateByPk($model->message_id,array('reply'=>1));
-				} else
+					ContactMessages::model()->updateByPk($model->message_id, array('reply' => 1));
+				}else
 					Yii::app()->user->setFlash('failed', 'خطا در ارسال پاسخ! لطفا مجددا تلاش کنید.');
-			}
-			else
-				Yii::app()->user->setFlash('failed','خطا در مقادیر ورودی!');
-			$this->redirect(array('/contact/messages/view?id='.$model->message_id));
+			}else
+				Yii::app()->user->setFlash('failed', 'خطا در مقادیر ورودی!');
+			$this->redirect(array('/contact/messages/view?id=' . $model->message_id));
 		}
 
-		$this->render('create',array(
-			'model'=>$model,
+		$this->render('create', array(
+			'model' => $model,
 		));
 	}
 
