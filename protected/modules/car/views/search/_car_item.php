@@ -1,5 +1,6 @@
 <?php /* @var $data Cars */ ?>
 <div class="advertising-item">
+    <a href="<?php echo Yii::app()->createUrl('/car/'.$data->id.'-'.$data->creation_date.'-'.$data->brand->slug.'-'.$data->model->slug.'-for-sale');?>" class="link"></a>
     <div class="image-container">
         <?php if($data->mainImage):?>
             <img src="<?= Yii::app()->baseUrl . '/uploads/cars/' . $data->mainImage->filename;?>">

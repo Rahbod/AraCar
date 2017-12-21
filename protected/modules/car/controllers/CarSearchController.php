@@ -90,12 +90,6 @@ class CarSearchController extends Controller
         ]);
 
         $this->redirect(['/car/brand/' . $model->brand->slug . '?model=' . $model->slug]);
-//        $this->render('brand', array(
-//            'model' => $model,
-//            'brand' => $model->brand,
-//            'filters' => $filters,
-//            'dataProvider' => $dataProvider,
-//        ));
     }
 
     /**
