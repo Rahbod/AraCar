@@ -2723,3 +2723,33 @@ footer{
 .plan-box *{
     margin: 15px 0;
 }
+.owl-controls{
+    margin: 0;
+}
+.social-networks{
+    display: inline-block;
+    float: left;
+}
+footer .nav{
+    display: inline-block;
+    float: right;
+}
+footer .nav li{
+    display: inline-block;
+    height: 60px;
+    padding: 20px 0;
+}
+footer .nav li a{
+    padding: 0 10px;
+    color: #888;
+}
+footer .nav li a:hover,
+footer .nav li a:focus {
+    background-color: transparent;
+}
+footer .nav li a{
+    border-left: 1px solid #aaa;
+}
+footer .nav li:last-of-type a{
+    border-left: none;
+}

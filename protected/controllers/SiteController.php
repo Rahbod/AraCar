@@ -13,6 +13,7 @@ class SiteController extends Controller
                 'error',
                 'contact',
                 'about',
+                'terms',
                 'contactUs',
                 'help',
             )
@@ -128,6 +129,15 @@ class SiteController extends Controller
         $this->render('//site/pages/page', array('model' => $model));
     }
 
+    public function actionTerms()
+    {
+        Yii::import('pages.models.*');
+        Yii::app()->theme = 'frontend';
+        $this->layout = '//layouts/public';
+        $model = Pages::model()->findByPk(2);
+        $this->render('//site/pages/page', array('model' => $model));
+    }
+
     public function actionContactUs()
     {
         Yii::import('pages.models.*');
@@ -142,7 +152,7 @@ class SiteController extends Controller
         Yii::import('pages.models.*');
         Yii::app()->theme = 'frontend';
         $this->layout = '//layouts/public';
-        $model = Pages::model()->findByPk(6);
+        $model = Pages::model()->findByPk(3);
         $this->render('//site/pages/page', array('model' => $model));
     }
 }

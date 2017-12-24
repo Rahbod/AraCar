@@ -62,7 +62,6 @@
                 </li>
                 <li><a href="<?= $this->createUrl('/research') ?>">بررسی خودرو</a></li>
 <!--                <li><a href="#">قیمت صفر</a></li>-->
-                <li><a href="<?= $this->createUrl('/contact') ?>">تماس با ما</a></li>
             </ul>
         </div>
     </div>
