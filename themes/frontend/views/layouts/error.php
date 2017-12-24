@@ -8,7 +8,6 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <meta name="keywords" content="<?= $this->keywords ?>">
     <meta name="description" content="<?= $this->description?>">
     <title><?= (!empty($this->pageTitle)?$this->pageTitle.' | ':'').$this->siteName ?></title>
@@ -29,6 +28,5 @@
 <body>
 
 <?php echo $content;?>
-
 </body>
 </html>

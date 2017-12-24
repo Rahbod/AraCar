@@ -168,14 +168,8 @@ class Controller extends AuthController
                     )
                 ),
                 array(
-                    'label' => '<i class="fa fa-file-text"></i><span>صفحات متنی</span> <i class="fa fa-angle-left pull-left"></i>',
-                    'url' => '#',
-                    'itemOptions' => array('class' => 'treeview', 'tabindex' => "-1"),
-                    'submenuOptions' => array('class' => 'treeview-menu'),
-                    'items' => array(
-                        array('label' => '<i class="fa fa-circle-o"></i>صفحات استاتیک', 'url' => Yii::app()->createUrl('/pages/manage/admin/slug/base')),
-                        array('label' => '<i class="fa fa-circle-o"></i>مستندات', 'url' => Yii::app()->createUrl('/pages/manage/admin/slug/document')),
-                    )
+                    'label' => '<i class="fa fa-file-text"></i><span>صفحات متنی</span>',
+                    'url' => Yii::app()->createUrl('/pages/manage/admin/slug/base')
                 ),
                 array(
                     'label' => '<i class="fa fa-user-md"></i><span>مدیران</span> <i class="fa fa-angle-left pull-left"></i>',

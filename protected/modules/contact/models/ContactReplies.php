@@ -87,7 +87,7 @@ class ContactReplies extends CActiveRecord
 		$criteria->compare('message_id',$this->message_id,true);
 		$criteria->compare('body',$this->body,true);
 		$criteria->compare('date',$this->date,true);
-
+		$criteria->order = 'id desc';
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));

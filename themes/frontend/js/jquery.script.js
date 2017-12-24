@@ -1,4 +1,11 @@
 $(document).ready(function() {
+    // Csrf Token setup
+    $.ajaxSetup({
+        data: {
+            'YII_CSRF_TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
     $('[data-title]').tooltip();
     if ($('.select-picker').length && $.fn.selectpicker)
         $('.select-picker').selectpicker();

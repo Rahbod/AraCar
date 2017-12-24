@@ -93,7 +93,7 @@ class Cars extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('user_id, brand_id, model_id, room_color_id, body_color_id, body_state_id, body_type_id, state_id, city_id, fuel_id, gearbox_id, car_type_id, plate_type_id, purchase_type_id, creation_date, images', 'required'),
+            array('user_id, brand_id, model_id, room_color_id, body_color_id, body_state_id, body_type_id, state_id, city_id, fuel_id, gearbox_id, car_type_id, plate_type_id, purchase_type_id, creation_date', 'required'),
             array('create_date, update_date, expire_date', 'length', 'max' => 20),
             array('user_id, brand_id, model_id, room_color_id, body_color_id, body_state_id, state_id, city_id, fuel_id, gearbox_id, car_type_id, plate_type_id', 'length', 'max' => 10),
             array('purchase_type_id', 'length', 'max' => 1),

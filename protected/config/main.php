@@ -100,7 +100,7 @@ return array(
 				'research' => 'car/public/research',
 				'research/<params:(.*)>' => 'car/public/research',
                 'car/<id:\d+>-<title:(.*)>'=>'car/public/view',
-				'<action:(about|contact|help|publishers|search)>' => 'site/<action>',
+				'<action:(about|contact|help|terms|search)>' => 'site/<action>',
 				'<action:(logout|dashboard|googleLogin|transactions|login|register|changePassword|profile|upgradePlan)>' => 'users/public/<action>',
 				'<action:(buyPlan|verifyPlan)>/<id:\d+>' => 'users/public/<action>',
 				'car/<action:(brand)>/<title:.*>' => 'car/search/<action>',
