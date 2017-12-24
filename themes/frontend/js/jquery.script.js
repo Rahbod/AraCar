@@ -115,45 +115,47 @@ $(document).ready(function() {
     });
 
     $(".is-carousel").each(function () {
-        var nestedItemSelector = $(this).data('item-selector'),
-            dots = ($(this).data('dots') == 1) ? true : false,
-            nav = ($(this).data('nav') == 1) ? true : false,
-            responsive = $(this).data('responsive'),
-            margin = $(this).data('margin'),
-            loop = ($(this).data('loop') == 1) ? true : false,
-            autoPlay = ($(this).data('autoplay') == 1) ? true : false,
-            autoPlayHoverPause = ($(this).data('autoplay-hover-pause') == 1) ? true : false,
-            mouseDrag = ($(this).data('mouse-drag') == 1) ? true : false;
-        if (typeof nestedItemSelector == 'undefined') {
-            $(this).owlCarousel({
-                slideBy: 1,
-                loop: loop,
-                autoplay: autoPlay,
-                items: 1,
-                dots: dots,
-                nav: nav,
-                margin: margin,
-                autoplayHoverPause: autoPlayHoverPause,
-                mouseDrag: mouseDrag,
-                navText: ["<i class='arrow-icon'></i>", "<i class='arrow-icon'></i>"],
-                responsive: responsive,
-                rtl: true
-            });
-        } else {
-            $(this).owlCarousel({
-                slideBy: 1,
-                loop: loop,
-                autoplay: autoPlay,
-                items: 1,
-                nestedItemSelector: nestedItemSelector,
-                dots: dots,
-                nav: nav,
-                autoplayHoverPause: autoPlayHoverPause,
-                mouseDrag: mouseDrag,
-                navText: ["<i class='arrow-icon'></i>", "<i class='arrow-icon'></i>"],
-                responsive: responsive,
-                rtl: true
-            });
+        if ($(this).children().length > 1) {
+            var nestedItemSelector = $(this).data('item-selector'),
+                dots = ($(this).data('dots') == 1) ? true : false,
+                nav = ($(this).data('nav') == 1) ? true : false,
+                responsive = $(this).data('responsive'),
+                margin = $(this).data('margin'),
+                loop = ($(this).data('loop') == 1) ? true : false,
+                autoPlay = ($(this).data('autoplay') == 1) ? true : false,
+                autoPlayHoverPause = ($(this).data('autoplay-hover-pause') == 1) ? true : false,
+                mouseDrag = ($(this).data('mouse-drag') == 1) ? true : false;
+            if (typeof nestedItemSelector == 'undefined') {
+                $(this).owlCarousel({
+                    slideBy: 1,
+                    loop: loop,
+                    autoplay: autoPlay,
+                    items: 1,
+                    dots: dots,
+                    nav: nav,
+                    margin: margin,
+                    autoplayHoverPause: autoPlayHoverPause,
+                    mouseDrag: mouseDrag,
+                    navText: ["<i class='arrow-icon'></i>", "<i class='arrow-icon'></i>"],
+                    responsive: responsive,
+                    rtl: true
+                });
+            } else {
+                $(this).owlCarousel({
+                    slideBy: 1,
+                    loop: loop,
+                    autoplay: autoPlay,
+                    items: 1,
+                    nestedItemSelector: nestedItemSelector,
+                    dots: dots,
+                    nav: nav,
+                    autoplayHoverPause: autoPlayHoverPause,
+                    mouseDrag: mouseDrag,
+                    navText: ["<i class='arrow-icon'></i>", "<i class='arrow-icon'></i>"],
+                    responsive: responsive,
+                    rtl: true
+                });
+            }
         }
     });
 

@@ -326,7 +326,13 @@ class CarPublicController extends Controller
                 $model = Cars::model()->findByPk($id);
                 if($model === null)
                     $this->sendJson(['status' => false]);
-                $this->sendJson(['status' => true, 'phone' => $model->user->userDetails->mobile]);
+                $phone = $model->user->userDetails->mobile;
+                $firstPart = substr($phone, 0, 4);
+                $secPart = substr($phone, 4, 3);
+                $thirdPart = substr($phone, 7, 2);
+                $forthPart = substr($phone, 9, 2);
+                $phone = "{$firstPart} {$secPart} {$thirdPart} {$forthPart}";
+                $this->sendJson(['status' => true, 'phone' => $phone]);
                 break;
             default:
                 $this->sendJson(['status' => false]);

@@ -63,6 +63,10 @@ $parked = UserParking::model()->findByAttributes(['user_id' => $car->user_id, 'c
 						?>
 							<img src="<?= $imageUrl.$car->mainImage->filename ?>" alt="<?= $car->getTitle(false)?>">
 						<?php
+						else:
+							?>
+							<div class="no-image"></div>
+						<?php
 						endif;
 						?>
 					</div>
@@ -164,7 +168,7 @@ $parked = UserParking::model()->findByAttributes(['user_id' => $car->user_id, 'c
 					</div>
 					<div class="feature-item">
 						<span class="name">تلفن</span>
-						<span class="value"><span class="hidden-num" id="phone-number"><?= $car->getSecureMobile() ?></span><a href="#" id="show-full-phone" data-url="<?= $this->createUrl('/car/public/json') ?>" data-hash="<?= base64_encode($car->id) ?>">[نمایش کامل]</a></span>
+						<span class="value"><div class="ltr hidden-num" id="phone-number"><?= $car->getSecureMobile() ?></div><a href="#" id="show-full-phone" data-url="<?= $this->createUrl('/car/public/json') ?>" data-hash="<?= base64_encode($car->id) ?>">[نمایش کامل]</a></span>
 					</div>
 					<div class="feature-item last">
 						<span class="name"><i class="police-hat-icon"></i></span>
@@ -186,16 +190,17 @@ $parked = UserParking::model()->findByAttributes(['user_id' => $car->user_id, 'c
                     <div class="item">
                         <a href="<?= $item->getViewUrl() ?>">
                             <div class="image-container">
-                                <?php
-                                if($item->carImages && isset($item->carImages[0])):
-                                    $image=$item->carImages[0];
-                                    if($image->filename && file_exists($imagePath.$image->filename)):
-                                ?>
-                                    <img src="<?= $imageUrl.$image->filename ?>" alt="<?= $item->getTitle(false)?>">
-                                <?php
-                                    endif;
-                                endif;
-                                ?>
+								<?php
+								if($item->mainImage && file_exists($imagePath.$item->mainImage->filename)):
+									?>
+									<img src="<?= Yii::app()->getBaseUrl(true).'/uploads/cars/'.$item->mainImage->filename ?>" alt="<?= $item->getTitle(false)?>">
+									<?php
+								else:
+									?>
+									<div class="no-image"></div>
+									<?php
+								endif;
+								?>
                             </div>
                             <div class="info-container">
                                 <h4><?= $item->getTitle(false) ?></h4>
