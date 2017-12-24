@@ -194,7 +194,8 @@ class Controller extends AuthController
                     'itemOptions' => array('class' => 'treeview', 'tabindex' => "-1"),
                     'submenuOptions' => array('class' => 'treeview-menu'),
                     'items' => array(
-                        array('label' => '<i class="fa fa-circle-o"></i>مدیریت', 'url' => Yii::app()->createUrl('/users/manage')),
+                        array('label' => '<i class="fa fa-circle-o"></i>مدیریت کاربران', 'url' => Yii::app()->createUrl('/users/manage')),
+                        array('label' => '<i class="fa fa-circle-o"></i>مدیریت نمایشگاه ها', 'url' => Yii::app()->createUrl('/users/manage/dealerships')),
                         array('label' => '<i class="fa fa-circle-o"></i>پلن ها', 'url' => Yii::app()->createUrl('/users/plans/admin')),
                     )
                 ),

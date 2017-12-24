@@ -23,7 +23,11 @@ class UsersManageController extends Controller
                 'admin',
                 'delete',
                 'userTransactions',
-                'transactions'
+                'transactions',
+                'dealerships',
+                'createDealership',
+                'upload',
+                'deleteUpload',
             )
         );
     }
@@ -54,7 +58,7 @@ class UsersManageController extends Controller
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'views' page.
      */
-    public function actionCreate()
+    /*public function actionCreate()
     {
         $model = new Users();
 
@@ -69,6 +73,57 @@ class UsersManageController extends Controller
 
         $this->render('create', array(
             'model' => $model,
+        ));
+    }*/
+
+    /**
+     * Creates a new model.
+     * If creation is successful, the browser will be redirected to the 'views' page.
+     */
+    public function actionCreateDealership()
+    {
+        $model = new Users();
+        $model->setScenario('create-dealership');
+
+        $tmpDIR = Yii::getPathOfAlias("webroot") . '/uploads/temp/';
+        if (!is_dir($tmpDIR))
+            mkdir($tmpDIR);
+        $tmpUrl = Yii::app()->baseUrl .'/uploads/temp/';
+        $avatarDIR = Yii::getPathOfAlias("webroot") . "/uploads/users/avatar/";
+        if (!is_dir($avatarDIR))
+            mkdir($avatarDIR);
+
+        $this->performAjaxValidation($model);
+
+        $avatar = array();
+        if(isset($_POST['Users'])) {
+            $model->attributes = $_POST['Users'];
+            $model->role_id = 2;
+            $model->status = 'active';
+
+            if (isset($_POST['Users']['avatar'])) {
+                $file = $_POST['Users']['avatar'];
+                $avatar = array(
+                    'name' => $file,
+                    'src' => $tmpUrl . '/' . $file,
+                    'size' => filesize($tmpDIR . $file),
+                    'serverName' => $file,
+                );
+            }
+
+            if ($model->save()) {
+                if ($model->avatar and file_exists($tmpDIR.$model->avatar))
+                    rename($tmpDIR . $model->avatar, $avatarDIR . $model->avatar);
+
+                Yii::app()->user->setFlash('success', 'اطلاعات با موفقیت ثبت شد.');
+                $this->refresh();
+            }else
+                Yii::app()->user->setFlash('failed', 'در ثبت اطلاعات خطایی رخ داده است! لطفا مجددا تلاش کنید.');
+        }
+
+        $this->render('create-dealership', array(
+            'model' => $model,
+            'avatar' => $avatar
         ));
     }
 
@@ -141,9 +196,24 @@ class UsersManageController extends Controller
         $model->role_id = 1;
         $this->render('admin', array(
             'model' => $model,
-            'role' => 1
         ));
     }
+
+    /**
+     * Manages all models.
+     */
+    public function actionDealerships()
+    {
+        $model = new Users('search');
+        $model->unsetAttributes();  // clear any default values
+        if(isset($_GET['Users']))
+            $model->attributes = $_GET['Users'];
+        $model->role_id = 2;
+        $this->render('dealerships', array(
+            'model' => $model,
+        ));
+    }
+
     /**
      * Show User Transactions
      *

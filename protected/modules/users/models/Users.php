@@ -17,7 +17,6 @@
  * @property string $repeatPassword
  * @property string $oldPassword
  * @property string $newPassword
- * @property string $national_code
  *
  * The followings are the available model relations:
  * @property UserDetails $userDetails
@@ -48,6 +47,9 @@ class Users extends CActiveRecord
     public $last_name;
     public $phone;
     public $mobile;
+    public $address;
+    public $avatar;
+    public $dealership_name;
     public $statusFilter;
     public $repeatPassword;
     public $oldPassword;
@@ -66,11 +68,17 @@ class Users extends CActiveRecord
             $this->last_name = isset($values['last_name']) && !empty($values['last_name'])?$values['last_name']:null;
             $this->phone = isset($values['phone']) && !empty($values['phone'])?$values['phone']:null;
             $this->mobile = isset($values['mobile']) && !empty($values['mobile'])?$values['mobile']:null;
+            $this->address = isset($values['address']) && !empty($values['address'])?$values['address']:null;
+            $this->avatar = isset($values['avatar']) && !empty($values['avatar'])?$values['avatar']:null;
+            $this->dealership_name = isset($values['dealership_name']) && !empty($values['dealership_name'])?$values['dealership_name']:null;
         }elseif($this){
             $this->first_name = $this->userDetails->first_name;
             $this->last_name = $this->userDetails->last_name;
             $this->phone = $this->userDetails->phone;
             $this->mobile = $this->userDetails->mobile;
+            $this->address = $this->userDetails->address;
+            $this->avatar = $this->userDetails->avatar;
+            $this->dealership_name = $this->userDetails->dealership_name;
         }
     }
 
@@ -82,30 +90,30 @@ class Users extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('email, password', 'required', 'on' => 'insert,create'),
+            array('email, password', 'required', 'on' => 'insert,create,create-dealership'),
             array('verifyCode', 'activeCaptcha', 'on' => 'insert,create'),
-            array('national_code', 'length', 'is' => 10, 'message' => 'کد ملی باید 10 رقم باشد.'),
-            array('national_code, mobile', 'numerical', 'integerOnly' => true, 'message' => '{attribute} باید عددی باشد.'),
+            array('phone, mobile', 'numerical', 'integerOnly' => true, 'message' => '{attribute} باید عددی باشد.'),
             array('email', 'required', 'on' => 'update'),
             array('role_id', 'default', 'value' => 1),
             array('email', 'required', 'on' => 'email, OAuthInsert'),
-            array('email, national_code', 'unique', 'on' => 'insert, create, OAuthInsert, update'),
+            array('email', 'unique', 'on' => 'insert, create, create-dealership, OAuthInsert, update'),
             array('change_password_request_count', 'numerical', 'integerOnly' => true),
             array('email', 'email'),
-            array('email', 'filter', 'filter' => 'trim', 'on' => 'create, update'),
-            array('username, password, verification_token', 'length', 'max' => 100, 'on' => 'create, update'),
+            array('email', 'filter', 'filter' => 'trim', 'on' => 'create, update, create-dealership'),
+            array('username, password, verification_token', 'length', 'max' => 100, 'on' => 'create, update, create-dealership'),
             array('email', 'length', 'max' => 255),
-            array('role_id, national_code', 'length', 'max' => 10),
+            array('role_id', 'length', 'max' => 10),
             array('status', 'length', 'max' => 8),
             array('create_date', 'length', 'max' => 20),
-            array('type, first_name, last_name, phone, mobile, national_code', 'safe'),
+            array('phone', 'length', 'max' => 11),
+            array('mobile', 'length', 'is'=>11, 'message'=>'شماره موبایل اشتباه است'),
+            array('address', 'length', 'max'=>1000),
+            array('avatar', 'length', 'max'=>255),
+            array('type, first_name, last_name, phone, mobile, address, avatar, dealership_name', 'safe'),
 
             // Register rules
-            array('mobile, first_name, last_name, repeatPassword', 'required', 'on' => 'create'),
-            array('repeatPassword', 'compare', 'compareAttribute' => 'password', 'on' => 'create', 'message' => 'کلمه های عبور همخوانی ندارند'),
-            array('email', 'email', 'on' => 'create'),
-            array('email', 'unique', 'on' => 'create'),
-            array('mobile', 'checkUnique', 'on' => 'create'),
+            array('mobile, dealership_name, first_name, last_name, repeatPassword', 'required', 'on' => 'create, create-dealership'),
+            array('repeatPassword', 'compare', 'compareAttribute' => 'password', 'on' => 'create, create-dealership', 'message' => 'کلمه های عبور همخوانی ندارند'),
 
             // change password rules
             array('oldPassword ,newPassword ,repeatPassword', 'required', 'on' => 'change_password'),
@@ -118,7 +126,7 @@ class Users extends CActiveRecord
 
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('type, roleId, create_date, status, verification_token, change_password_request_count, email ,statusFilter, first_name, last_name, phone, mobile, national_code', 'safe', 'on' => 'search'),
+            array('type, roleId, create_date, status, verification_token, change_password_request_count, email ,statusFilter, first_name, last_name, phone, mobile, address, avatar, dealership_name', 'safe', 'on' => 'search'),
         );
     }
 
@@ -190,10 +198,13 @@ class Users extends CActiveRecord
             'verification_token' => 'Verification Token',
             'change_password_request_count' => 'تعداد درخواست تغییر کلمه عبور',
             'type' => 'نوع کاربری',
-            'national_code' => 'کد ملی',
             'mobile' => 'تلفن همراه',
+            'phone' => 'تلفن',
             'first_name' => 'نام',
             'last_name' => 'نام خانوادگی',
+            'address' => 'آدرس',
+            'avatar' => 'تصویر',
+            'dealership_name' => 'نام نمایشگاه',
             'verifyCode' => 'کد امنیتی',
         );
     }
@@ -219,10 +230,9 @@ class Users extends CActiveRecord
         $criteria->compare('username', $this->username, true);
         $criteria->compare('status', $this->statusFilter, true);
         $criteria->compare('role_id', $this->role_id);
-        $criteria->compare('national_code', $this->national_code, true);
         $criteria->addSearchCondition('userDetails.first_name', $this->first_name);
         $criteria->addSearchCondition('userDetails.last_name', $this->last_name);
-        $criteria->with = array('userDetails');
+        $criteria->with = array('userDetails', 'activePlan');
         $criteria->order = 'status ,t.id DESC';
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -262,10 +272,13 @@ class Users extends CActiveRecord
             $model->last_name = $this->last_name;
             $model->phone = $this->phone;
             $model->mobile = $this->mobile;
+            $model->address = $this->address;
+            $model->avatar = $this->avatar;
+            $model->dealership_name = $this->dealership_name;
             if(!$model->save())
                 $this->addErrors($model->errors);
 
-            $freePlan = Plans::model()->find('price = 0');
+            $freePlan = Plans::model()->findByPk(1);
             if($freePlan){
                 $model = new UserPlans;
                 $model->user_id = $this->id;
@@ -282,6 +295,9 @@ class Users extends CActiveRecord
             $model->last_name = $this->last_name;
             $model->phone = $this->phone;
             $model->mobile = $this->mobile;
+            $model->address = $this->address;
+            $model->avatar = $this->avatar;
+            $model->dealership_name = $this->dealership_name;
             if(!@$model->save())
                 $this->addErrors($model->errors);
         }
@@ -291,7 +307,7 @@ class Users extends CActiveRecord
 
     public function generatePassword()
     {
-        return substr(md5($this->national_code), 0, 8);
+        return substr(md5($this->email), 0, 8);
     }
 
     public function useGeneratedPassword()
