@@ -40,8 +40,8 @@ $this->breadcrumbs=array(
                         'class'=>'CButtonColumn',
                         'template' => '{update} {delete}',
                         'buttons' => array(
-                            'view' => array(
-                                'url' => 'Yii::app()->createUrl("/users/manage/view",array("id" => $data->id))'
+                            'update' => array(
+                                'url' => 'Yii::app()->createUrl("/users/manage/updateDealership",array("id" => $data->id))'
                             )
                         )
                     )

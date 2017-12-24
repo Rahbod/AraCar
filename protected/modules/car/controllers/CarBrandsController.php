@@ -7,7 +7,6 @@ class CarBrandsController extends Controller
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
 	public $layout = '//layouts/column2';
-	public $tempPath = 'uploads/temp';
 	public $logoPath = 'uploads/brands';
 	public $modelImagePath = 'uploads/brands/models';
 

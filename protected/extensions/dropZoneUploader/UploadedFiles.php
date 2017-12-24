@@ -132,9 +132,9 @@ class UploadedFiles
     /**
      * Update files List
      *
-     * @param $oldFilename
-     * @param $newFilename
-     * @param $newFilePath
+     * @param string $oldFilename
+     * @param string $newFilename
+     * @param string $newFilePath path of new file
      */
     public function update($oldFilename, $newFilename, $newFilePath, $isArray = false)
     {

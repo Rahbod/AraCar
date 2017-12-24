@@ -64,17 +64,19 @@
 		<?php echo $form->error($model,'email'); ?>
 	</div>
 
-	<div class="form-group">
-		<?php echo $form->labelEx($model,'password'); ?>
-		<?php echo $form->passwordField($model,'password',array('size'=>60,'maxlength'=>100,'class' => 'form-control')); ?>
-		<?php echo $form->error($model,'password'); ?>
-	</div>
+    <?php if($model->isNewRecord):?>
+        <div class="form-group">
+            <?php echo $form->labelEx($model,'password'); ?>
+            <?php echo $form->passwordField($model,'password',array('size'=>60,'maxlength'=>100,'class' => 'form-control')); ?>
+            <?php echo $form->error($model,'password'); ?>
+        </div>
 
-    <div class="form-group">
-		<?php echo $form->labelEx($model,'repeatPassword'); ?>
-		<?php echo $form->passwordField($model,'repeatPassword',array('size'=>60,'maxlength'=>100,'class' => 'form-control')); ?>
-		<?php echo $form->error($model,'repeatPassword'); ?>
-	</div>
+        <div class="form-group">
+            <?php echo $form->labelEx($model,'repeatPassword'); ?>
+            <?php echo $form->passwordField($model,'repeatPassword',array('size'=>60,'maxlength'=>100,'class' => 'form-control')); ?>
+            <?php echo $form->error($model,'repeatPassword'); ?>
+        </div>
+    <?php endif;?>
 
     <div class="form-group">
         <?php echo $form->labelEx($model,'avatar'); ?>
@@ -86,16 +88,18 @@
             'maxFileSize' => 2, //MB
             'url' => $this->createUrl('/users/manage/upload'),
             'deleteUrl' => $this->createUrl('/users/manage/deleteUpload'),
-            'acceptedFiles' => '.jpeg, .jpg, .png, .gif',
+            'acceptedFiles' => '.jpeg, .jpg, .png',
             'serverFiles' => $avatar,
             'onSuccess' => '
 				var responseObj = JSON.parse(res);
-				if(responseObj.state == "ok")
-				{
+				if(responseObj.status){
 					{serverName} = responseObj.fileName;
-				}else if(responseObj.state == "error"){
-					console.log(responseObj.msg);
+					$(".uploader-message").html("");
 				}
+				else{
+					$(".uploader-message").html(responseObj.message);
+                    this.removeFile(file);
+                }
 		',
         )); ?>
     </div>
