@@ -258,6 +258,7 @@ class dropZoneUploader extends CWidget
                     });
                     this.on("sending", function(file, xhr, formData) {
                         formData.append("data", '.$data.');
+                        '.(Yii::app()->request->enableCsrfValidation?'formData.append("'.Yii::app()->request->csrfTokenName.'", "'.Yii::app()->request->csrfToken.'");':'').'
                     });
                     this.on("success", function(file,res) {
                         '.$this->onSuccess.'

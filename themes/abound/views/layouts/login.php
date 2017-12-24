@@ -9,6 +9,7 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <meta name="description" content="<?= strip_tags($this->description) ?>">
     <meta name="author" content="Rahbod Developing Software Co">
+    <meta name="csrf-token" content="<?= Yii::app()->request->csrfToken ?>" />
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
