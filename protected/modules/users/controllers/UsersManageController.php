@@ -8,6 +8,7 @@ class UsersManageController extends Controller
      */
     public $layout = '//layouts/column2';
     public $defaultAction = 'admin';
+    public $avatarPath = 'uploads/users/avatar';
 
     /**
      * @return array actions type list
@@ -23,8 +24,34 @@ class UsersManageController extends Controller
                 'admin',
                 'delete',
                 'userTransactions',
-                'transactions'
+                'transactions',
+                'dealerships',
+                'createDealership',
+                'updateDealership',
+                'upload',
+                'deleteUpload',
             )
+        );
+    }
+
+    public function actions()
+    {
+        return array(
+            'upload' => array(
+                'class' => 'ext.dropZoneUploader.actions.AjaxUploadAction',
+                'attribute' => 'avatar',
+                'rename' => 'random',
+                'validateOptions' => array(
+                    'acceptedTypes' => array('png', 'jpg', 'jpeg')
+                )
+            ),
+            'deleteUpload' => array(
+                'class' => 'ext.dropZoneUploader.actions.AjaxDeleteUploadedAction',
+                'modelName' => 'UserDetails',
+                'attribute' => 'avatar',
+                'uploadDir' => '/uploads/users/avatar/',
+                'storedMode' => 'field'
+            ),
         );
     }
 
@@ -54,7 +81,7 @@ class UsersManageController extends Controller
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'views' page.
      */
-    public function actionCreate()
+    /*public function actionCreate()
     {
         $model = new Users();
 
@@ -69,6 +96,38 @@ class UsersManageController extends Controller
 
         $this->render('create', array(
             'model' => $model,
+        ));
+    }*/
+
+    /**
+     * Creates a new model.
+     * If creation is successful, the browser will be redirected to the 'views' page.
+     */
+    public function actionCreateDealership()
+    {
+        $model = new Users();
+        $model->setScenario('create-dealership');
+
+        $this->performAjaxValidation($model);
+
+        $avatar = array();
+        if(isset($_POST['Users'])) {
+            $model->attributes = $_POST['Users'];
+            $model->role_id = 2;
+            $model->status = 'active';
+
+            $avatar = new UploadedFiles($this->tempPath, $model->avatar);
+            if ($model->save()) {
+                $avatar->move($this->avatarPath);
+                Yii::app()->user->setFlash('success', 'اطلاعات با موفقیت ثبت شد.');
+                $this->refresh();
+            }else
+                Yii::app()->user->setFlash('failed', 'در ثبت اطلاعات خطایی رخ داده است! لطفا مجددا تلاش کنید.');
+        }
+
+        $this->render('create-dealership', array(
+            'model' => $model,
+            'avatar' => $avatar
         ));
     }
 
@@ -101,6 +160,36 @@ class UsersManageController extends Controller
 
         $this->render('update', array(
             'model' => $model,
+        ));
+    }
+
+    /**
+     * Updates a particular model.
+     * If update is successful, the browser will be redirected to the 'views' page.
+     * @param integer $id the ID of the model to be updated
+     */
+    public function actionUpdateDealership($id)
+    {
+        $model = $this->loadModel($id);
+        $model->loadPropertyValues();
+
+        $this->performAjaxValidation($model);
+
+        $avatar = new UploadedFiles($this->avatarPath, $model->avatar);
+        if(isset($_POST['Users'])){
+            $oldAvatar = $model->avatar;
+            $model->attributes = $_POST['Users'];
+            if ($model->save()) {
+                $avatar->update($oldAvatar, $model->avatar, $this->tempPath);
+                Yii::app()->user->setFlash('success', 'اطلاعات با موفقیت ثبت شد.');
+                $this->refresh();
+            }else
+                Yii::app()->user->setFlash('failed', 'در ثبت اطلاعات خطایی رخ داده است! لطفا مجددا تلاش کنید.');
+        }
+
+        $this->render('update-dealership', array(
+            'model' => $model,
+            'avatar' => $avatar,
         ));
     }
 
@@ -143,9 +232,24 @@ class UsersManageController extends Controller
         $model->role_id = 1;
         $this->render('admin', array(
             'model' => $model,
-            'role' => 1
         ));
     }
+
+    /**
+     * Manages all models.
+     */
+    public function actionDealerships()
+    {
+        $model = new Users('search');
+        $model->unsetAttributes();  // clear any default values
+        if(isset($_GET['Users']))
+            $model->attributes = $_GET['Users'];
+        $model->role_id = 2;
+        $this->render('dealerships', array(
+            'model' => $model,
+        ));
+    }
+
     /**
      * Show User Transactions
      *

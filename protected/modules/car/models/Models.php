@@ -57,7 +57,7 @@ class Models extends SortableCActiveRecord
         // class name for the relations automatically generated below.
         return array(
             'cars' => array(self::HAS_MANY, 'Cars', 'model_id'),
-            'carsCount' => array(self::STAT, 'Cars', 'model_id'),
+            'carsCount' => array(self::STAT, 'Cars', 'model_id', 'condition' => 't.status = :status', 'params' => [':status' => Cars::STATUS_APPROVED]),
             'years' => array(self::HAS_MANY, 'ModelDetails', 'model_id'),
             'lastYear' => array(self::HAS_ONE, 'ModelDetails', 'model_id', 'order' => 'product_year DESC'),
             'brand' => array(self::BELONGS_TO, 'Brands', 'brand_id'),
