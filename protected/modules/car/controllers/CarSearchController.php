@@ -119,7 +119,15 @@ class CarSearchController extends Controller
     public function actionAutoComplete()
     {
         if (isset($_POST['query'])) {
-            $list = Models::model()->findAll('title REGEXP :field', [':field' => Persian2Arabic::parse($_POST['query'])]);
+            $criteria = new CDbCriteria();
+            $criteria->with = ['brand'];
+            $criteria->alias = 'model';
+            $criteria->addCondition('model.title REGEXP :field', 'OR');
+            $criteria->addCondition('model.slug REGEXP :field', 'OR');
+            $criteria->addCondition('brand.title REGEXP :field', 'OR');
+            $criteria->addCondition('brand.slug REGEXP :field', 'OR');
+            $criteria->params[':field'] = Persian2Arabic::parse($_POST['query']);
+            $list = Models::model()->findAll($criteria);
             echo CJSON::encode(CHtml::listData($list, 'id', 'titleAndBrand'));
         } else
             return null;
