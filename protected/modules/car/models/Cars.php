@@ -62,7 +62,7 @@ class Cars extends CActiveRecord
     const STATUS_APPROVED = 1;
     const STATUS_REFUSED = 2;
 
-    public $oldImages;
+    public $oldImages = [];
     public $images;
 
     /**
@@ -301,21 +301,20 @@ class Cars extends CActiveRecord
     protected function afterSave()
     {
         if($this->isNewRecord){
-            foreach($this->images as $image){
-                $model = new CarImages();
-                $model->car_id = $this->id;
-                $model->filename = $image;
-                @$model->save();
-            }
-        }else if($this->oldImages){
-            $newImages = array_diff($this->oldImages, $this->images);
-            foreach($newImages as $image){
-                if(file_exists(Yii::getPathOfAlias('webroot') . '/uploads/cars/' . $image)){
+            if($this->images)
+                foreach($this->images as $image){
                     $model = new CarImages();
                     $model->car_id = $this->id;
                     $model->filename = $image;
                     @$model->save();
                 }
+        }else if($this->images){
+            $newImages = $this->oldImages?array_diff($this->images, $this->oldImages):$this->images;
+            foreach($newImages as $image){
+                $model = new CarImages();
+                $model->car_id = $this->id;
+                $model->filename = $image;
+                @$model->save();
             }
         }
         parent::afterSave();
@@ -391,5 +390,15 @@ class Cars extends CActiveRecord
         if ($this->carImages)
             return $this->carImages[0];
         return null;
+    }
+
+    public static function ZeroKmCarCounts()
+    {
+        return self::model()->count('distance = 0');
+    }
+
+    public static function ResearchCounts()
+    {
+        return ModelDetails::model()->count();
     }
 }

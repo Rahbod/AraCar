@@ -4,7 +4,7 @@
 ?>
 <div class="page-error">
     <div class="code"><?php echo $code; ?></div>
-    <div class="title"><?php echo CHtml::encode($message);?></div>
+    <div class="title" dir="auto"><?php echo CHtml::encode($message);?></div>
 
     <div class="buttons">
         <div class="row">

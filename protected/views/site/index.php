@@ -28,6 +28,9 @@ $baseUrl = Yii::app()->theme->baseUrl;
             endforeach;
             $skinPath = $baseUrl.'/assets/slider/layerslider_skins/';
             $cs->registerScript('slider-js','
+                var sh;
+                sh = $(window).width() * 720 / 2500 - 5;
+                $("#slider").css({height:sh});
                 $("#slider").layerSlider({
                     startInViewport: false,
                     responsive : false ,
@@ -47,17 +50,17 @@ $baseUrl = Yii::app()->theme->baseUrl;
         <div class="ls-items">
             <div class="ls-item">
                 <i class="star-icon"></i>
-                <h4>+70</h4>
+                <h4><?= Controller::parseNumbers(Cars::ZeroKmCarCounts()); ?></h4>
                 <span>صفر کیلومتر</span>
             </div>
             <div class="ls-item">
                 <i class="edit-icon"></i>
-                <h4>+80</h4>
+                <h4><?= Controller::parseNumbers(Cars::ResearchCounts()); ?></h4>
                 <span>بررسی خودرو</span>
             </div>
             <div class="ls-item">
                 <i class="clock-icon"></i>
-                <h4>+260</h4>
+                <h4><?= Controller::parseNumbers(Cars::getDailySell()) ?></h4>
                 <span>آگهی امروز</span>
             </div>
         </div>

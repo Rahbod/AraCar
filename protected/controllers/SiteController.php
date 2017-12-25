@@ -49,7 +49,7 @@ class SiteController extends Controller
         $this->layout = "public";
         Yii::app()->getModule("slideshow");
         $slideShow = Slideshow::model()->findAll();
-        $topBrands = Brands::model()->findAll(array('limit' => 10));
+        $topBrands = Brands::model()->findAll(array('order' => 'title'));
         $this->render('index', array(
             'slideShow' => $slideShow,
             'topBrands' => $topBrands

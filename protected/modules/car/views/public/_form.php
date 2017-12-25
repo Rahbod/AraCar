@@ -51,7 +51,7 @@ echo $form->errorSummary($model);
 				'name' => 'images',
 				'containerClass' => 'image-uploader',
 				'dictDefaultMessage' => 'تصاویر خودروی خود را بکشید و در کادر رها کنید.',
-				'maxFiles' => 4,
+				'maxFiles' => $adImageCount,
 				'maxFileSize' => 1, //MB
 				'url' => Yii::app()->createUrl('/car/public/upload'),
 				'deleteUrl' => Yii::app()->createUrl('/car/public/deleteUpload'),
@@ -238,7 +238,7 @@ echo $form->errorSummary($model);
                 <?php echo $form->error($model,'description'); ?>
 			</div>
 			<div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-				<button type="submit" class="btn btn-primary pull-left">ثبت آگهی</button>
+				<button type="submit" class="btn btn-primary pull-left"><?= $model->isNewRecord?'ثبت آگهی':'ویرایش آگهی' ?></button>
 			</div>
 		</div>
 	</div>

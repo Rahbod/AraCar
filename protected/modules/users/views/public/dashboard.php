@@ -19,6 +19,7 @@ $this->breadcrumbs =[
         </ul>
         <div class="tab-content panel-tabs">
             <div class="tab-pane fade active in" id="sell-tab">
+                <?php $this->renderPartial('//partial-views/_flashMessage', ['prefix' => 'sells-']) ?>
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <a type="button" class="btn btn-success btn-wide-2x" href="<?= $this->createUrl('/sell') ?>">
@@ -27,7 +28,7 @@ $this->breadcrumbs =[
                         </a>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                        <h5 class="text-blue pull-left">تعداد آگهی های مجاز 1</h5>
+                        <h5 class="text-blue pull-left">تعداد آگهی های مجاز <?= Controller::parseNumbers($user->getValidAdCount()) ?></h5>
                     </div>
                 </div>
                 <?php $this->widget('zii.widgets.CListView', array(

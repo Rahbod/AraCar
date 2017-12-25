@@ -99,7 +99,8 @@ class UsersPublicController extends Controller
         $this->pageHeader = $user->userDetails->getShowName();
         $this->pageDescription = $user->userDetails->getShowDescription();
         $sells = Cars::model()->findAllByAttributes(array(
-            'user_id' => $user->id
+            'user_id' => $user->id,
+            'status' => ' <> '.Cars::STATUS_DELETED 
         ));
         $this->render('dashboard', array(
             'user' => $user,

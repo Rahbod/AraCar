@@ -41,19 +41,19 @@ $imagePath = Yii::getPathOfAlias('webroot').'/uploads/cars/';
         </div>
     </div>
     <div class="item-actions">
-        <a href="#" class="btn btn-gray">
-            ارتقا خودرو
-            <i class="addon-icon icon icon-bolt"></i>
-        </a>
-        <a href="<?= $this->createUrl('/car') ?>" class="btn btn-gray">
+<!--        <a href="--><?//= $this->createUrl('/car/public/delete/'.$data->id) ?><!--" class="btn btn-gray">-->
+<!--            ارتقا خودرو-->
+<!--            <i class="addon-icon icon icon-bolt"></i>-->
+<!--        </a>-->
+        <a href="<?= $this->createUrl('/car/public/update/'.$data->id) ?>" class="btn btn-gray">
             به روزرسانی
             <i class="addon-icon icon icon-refresh"></i>
         </a>
-        <a href="#" class="btn btn-gray">
+        <a href="<?= $this->createUrl('/car/public/edit/'.$data->id) ?>" class="btn btn-gray">
             ویرایش خودرو
             <i class="addon-icon icon icon-edit"></i>
         </a>
-        <a href="<?= $this->createUrl('/car/public/delete/'.$data->id) ?>" class="btn btn-gray">
+        <a onclick="if(!confirm('آیا از حذف این خودرو اطمینان دارید؟')) return false;" href="<?= $this->createUrl('/car/public/delete/'.$data->id) ?>" class="btn btn-gray">
             حذف خودرو
             <i class="addon-icon icon icon-remove"></i>
         </a>

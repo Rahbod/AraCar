@@ -84,12 +84,21 @@ a:focus{
 .slideshow{
     overflow: hidden;
     width: 100%;
-    height:400px;
+    height: auto;
     position: relative;
     z-index:1;
+    margin-top: -2px;
 }
-.slideshow img{
-    max-height: 400px;
+.slideshow-container .ls-curtiles img,
+.slideshow-container img{
+    width: 100% !important;
+}
+.slideshow-container .ls-nexttiles,
+.slideshow-container .ls-lt-tile{
+    display: none !important;
+}
+.slideshow-container .ls-gpuhack{
+    width: 100% !important;
 }
 
 .slideshow-container{
@@ -2907,4 +2916,15 @@ footer .nav li:last-of-type a{
     -ms-transform: rotate(180deg);
     -o-transform: rotate(180deg);
     transform: rotate(180deg);
+}
+.sell-not-allow{
+    display: flex;
+    min-height: 400px;
+    text-align: center;
+    justify-content: center;
+}
+.inner-flex{
+    padding: 100px 0;
+    display: block;
+    width:100%;
 }

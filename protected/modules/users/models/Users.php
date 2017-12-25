@@ -25,7 +25,9 @@
  * @property UserParking[] $parked
  * @property UserPlans[] $plans
  * @property UserPlans $activePlan
+ * @property Cars $cars
  * @property int $countParked
+ * @property int $countCars
  */
 class Users extends CActiveRecord
 {
@@ -106,9 +108,9 @@ class Users extends CActiveRecord
             array('status', 'length', 'max' => 8),
             array('create_date', 'length', 'max' => 20),
             array('phone', 'length', 'max' => 11),
-            array('mobile', 'length', 'is'=>11, 'message'=>'شماره موبایل اشتباه است'),
-            array('address', 'length', 'max'=>1000),
-            array('avatar', 'length', 'max'=>255),
+            array('mobile', 'length', 'is' => 11, 'message' => 'شماره موبایل اشتباه است'),
+            array('address', 'length', 'max' => 1000),
+            array('avatar', 'length', 'max' => 255),
             array('type, first_name, last_name, phone, mobile, address, avatar, dealership_name', 'safe'),
 
             // Register rules
@@ -173,6 +175,8 @@ class Users extends CActiveRecord
             'role' => array(self::BELONGS_TO, 'UserRoles', 'role_id'),
             'sessions' => array(self::HAS_MANY, 'Sessions', 'user_id', 'on' => 'user_type = "user"'),
             'countParked' => array(self::STAT, 'UserParking', 'user_id'),
+            'countCars' => array(self::STAT, 'Cars', 'user_id', 'condition' => 'status <> :deleted', 'params' => [':deleted' => Cars::STATUS_DELETED]),
+            'cars' => array(self::HAS_MANY, 'Cars', 'user_id'),
             'parked' => array(self::HAS_MANY, 'UserParking', 'user_id'),
             'activePlan' => array(self::HAS_ONE, 'UserPlans', 'user_id', 'on' => 'activePlan.expire_date = -1 OR activePlan.expire_date > :time', 'params' => [':time' => time()], 'order' => 'activePlan.id DESC'),
             'plans' => array(self::HAS_MANY, 'UserPlans', 'user_id', 'order' => 'plans.id DESC'),
@@ -331,5 +335,16 @@ class Users extends CActiveRecord
         if($model->save())
             return $model->id;
         return false;
+    }
+
+    public function getActivePlanRule($name)
+    {
+        return $this->activePlan->plan->getRule($this->role->role, $name);
+    }
+
+    public function getValidAdCount()
+    {
+        $total = $this->getActivePlanRule('adsCount');
+        return $total - $this->countCars;
     }
 }

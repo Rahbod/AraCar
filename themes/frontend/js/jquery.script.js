@@ -8,7 +8,10 @@ $(document).ready(function() {
 
     $('[data-title]').tooltip();
     if ($('.select-picker').length && $.fn.selectpicker)
-        $('.select-picker').selectpicker();
+        $('.select-picker').selectpicker({
+            dropupAuto: false,
+            size: 7
+        });
 
     $('.digitFormat').digitFormat();
 
