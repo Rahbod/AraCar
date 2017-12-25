@@ -586,17 +586,17 @@ a:focus{
 .btn-success:active{
     background: #bed90e !important;
 }
-.btn-default{
+.btn-gray{
     background: #acacac;
     color: #fff;
     border-radius: 5px;
     padding: 15px;
     border:none;
 }
-.active > .btn-default,
-.btn-default:hover,
-.btn-default:focus,
-.btn-default:active{
+.active > .btn-gray,
+.btn-gray:hover,
+.btn-gray:focus,
+.btn-gray:active{
     background: #1a7edf !important;
     color: #fff !important;
 }
@@ -2725,16 +2725,95 @@ footer{
 }
 
 .plan-box{
-    padding: 50px 15px;
+    padding: 30px 15px;
     text-align: center;
     border-radius: 4px;
     display: block;
     height: 500px;
     background-color: #eee;
+    color: white;
+}
+.plan-box.green{
+    background-color: #8abc00;
+}
+.plan-box.bronze{
+    background-color: #F6A27E;
+}
+.plan-box.silver{
+    background-color: #ececec;
+}
+.plan-box.gold{
+    background-color: #f3c56d;
 }
 
 .plan-box *{
     margin: 15px 0;
+}
+.badge {
+    font-size: 11px !important;
+}
+.badge {
+    display: inline-block;
+    min-width: 10px;
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #fff;
+    line-height: 1;
+    vertical-align: middle;
+    white-space: nowrap;
+    text-align: center;
+    background-color: #777;
+    border-radius: 10px;
+}
+.badge-circle.badge-circle-2x {
+    padding: 28px;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    background-color: white;
+    border: 5px solid;
+    margin: 30px 0;
+}
+.badge-circle {
+    padding: 7px;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+}
+.plan-box .clearfix{
+    font-size: 15px;
+}
+.plan-title{
+    font-size: 1.75em !important;
+    font-weight: 600;
+    color: white;
+}
+.plan-box .list-unstyled{
+    font-size: 14px !important;
+    font-weight: 400;
+    color: white;
+}
+.plan-box .clearfix{
+    min-height: 20px;
+}
+.plan-box .button-box{
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    right:0;
+}
+.bronze{
+    color: #965A38 !important;
+}
+.silver{
+    color:#A8A8A8 !important;
+}
+.gold{
+    color: #C98910 !important;
+}
+.badge-circle.badge-free {
+    background-color: #8abc00;
 }
 .owl-controls{
     margin: 0 !important;

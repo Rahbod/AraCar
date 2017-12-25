@@ -42,7 +42,7 @@ $brandImageUrl = Yii::app()->getBaseUrl(true).'/'.$this->brandImagePath.'/';
                                     $uri = '/research/';
                                     $uri .= $vs !== false && $b2?'vs/'.$b2.($m2?'/'.$m2.($y2?'/'.$y2:''):''):'';
                                     echo $this->createUrl($uri);
-                                    ?>" class="btn btn-default btn-sm pull-left">بازگشت به لیست برندها</a>
+                                    ?>" class="btn btn-gray btn-sm pull-left">بازگشت به لیست برندها</a>
                                 <?php else:?>
                                     <input type="text" class="form-control brand-search-trigger" placeholder="جستجوی برند ...">
                                 <?php endif;?>
@@ -181,7 +181,7 @@ $brandImageUrl = Yii::app()->getBaseUrl(true).'/'.$this->brandImagePath.'/';
                                 $uri = '/research/';
                                 $uri .= $b1?$b1.'/'.($m1?$m1.'/'.($y1?$y1.'/':''):''):'';
                                 echo $this->createUrl($uri);
-                                ?>" class="btn btn-default btn-sm pull-left">بازگشت به لیست برندها</a>
+                                ?>" class="btn btn-gray btn-sm pull-left">بازگشت به لیست برندها</a>
                                 <?php else:?>
                                     <input type="text" class="form-control brand-search-trigger" placeholder="جستجوی برند ...">
                                 <?php endif;?>
