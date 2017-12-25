@@ -67,7 +67,7 @@ $baseUrl = Yii::app()->theme->baseUrl;
 
 <div class="boxes-container">
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 right-side">
-                <a href="#suggest-way-modal" data-toggle="modal" class="linear-link">روش پیشنهادی</a>
+<!--                <a href="#suggest-way-modal" data-toggle="modal" class="linear-link">روش پیشنهادی</a>-->
         <div class="content">
             <div class="steps">
                 <i class="step-1"></i>

@@ -12,10 +12,10 @@ $this->breadcrumbs =[
 <div class="content-box white-bg">
     <div class="center-box">
         <ul class="nav nav-pills">
-            <li class="active"><a class="btn btn-default btn-wide" data-toggle="tab" href="#sell-tab">آگهی فروش</a></li>
-            <li><a class="btn btn-default btn-wide" data-toggle="tab" href="#parking-tab">پارکینگ</a></li>
-<!--            <li><a class="btn btn-default btn-wide" data-toggle="tab" href="#exchange-tab">معاوضه</a></li>-->
-<!--            <li><a class="btn btn-default btn-wide" data-toggle="tab" href="#">گوش به زنگ</a></li>-->
+            <li class="active"><a class="btn btn-gray btn-wide" data-toggle="tab" href="#sell-tab">آگهی فروش</a></li>
+            <li><a class="btn btn-gray btn-wide" data-toggle="tab" href="#parking-tab">پارکینگ</a></li>
+<!--            <li><a class="btn btn-gray btn-wide" data-toggle="tab" href="#exchange-tab">معاوضه</a></li>-->
+<!--            <li><a class="btn btn-gray btn-wide" data-toggle="tab" href="#">گوش به زنگ</a></li>-->
         </ul>
         <div class="tab-content panel-tabs">
             <div class="tab-pane fade active in" id="sell-tab">

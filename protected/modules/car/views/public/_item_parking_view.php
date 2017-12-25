@@ -51,7 +51,7 @@ $imagePath = Yii::getPathOfAlias('webroot').'/uploads/cars/';
                 }   
                 $("#parking-tab .view-alert").removeClass("hidden");
             }'
-        ),array('class' => 'btn btn-default remove-parked'));
+        ),array('class' => 'btn btn-gray remove-parked'));
         ?>
     </div>
 </article>

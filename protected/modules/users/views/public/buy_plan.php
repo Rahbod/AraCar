@@ -2,6 +2,8 @@
 /* @var $this UsersPublicController */
 /* @var $plan Plans */
 /* @var $transaction UserTransactions */
+/* @var $active_gateway string */
+/* @var $user Users */
 
 $this->breadcrumbs =[
     'داشبورد' => array('/dashboard'),
@@ -37,13 +39,17 @@ $this->breadcrumbs =[
                             <th>درگاه پرداخت</th><td><b><?= UserTransactions::model()->gateways[$active_gateway]?></b></td>
                         </tr>
                         <tr>
-                            <th>مبلغ قابل پرداخت</th><td><h5><?= Controller::parseNumbers(number_format($plan->price)) ?> تومان</h5></td>
+                            <th>مبلغ قابل پرداخت</th><td><?= Controller::parseNumbers(number_format($plan->getPrice($user->role->role))) ?> تومان</td>
                         </tr>
                         </tbody>
                     </table>
-                    <form method="post">
+                    <?php
+                    echo CHtml::beginForm('','post',array('csrf' => true));
+                    ?>
                         <button type="submit" name="buy" class="btn btn-success pull-left">پرداخت</button>
-                    </form>
+                    <?php
+                    echo CHtml::endForm();
+                    ?>
                 </div>
             <?php
             else:

@@ -565,7 +565,7 @@ class UsersPublicController extends Controller
             if ($model->validate() && $model->login()) {
                 $user = Users::model()->findByPk(Yii::app()->user->getId());
                 if(!$user->activePlan){
-                    $freePlan = Plans::model()->find('price = 0');
+                    $freePlan = Plans::model()->findByPk(1);
                     if($freePlan){
                         $model = new UserPlans;
                         $model->user_id = $user->id;
@@ -580,7 +580,7 @@ class UsersPublicController extends Controller
                     Yii::app()->user->returnUrl != 'logout')
                     $redirect = Yii::app()->user->returnUrl;
                 else
-                    $redirect = array('/dashboard');
+                    $redirect = $this->createUrl('/dashboard');
                 if (isset($_GET['ajax'])) {
                     echo CJSON::encode(array('status' => true, 'url' => $redirect, 'msg' => 'در حال انتقال ...'));
                     Yii::app()->end();
@@ -704,7 +704,7 @@ class UsersPublicController extends Controller
                     $siteName = Yii::app()->name;
                     $transaction = new UserTransactions();
                     $transaction->user_id = Yii::app()->user->getId();
-                    $transaction->amount = $plan->price;
+                    $transaction->amount = $plan->getPrice($user->role->role);
                     $transaction->date = time();
                     $transaction->gateway_name = $active_gateway;
                     $transaction->model_name = Plans::class;
@@ -740,7 +740,7 @@ class UsersPublicController extends Controller
             }
         }
         
-        $this->render('buy_plan', compact('plan', 'transaction', 'active_gateway'));
+        $this->render('buy_plan', compact('plan', 'transaction', 'user', 'active_gateway'));
     }
 
     public function actionVerifyPlan($id)
