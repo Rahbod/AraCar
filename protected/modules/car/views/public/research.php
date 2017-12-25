@@ -14,7 +14,7 @@ $baseUrl = Yii::app()->theme->baseUrl;
 $cs->registerCssFile($baseUrl.'/css/owl.carousel.css');
 $cs->registerCssFile($baseUrl.'/css/owl.theme.default.min.css');
 $cs->registerScriptFile($baseUrl.'/js/owl.carousel.min.js', CClientScript::POS_END);
-var_dump($year1->images);exit;
+
 $this->breadcrumbs= [
     'بررسی / مقایسه خودرو'
 ];
@@ -52,15 +52,15 @@ $brandImageUrl = Yii::app()->getBaseUrl(true).'/'.$this->brandImagePath.'/';
                     <div class="panel-body">
                         <?php if($brand1 && $model1 && $year1):?>
                         <div class="show-details">
-                            <div class="car-image">
+                            <div class="car-image is-carousel" data-margin="0" data-dots="0" data-nav="1" data-mouse-drag="1" data-items="1">
                                 <?php
+                                $i = 0;
                                 if($year1->images):
-                                    $i = 0;
                                     foreach($year1->images as $image):
                                         if($image && file_exists($modelImagePath.$image)):
                                             $i++;
                                             ?>
-                                            <img src="<?= $modelImageUrl.$image ?>" alt="<?= $brand1->title.'-'.$model1->title.'-'.$year1->product_year ?>">
+                                            <div class="car-image-item"><img src="<?= $modelImageUrl.$image ?>" alt="<?= $brand1->title.'-'.$model1->title.'-'.$year1->product_year ?>"></div>
                                             <?php
                                         endif;
                                     endforeach;
@@ -191,8 +191,25 @@ $brandImageUrl = Yii::app()->getBaseUrl(true).'/'.$this->brandImagePath.'/';
                     <div class="panel-body">
                         <?php if($brand2 && $model2 && $year2):?>
                         <div class="show-details">
-                            <div class="car-image">
-                                <img src="<?= $modelImageUrl.$year2->images[0] ?>">
+                            <div class="car-image is-carousel" data-margin="0" data-dots="0" data-nav="1" data-mouse-drag="1" data-items="1">
+                                <?php
+                                $i = 0;
+                                if($year2->images):
+                                    foreach($year2->images as $image):
+                                        if($image && file_exists($modelImagePath.$image)):
+                                            $i++;
+                                            ?>
+                                            <div class="car-image-item"><img src="<?= $modelImageUrl.$image ?>" alt="<?= $brand2->title.'-'.$model2->title.'-'.$year2->product_year ?>"></div>
+                                            <?php
+                                        endif;
+                                    endforeach;
+                                endif;
+                                if(!$i):
+                                    ?>
+                                    <div class="no-image"></div>
+                                    <?php
+                                endif;
+                                ?>
                             </div>
                             <div class="car-header">
                                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">

@@ -7,10 +7,14 @@ $imagePath = Yii::getPathOfAlias('webroot').'/uploads/cars/';
 <article>
     <div class="item-image">
         <?php
-        if($data->carImages):
-        ?>
-            <img src="<?= Yii::app()->getBaseUrl(true).'/uploads/cars/'.$data->carImages[0]->filename ?>">
-        <?php
+        if($data->mainImage && file_exists($imagePath.$data->mainImage->filename)):
+            ?>
+            <img src="<?= Yii::app()->getBaseUrl(true).'/uploads/cars/'.$data->mainImage->filename ?>">
+            <?php
+        else:
+            ?>
+            <div class="no-image"></div>
+            <?php
         endif;
         ?>
     </div>

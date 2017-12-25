@@ -1,16 +1,27 @@
-<?php /* @var $data Cars */ ?>
+<?php
+/* @var $data Cars */
+$imagePath = Yii::getPathOfAlias('webroot').'/uploads/cars/';
+?>
 <div class="advertising-item">
     <a href="<?php echo Yii::app()->createUrl('/car/'.$data->id.'-'.$data->creation_date.'-'.$data->brand->slug.'-'.$data->model->slug.'-for-sale');?>" class="link"></a>
     <div class="image-container">
-        <?php if($data->mainImage):?>
-            <img src="<?= Yii::app()->baseUrl . '/uploads/cars/' . $data->mainImage->filename;?>">
-        <?php endif;?>
+        <?php
+        if($data->mainImage && file_exists($imagePath.$data->mainImage->filename)):
+            ?>
+            <img src="<?= Yii::app()->getBaseUrl(true).'/uploads/cars/'.$data->mainImage->filename ?>">
+            <?php
+        else:
+            ?>
+            <div class="no-image"></div>
+            <?php
+        endif;
+        ?>
     </div>
     <div class="info-container">
         <h2><?= $data->getTitle()?> | <span class="time"><?= JalaliDate::differenceTime($data->update_date)?></span></h2>
         <div class="public-info">
             <span class="place"><?= $data->city->name?>/ <?= $data->visit_district?></span>
-            <div class="desc"><?= $data->description?></div>
+            <div class="desc"><?= strip_tags($data->description)?></div>
             <div class="last-row">
                 <span>کارکرد <?= $data->distance == 0 ? "صفر" : $data->distance?>کیلومتر</span>
                 <?php if($data->purchase_type_id == Cars::PURCHASE_TYPE_CASH):?>

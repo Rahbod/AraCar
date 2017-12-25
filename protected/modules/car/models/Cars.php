@@ -101,6 +101,7 @@ class Cars extends CActiveRecord
             array('distance', 'length', 'max' => 7),
             array('creation_date', 'length', 'max' => 4),
             array('status', 'length', 'max' => 1),
+            array('status', 'default', 'value' => self::STATUS_PENDING),
             array('visit_district', 'length', 'max' => 255),
             array('description, seen, plan_title, plan_rules', 'safe'),
             array('images', 'safe'),
@@ -124,7 +125,7 @@ class Cars extends CActiveRecord
             'gearbox' => array(self::BELONGS_TO, 'Lists', 'gearbox_id'),
             'carType' => array(self::BELONGS_TO, 'Lists', 'car_type_id'),
             'brand' => array(self::BELONGS_TO, 'Brands', 'brand_id'),
-            'model' => array(self::BELONGS_TO, 'Models', 'model_id'),
+            'model' => array(self::BELONGS_TO, 'Models', 'model_id', 'order' => 'model.order'),
             'roomColor' => array(self::BELONGS_TO, 'Lists', 'room_color_id'),
             'bodyColor' => array(self::BELONGS_TO, 'Lists', 'body_color_id'),
             'bodyState' => array(self::BELONGS_TO, 'Lists', 'body_state_id'),
@@ -333,8 +334,9 @@ class Cars extends CActiveRecord
     public function getSecureMobile()
     {
         if($this->user && $this->user->userDetails && $this->user->userDetails->mobile){
-            $firstPart = substr($this->user->userDetails->mobile, 0, 6);
-            return $firstPart . 'xx xxx';
+            $firstPart = substr($this->user->userDetails->mobile, 0, 4);
+            $secPart = substr($this->user->userDetails->mobile, 4, 3);
+            return $firstPart . ' ' . $secPart . ' ' . 'xx xxx';
         }else
             return false;
     }
