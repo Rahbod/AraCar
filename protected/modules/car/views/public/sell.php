@@ -15,7 +15,7 @@ $this->breadcrumbs = array(
 		<div class="row">
 			<?php
 			if($user->getValidAdCount()):
-				$this->renderPartial('_form', ['model' => $model, 'images' => $images]);
+				$this->renderPartial('_form', ['model' => $model, 'images' => $images, 'adImageCount' => $adImageCount]);
 			else:
 				?>
 				<div class="sell-not-allow silver">

@@ -34,6 +34,10 @@
  * @property string $title
  * @property [] $oldImages
  * @property CarImages $mainImage
+ * @property array $numberOfInstallments
+ * @property array $deliveryInDays
+ * @property array $numberOfMonth
+ * @property string $price
  *
  * The followings are the available model relations:
  * @property CarImages[] $carImages
@@ -75,7 +79,8 @@ class Cars extends CActiveRecord
 
     public $purchase_types = [
         self::PURCHASE_TYPE_CASH => 'نقدی',
-        self::PURCHASE_TYPE_INSTALMENT => 'اقساطی'
+        self::PURCHASE_TYPE_INSTALMENT => 'اقساطی',
+        self::PURCHASE_TYPE_AGREEMENT => 'توافقی',
     ];
 
     public $statusLabels = [
@@ -84,6 +89,49 @@ class Cars extends CActiveRecord
         self::STATUS_APPROVED => 'تایید شده',
         self::STATUS_REFUSED => 'رد شده',
     ];
+
+    /**
+     * @return array
+     */
+    public function getNumberOfInstallments()
+    {
+        $arr = [2 => 'قسط دوم'];
+        for($i = 3;$i <= 60;$i++)
+            $arr[$i] = Controller::parseNumbers($i) . ' اقساط';
+        return $arr;
+    }
+
+    /**
+     * @return array
+     */
+    public function getDeliveryInDays()
+    {
+        return [
+            -1 => 'دلخواه',
+            1 => 'فوری',
+            7 => Controller::parseNumbers(7) . 'روز',
+            12 => Controller::parseNumbers(12) . 'روز',
+            15 => Controller::parseNumbers(15) . 'روز',
+            20 => Controller::parseNumbers(20) . 'روز',
+            30 => Controller::parseNumbers(30) . 'روز',
+            45 => Controller::parseNumbers(45) . 'روز',
+            60 => Controller::parseNumbers(60) . 'روز',
+            90 => Controller::parseNumbers(90) . 'روز',
+            120 => Controller::parseNumbers(120) . 'روز',
+
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function getNumberOfMonth()
+    {
+        $arr = [1 => 'ماهیانه'];
+        for($i = 2;$i <= 6;$i++)
+            $arr[$i] = Controller::parseNumbers($i) . ' ماه';
+        return $arr;
+    }
 
     /**
      * @return array validation rules for model attributes.
@@ -104,7 +152,7 @@ class Cars extends CActiveRecord
             array('status', 'default', 'value' => self::STATUS_PENDING),
             array('visit_district', 'length', 'max' => 255),
             array('description, seen, plan_title, plan_rules', 'safe'),
-            array('images', 'safe'),
+            array('images, purchase_details', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
             array('id, create_date, update_date, expire_date, user_id, brand_id, model_id, room_color_id, body_color_id, body_state_id, state_id, city_id, fuel_id, gearbox_id, car_type_id, plate_type_id, purchase_type_id, purchase_details, distance, status, visit_district, description, creation_date', 'safe', 'on' => 'search'),
@@ -290,11 +338,8 @@ class Cars extends CActiveRecord
     protected function beforeSave()
     {
         $this->distance = str_replace(',', '', $this->distance);
-        if($this->purchase_type_id == self::PURCHASE_TYPE_CASH && !is_array($this->purchase_details))
-            $this->purchase_details = str_replace(',', '', $this->purchase_details);
-        else
-            $this->purchase_details = CJSON::encode($this->purchase_details);
         $this->update_date = time();
+        $this->plan_rules = is_array($this->plan_rules)?CJSON::encode($this->plan_rules):null;
         return parent::beforeSave();
     }
 
@@ -320,9 +365,17 @@ class Cars extends CActiveRecord
         parent::afterSave();
     }
 
-    public function getPlanRules()
+    protected function afterFind()
     {
-        return CJSON::decode($this->plan_rules);
+        parent::afterFind();
+        if($this->purchase_type_id == self::PURCHASE_TYPE_INSTALMENT && $this->purchase_details)
+            $this->purchase_details = CJSON::decode($this->purchase_details);
+        $this->plan_rules = $this->plan_rules?CJSON::decode($this->plan_rules):null;
+    }
+
+    public function getCarPlanRule($name)
+    {
+        return $this->plan_rules && isset($this->plan_rules[$name]) && !empty($this->plan_rules[$name])?$this->plan_rules[$name]:null;
     }
 
     public function getViewUrl()
@@ -387,7 +440,7 @@ class Cars extends CActiveRecord
 
     public function getMainImage()
     {
-        if ($this->carImages)
+        if($this->carImages)
             return $this->carImages[0];
         return null;
     }
@@ -400,5 +453,38 @@ class Cars extends CActiveRecord
     public static function ResearchCounts()
     {
         return ModelDetails::model()->count();
+    }
+
+    public function getPurchaseDetail($name)
+    {
+        return $this->purchase_details && is_array($this->purchase_details) && isset($this->purchase_details[$name])?$this->purchase_details[$name]:null;
+    }
+
+    public function getPrice($convert = true, $postfix = 'تومان')
+    {
+        if($this->purchase_type_id == Cars::PURCHASE_TYPE_CASH)
+            $p = $this->purchase_details;
+        elseif($this->purchase_type_id == Cars::PURCHASE_TYPE_INSTALMENT)
+            $p = $this->getPurchaseDetail('totalPrice');
+        else
+            return 'توافقی';
+        $p = number_format($p);
+        $p = $postfix?$p . ' ' . $postfix:$p;
+        return $convert?Controller::parseNumbers($p):$p;
+    }
+    
+    public function normalizePrice(){
+        // normalize price
+        if($this->purchase_type_id == Cars::PURCHASE_TYPE_CASH && isset($this->purchase_details['price']) && !empty($this->purchase_details['price']))
+            $this->purchase_details = str_replace(',', '', $this->purchase_details['price']);
+        elseif($this->purchase_type_id == Cars::PURCHASE_TYPE_INSTALMENT){
+            $details = $this->purchase_details;
+            $details['deliveryInDays'] = $details['deliveryInDays'] == -1?$details['deliveryInFewDays']:$details['deliveryInDays'];
+            foreach($details as $key => $detail)
+                $details[$key] = str_replace(',', '', $detail);
+            $this->purchase_details = CJSON::encode($details);
+        }else
+            $this->purchase_details = -1;
+        //
     }
 }

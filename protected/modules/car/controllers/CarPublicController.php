@@ -99,6 +99,9 @@ class CarPublicController extends Controller
             $model->create_date = time();
             $model->expire_date = time() + $adLifeTime*24*60*60;
             $model->status = Cars::STATUS_PENDING;
+            $model->normalizePrice();
+            $model->plan_title = $user->getActivePlanTitle();
+            $model->plan_rules = $user->getActivePlanRules(true);
             if(count($model->images) > $adImageCount)
                 $model->addError('images', "تعداد تصویر مجاز {$adImageCount} می باشد.");
             $images = new UploadedFiles($this->tempPath, $model->images);
@@ -127,8 +130,7 @@ class CarPublicController extends Controller
         $this->pageHeader = 'ویرایش خودرو';
         $this->pageDescription = 'ویرایش آگهی فروش خودروی ' . $model->getTitle(false);
         $user = Users::model()->findByPk(Yii::app()->user->getId());
-        $adImageCount = $user->getActivePlanRule('adsImageCount');
-        $adLifeTime = $user->getActivePlanRule('adsDuration');
+        $adImageCount = $model->getCarPlanRule('adsImageCount')?:$user->getActivePlanRule('adsImageCount');
         $images = [];
         if($model->carImages){
             $model->oldImages = CHtml::listData($model->carImages, 'id', 'filename');
@@ -136,6 +138,10 @@ class CarPublicController extends Controller
         }
         if(isset($_POST['Cars'])){
             $model->attributes = $_POST['Cars'];
+            $model->normalizePrice();
+            // set plan details if is null
+            $model->plan_title = $model->plan_title?:$user->getActivePlanTitle();
+            $model->plan_rules = $model->plan_rules?:$user->getActivePlanRules(true);
             if($model->save()){
                 if(!$images){
                     $images = new UploadedFiles($this->tempPath, $model->images);
@@ -179,17 +185,18 @@ class CarPublicController extends Controller
     {
         $model = $this->loadModel($id);
         if(!Yii::app()->user->isGuest && (Yii::app()->user->type == 'admin' || (Yii::app()->user->type == 'user' && Yii::app()->user->getId() == $model->user_id))){
-            // delete for ever
-//            $images = new UploadedFiles($this->imagePath, $model->carImages);
-//            $images = new UploadedFiles($this->imagePath, $model->carImages);
-//            $images->removeAll(true);
-//            $model->delete();
-            // status changed to deleted
-            $model->expire_date = Cars::STATUS_DELETED;
+            $user = Users::model()->findByPk(Yii::app()->user->getId());
+            $model->plan_title = $model->plan_title?:$user->getActivePlanTitle();
+            $model->plan_rules = $model->plan_rules?:$user->getActivePlanRules(true);
+            $adLifeTime = $model->getCarPlanRule('adsDuration')?:$user->getActivePlanRule('adsDuration');
+            $model->expire_date = time() + $adLifeTime * 24 * 60 * 60;
+            $model->normalizePrice();
+            echo '<pre>';
+
             if($model->save(false))
-                Yii::app()->user->setFlash('sells-success', 'خودروی شما با موفقیت از سایت حذف گردید.');
+                Yii::app()->user->setFlash('sells-success', 'خودروی شما با موفقیت به روزرسانی گردید.');
             else
-                Yii::app()->user->setFlash('sells-failed', 'متاسفانه در حذف آگهی مشکلی بوجود آمده است! لطفا مجددا بررسی فرمایید.');
+                Yii::app()->user->setFlash('sells-failed', 'متاسفانه در به روزرسانی آگهی مشکلی بوجود آمده است! لطفا مجددا بررسی فرمایید.');
         }
         $this->redirect(['/dashboard']);
     }

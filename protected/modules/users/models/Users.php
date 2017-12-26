@@ -342,6 +342,19 @@ class Users extends CActiveRecord
         return $this->activePlan->plan->getRule($this->role->role, $name);
     }
 
+    public function getActivePlanRules($encode = false)
+    {
+        $rules = $this->activePlan->plan->getRules($this->role->role);
+        if(!$rules)
+            return null;
+        return $encode?CJSON::encode($rules):$rules;
+    }
+
+    public function getActivePlanTitle()
+    {
+        return $this->activePlan->plan->title;
+    }
+
     public function getValidAdCount()
     {
         $total = $this->getActivePlanRule('adsCount');

@@ -162,6 +162,15 @@ echo $form->errorSummary($model);
                 <?php echo $form->error($model,'plate_type_id'); ?>
             </div>
             <!--Millage-->
+            <div class="form-group col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                <?php echo $form->radioButtonList($model,'car_type_id', Lists::getList('car_types'),array(
+                    'class'=>'form-control select-picker millage',
+                    'separator'=> '',
+                    'template'=> '<div class="radio">{input} {label}</div>',
+                    'prompt' => $model->getAttributeLabel('car_type_id'),
+                )); ?>
+                <?php echo $form->error($model,'car_type_id'); ?>
+            </div>
             <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
                 <div class="input-group">
                     <?php echo $form->textField($model,'distance', array(
@@ -172,27 +181,9 @@ echo $form->errorSummary($model);
                 </div>
                 <?php echo $form->error($model,'distance'); ?>
             </div>
-            <div class="form-group col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                <?php echo $form->radioButtonList($model,'car_type_id', Lists::getList('car_types'),array(
-                    'class'=>'form-control select-picker millage',
-                    'separator'=> '',
-                    'template'=> '<div class="radio">{input} {label}</div>',
-                    'prompt' => $model->getAttributeLabel('car_type_id'),
-                )); ?>
-                <?php echo $form->error($model,'car_type_id'); ?>
-            </div>
+            <div class="clearfix"></div>
             <!--Purchase-->
-			<div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
-				<div class="input-group white-bg">
-                    <?php echo $form->textField($model,'purchase_details', array(
-                        'class'=>'form-control digitFormat',
-                        'maxLength' => 12,
-                        'placeholder'=>'قیمت',
-                    )); ?>
-                    <span class="input-group-addon">تومان</span>
-				</div>
-			</div>
-            <div class="form-group col-lg-8 col-md-8 col-sm-8 col-xs-12">
+            <div class="form-group col-lg-2 col-md-2 col-sm-2 col-xs-12">
                 <?php echo $form->radioButtonList($model,'purchase_type_id', $model->purchase_types,array(
                     'class'=>'form-control select-picker purchase_type',
                     'separator'=> '',
@@ -200,6 +191,113 @@ echo $form->errorSummary($model);
                     'prompt' => $model->getAttributeLabel('purchase_type_id'),
                 )); ?>
                 <?php echo $form->error($model,'purchase_type_id'); ?>
+            </div>
+            <div class="row col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                <div id="cash-type" <?php if($model->purchase_type_id != Cars::PURCHASE_TYPE_CASH) echo 'style="display:none"'?>>
+                    <div class="form-group col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                        <div class="input-group white-bg">
+                            <?php echo CHtml::textField('Cars[purchase_details][price]',
+                                $model->getPrice(false,null),
+                                array(
+                                    'class'=>'form-control digitFormat',
+                                    'maxLength' => 12,
+                                    'placeholder'=>'قیمت',
+                                )); ?>
+                            <span class="input-group-addon">تومان</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="instalment-type" <?php if($model->purchase_type_id != Cars::PURCHASE_TYPE_INSTALMENT) echo 'style="display:none"'?>>
+                    <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        <div class="input-group white-bg">
+                            <?php echo CHtml::textField('Cars[purchase_details][totalPrice]',
+                                $model->getPurchaseDetail('totalPrice'),
+                                array(
+                                    'class'=>'form-control digitFormat',
+                                    'maxLength' => 12,
+                                    'placeholder'=>'قیمت نهایی',
+                                )); ?>
+                            <span class="input-group-addon">تومان</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        <div class="input-group white-bg">
+                            <?php echo CHtml::textField('Cars[purchase_details][downPayment]',
+                                $model->getPurchaseDetail('downPayment'),
+                                array(
+                                    'class'=>'form-control digitFormat',
+                                    'maxLength' => 12,
+                                    'placeholder'=>'پیش پرداخت',
+                                )); ?>
+                            <span class="input-group-addon">تومان</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        <div class="input-group white-bg">
+                            <?php echo CHtml::textField('Cars[purchase_details][downPaymentSecondary]',
+                                $model->getPurchaseDetail('downPaymentSecondary'),
+                                array(
+                                    'class'=>'form-control digitFormat',
+                                    'maxLength' => 12,
+                                    'placeholder'=>'پیش پرداخت دوم',
+                                )); ?>
+                            <span class="input-group-addon">تومان</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        <div class="input-group white-bg">
+                            <?php echo CHtml::textField('Cars[purchase_details][monthlyPayment]',
+                                $model->getPurchaseDetail('monthlyPayment'),
+                                array(
+                                    'class'=>'form-control digitFormat',
+                                    'maxLength' => 12,
+                                    'placeholder'=>'مبلغ هر قسط',
+                                )); ?>
+                            <span class="input-group-addon">تومان</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        <?php echo CHtml::dropDownList('Cars[purchase_details][numberOfInstallment]',
+                            $model->getPurchaseDetail('numberOfInstallment'),
+                            $model->numberOfInstallments,
+                            array(
+                                'class'=>'form-control select-picker',
+                                'prompt'=>'تعداد اقساط',
+                            )); ?>
+                    </div>
+                    <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        <?php echo CHtml::dropDownList('Cars[purchase_details][numberOfMonth]',
+                            $model->getPurchaseDetail('numberOfMonth'),
+                            $model->numberOfMonth,
+                            array(
+                                'class'=>'form-control select-picker numberOfMonth',
+                                'prompt'=>'موعد پرداخت',
+                            )); ?>
+                    </div>
+                    <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        <?php echo CHtml::dropDownList('Cars[purchase_details][deliveryInDays]',
+                            $model->getPurchaseDetail('deliveryInDays'),
+                            $model->deliveryInDays,
+                            array(
+                                'class'=>'form-control select-picker deliveryInDays',
+                                'prompt'=>'موعد تحویل',
+                            )); ?>
+                    </div>
+                    <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12 fade">
+                        <div class="input-group white-bg">
+                            <?php echo CHtml::textField('Cars[purchase_details][deliveryInFewDays]',
+                                $model->getPurchaseDetail('deliveryInFewDays'),
+                                array(
+                                    'class'=>'form-control digitFormat',
+                                    'maxLength' => 3,
+                                    'placeholder'=>'زمان تحویل دلخواه',
+                            )); ?>
+                            <span class="input-group-addon">روز</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <?php echo $form->error($model,'purchase_details'); ?>
             </div>
             <!--****************************************************-->
             <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12"><hr></div>
@@ -271,13 +369,14 @@ Yii::app()->clientScript->registerScript("sell-js","
                     alert(data.message);
             }
         });
-    }).on('change', '.millage', function(){
-        var label=$(this).parent().find('label').text();
-        var target=$('#Cars_distance');
-        if(label == 'صفر')
-            target.val('').attr('disabled','disabled');
+    }).on('change', '.deliveryInDays', function(){
+        var val=$('#Cars_purchase_details_deliveryInDays').val();
+        console.log(val == -1);
+        var target=$('#Cars_purchase_details_deliveryInFewDays');
+        if(val == -1)
+            target.val('').parents('.form-group').addClass('in');
         else
-            target.attr('disabled',false);
+            target.val('').parents('.form-group').removeClass('in');
     }).on('change', '.millage', function(){
         var label=$(this).parent().find('label').text();
         var target=$('#Cars_distance');
@@ -287,11 +386,19 @@ Yii::app()->clientScript->registerScript("sell-js","
             target.val('0').attr('disabled','disabled');
     }).on('change', '.purchase_type', function(){
         var val=$(this).val();
-        var target=$('#Cars_pur');
-        if(val == 0)
-            target.val('').attr('disabled','disabled');
-        else
-            target.attr('disabled',false);
+        var cash=$('#cash-type');
+        var instalment=$('#instalment-type');
+        if(val == 0){
+            instalment.hide();
+            cash.show();
+        }else if(val == 1){
+            instalment.show();
+            cash.hide();
+        }
+        else if(val == 2){
+            instalment.hide();
+            cash.hide();
+        }
     });
     
     var label=$('.millage:checked').parent().find('label').text();

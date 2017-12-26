@@ -172,6 +172,11 @@ class Plans extends CActiveRecord
         return $this->rules && isset($this->rules[$role]) && isset($this->rules[$role][$name]) && !empty($this->rules[$role][$name]) ? $this->rules[$role][$name] : null;
     }
 
+	public function getRules($role)
+    {
+        return $this->rules && isset($this->rules[$role])? $this->rules[$role]: null;
+    }
+
 	public function getPrice($role)
 	{
 		return $this->getRule($role, 'price');
