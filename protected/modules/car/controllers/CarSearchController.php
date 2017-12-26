@@ -69,15 +69,13 @@ class CarSearchController extends Controller
     {
         Yii::app()->theme = 'frontend';
         $model = null;
-        if (isset($_POST['Search']))
-            $model = explode('، ', $_POST['Search']['model'])[1];
-        elseif (Yii::app()->request->getQuery('model'))
+        if (Yii::app()->request->getQuery('model'))
             $model = Yii::app()->request->getQuery('model');
         else
             $this->redirect(['/site']);
 
         /* @var Models $model */
-        $model = Models::model()->find('title = :title', [':title' => $model]);
+        $model = Models::model()->find('slug = :slug', [':slug' => $model]);
 
         $filters = $this->getFilters();
         $filters['model'] = $model->slug;
@@ -127,8 +125,17 @@ class CarSearchController extends Controller
             $criteria->addCondition('brand.title REGEXP :field', 'OR');
             $criteria->addCondition('brand.slug REGEXP :field', 'OR');
             $criteria->params[':field'] = Persian2Arabic::parse($_POST['query']);
+            /* @var Models[] $list */
             $list = Models::model()->findAll($criteria);
-            echo CJSON::encode(CHtml::listData($list, 'id', 'titleAndBrand'));
+
+            $result = [];
+            foreach($list as $model){
+                $result[] = [
+                    'title' => $model->getTitleAndBrand(),
+                    'link' => $this->createUrl('model', ['model' => $model->slug]),
+                ];
+            }
+            echo CJSON::encode($result);
         } else
             return null;
     }

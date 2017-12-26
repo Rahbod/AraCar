@@ -232,6 +232,7 @@ a:focus{
     background: #1272d1;
     padding: 51px 100px 52px;
     color: #fff;
+    position: relative;
 }
 .boxes-container .search-box .input-group .form-control{
     border:none;
@@ -2625,21 +2626,37 @@ input.form-control.white-bg {
 .ltr{
     direction: ltr !important;
 }
-.ui-widget.ui-widget-content.ui-autocomplete{
+.autocomplete-result{
     height:auto;
     border-radius: 5px;
     background: #fff;
     box-shadow: 0 0 3px #ccc;
+    max-height:200px;
     overflow: hidden;
+    margin-top: 1px;
+    position: absolute;
+    width: calc(100% - 200px);
+    z-index: 4;
 }
-.ui-menu .ui-menu-item{
-    padding: 9px 12px;
-    font-family: IRANSans;
+.autocomplete-result ul{
+    padding: 0;
+    margin: 0;
+}
+.autocomplete-result li{
     border-bottom: 1px solid #ccc;
-    font-size: 12px;
-    font-weight: normal;
 }
-.ui-menu .ui-menu-item:last-child{
+.autocomplete-result li.loading{
+    padding: 9px 12px;
+    color: #313131;
+}
+.autocomplete-result li a{
+    padding: 9px 12px;
+    display: block;
+}
+.autocomplete-result li a:hover{
+    background: #f0f0f0;
+}
+.autocomplete-result li:last-child{
     border-bottom: none;
 }
 .ui-widget-content.ui-autocomplete .ui-state-focus{

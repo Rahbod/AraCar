@@ -85,17 +85,18 @@ $baseUrl = Yii::app()->theme->baseUrl;
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left-side">
         <div class="search-box">
             <h4>جستجوی وسیله نقلیه</h4>
-            <?= CHtml::form(['car/search/model']);?>
             <div class="input-group">
                 <?= CHtml::textField('Search[model]', null, [
                     'class' => 'form-control custom-search auto-complete',
                     'placeholder' => 'مدل وسیله نقلیه را تایپ نمایید...',
                 ]);?>
             <span class="input-group-btn">
-                <?= CHtml::htmlButton('<i class="search-icon"></i>', ['class' => 'btn', 'type' => 'submit']);?>
+                <?= CHtml::htmlButton('<i class="search-icon"></i>', ['class' => 'btn', 'type' => 'button']);?>
             </span>
             </div>
-            <?= CHtml::endForm();?>
+            <div class="autocomplete-result nicescroll hidden" data-cursorcolor="#b7b7b7" data-cursorborder="none" data-autohidemode="leave">
+                <ul></ul>
+            </div>
         </div>
         <div class="desc-box">
             <i class="dollar-car-icon"></i>
@@ -250,26 +251,35 @@ $cs->registerScriptFile($baseUrl.'/js/owl.carousel.min.js', CClientScript::POS_E
 endif;
 
 Yii::app()->clientScript->registerScript('autoComplete', "
-    $('.auto-complete').autocomplete({
-        source: function (request, response) {
-            $.ajax({
+    var currentRequest = null;
+    $('.auto-complete').on('keyup', function(){
+        if($(this).val().length >= 2){
+            var query = $(this).val();
+            currentRequest = $.ajax({
                 url: 'car/search/autoComplete',
                 type: 'POST',
                 dataType: 'JSON',
                 data: {
-                    query: request.term
+                    query: query
+                },
+                beforeSend : function(){
+                    $('.autocomplete-result').removeClass('hidden');
+                    $('.autocomplete-result ul').html('<li class=\"loading\">در حال جستجو...</li>');
+
+                    if(currentRequest != null)
+                        currentRequest.abort();
                 },
                 success: function (data) {
-                    var list = $.map(data, function (el) {
-                        return el;
-                    });
-                    response(list);
-                },
-                error: function () {
-                    response([]);
+                    if(data.length != 0){
+                        $('.autocomplete-result ul').html('');
+                        $.each(data, function(index, model){
+                            $('.autocomplete-result ul').append('<li><a href=\"' + model.link + '\">' + model.title + '</a></li>');
+                        });
+                    }else{
+                        $('.autocomplete-result ul').html('<li class=\"loading\">نتیجه ای یافت نشد.</li>');
+                    }
                 }
             });
-        },
-        minLength: 2
+        }
     });
 ");

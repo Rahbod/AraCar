@@ -100,6 +100,11 @@ $(document).ready(function() {
         $(this).digitFormat();
     }).on("change", '.digitFormat', function () {
         $(this).digitFormat();
+    }).on("blur", ".auto-complete", function () {
+        $('.autocomplete-result').addClass('hidden');
+    }).on("focus", ".auto-complete", function () {
+        if($('.autocomplete-result ul li').length != 0)
+            $('.autocomplete-result').removeClass('hidden');
     });
 
     $(".nicescroll").each(function () {
