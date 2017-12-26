@@ -55,6 +55,7 @@ if(isset($filters['price'])) {
         </div>
     </div>
 </div>
+<?php if($selectedBrand):?>
 <div class="filter-box">
     <div class="head">
         <span>مدل</span>
@@ -62,12 +63,13 @@ if(isset($filters['price'])) {
     </div>
     <div class="context collapse<?= isset($filters['model']) ? ' in' : ''?>" aria-expanded="true" id="context-8">
         <ul class="list nicescroll" data-cursorcolor="#b7b7b7" data-cursorborder="none" data-railpadding='js:{"top":0,"right":-12,"bottom":0,"left":0}' data-autohidemode="leave">
-            <?php foreach($brand->models as $model):?>
+            <?php foreach($selectedBrand->models as $model):?>
                 <li><a href="<?= $this->createFilterUrl('model', $model->slug)?>" class="<?= (isset($filters['model']) and $model->slug == $filters['model']) ? 'selected' : ''?>"><?= $model->title?><span><?= $model->carsCount?></span></a></li>
             <?php endforeach;?>
         </ul>
     </div>
 </div>
+<?php endif; ?>
 <div class="filter-box">
     <div class="head">
         <span>استان</span>

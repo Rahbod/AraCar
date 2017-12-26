@@ -173,6 +173,7 @@ class CarPublicController extends Controller
 //            $model->delete();
             // status changed to deleted
             $model->status = Cars::STATUS_DELETED;
+            $model->normalizePrice();
             if($model->save(false))
                 Yii::app()->user->setFlash('sells-success', 'خودروی شما با موفقیت از سایت حذف گردید.');
             else
@@ -191,8 +192,6 @@ class CarPublicController extends Controller
             $adLifeTime = $model->getCarPlanRule('adsDuration')?:$user->getActivePlanRule('adsDuration');
             $model->expire_date = time() + $adLifeTime * 24 * 60 * 60;
             $model->normalizePrice();
-            echo '<pre>';
-
             if($model->save(false))
                 Yii::app()->user->setFlash('sells-success', 'خودروی شما با موفقیت به روزرسانی گردید.');
             else
