@@ -45,10 +45,10 @@ $imagePath = Yii::getPathOfAlias('webroot').'/uploads/cars/';
         </div>
     </div>
     <div class="item-actions">
-<!--        <a href="--><?//= $this->createUrl('/car/public/delete/'.$data->id) ?><!--" class="btn btn-gray">-->
-<!--            ارتقا خودرو-->
-<!--            <i class="addon-icon icon icon-bolt"></i>-->
-<!--        </a>-->
+        <a href="<?php echo $data->getViewUrl(); ?>" class="btn btn-gray">
+            نمایش خودرو
+            <i class="addon-icon icon icon-search"></i>
+        </a>
         <a href="<?= $this->createUrl('/car/public/update/'.$data->id) ?>" class="btn btn-gray">
             به روزرسانی
             <i class="addon-icon icon icon-refresh"></i>

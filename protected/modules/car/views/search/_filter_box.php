@@ -55,7 +55,7 @@ if(isset($filters['price'])) {
         </div>
     </div>
 </div>
-<?php if($selectedBrand):?>
+<?php if(isset($selectedBrand)):?>
 <div class="filter-box">
     <div class="head">
         <span>مدل</span>

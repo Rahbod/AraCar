@@ -380,7 +380,7 @@ class Cars extends CActiveRecord
 
     public function getViewUrl()
     {
-        return Yii::app()->createUrl("/car/" . $this->id);
+        return Yii::app()->createUrl('/car/'.$this->id.'-'.$this->creation_date.'-'.$this->brand->slug.'-'.$this->model->slug.'-for-sale');
     }
 
     public function getSecureMobile()

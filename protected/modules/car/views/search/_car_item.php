@@ -3,7 +3,7 @@
 $imagePath = Yii::getPathOfAlias('webroot').'/uploads/cars/';
 ?>
 <div class="advertising-item">
-    <a href="<?php echo Yii::app()->createUrl('/car/'.$data->id.'-'.$data->creation_date.'-'.$data->brand->slug.'-'.$data->model->slug.'-for-sale');?>" class="link"></a>
+    <a href="<?php echo $data->getViewUrl(); ?>" class="link"></a>
     <div class="image-container">
         <?php
         if($data->mainImage && file_exists($imagePath.$data->mainImage->filename)):

@@ -23,7 +23,7 @@
                     <div class="dropdown-menu">
                         <ul class="linear-menu">
                             <?php foreach($this->brands as $brand):?>
-                                <li><a href="<?= $this->createUrl('/car/brand/' . $brand->slug)?>"><?= $brand->title?></a></li>
+                                <li><a href="<?= $this->createUrl('/car/brand/' . $brand->slug)?>"><?= $brand->title?> <small>( <?= Controller::parseNumbers(number_format($brand->carsCount)) ?> )</small></a></li>
                             <?php endforeach;?>
                         </ul>
                     </div>

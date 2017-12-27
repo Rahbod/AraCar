@@ -107,10 +107,10 @@ class CarPublicController extends Controller
             $images = new UploadedFiles($this->tempPath, $model->images);
             if($model->save()){
                 $images->move($this->imagePath);
-                Yii::app()->user->setFlash('success', '<span class="icon-check"></span>&nbsp;&nbsp;اطلاعات با موفقیت ذخیره شد.');
+                Yii::app()->user->setFlash('sells-success', '<span class="icon-check"></span>&nbsp;&nbsp;خودرو با موفقیت ثبت شد و پس از تایید توسط کارشناسان در سایت قرار خواهد گرفت.');
                 $this->redirect(array('/dashboard'));
             }else
-                Yii::app()->user->setFlash('failed', 'در ثبت اطلاعات خطایی رخ داده است! لطفا مجددا تلاش کنید.');
+                Yii::app()->user->setFlash('sells-failed', 'در ثبت اطلاعات خطایی رخ داده است! لطفا مجددا تلاش کنید.');
         }
 
         $this->render('sell', compact('model', 'images', 'user','adImageCount'));

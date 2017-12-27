@@ -30,6 +30,10 @@ $imagePath = Yii::getPathOfAlias('webroot').'/uploads/cars/';
         </div>
     </div>
     <div class="item-actions">
+        <a href="<?php echo $data->car->getViewUrl(); ?>" class="btn btn-gray">
+            نمایش خودرو
+            <i class="addon-icon icon icon-search"></i>
+        </a>
         <?php
         echo CHtml::ajaxLink('حذف از پارکینگ<i class="addon-icon icon icon-remove"></i>',array('/car/public/authJson'),array(
             'type' => 'POST',
