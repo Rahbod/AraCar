@@ -100,8 +100,12 @@ $(document).ready(function() {
         $(this).digitFormat();
     }).on("change", '.digitFormat', function () {
         $(this).digitFormat();
-    }).on("blur", ".auto-complete", function () {
-        $('.autocomplete-result').addClass('hidden');
+    }).on("click", function (e) {
+        // Hidden auto complete result box
+        if($(e.target).hasClass("autocomplete-item") || $(e.target).hasClass("auto-complete"))
+            return;
+        else
+            $('.autocomplete-result').addClass('hidden');
     }).on("focus", ".auto-complete", function () {
         if($('.autocomplete-result ul li').length != 0)
             $('.autocomplete-result').removeClass('hidden');
@@ -212,3 +216,7 @@ $.fn.digitFormat = function () {
         });
     });
 };
+
+function clearAutoCompleteResult() {
+    $('.autocomplete-result').addClass('hidden');
+}
