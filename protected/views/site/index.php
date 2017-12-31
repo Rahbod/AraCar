@@ -253,7 +253,10 @@ endif;
 
 Yii::app()->clientScript->registerScript('autoComplete', "
     var currentRequest = null;
-    $('.auto-complete').on('keyup', function(){
+    $('.auto-complete').on('keyup', function(e){
+        if(e.keyCode >= 37 && e.keyCode <= 40)
+            return;
+
         if($(this).val().length >= 2){
             var query = $(this).val();
             currentRequest = $.ajax({
