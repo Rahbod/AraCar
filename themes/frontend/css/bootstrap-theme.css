@@ -306,16 +306,27 @@ a:focus{
     display: block;
     border:1px solid transparent;
     position: relative;
+    text-align: center;
+    width: 100px;
+    height: 100px;
 }
 .top-brands .is-carousel .item a:hover{
     background: #fff;
     border:1px solid #313131;
 }
 .top-brands .is-carousel .item img{
+    position: absolute;
+    top: 50%;
+    left:50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
     max-width: 100%;
-    max-height:100%;
-    -webkit-filter: grayscale(100%);
-    filter: grayscale(100%);
+    width: auto;
+    max-height:100px;
+    display: inline-block;
     padding: 15px;
 }
 .top-brands .is-carousel .item a:hover img{
