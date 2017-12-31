@@ -462,12 +462,13 @@ class Cars extends CActiveRecord
 
     public function getPrice($convert = true, $postfix = 'تومان')
     {
+        if($this->purchase_details == -1)
+            return 'توافقی';
         if($this->purchase_type_id == Cars::PURCHASE_TYPE_CASH)
             $p = $this->purchase_details;
         elseif($this->purchase_type_id == Cars::PURCHASE_TYPE_INSTALMENT)
             $p = $this->getPurchaseDetail('totalPrice');
-        else
-            return 'توافقی';
+
         $p = number_format($p);
         $p = $postfix?$p . ' ' . $postfix:$p;
         return $convert?Controller::parseNumbers($p):$p;

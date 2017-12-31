@@ -34,7 +34,7 @@ $baseUrl = Yii::app()->theme->baseUrl;
                 $("#slider").layerSlider({
                     startInViewport: false,
                     responsive : false ,
-                    responsiveUnder : 768 ,
+                    responsiveUnder : 1024 ,
                     forceLoopNum: false,
                     autoPlayVideos: false,
                     skinsPath: \''.$skinPath.'\',
@@ -114,7 +114,7 @@ $cs->registerScriptFile($baseUrl.'/js/owl.carousel.min.js', CClientScript::POS_E
 ?>
 
 <div class="top-brands">
-    <div class="is-carousel" data-margin="10" data-dots="0" data-nav="1" data-mouse-drag="1" data-responsive='{"1920":{"items":"5"},"1200":{"items":"10"},"992":{"items":"6"},"768":{"items":"5"},"480":{"items":"3"},"0":{"items":"2"}}'>
+    <div class="is-carousel" data-margin="10" data-dots="0" data-nav="1" data-mouse-drag="1" data-responsive='{"1920":{"items":"5"},"1200":{"items":"8"},"992":{"items":"6"},"768":{"items":"5"},"480":{"items":"3"},"0":{"items":"2"}}'>
         <?php
         $logoPath = Yii::getPathOfAlias("webroot").'/uploads/brands/';
         foreach($topBrands as $brand):

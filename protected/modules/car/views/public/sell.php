@@ -4,19 +4,20 @@
 /* @var $user Users */
 /* @var $form CActiveForm */
 /* @var $images UploadedFiles|[] */
-
-$this->breadcrumbs = array(
-	'فروش خودرو'
-);
-
 ?>
 <div class="content-box white-bg">
 	<div class="center-box">
 		<div class="row">
 			<?php
 			if($user->getValidAdCount()):
+				$this->breadcrumbs = array(
+					'فروش خودرو'
+				);
 				$this->renderPartial('_form', ['model' => $model, 'images' => $images, 'adImageCount' => $adImageCount]);
 			else:
+				$this->breadcrumbs = array(
+					'داشبورد' => array('/dashboard')
+				);
 				?>
 				<div class="sell-not-allow silver">
 					<div class="inner-flex">

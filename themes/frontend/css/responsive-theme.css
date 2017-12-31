@@ -201,6 +201,7 @@
     }
 }
 @media (min-width: 992px) and (max-width: 1200px){
+
     .nav-tabs > li > a{
         font-size: 13px;
         padding: 10px 5px;
