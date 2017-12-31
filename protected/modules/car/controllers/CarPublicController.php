@@ -30,7 +30,7 @@ class CarPublicController extends Controller
     {
         return array(
             'frontend' => array(
-                'sell', 'delete', 'upload', 'deleteUpload', 'authJson', // auth required
+                'sell', 'delete', 'edit', 'update', 'upload', 'deleteUpload', 'authJson', // auth required
                 'research', 'view', 'getBrandModels', 'getModelYears', 'getStateCities', 'json', // allow for all
             )
         );
@@ -89,26 +89,31 @@ class CarPublicController extends Controller
         $this->pageDescription = 'درج آگهی فروش با چند کلیک ساده';
 
         $model = new Cars();
-
+        $user = Users::model()->findByPk(Yii::app()->user->getId());
+        $adImageCount = $user->getActivePlanRule('adsImageCount');
+        $adLifeTime = $user->getActivePlanRule('adsDuration');
         $images = [];
         if(isset($_POST['Cars'])){
             $model->attributes = $_POST['Cars'];
             $model->user_id = Yii::app()->user->getId();
             $model->create_date = time();
+            $model->expire_date = time() + $adLifeTime*24*60*60;
             $model->status = Cars::STATUS_PENDING;
+            $model->normalizePrice();
+            $model->plan_title = $user->getActivePlanTitle();
+            $model->plan_rules = $user->getActivePlanRules(true);
+            if(count($model->images) > $adImageCount)
+                $model->addError('images', "تعداد تصویر مجاز {$adImageCount} می باشد.");
             $images = new UploadedFiles($this->tempPath, $model->images);
             if($model->save()){
                 $images->move($this->imagePath);
-                Yii::app()->user->setFlash('success', '<span class="icon-check"></span>&nbsp;&nbsp;اطلاعات با موفقیت ذخیره شد.');
+                Yii::app()->user->setFlash('sells-success', '<span class="icon-check"></span>&nbsp;&nbsp;خودرو با موفقیت ثبت شد و پس از تایید توسط کارشناسان در سایت قرار خواهد گرفت.');
                 $this->redirect(array('/dashboard'));
             }else
-                Yii::app()->user->setFlash('failed', 'در ثبت اطلاعات خطایی رخ داده است! لطفا مجددا تلاش کنید.');
+                Yii::app()->user->setFlash('sells-failed', 'در ثبت اطلاعات خطایی رخ داده است! لطفا مجددا تلاش کنید.');
         }
 
-        $this->render('sell', array(
-            'model' => $model,
-            'images' => $images
-        ));
+        $this->render('sell', compact('model', 'images', 'user','adImageCount'));
     }
 
     /**
@@ -116,26 +121,40 @@ class CarPublicController extends Controller
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id the ID of the model to be updated
      */
-    public function actionUpdate($id)
+    public function actionEdit($id)
     {
+        Yii::app()->theme = "frontend";
+        $this->layout = '//layouts/inner';
         $model = $this->loadModel($id);
-        $model->oldImages = $model->carImages;
-        $images = new UploadedFiles($this->imagePath, $model->carImages);
+        $this->pageTitle = 'ویرایش خودروی ' . $model->getTitle(false);
+        $this->pageHeader = 'ویرایش خودرو';
+        $this->pageDescription = 'ویرایش آگهی فروش خودروی ' . $model->getTitle(false);
+        $user = Users::model()->findByPk(Yii::app()->user->getId());
+        $adImageCount = $model->getCarPlanRule('adsImageCount')?:$user->getActivePlanRule('adsImageCount');
+        $images = [];
+        if($model->carImages){
+            $model->oldImages = CHtml::listData($model->carImages, 'id', 'filename');
+            $images = new UploadedFiles($this->imagePath, $model->oldImages);
+        }
         if(isset($_POST['Cars'])){
-            // store model image value in oldImage variable
-            $oldImages = $model->images;
             $model->attributes = $_POST['Cars'];
+            $model->normalizePrice();
+            // set plan details if is null
+            $model->plan_title = $model->plan_title?:$user->getActivePlanTitle();
+            $model->plan_rules = $model->plan_rules?:$user->getActivePlanRules(true);
             if($model->save()){
-                $images->update($oldImages, $model->images, $this->tempPath, true);
-                Yii::app()->user->setFlash('success', '<span class="icon-check"></span>&nbsp;&nbsp;اطلاعات با موفقیت ذخیره شد.');
-                $this->redirect(array('admin'));
+                if(!$images){
+                    $images = new UploadedFiles($this->tempPath, $model->images);
+                    $images->move($this->imagePath);
+                }else
+                    $images->update($model->oldImages, $model->images, $this->tempPath, true);
+                Yii::app()->user->setFlash('sells-success', '<span class="icon-check"></span>&nbsp;&nbsp;اطلاعات با موفقیت ذخیره شد.');
+                $this->redirect(array('/dashboard'));
             }else
-                Yii::app()->user->setFlash('failed', 'در ثبت اطلاعات خطایی رخ داده است! لطفا مجددا تلاش کنید.');
+                Yii::app()->user->setFlash('sells-failed', 'در ثبت اطلاعات خطایی رخ داده است! لطفا مجددا تلاش کنید.');
         }
 
-        $this->render('update', array(
-            'model' => $model,
-        ));
+        $this->render('update', compact('model', 'images', 'adImageCount'));
     }
 
     /**
@@ -149,16 +168,36 @@ class CarPublicController extends Controller
         if(!Yii::app()->user->isGuest && (Yii::app()->user->type == 'admin' || (Yii::app()->user->type == 'user' && Yii::app()->user->getId() == $model->user_id))){
             // delete for ever
 //            $images = new UploadedFiles($this->imagePath, $model->carImages);
+//            $images = new UploadedFiles($this->imagePath, $model->carImages);
 //            $images->removeAll(true);
 //            $model->delete();
             // status changed to deleted
             $model->status = Cars::STATUS_DELETED;
-            $model->save(false);
+            $model->normalizePrice();
+            if($model->save(false))
+                Yii::app()->user->setFlash('sells-success', 'خودروی شما با موفقیت از سایت حذف گردید.');
+            else
+                Yii::app()->user->setFlash('sells-failed', 'متاسفانه در حذف آگهی مشکلی بوجود آمده است! لطفا مجددا بررسی فرمایید.');
         }
+        $this->redirect(['/dashboard']);
+    }
 
-        // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-        if(!isset($_GET['ajax']))
-            $this->redirect(isset($_POST['returnUrl'])?$_POST['returnUrl']:array('admin'));
+    public function actionUpdate($id)
+    {
+        $model = $this->loadModel($id);
+        if(!Yii::app()->user->isGuest && (Yii::app()->user->type == 'admin' || (Yii::app()->user->type == 'user' && Yii::app()->user->getId() == $model->user_id))){
+            $user = Users::model()->findByPk(Yii::app()->user->getId());
+            $model->plan_title = $model->plan_title?:$user->getActivePlanTitle();
+            $model->plan_rules = $model->plan_rules?:$user->getActivePlanRules(true);
+            $adLifeTime = $model->getCarPlanRule('adsDuration')?:$user->getActivePlanRule('adsDuration');
+            $model->expire_date = time() + $adLifeTime * 24 * 60 * 60;
+            $model->normalizePrice();
+            if($model->save(false))
+                Yii::app()->user->setFlash('sells-success', 'خودروی شما با موفقیت به روزرسانی گردید.');
+            else
+                Yii::app()->user->setFlash('sells-failed', 'متاسفانه در به روزرسانی آگهی مشکلی بوجود آمده است! لطفا مجددا بررسی فرمایید.');
+        }
+        $this->redirect(['/dashboard']);
     }
 
     /**

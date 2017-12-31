@@ -202,6 +202,8 @@ class CarSearchController extends Controller
 
                 case "model":
                     $model = Models::model()->find('slug = :slug', [':slug' => $value]);
+                    if($model === null)
+                        throw new CHttpException(404, 'مدل موردنظر یافت نشد.');
                     $strTemp .= $model->title;
                     break;
 

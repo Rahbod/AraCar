@@ -4,7 +4,7 @@
 ?>
 <div class="page-error">
     <div class="code"><?php echo $code; ?></div>
-    <div class="title">
+    <div class="title" dir="auto">
         <?php echo CHtml::encode($message);?>
         <?php if(Yii::app()->request->hostInfo == 'http://localhost'):?>
             <small style="display: block;margin-top: 40px;"><?= Yii::app()->errorHandler->error['file'] . '(' . Yii::app()->errorHandler->error['line'] . ')'?></small>

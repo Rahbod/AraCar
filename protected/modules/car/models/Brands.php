@@ -56,7 +56,7 @@ class Brands extends CActiveRecord
 			'country' => array(self::BELONGS_TO, 'Countries', 'country_id'),
 			'cars' => array(self::HAS_MANY, 'Cars', 'brand_id'),
 			'carsCount' => array(self::STAT, 'Cars', 'brand_id', 'condition' => 't.status = :status', 'params' => [':status' => Cars::STATUS_APPROVED]),
-			'models' => array(self::HAS_MANY, 'Models', 'brand_id'),
+			'models' => array(self::HAS_MANY, 'Models', 'brand_id', 'order' => 'models.order'),
 			'modelCount' => array(self::STAT, 'Models', 'brand_id'),
 		);
 	}

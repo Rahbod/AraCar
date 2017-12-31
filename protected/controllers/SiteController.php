@@ -49,7 +49,13 @@ class SiteController extends Controller
         $this->layout = "public";
         Yii::app()->getModule("slideshow");
         $slideShow = Slideshow::model()->findAll();
-        $topBrands = Brands::model()->findAll(array('limit' => 10));
+        $criteria = new CDbCriteria();
+        $criteria->select = 't.*, COUNT(cars.id) as c';
+        $criteria->together = true;
+        $criteria->with = array('cars');
+        $criteria->group = 't.id';
+        $criteria->order = 'c DESC';
+        $topBrands = Brands::model()->findAll($criteria);
         $this->render('index', array(
             'slideShow' => $slideShow,
             'topBrands' => $topBrands

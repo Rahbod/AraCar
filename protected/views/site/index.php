@@ -28,10 +28,13 @@ $baseUrl = Yii::app()->theme->baseUrl;
             endforeach;
             $skinPath = $baseUrl.'/assets/slider/layerslider_skins/';
             $cs->registerScript('slider-js','
+                var sh;
+                sh = $(window).width() * 720 / 2500 - 5;
+                $("#slider").css({height:sh});
                 $("#slider").layerSlider({
                     startInViewport: false,
                     responsive : false ,
-                    responsiveUnder : 768 ,
+                    responsiveUnder : 1024 ,
                     forceLoopNum: false,
                     autoPlayVideos: false,
                     skinsPath: \''.$skinPath.'\',
@@ -47,17 +50,17 @@ $baseUrl = Yii::app()->theme->baseUrl;
         <div class="ls-items">
             <div class="ls-item">
                 <i class="star-icon"></i>
-                <h4>+70</h4>
+                <h4><?= Controller::parseNumbers(Cars::ZeroKmCarCounts()); ?></h4>
                 <span>صفر کیلومتر</span>
             </div>
             <div class="ls-item">
                 <i class="edit-icon"></i>
-                <h4>+80</h4>
+                <h4><?= Controller::parseNumbers(Cars::ResearchCounts()); ?></h4>
                 <span>بررسی خودرو</span>
             </div>
             <div class="ls-item">
                 <i class="clock-icon"></i>
-                <h4>+260</h4>
+                <h4><?= Controller::parseNumbers(Cars::getDailySell()) ?></h4>
                 <span>آگهی امروز</span>
             </div>
         </div>
@@ -112,7 +115,7 @@ $cs->registerScriptFile($baseUrl.'/js/owl.carousel.min.js', CClientScript::POS_E
 ?>
 
 <div class="top-brands">
-    <div class="is-carousel" data-margin="10" data-dots="0" data-nav="1" data-mouse-drag="1" data-responsive='{"1920":{"items":"5"},"1200":{"items":"10"},"992":{"items":"6"},"768":{"items":"5"},"480":{"items":"3"},"0":{"items":"2"}}'>
+    <div class="is-carousel" data-margin="10" data-dots="0" data-nav="1" data-mouse-drag="1" data-responsive='{"1920":{"items":"5"},"1200":{"items":"8"},"992":{"items":"6"},"768":{"items":"5"},"480":{"items":"3"},"0":{"items":"2"}}'>
         <?php
         $logoPath = Yii::getPathOfAlias("webroot").'/uploads/brands/';
         foreach($topBrands as $brand):

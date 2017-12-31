@@ -20,7 +20,7 @@ a:focus{
 .header {
     height:60px;
     position: relative;
-    z-index:2;
+    z-index:100;
 }
 .header.inner-page {
     background: #fff;
@@ -84,12 +84,22 @@ a:focus{
 .slideshow{
     overflow: hidden;
     width: 100%;
-    height:400px;
+    min-height: 300px;
+    height: auto;
     position: relative;
     z-index:1;
+    margin-top: -2px;
 }
-.slideshow img{
-    max-height: 400px;
+.slideshow-container .ls-curtiles img,
+.slideshow-container img{
+    width: 100% !important;
+}
+.slideshow-container .ls-nexttiles,
+.slideshow-container .ls-lt-tile{
+    display: none !important;
+}
+.slideshow-container .ls-gpuhack{
+    width: 100% !important;
 }
 
 .slideshow-container{
@@ -224,6 +234,7 @@ a:focus{
     padding: 51px 100px 52px;
     color: #fff;
     position: relative;
+    height: 180px;
 }
 .boxes-container .search-box .input-group .form-control{
     border:none;
@@ -255,6 +266,7 @@ a:focus{
     padding: 34px 100px;
     color: #313131;
     position: relative;
+    height: 176px;
 }
 .boxes-container .desc-box .dollar-car-icon{
     background: url("../svg/quote.svg") no-repeat center;
@@ -277,6 +289,10 @@ a:focus{
 }
 .boxes-container .desc-box p{
     margin-bottom: 0;
+}
+.top-brands .is-carousel{
+    height: 135px;
+    overflow: hidden;
 }
 .top-brands .is-carousel{
     padding: 0 31px;
@@ -706,12 +722,21 @@ input[type="checkbox"]:checked + label::before {
     padding-bottom: 15px;
 }
 .advertising-list .advertising-item{
+    background-color: #fafafa;
     border:1px solid #d3d3d3;
     border-radius: 5px;
     padding: 10px;
     overflow: hidden;
     margin-bottom: 5px;
     position: relative;
+    -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -ms-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
 }
 .advertising-list .advertising-item a.link{
     position: absolute;
@@ -721,8 +746,11 @@ input[type="checkbox"]:checked + label::before {
     height: 100%;
     z-index:5;
 }
-.advertising-list .advertising-item:hover{
+.advertising-list .advertising-item:hover {
     background: #fff;
+    -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 .advertising-list .advertising-item .image-container{
     width:187px;
@@ -909,6 +937,7 @@ input[type="checkbox"]:checked + label::before {
 }
 .advertise-info-box .image-container .is-carousel{
     margin-top: 10px;
+    height: 110px;
 }
 .advertise-info-box .image-container .main-image-container img{
     max-width: 100%;
@@ -918,7 +947,7 @@ input[type="checkbox"]:checked + label::before {
 }
 .advertise-info-box h2.title{
     margin: 0 0 20px;
-    font-size: 16px;
+    font-size: 20px;
     line-height:20px;
     font-weight: bold;
 }
@@ -1001,7 +1030,7 @@ input[type="checkbox"]:checked + label::before {
     padding:12px 15px;
     float: left;
     line-height:20px;
-    width: 180px;
+    min-width: 180px;
     text-align: center;
     display: inline-block;
 }
@@ -1010,6 +1039,10 @@ input[type="checkbox"]:checked + label::before {
 }
 .advertise-info-box .text {
     padding: 15px 0 100px;
+    font-size: 14px;
+    line-height: 40px;
+    text-align: justify;
+    white-space: pre-line;
 }
 .advertise-info-box .features .feature-item.last{
     padding-bottom: 0;
@@ -2924,4 +2957,23 @@ footer .nav li:last-of-type a{
     -ms-transform: rotate(180deg);
     -o-transform: rotate(180deg);
     transform: rotate(180deg);
+}
+.sell-not-allow{
+    display: flex;
+    min-height: 400px;
+    text-align: center;
+    justify-content: center;
+}
+.inner-flex{
+    padding: 100px 0;
+    display: block;
+    width:100%;
+}
+.instalment-box{
+    background-color: #8ce533 !important;
+    color: #fff !important;
+    position: absolute;
+    padding: 2px 8px;
+    top: 15px;
+    left:15px;
 }

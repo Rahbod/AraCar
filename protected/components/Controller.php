@@ -266,6 +266,21 @@ class Controller extends AuthController
         return str_replace($english_array, $farsi_array, $matches);
     }
 
+    /**
+     * @param $number
+     * @param bool $numberFormat
+     * @param bool $persianNumber
+     * @param string $postfix
+     * @return mixed|string
+     */
+    public static function normalizeNumber($number,$numberFormat = true, $persianNumber = true, $postfix = 'تومان')
+    {
+        $number = $numberFormat?number_format($number):$number;
+        $number = $persianNumber?Controller::parseNumbers($number):$number;
+        $number = $postfix?$number . ' ' . $postfix:$number;
+        return $number;
+    }
+
     public static function fileSize($file)
     {
         if(file_exists($file)){

@@ -98,9 +98,11 @@ class UsersPublicController extends Controller
         $this->pageTitle = 'پروفایل من';
         $this->pageHeader = $user->userDetails->getShowName();
         $this->pageDescription = $user->userDetails->getShowDescription();
-        $sells = Cars::model()->findAllByAttributes(array(
-            'user_id' => $user->id
-        ));
+        $criteria = new CDbCriteria();
+        $criteria->compare('user_id' , $user->id);
+        $criteria->addCondition('status <> :deleted');
+        $criteria->params[':deleted'] = Cars::STATUS_DELETED;
+        $sells = Cars::model()->findAll($criteria);
         $this->render('dashboard', array(
             'user' => $user,
             'sells' => $sells,

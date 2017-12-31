@@ -58,6 +58,7 @@ class UploadedFiles
             $path = $this->normalizePath($filePath);
             $url = $this->normalizeUrl($filePath);
         }
+
         if((string)$filename && file_exists($path . $filename))
             $this->_storedFiles[] = [
                 'name' => $filename,
@@ -189,11 +190,13 @@ class UploadedFiles
 
     public function move($destinationPath, $fileName = false)
     {
-        if($fileName)
-            $this->moveFile($destinationPath, $fileName);
-        else
-            foreach($this->getFiles() as $file)
-                $this->moveFile($destinationPath, $file['serverName']);
+        if($this->getFiles()){
+            if($fileName)
+                $this->moveFile($destinationPath, $fileName);
+            else
+                foreach($this->getFiles() as $file)
+                    $this->moveFile($destinationPath, $file['serverName']);
+        }
     }
 
     public function moveFile($destinationPath, $fileName)

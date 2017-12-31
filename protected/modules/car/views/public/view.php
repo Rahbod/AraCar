@@ -2,7 +2,6 @@
 /* @var $this CarPublicController */
 /* @var $car Cars */
 /* @var $similar Cars[] */
-
 // load owl carousel plugin
 $cs = Yii::app()->clientScript;
 $baseUrl = Yii::app()->theme->baseUrl;
@@ -12,8 +11,9 @@ $cs->registerScriptFile($baseUrl.'/js/owl.carousel.min.js', CClientScript::POS_E
 
 $breadcrumbs= [
 	$car->brand->title => array('/car/brand/'.$car->brand->slug),
-	$car->model->title => array('/car/brand/'.$car->brand->slug.'/'.$car->model->slug),
-	$car->creation_date => array('/car/brand/'.$car->brand->slug.'/'.$car->model->slug.'/'.$car->creation_date),
+	$car->model->title => array('/car/brand/'.$car->brand->slug.'?model='.$car->model->slug),
+	$car->creation_date,
+//	$car->creation_date => array('/car/brand/'.$car->brand->slug.'/'.$car->model->slug.'/'.$car->creation_date),
 	'جزییات'
 ];
 
@@ -97,6 +97,7 @@ $parked = UserParking::model()->findByAttributes(['user_id' => $car->user_id, 'c
                 <div class="clearfix"></div>
 				<h2 class="title"><?= $car->getTitle(false)?></h2>
                 <?php
+//				var_dump($parked);exit;
                 if(!Yii::app()->user->isGuest && Yii::app()->user->type == 'user'):
                     echo CHtml::ajaxLink('P<span>افزودن این خودرو به پارکینگ خود</span><span>حذف این خودرو از پارکینگ</span>',array('/car/public/authJson'),array(
                         'type' => 'POST',
@@ -121,13 +122,41 @@ $parked = UserParking::model()->findByAttributes(['user_id' => $car->user_id, 'c
                     ),array('class' => 'add-to-park'.($parked?' parked':'')));
                 else:
                     ?>
-                    <a href="#" class="add-to-park" data-toggle="modal" data-target="#login-modal">P<span>افزودن این خودرو به پارکینگ خود</span></a>
+                    <a href="#" class="add-to-park" data-toggle="modal" data-target="#login-modal">P<span>افزودن این خودرو به پارکینگ خود</span><span>حذف این خودرو از پارکینگ</span></a>
                     <?php
                 endif;
                 ?>
 				<div class="features">
+                    <?php
+                    if($car->purchase_type_id == Cars::PURCHASE_TYPE_INSTALMENT):
+                        ?>
+                        <div class="feature-item">
+                            <span class="name">پیش پرداخت</span>
+                            <span class="value"><?= Controller::normalizeNumber($car->getPurchaseDetail('downPayment')) ?></span>
+                        </div>
+                        <?php if($car->getPurchaseDetail('downPaymentSecondary')): ?>
+                            <div class="feature-item">
+                                <span class="name">پیش پرداخت دوم</span>
+                                <span class="value"><?= Controller::normalizeNumber($car->getPurchaseDetail('downPaymentSecondary')) ?></span>
+                            </div>
+                        <?php endif; ?>
+                        <div class="feature-item">
+                            <span class="name">تعداد اقساط</span>
+                            <span class="value"><?= Controller::normalizeNumber($car->getPurchaseDetail('numberOfInstallment'),false,true,'قسط') ?></span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="name">مبلغ هر قسط</span>
+                            <span class="value"><?= Controller::normalizeNumber($car->getPurchaseDetail('monthlyPayment')) ?></span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="name">موعد پرداخت</span>
+                            <span class="value"><?= Controller::normalizeNumber($car->getPurchaseDetail('numberOfMonth'),false,true,'ماه یکبار') ?></span>
+                        </div>
+                        <?php
+                    endif;
+                    ?>
 					<div class="feature-item">
-						<span class="name">زمان</span>
+						<span class="name">زمان ثبت</span>
 						<span class="value"><?= JalaliDate::differenceTime($car->update_date) ?></span>
 					</div>
                     <div class="feature-item">
@@ -173,7 +202,7 @@ $parked = UserParking::model()->findByAttributes(['user_id' => $car->user_id, 'c
 					<div class="feature-item last">
 						<span class="name"><i class="police-hat-icon"></i></span>
 						<span class="value">پیش از انجام معامله و پرداخت هرگونه وجه از صحت خودرو اطمینان حاصل نمایید.</span>
-						<div class="price"><?= Controller::parseNumbers(number_format($car->purchase_details)) ?><span>تومان</span></div>
+						<div class="price"><?php if($car->purchase_type_id == Cars::PURCHASE_TYPE_INSTALMENT) echo 'قیمت نهایی '; ?><?= $car->getPrice() ?></div>
 					</div>
 				</div>
 				<div class="text"><?= $car->description ?></div>
@@ -205,7 +234,7 @@ $parked = UserParking::model()->findByAttributes(['user_id' => $car->user_id, 'c
                             <div class="info-container">
                                 <h4><?= $item->getTitle(false) ?></h4>
                                 <div class="text"><?= Controller::parseNumbers(number_format($item->distance)) ?> کیلومتر - <?= $item->gearbox->title ?> - <?= $item->fuel->title ?> - <?= $item->bodyState->title ?> - <?= $item->bodyColor->title ?> - <?= $item->state->name ?> - <?= $item->city->name ?></div>
-                                <div class="price"><?= Controller::parseNumbers(number_format($item->purchase_details)) ?> تومان</div>
+                                <div class="price"><?= $item->getPrice() ?></div>
                             </div>
                         </a>
                     </div>

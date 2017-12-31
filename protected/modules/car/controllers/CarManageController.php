@@ -100,10 +100,11 @@ class CarManageController extends Controller
         // status changed to deleted
         if($model->status != Cars::STATUS_DELETED){
             $model->status = Cars::STATUS_DELETED;
+            $model->normalizePrice();
             $model->save(false);
         }else{
             // delete for ever
-            $images = new UploadedFiles($this->imagePath, $model->carImages);
+            $images = new UploadedFiles($this->imagePath, CHtml::listData($model->carImages, 'id', 'filename'));
             $images->removeAll(true);
             $model->delete();
         }
@@ -158,6 +159,7 @@ class CarManageController extends Controller
     {
         $model = $this->loadModel($id);
         $model->status = Cars::STATUS_PENDING;
+        $model->normalizePrice();
         if($model->save(false))
             Yii::app()->user->setFlash('success', '<span class="icon-check"></span>&nbsp;&nbsp;با موفقیت بازیابی شد.');
         // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
@@ -197,6 +199,7 @@ class CarManageController extends Controller
         $model = $this->loadModel($_POST['id']);
         if(key_exists($_POST['value'], $model->statusLabels)){
             $model->status = $_POST['value'];
+            $model->normalizePrice();
             if($model->save(false)){
                 echo CJSON::encode(array(
                     'status' => true,
