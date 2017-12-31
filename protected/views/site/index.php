@@ -85,6 +85,7 @@ $baseUrl = Yii::app()->theme->baseUrl;
             <div class="input-group">
                 <?= CHtml::textField('Search[model]', null, [
                     'class' => 'form-control custom-search auto-complete',
+//                    'onblur' => 'clearAutoCompleteResult()',
                     'placeholder' => 'مدل وسیله نقلیه را تایپ نمایید...',
                 ]);?>
             <span class="input-group-btn">
@@ -270,7 +271,7 @@ Yii::app()->clientScript->registerScript('autoComplete', "
                     if(data.length != 0){
                         $('.autocomplete-result ul').html('');
                         $.each(data, function(index, model){
-                            $('.autocomplete-result ul').append('<li><a href=\"' + model.link + '\">' + model.title + '</a></li>');
+                            $('.autocomplete-result ul').append('<li><a href=\"' + model.link + '\" class=\"autocomplete-item\">' + model.title + '</a></li>');
                         });
                     }else{
                         $('.autocomplete-result ul').html('<li class=\"loading\">نتیجه ای یافت نشد.</li>');
