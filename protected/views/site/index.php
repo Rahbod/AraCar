@@ -29,7 +29,7 @@ $baseUrl = Yii::app()->theme->baseUrl;
             $skinPath = $baseUrl.'/assets/slider/layerslider_skins/';
             $cs->registerScript('slider-js','
                 var sh;
-                sh = $(window).width() * 720 / 2500 - 5;
+                sh = $(window).width() * 600 / 1920 - 5;
                 $("#slider").css({height:sh});
                 $("#slider").layerSlider({
                     startInViewport: false,

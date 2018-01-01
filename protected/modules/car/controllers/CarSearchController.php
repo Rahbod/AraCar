@@ -124,7 +124,7 @@ class CarSearchController extends Controller
             $criteria->addCondition('model.slug REGEXP :field', 'OR');
             $criteria->addCondition('brand.title REGEXP :field', 'OR');
             $criteria->addCondition('brand.slug REGEXP :field', 'OR');
-            $criteria->params[':field'] = Persian2Arabic::parse($_POST['query']);
+            $criteria->params[':field'] = '^'.Persian2Arabic::parse($_POST['query']);
             /* @var Models[] $list */
             $list = Models::model()->findAll($criteria);
 

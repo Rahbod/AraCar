@@ -55,19 +55,22 @@
                                     رایگان
                                 </div>
                             <?php endif;?>
-                        <?php elseif($field['name'] == 'adsDuration'):?>
-                            <div class="form-group">
-                                <?php echo CHtml::label($field['title'], $field['name'], array('class'=>'control-label')); ?>
-                                <div class="input-group">
-                                    <span class="input-group-addon">روز</span>
-                                    <?php echo CHtml::textField("Plans[rules][{$role}][{$field['name']}]",$model->getRule($role,$field['name']),array('class' => 'form-control')) ?>
-                                </div>
-                            </div>
                         <?php else:?>
                             <div class="form-group">
                                 <?php echo CHtml::label($field['title'], $field['name'], array('class'=>'control-label')); ?>
-                                <?php echo CHtml::textField("Plans[rules][{$role}][{$field['name']}]",$model->getRule($role,$field['name']),array('class' => 'form-control')) ?>
+                                <?php if(isset($field['addon'])): ?><div class="input-group"><span class="input-group-addon"><?= $field['addon'] ?></span><?php endif ?>
+                                <?php if(!isset($field['type']) || $field['type'] == 'num'): ?>
+                                    <?php echo CHtml::textField("Plans[rules][{$role}][{$field['name']}]",$model->getRule($role,$field['name']),array('class' => 'form-control')) ?>
+                                <?php else:?>
+                                    <div><?php echo CHtml::checkBox("Plans[rules][{$role}][{$field['name']}]",$model->getRule($role,$field['name'])) ?></div>
+                                <?php endif; ?>
+                                <?php if(isset($field['addon'])): ?></div><?php endif ?>
                             </div>
+<!--                        --><?php //else:?>
+<!--                            <div class="form-group">-->
+<!--                                --><?php //echo CHtml::label($field['title'], $field['name'], array('class'=>'control-label')); ?>
+<!--                                --><?php //echo CHtml::textField("Plans[rules][{$role}][{$field['name']}]",$model->getRule($role,$field['name']),array('class' => 'form-control')) ?>
+<!--                            </div>-->
                         <?php endif;?>
                     <?php endforeach;?>
                 </div>

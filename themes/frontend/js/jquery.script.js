@@ -127,7 +127,7 @@ $(document).ready(function() {
     });
 
     $(".is-carousel").each(function () {
-        if ($(this).children().length > 1) {
+        if ($(this).children().length > 0) {
             var nestedItemSelector = $(this).data('item-selector'),
                 dots = ($(this).data('dots') == 1) ? true : false,
                 nav = ($(this).data('nav') == 1) ? true : false,

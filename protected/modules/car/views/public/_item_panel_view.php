@@ -22,7 +22,7 @@ $imagePath = Yii::getPathOfAlias('webroot').'/uploads/cars/';
         <div class="row">
             <div class="col-lg-6 col-md-6 item-col">
                 <div class="item-title text-blue "><?= $data->title ?></div>
-                <div class="item-attribute"><?= $data->price ?></div>
+                <div class="item-attribute"><?= $data->getPrice() ?></div>
                 <div class="item-attribute"><?= Controller::parseNumbers(number_format($data->distance)) ?> کیلومتر</div>
                 <div class="item-attribute"><?= $data->bodyState->title  ?></div>
             </div>

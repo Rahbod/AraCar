@@ -28,39 +28,93 @@ class Plans extends CActiveRecord
 
 	public static $rulesFields = [
         'dealership' => [
-            [
-                'title'=>'تعداد آگهی مجاز',
-                'name'=>'adsCount',
-            ],
-            [
-                'title'=>'مدت آگهی (روز)',
-                'name'=>'adsDuration',
-            ],
-            [
-                'title'=>'تعداد تصویر آگهی',
-                'name'=>'adsImageCount',
-            ],
-            [
-                'title'=>'تعرفه',
-                'name'=>'price',
-            ],
+			[
+				'title'=>'تعداد آگهی مجاز',
+				'name'=>'adsCount',
+				'type' => 'num'
+			],
+			[
+				'title'=>'مدت آگهی',
+				'name'=>'adsDuration',
+				'type' => 'num',
+				'addon' => 'روز'
+			],
+			[
+				'title'=>'تعداد تصویر آگهی',
+				'name'=>'adsImageCount',
+				'type' => 'num'
+			],
+			[
+				'title'=>'تعداد به روز رسانی آگهی',
+				'name'=>'adsUpdateCount',
+				'type' => 'num',
+				'addon' => 'روز'
+			],
+			[
+				'title'=>'ارسال ایمیل و پیامک',
+				'name'=>'notifySend',
+				'type' => 'check'
+			],
+			[
+				'title'=>'نمایش در صدر',
+				'name'=>'showOnTop',
+				'type' => 'check'
+			],
+			[
+				'title'=>'الویت در تایید',
+				'name'=>'confirmPriority',
+				'type' => 'check'
+			],
+			[
+				'title'=>'تعرفه',
+				'name'=>'price',
+				'type' => 'num',
+				'addon' => 'تومان'
+			],
         ],
         'user' => [
             [
                 'title'=>'تعداد آگهی مجاز',
                 'name'=>'adsCount',
+				'type' => 'num'
             ],
             [
-                'title'=>'مدت آگهی (روز)',
+                'title'=>'مدت آگهی',
                 'name'=>'adsDuration',
+				'type' => 'num',
+				'addon' => 'روز'
             ],
             [
                 'title'=>'تعداد تصویر آگهی',
                 'name'=>'adsImageCount',
+				'type' => 'num'
             ],
+			[
+				'title'=>'تعداد به روز رسانی آگهی',
+				'name'=>'adsUpdateCount',
+				'type' => 'num',
+				'addon' => 'روز'
+			],
+			[
+				'title'=>'ارسال ایمیل و پیامک',
+				'name'=>'notifySend',
+				'type' => 'check'
+			],
+			[
+				'title'=>'نمایش در صدر',
+				'name'=>'showOnTop',
+				'type' => 'check'
+			],
+			[
+				'title'=>'الویت در تایید',
+				'name'=>'confirmPriority',
+				'type' => 'check'
+			],
             [
                 'title'=>'تعرفه',
                 'name'=>'price',
+				'type' => 'num',
+				'addon' => 'تومان'
             ],
         ],
     ];

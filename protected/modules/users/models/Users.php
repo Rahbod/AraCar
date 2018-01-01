@@ -114,7 +114,8 @@ class Users extends CActiveRecord
             array('type, first_name, last_name, phone, mobile, address, avatar, dealership_name', 'safe'),
 
             // Register rules
-            array('mobile, dealership_name, first_name, last_name, repeatPassword', 'required', 'on' => 'create, create-dealership'),
+            array('mobile, first_name, last_name, repeatPassword', 'required', 'on' => 'create, create-dealership'),
+            array('dealership_name', 'required', 'on' => 'create-dealership'),
             array('repeatPassword', 'compare', 'compareAttribute' => 'password', 'on' => 'create, create-dealership', 'message' => 'کلمه های عبور همخوانی ندارند'),
 
             // change password rules

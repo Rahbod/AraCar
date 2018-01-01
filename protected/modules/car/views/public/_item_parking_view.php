@@ -4,7 +4,10 @@
 /* @var $form CActiveForm */
 $imagePath = Yii::getPathOfAlias('webroot').'/uploads/cars/';
 ?>
-<article class="relative">
+<article class="relative parking-item">
+    <?php if($data->car->purchase_type_id == Cars::PURCHASE_TYPE_INSTALMENT):?>
+        <span class="instalment-box">اقساطی</span>
+    <?php endif;?>
     <?php $this->renderPartial('//partial-views/_loading') ?>
     <div class="item-image">
         <?php
@@ -23,7 +26,7 @@ $imagePath = Yii::getPathOfAlias('webroot').'/uploads/cars/';
         <div class="row">
             <div class="col-lg-6 col-md-6 item-col">
                 <div class="item-title text-blue "><?= $data->car->title ?></div>
-                <div class="item-attribute"><?= Controller::parseNumbers(number_format($data->car->purchase_details)) ?> تومان</div>
+                <div class="item-attribute"><?= $data->car->getPrice() ?></div>
                 <div class="item-attribute"><?= Controller::parseNumbers(number_format($data->car->distance)) ?> کیلومتر</div>
                 <div class="item-attribute"><?= $data->car->bodyState->title  ?></div>
             </div>

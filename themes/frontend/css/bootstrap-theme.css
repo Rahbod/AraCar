@@ -2988,3 +2988,11 @@ footer .nav li:last-of-type a{
     top: 15px;
     left:15px;
 }
+
+.parking-item .instalment-box{
+    position: absolute;
+    padding: 7px 53px;
+    bottom: 15px;
+    left:10px;
+    border-radius: 4px;
+}
