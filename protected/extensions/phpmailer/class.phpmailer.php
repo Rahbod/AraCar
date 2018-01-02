@@ -684,7 +684,6 @@ class PHPMailer {
       ini_set('sendmail_from', $old_from);
     }
     if(!$rt) {
-      return false;
       throw new phpmailerException($this->Lang('instantiate'), self::STOP_CRITICAL);
     }
     return true;

@@ -66,11 +66,6 @@
                                 <?php endif; ?>
                                 <?php if(isset($field['addon'])): ?></div><?php endif ?>
                             </div>
-<!--                        --><?php //else:?>
-<!--                            <div class="form-group">-->
-<!--                                --><?php //echo CHtml::label($field['title'], $field['name'], array('class'=>'control-label')); ?>
-<!--                                --><?php //echo CHtml::textField("Plans[rules][{$role}][{$field['name']}]",$model->getRule($role,$field['name']),array('class' => 'form-control')) ?>
-<!--                            </div>-->
                         <?php endif;?>
                     <?php endforeach;?>
                 </div>

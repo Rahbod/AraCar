@@ -30,13 +30,13 @@ $this->breadcrumbs =[
                         </div>
                         <div class="clearfix text-center">
                             <div class="col-sm-12">
-                                <ul class="list-unstyled">
+                                <ul class="list-unstyled plan-details">
                                     <?php
                                     foreach(Plans::$rulesFields[$user->role->role] as $rulesField):
                                         $rule = $plan->getRule($user->role->role,$rulesField['name']);
-                                        if($rulesField['name']!='price' && $rule):
+                                        if($rulesField['name']!='price' && ($rulesField['type']=='check' || ($rulesField['type']!='check' && $rule))):
                                         ?>
-                                            <li><b><?= $rulesField['title'] ?>:</b>&nbsp;<span><?= Controller::parseNumbers($rule) ?></span></li>
+                                            <li><b><?= $rulesField['title'] ?></b><span><?php if($rulesField['type'] != 'check'): ?><?= Controller::parseNumbers($rule).(isset($rulesField['addon'])?' '.$rulesField['addon']:'') ?><?php else: echo $rule?'<i class="icon-check-sign"></i>':'<i class="text-danger icon-remove-sign"></i>'; endif; ?></span></li>
                                         <?php
                                         endif;
                                     endforeach;

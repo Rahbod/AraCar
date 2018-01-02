@@ -4,10 +4,10 @@
  */
 class SendSMS extends CComponent
 {
-    public $username = '9160336621';
-    public $password = '665d43';
+    public $username = '9135751808';
+    public $password = '802FE9';
     public $lineNumber = '30004554554153';
-    public $messagePostfix = 'http://visit365.ir';
+    public $messagePostfix = 'http://carcadeh.ir';
 
     private $_client;
     private $_invalid_numbers=array();
@@ -24,8 +24,7 @@ class SendSMS extends CComponent
         try {
             @$this->_client = new SoapClient('http://n.sms.ir/ws/SendReceive.asmx?wsdl',array('encoding' => 'UTF-8'));
         }catch (Exception $e){
-            if(!Yii::app()->request->isAjaxRequest)
-                throw new CHttpException(501, $e->getMessage());
+            throw new CHttpException(501, $e->getMessage());
         }
     }
 

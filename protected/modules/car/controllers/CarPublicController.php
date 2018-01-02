@@ -102,6 +102,7 @@ class CarPublicController extends Controller
             $model->normalizePrice();
             $model->plan_title = $user->getActivePlanTitle();
             $model->plan_rules = $user->getActivePlanRules(true);
+            $model->confirm_priority = $user->getActivePlanRule('confirmPriority');
             if(count($model->images) > $adImageCount)
                 $model->addError('images', "تعداد تصویر مجاز {$adImageCount} می باشد.");
             $images = new UploadedFiles($this->tempPath, $model->images);

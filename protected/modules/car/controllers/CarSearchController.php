@@ -297,7 +297,7 @@ class CarSearchController extends Controller
                     break;
             }
         }
-
+        $criteria->order = "update";
         return $criteria;
     }
 }

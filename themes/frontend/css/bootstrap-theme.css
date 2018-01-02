@@ -2807,7 +2807,7 @@ footer{
     background-color: #f3c56d;
 }
 
-.plan-box *{
+.plan-box > *{
     margin: 15px 0;
 }
 .badge {
@@ -2854,6 +2854,7 @@ footer{
     font-size: 14px !important;
     font-weight: 400;
     color: white;
+    margin-top: 30px;
 }
 .plan-box .clearfix{
     min-height: 20px;
@@ -2995,4 +2996,20 @@ footer .nav li:last-of-type a{
     bottom: 15px;
     left:10px;
     border-radius: 4px;
+}
+.plan-box .button-box p{
+    margin: 0;
+}
+.plan-details li{
+    padding: 8px;
+}
+.plan-details li > b{
+    display: inline-block;
+    width: 70%;
+    text-align: right;
+}
+.plan-details li > span{
+    display: inline-block;
+    width: 30%;
+    text-align: left;
 }

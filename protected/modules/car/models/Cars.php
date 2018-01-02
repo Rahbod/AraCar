@@ -29,6 +29,7 @@
  * @property string $description
  * @property string $creation_date
  * @property int $seen
+ * @property int $confirm_priority
  * @property string $plan_title
  * @property string $plan_rules
  * @property string $title
@@ -150,12 +151,13 @@ class Cars extends CActiveRecord
             array('creation_date', 'length', 'max' => 4),
             array('status', 'length', 'max' => 1),
             array('status', 'default', 'value' => self::STATUS_PENDING),
+            array('confirm_priority', 'default', 'value' => 0),
             array('visit_district', 'length', 'max' => 255),
             array('description, seen, plan_title, plan_rules', 'safe'),
             array('images, purchase_details', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, create_date, update_date, expire_date, user_id, brand_id, model_id, room_color_id, body_color_id, body_state_id, state_id, city_id, fuel_id, gearbox_id, car_type_id, plate_type_id, purchase_type_id, purchase_details, distance, status, visit_district, description, creation_date', 'safe', 'on' => 'search'),
+            array('id, create_date, update_date, expire_date, user_id, brand_id, model_id, room_color_id, body_color_id, body_state_id, state_id, city_id, fuel_id, gearbox_id, car_type_id, plate_type_id, purchase_type_id, purchase_details, distance, status, visit_district, description, creation_date, confirm_priority', 'safe', 'on' => 'search'),
         );
     }
 
@@ -219,6 +221,7 @@ class Cars extends CActiveRecord
             'seen' => 'آمار بازدید',
             'plan_title' => 'عنوان پلن',
             'plan_rules' => 'قوانین پلن',
+            'confirm_priority' => 'الویت در تایید',
         );
     }
 
@@ -234,7 +237,7 @@ class Cars extends CActiveRecord
      * @return CActiveDataProvider the data provider that can return the models
      * based on the search/filter conditions.
      */
-    public function search($deleted = false)
+    public function search($deleted = false, $admin = false)
     {
         // @todo Please modify the following code to remove attributes that should not be searched.
 
@@ -269,7 +272,10 @@ class Cars extends CActiveRecord
         else
             $criteria->addCondition('status <> :deleted');
         $criteria->params[':deleted'] = Cars::STATUS_DELETED;
-        $criteria->order = 'id DESC';
+        if($admin)
+            $criteria->order = 'confirm_priority DESC, id';
+        else
+            $criteria->order = 'id DESC';
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));
@@ -337,8 +343,9 @@ class Cars extends CActiveRecord
 
     protected function beforeSave()
     {
+        if($this->isNewRecord)
+            $this->update_date = time();
         $this->distance = str_replace(',', '', $this->distance);
-        $this->update_date = time();
         $this->plan_rules = is_array($this->plan_rules)?CJSON::encode($this->plan_rules):null;
         return parent::beforeSave();
     }
@@ -415,6 +422,7 @@ class Cars extends CActiveRecord
         $criteria->alias = 'car';
         $criteria->addCondition('status = :status');
         $criteria->params[':status'] = Cars::STATUS_APPROVED;
+        $criteria->order = 't.update_date DESC';
         return $criteria;
     }
 
@@ -426,6 +434,7 @@ class Cars extends CActiveRecord
         $cr->addCondition('model_id = :model_id OR brand_id = :brand_id');
         $cr->params[':model_id'] = $this->model_id;
         $cr->params[':brand_id'] = $this->brand_id;
+        $cr->order = 't.update_date DESC';
         return $activeProvider?new CActiveDataProvider('Cars', array(
             'criteria' => $cr
         )):$this->findAll($cr);

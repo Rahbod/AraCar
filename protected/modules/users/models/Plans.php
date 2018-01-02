@@ -29,15 +29,15 @@ class Plans extends CActiveRecord
 	public static $rulesFields = [
         'dealership' => [
 			[
-				'title'=>'تعداد آگهی مجاز',
-				'name'=>'adsCount',
-				'type' => 'num'
-			],
-			[
 				'title'=>'مدت آگهی',
 				'name'=>'adsDuration',
 				'type' => 'num',
 				'addon' => 'روز'
+			],
+			[
+				'title'=>'تعداد آگهی مجاز',
+				'name'=>'adsCount',
+				'type' => 'num'
 			],
 			[
 				'title'=>'تعداد تصویر آگهی',
@@ -73,16 +73,16 @@ class Plans extends CActiveRecord
 			],
         ],
         'user' => [
+			[
+				'title'=>'مدت آگهی',
+				'name'=>'adsDuration',
+				'type' => 'num',
+				'addon' => 'روز'
+			],
             [
                 'title'=>'تعداد آگهی مجاز',
                 'name'=>'adsCount',
 				'type' => 'num'
-            ],
-            [
-                'title'=>'مدت آگهی',
-                'name'=>'adsDuration',
-				'type' => 'num',
-				'addon' => 'روز'
             ],
             [
                 'title'=>'تعداد تصویر آگهی',

@@ -25,7 +25,7 @@ $this->menu=array(
         <div class="table-responsive">
             <?php $this->widget('zii.widgets.grid.CGridView', array(
                 'id'=>'cars-grid',
-                'dataProvider'=>$model->search(),
+                'dataProvider'=>$model->search(false, true),
                 'filter'=>$model,
                 'itemsCssClass'=>'table table-striped table-hover',
                 'template' => '{items} {pager}',
