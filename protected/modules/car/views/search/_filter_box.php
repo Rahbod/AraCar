@@ -177,7 +177,7 @@ if(isset($filters['price'])) {
 <?php Yii::app()->clientScript->registerScript('changePriceFilterBtnUrl', '
     function changePriceFilterBtnUrl(min, max) {
         var queryStrings = ' . (count($queryStrings) == 0 ? "[]" : CJSON::encode($queryStrings)) . ',
-            hasPrice = false
+            hasPrice = false,
             filteredQueryStrings = [];
 
         min = min / 1000000;

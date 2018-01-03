@@ -78,7 +78,7 @@ class Cars extends CActiveRecord
         return '{{cars}}';
     }
 
-    public $purchase_types = [
+    public static $purchase_types = [
         self::PURCHASE_TYPE_CASH => 'نقدی',
         self::PURCHASE_TYPE_INSTALMENT => 'اقساطی',
         self::PURCHASE_TYPE_AGREEMENT => 'توافقی',
