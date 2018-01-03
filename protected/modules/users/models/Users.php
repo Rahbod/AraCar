@@ -244,6 +244,22 @@ class Users extends CActiveRecord
         ));
     }
 
+
+    public function searchDealers()
+    {
+        // @todo Please modify the following code to remove attributes that should not be searched.
+
+        $criteria = new CDbCriteria;
+        $criteria->compare('role_id', $this->role_id);
+        $criteria->compare('userDetails.dealership_name', $this->dealership_name, true);
+        $criteria->with = array('userDetails');
+        $criteria->order = 'dealership_name';
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+            'pagination' => array('pageSize' => 20)
+        ));
+    }
+
     /**
      * Returns the static model of the specified AR class.
      * Please note that you should have this exact method in all your CActiveRecord descendants!

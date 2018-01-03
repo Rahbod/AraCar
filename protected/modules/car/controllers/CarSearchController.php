@@ -27,6 +27,7 @@ class CarSearchController extends Controller
                 'model',
                 'all',
                 'autoComplete',
+                'dealership',
             )
         );
     }
@@ -138,6 +139,30 @@ class CarSearchController extends Controller
             echo CJSON::encode($result);
         } else
             return null;
+    }
+
+    public function actionDealership($id = false, $title=  false)
+    {
+        Yii::app()->theme = "frontend";
+        $this->layout = '//layouts/public';
+        // list of dealerships
+        if(!$id && !$title){
+            $filters = $this->getFilters();
+            $model = new Users('search');
+            if(isset($_GET['Users'])){
+                $model->attributes = $_GET['Users'];
+            }
+            $model->role_id = 1;
+            $this->render('dealerships', compact('model', 'filters'));
+            Yii::app()->end();
+        }
+        // show dealership
+        if($id){
+            /* @var $model Users */
+            $model = Users::model()->findByPk($id);
+            $this->render('dealership', compact('model'));
+            Yii::app()->end();
+        }
     }
 
     /**
