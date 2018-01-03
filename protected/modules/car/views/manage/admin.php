@@ -3,6 +3,7 @@
 /* @var $model Cars */
 
 $this->breadcrumbs=array(
+	'پیشخوان' => array('/admins/dashboard'),
 	'مدیریت آگهی ها',
 );
 

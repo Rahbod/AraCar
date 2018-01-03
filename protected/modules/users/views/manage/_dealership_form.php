@@ -1,6 +1,7 @@
 <?php
 /* @var $this UsersManageController */
 /* @var $model Users */
+/* @var $request DealershipRequests*/
 /* @var $form CActiveForm */
 /* @var $avatar array */
 ?>
@@ -11,13 +12,16 @@
 
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'users-form',
-	// Please note: When you enable ajax validation, make sure the corresponding
-	// controller action is handling ajax validation correctly.
-	// There is a call to performAjaxValidation() commented in generated controller code.
-	// See class documentation of CActiveForm for details on this.
 	'enableAjaxValidation'=>true,
 )); ?>
-
+	<?php if($request): ?>
+		<div class="form-group well">
+			<h5>اطلاعات ثبت کننده درخواست</h5>
+			<p>نام ثبت کننده: <?= $request->creator_name ?></p>
+			<button type="button" class="btn btn-primary"><b>شماره تماس: <?= Controller::parseNumbers($request->creator_mobile) ?></b> <i class="fa fa-phone"></i></button>
+			<a onclick="if(!confirm('آیا از حذف این درخواست اطمینان دارید؟')) return false;" href="<?= $this->createUrl('/users/manage/deleteDealershipRequest/'.$request->id) ?>" class="btn btn-danger pull-left"><i class="fa fa-trash"></i> حذف درخواست</a>
+		</div>
+	<?php endif; ?>
 	<p class="note">فیلد های <span class="required">*</span>دار اجباری هستند.</p>
 
 	<?php echo $form->errorSummary($model); ?>

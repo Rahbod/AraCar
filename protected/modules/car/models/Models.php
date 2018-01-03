@@ -104,7 +104,7 @@ class Models extends SortableCActiveRecord
         $criteria->compare('brand_id', $this->brand_id, true);
         $criteria->compare('body_type_id', $this->body_type_id, true);
         $criteria->compare('order', $this->order, true);
-        $criteria->order = 'order';
+//        $criteria->order = 'order';
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));

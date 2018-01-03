@@ -100,6 +100,10 @@ $(document).ready(function() {
         $(this).digitFormat();
     }).on("change", '.digitFormat', function () {
         $(this).digitFormat();
+    }).on("keyup", '.numberFormat', function () {
+        $(this).numericFormat();
+    }).on("change", '.numberFormat', function () {
+        $(this).numericFormat();
     }).on("click", function (e) {
         // Hidden auto complete result box
         if($(e.target).hasClass("autocomplete-item") || $(e.target).hasClass("auto-complete"))
@@ -213,6 +217,16 @@ $.fn.digitFormat = function () {
             return value
                 .replace(/\D/g, "")
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        });
+    });
+};
+
+$.fn.numericFormat = function () {
+    return this.each(function (event) {
+        if (event.which >= 37 && event.which <= 40) return;
+        $(this).val(function (index, value) {
+            return value
+                .replace(/\D/g, "");
         });
     });
 };

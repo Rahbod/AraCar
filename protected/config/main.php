@@ -99,6 +99,7 @@ return array(
 				'sell' => 'car/public/sell',
 				'research' => 'car/public/research',
 				'research/<params:(.*)>' => 'car/public/research',
+				'dealership' => 'users/public/dealership',
                 'car/<id:\d+>-<title:(.*)>'=>'car/public/view',
 				'<action:(about|contact|help|terms|search)>' => 'site/<action>',
 				'<action:(logout|dashboard|googleLogin|transactions|login|register|changePassword|profile|upgradePlan)>' => 'users/public/<action>',

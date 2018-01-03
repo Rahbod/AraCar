@@ -14,7 +14,9 @@
                 <?php
                 else:
                     ?>
-                    <li class="login-link"><a href="<?= $this->createUrl('/dashboard') ?>"><?= Yii::app()->user->first_name.' '.Yii::app()->user->last_name ?></a></li>
+                    <li class="login-link"><a class="login" href="<?= $this->createUrl('/dashboard') ?>"><?= Yii::app()->user->first_name.' '.Yii::app()->user->last_name ?></a>
+                        <a class="logout-link" href="<?= $this->createUrl('/logout') ?>"><small><i class="icon-off"></i> خروج</small></a>
+                    </li>
                 <?
                 endif;
                 ?>
@@ -61,6 +63,15 @@
                     </div>
                 </li>
                 <li><a href="<?= $this->createUrl('/research') ?>">بررسی خودرو</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">نمایشگاه <i class="caret"></i></a>
+                    <div class="dropdown-menu special-menu">
+                        <ul class="linear-menu">
+<!--                            <li><a href="--><?//= $this->createUrl('/dealerships')?><!--">نمایشگاه ها</a></li>-->
+                            <li><a href="<?= $this->createUrl('/dealership')?>">ثبت نام نمایشگاه</a></li>
+                        </ul>
+                    </div>
+                </li>
 <!--                <li><a href="#">قیمت صفر</a></li>-->
             </ul>
         </div>

@@ -61,7 +61,7 @@ class Plans extends CActiveRecord
 				'type' => 'check'
 			],
 			[
-				'title'=>'الویت در تایید',
+				'title'=>'اولویت در تایید',
 				'name'=>'confirmPriority',
 				'type' => 'check'
 			],
@@ -106,7 +106,7 @@ class Plans extends CActiveRecord
 				'type' => 'check'
 			],
 			[
-				'title'=>'الویت در تایید',
+				'title'=>'اولویت در تایید',
 				'name'=>'confirmPriority',
 				'type' => 'check'
 			],

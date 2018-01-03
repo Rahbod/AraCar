@@ -11,6 +11,7 @@
     <meta name="author" content="Rahbod Developing Software Co">
     <meta name="csrf-token" content="<?= Yii::app()->request->csrfToken ?>" />
 
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -28,7 +29,6 @@
     <?php
     $cs->registerCssFile($baseUrl . '/css/bootstrap.min.css');
     $cs->registerCssFile($baseUrl . '/css/font-awesome.css');
-    $cs->registerCssFile($baseUrl . '/css/ionicons.css');
     $cs->registerCssFile($baseUrl . '/css/AdminLTE.css');
     $cs->registerCssFile($baseUrl . '/css/skins/skin-blue.min.css');
     $cs->registerCssFile($baseUrl . '/css/bootstrap-rtl.min.css');

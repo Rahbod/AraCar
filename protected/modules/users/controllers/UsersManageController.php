@@ -30,6 +30,9 @@ class UsersManageController extends Controller
                 'updateDealership',
                 'upload',
                 'deleteUpload',
+                'dealershipRequests',
+                'dealershipRequest',
+                'deleteDealershipRequest',
             )
         );
     }
@@ -103,32 +106,40 @@ class UsersManageController extends Controller
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'views' page.
      */
-    public function actionCreateDealership()
+    public function actionCreateDealership($id = false)
     {
+        $request = null;
         $model = new Users();
         $model->setScenario('create-dealership');
-
         $this->performAjaxValidation($model);
-
+        if($id){
+            $request = DealershipRequests::model()->findByPk($id);
+            if(!isset($_POST['Users'])){
+                $model->attributes = $request->attributes;
+                $model->first_name = $request->manager_name;
+                $model->last_name = $request->manager_last_name;
+            }
+        }
         $avatar = array();
-        if(isset($_POST['Users'])) {
+        if(isset($_POST['Users'])){
             $model->attributes = $_POST['Users'];
             $model->role_id = 2;
             $model->status = 'active';
 
             $avatar = new UploadedFiles($this->tempPath, $model->avatar);
-            if ($model->save()) {
+            if($model->save()){
                 $avatar->move($this->avatarPath);
+                if($id && $request){
+                    $request->status = DealershipRequests::STATUS_SAVED;
+                    $request->save(false);
+                }
                 Yii::app()->user->setFlash('success', 'اطلاعات با موفقیت ثبت شد.');
                 $this->refresh();
             }else
                 Yii::app()->user->setFlash('failed', 'در ثبت اطلاعات خطایی رخ داده است! لطفا مجددا تلاش کنید.');
         }
 
-        $this->render('create-dealership', array(
-            'model' => $model,
-            'avatar' => $avatar
-        ));
+        $this->render('create-dealership', compact('model', 'avatar', 'request'));
     }
 
     /**
@@ -179,7 +190,7 @@ class UsersManageController extends Controller
         if(isset($_POST['Users'])){
             $oldAvatar = $model->avatar;
             $model->attributes = $_POST['Users'];
-            if ($model->save()) {
+            if($model->save()){
                 $avatar->update($oldAvatar, $model->avatar, $this->tempPath);
                 Yii::app()->user->setFlash('success', 'اطلاعات با موفقیت ثبت شد.');
                 $this->refresh();
@@ -204,7 +215,7 @@ class UsersManageController extends Controller
 //        if($model->status == 'deleted')
 //            $model->delete();
 //        $model->updateByPk($model->id, array('status' => 'deleted'));
-        $avatar=new UploadedFiles($this->avatarPath,$model->userDetails->avatar);
+        $avatar = new UploadedFiles($this->avatarPath, $model->userDetails->avatar);
         $avatar->removeAll(true);
         $model->delete();
 
@@ -258,7 +269,7 @@ class UsersManageController extends Controller
      */
     public function actionUserTransactions($id)
     {
-        $model =new UserTransactions('search');
+        $model = new UserTransactions('search');
         $model->unsetAttributes();
         if(isset($_GET['UserTransactions']))
             $model->attributes = $_GET['UserTransactions'];
@@ -277,7 +288,7 @@ class UsersManageController extends Controller
 
         $model = new UserTransactions('search');
         $model->unsetAttributes();  // clear any default values
-        if (isset($_GET['UserTransactions']))
+        if(isset($_GET['UserTransactions']))
             $model->attributes = $_GET['UserTransactions'];
 
         $this->render('admin_transactions', array(
@@ -310,5 +321,25 @@ class UsersManageController extends Controller
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }
+    }
+
+    public function actionDealershipRequests()
+    {
+        $model = new DealershipRequests('search');
+        if(isset($_GET['DealershipRequests']))
+            $model->attributes = $_GET['DealershipRequests'];
+        $this->render('dealership_requests', compact('model'));
+    }
+
+    public function actionDealershipRequest($id)
+    {
+        $model = DealershipRequests::model()->findByPk($id);
+        $this->render('view_dealership_request', compact('model'));
+    }
+
+    public function actionDeleteDealershipRequest($id)
+    {
+        DealershipRequests::model()->deleteByPk($id);
+        $this->redirect(array('dealershipRequests'));
     }
 }

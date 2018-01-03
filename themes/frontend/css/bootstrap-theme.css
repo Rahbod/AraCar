@@ -39,23 +39,46 @@ a:focus{
 
 .header .nav > li.login-link{
     background: #1272d1;
+    position: relative;
 }
 .header.inner-page .nav > li.login-link{
     padding-right: 80px;
 }
-.header .nav > li.login-link > a{
+.header .nav > li.login-link > a:first-child{
     color: #fff;
     background: url("../svg/user.svg") no-repeat calc(100% - 20px) center;
     background-size: 25px;
     padding-right: 50px;
     padding-left: 30px;
+    height: 60px;
 }
-.header .nav > li.login-link > a:hover,
-.header .nav > li.login-link > a:focus{
+.header .nav > li.login-link > a.login{
+    padding-top: 12px !important;
+}
+.header .nav > li.login-link > a:first-child:hover,
+.header .nav > li.login-link > a:first-child:focus{
     opacity:1;
     background-color: #1a7edf;
 }
-
+.logout-link{
+    position: absolute !important;
+    z-index:10;
+    bottom: 3px;
+    line-height: 15px !important;
+    padding: 4px !important;
+    font-size: 14px !important;
+    color: #e00;
+    right: 50px;
+    font-weight: 500 !important;
+}
+.header .nav > li.login-link .logout-link:hover,
+.header .nav > li.login-link .logout-link:focus{
+    color: #f00 !important;
+    opacity: 1 !important;
+}
+.header.inner-page .nav > li.login-link .logout-link{
+    right: 130px;
+}
 .header .logo-box{
     border-top: 5px solid #adc50c;
     width: 400px;
@@ -324,7 +347,8 @@ a:focus{
     -o-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     max-width: 100%;
-    width: auto;
+    width: 100px;
+    height: auto;
     max-height:100px;
     display: inline-block;
     padding: 15px;
@@ -2354,6 +2378,7 @@ input.form-control.white-bg {
 }
 .auth-tab.login-tab [class*="col-"] .icon-box{
     right: 15px;
+    top:0;
 }
 .auth-tab .form-group{
     margin-bottom:8px;
@@ -2370,6 +2395,12 @@ input.form-control.white-bg {
     padding: 0 15px;
     color: #858585;
     font-size: 13px;
+}
+.auth-tab textarea.form-control{
+    border-radius:20px;
+    height: auto;
+    resize: none !important;
+    line-height: 24px;
 }
 .auth-tab.register-tab .category-select{
     background-color: #fff;
@@ -2557,17 +2588,27 @@ input.form-control.white-bg {
     background: url("../svg/mail.svg") no-repeat scroll center transparent;
     background-size: 30px !important;
 }
+.register-box .form-group,
 #login-modal .form-group{
     margin-bottom: 5px !important;
-    padding-bottom: 0 !important;
+    padding: 0 5px !important;
     position: relative;
 }
+.register-box .form-group .errorMessage,
 #login-modal .form-group .errorMessage{
     position: relative;
     line-height: 25px;
 }
-
-
+.auth-tab .title{
+    font-weight: 500;
+    font-size: 24px;
+}
+.center-box .auth-tab .register-box{
+    padding-top: 30px;
+}
+.center-box .register-box .icon-box{
+    top:0 !important;
+}
 /*********************** LOADING **********************/
 .loading-container {
     position: absolute;
@@ -3012,4 +3053,13 @@ footer .nav li:last-of-type a{
     display: inline-block;
     width: 30%;
     text-align: left;
+}
+
+.svg-mini-car-white{
+    display: inline-block;
+    background: url("../svg/mini-car-white.svg") no-repeat scroll center transparent;
+    background-size: 70px;
+    width: 70px;
+    height:70px;
+    margin-top: calc(50% - 35px);
 }

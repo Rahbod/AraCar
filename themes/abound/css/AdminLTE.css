@@ -76,10 +76,6 @@ body {
   .main-footer {
     margin-right: 0;
   }
-  .box-header .box-title{
-    display: block !important;
-    margin-bottom: 15px !important;
-  }
 }
 @media (min-width: 768px) {
   .sidebar-collapse .content-wrapper,
@@ -4464,7 +4460,6 @@ ul.wysihtml5-toolbar > li {
   right: 0;
   bottom: 0;
   display: none;
-  z-index:101;
 }
 .loading-container .overly{
   position: absolute;
@@ -4644,38 +4639,4 @@ ul.wysihtml5-toolbar > li {
 }
 .dz-hidden-input{
   display: none !important;
-}
-
-.pagination{
-  margin: 0 5px;
-}
-.pagination > li.page.selected > a{
-  z-index: 3;
-  color: #23527c;
-  background-color: #eee;
-  border-color: #ddd;
-}
-.list-icon{
-  width: 16px; height: 16px; display:inline-block;
-  margin: 0 5px;
-}
-.ui-sortable .ui-sortable-handle.selected,
-.ui-sortable .ui-sortable-handle:hover,
-.ui-sortable .ui-sortable-handle:active,
-.ui-sortable .ui-sortable-handle:focus{
-  cursor: move !important;
-}
-
-.sortable-handle{
-    background: url("../img/drag_handle.png") no-repeat scroll center transparent;
-    background-size: 24px;
-    overflow: hidden;
-    text-indent: -9999px;
-}
-.breadcrumb a{
-  display: inline-block;
-
-}
-.input-group-addon:first-child{
-  border-right: 1px solid #d2d6de !important;
 }

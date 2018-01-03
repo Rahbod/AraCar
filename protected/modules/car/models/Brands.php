@@ -57,7 +57,7 @@ class Brands extends CActiveRecord
 			'cars' => array(self::HAS_MANY, 'Cars', 'brand_id'),
 			'carsCount' => array(self::STAT, 'Cars', 'brand_id', 'condition' => 't.status = :status', 'params' => [':status' => Cars::STATUS_APPROVED]),
 			'models' => array(self::HAS_MANY, 'Models', 'brand_id', 'order' => 'models.order'),
-			'modelCount' => array(self::STAT, 'Models', 'brand_id'),
+			'modelCount' => array(self::STAT, 'Models', 'brand_id', 'condition' => 'md.id IS NOT NULL', 'join' => 'LEFT JOIN {{model_details}} md ON md.model_id=t.id'),
 		);
 	}
 
