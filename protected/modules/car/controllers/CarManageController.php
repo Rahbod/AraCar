@@ -199,6 +199,7 @@ class CarManageController extends Controller
         $model = $this->loadModel($_POST['id']);
         if(key_exists($_POST['value'], $model->statusLabels)){
             $model->status = $_POST['value'];
+            $model->update_date = time();
             $model->normalizePrice();
             if($model->save(false)){
                 echo CJSON::encode(array(

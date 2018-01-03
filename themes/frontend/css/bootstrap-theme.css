@@ -3063,3 +3063,60 @@ footer .nav li:last-of-type a{
     height:70px;
     margin-top: calc(50% - 35px);
 }
+
+.dealer-items{
+
+}
+.dealer-item{
+    padding: 18px 0;
+    margin: 0;
+    border-bottom: 1px solid #e0e0e0;
+    overflow: hidden;
+    position: relative;
+    height: auto;
+}
+.dealer-item .photo {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 150px;
+    height: 100px;
+    margin-left: 15px;
+}
+.dealer-item .photo img {
+    height: 100px !important;
+    width: 150px;
+}
+.dealer-item .listdata {
+    overflow: hidden;
+    padding: 0;
+    text-align: right;
+    height: 100px;
+    padding-right: 150px;
+}
+.dealer-item .detail h3 {
+    font-size: 13px;
+    font-weight: bold;
+    margin: -2px 0 55px;
+    margin-bottom: 55px;
+    padding: 0;
+    line-height: 16px;
+    color: #000;
+    margin: 0 0 40px 0;
+}
+.dealer-item .listdata .address {
+    bottom: 17px;
+    position: absolute;
+    direction: rtl;
+    min-width: 430px;
+}
+.dealer-ad-details {
+    float: left;
+    direction: rtl;
+    width: 152px;
+}
+.dealer-page .dvLeft .overview {
+    position: absolute;
+    bottom: 25px;
+    font-size: 13px;
+}

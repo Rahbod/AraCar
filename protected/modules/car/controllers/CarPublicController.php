@@ -353,7 +353,7 @@ class CarPublicController extends Controller
             echo CJSON::encode(['status' => false, 'message' => 'خطا در دریافت اطلاعات.']);
         Yii::app()->end();
     }
-
+    
     public function actionJson()
     {
         if(!isset($_POST['method']))
