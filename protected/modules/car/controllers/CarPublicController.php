@@ -30,7 +30,7 @@ class CarPublicController extends Controller
     {
         return array(
             'frontend' => array(
-                'sell', 'delete', 'edit', 'update', 'upload', 'deleteUpload', 'authJson', // auth required
+                'sell', 'delete', 'edit', 'update', 'upload', 'deleteUpload', 'alert', 'authJson', // auth required
                 'research', 'view', 'getBrandModels', 'getModelYears', 'getStateCities', 'json', // allow for all
             )
         );
@@ -115,6 +115,31 @@ class CarPublicController extends Controller
         }
 
         $this->render('sell', compact('model', 'images', 'user','adImageCount'));
+    }
+
+
+    public function actionAlert()
+    {
+        Yii::app()->theme = "frontend";
+        $this->layout = '//layouts/inner';
+        $this->pageTitle = 'درج گوش به زنگ';
+        $this->pageHeader = 'درج گوش به زنگ';
+        $this->pageDescription = 'درج هشدار برای یافتن خودروی موردنظر';
+
+        $model = new CarAlerts();
+        $user = Users::model()->findByPk(Yii::app()->user->getId());
+        if(isset($_POST['CarAlerts'])){
+            $model->attributes = $_POST['CarAlerts'];
+            $model->user_id = Yii::app()->user->getId();
+            $model->create_date = time();
+            if($model->save()){
+                Yii::app()->user->setFlash('sells-success', '<span class="icon-check"></span>&nbsp;&nbsp;گوش به زنگ با موفقیت ثبت شد.');
+                $this->redirect(array('/dashboard#alerts-tab'));
+            }else
+                Yii::app()->user->setFlash('sells-failed', 'در ثبت اطلاعات خطایی رخ داده است! لطفا مجددا تلاش کنید.');
+        }
+
+        $this->render('alert', compact('model', 'images', 'user','adImageCount'));
     }
 
     /**
@@ -416,6 +441,19 @@ class CarPublicController extends Controller
                     else
                         $this->sendJson(['status' => false, 'message' => 'در خارج کردن خودرو از پارکینگ مشکلی بوجود آمده است! لطفا مجددا تلاش فرمایید.']);
                 }
+                break;
+            case 'removeAlert':
+                if(!isset($_POST['hash']))
+                    $this->sendJson(['status' => false]);
+                $id = base64_decode($_POST['hash']);
+                $alert = CarAlerts::model()->findByPk($id);
+                if($alert !== null)
+                    if($alert->delete())
+                        $this->sendJson(['status' => true, 'message' => 'گوش به زنگ با موفقیت حذف شد.']);
+                    else
+                        $this->sendJson(['status' => false, 'message' => 'در حذف گوش به زنگ مشکلی بوجود آمده است! لطفا مجددا تلاش فرمایید.']);
+                else
+                    $this->sendJson(['status' => false, 'message' => 'در حذف گوش به زنگ مشکلی بوجود آمده است! لطفا مجددا تلاش فرمایید.']);
                 break;
             default:
                 $this->sendJson(['status' => false, 'message' => 'خطا در مقادیر.']);

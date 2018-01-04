@@ -46,7 +46,6 @@ $imagePath = Yii::getPathOfAlias('webroot').'/uploads/cars/';
                 article.find(\'.loading-container\').show();
             }',
             'success' => 'js: function(data){
-                console.log(article);
                 article.find(\'.loading-container\').show();
                 if(data.status){
                     article.remove();

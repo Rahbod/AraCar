@@ -97,16 +97,20 @@ class UsersPublicController extends Controller
         $this->pageTitle = 'پروفایل من';
         $this->pageHeader = $user->userDetails->getShowName();
         $this->pageDescription = $user->userDetails->getShowDescription();
-        $this->pageLogo = $user->userDetails->avatar && file_exists(Yii::getPathOfAlias('webroot.uploads').'/users/'.$user->userDetails->avatar)?Yii::app()->getBaseUrl(true).'/uploads/users/'.$user->userDetails->avatar:false;
+        $this->pageLogo = $user->userDetails->avatar && file_exists(Yii::getPathOfAlias('webroot.uploads') . '/users/' . $user->userDetails->avatar)?Yii::app()->getBaseUrl(true) . '/uploads/users/' . $user->userDetails->avatar:false;
+
         $criteria = new CDbCriteria();
-        $criteria->compare('user_id' , $user->id);
+        $criteria->compare('user_id', $user->id);
         $criteria->addCondition('status <> :deleted');
         $criteria->params[':deleted'] = Cars::STATUS_DELETED;
         $sells = Cars::model()->findAll($criteria);
-        $this->render('dashboard', array(
-            'user' => $user,
-            'sells' => $sells,
-        ));
+
+
+        $criteria = new CDbCriteria();
+        $criteria->compare('user_id', $user->id);
+        $alerts = CarAlerts::model()->findAll($criteria);
+
+        $this->render('dashboard', compact('user', 'sells', 'alerts'));
     }
 
     /**

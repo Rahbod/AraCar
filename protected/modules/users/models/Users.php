@@ -24,11 +24,13 @@
  * @property UserTransactions[] $transactions
  * @property UserRoles $role
  * @property UserParking[] $parked
+ * @property CarAlerts[] $alerts
  * @property UserPlans[] $plans
  * @property UserPlans $activePlan
  * @property Cars $cars
  * @property int $countParked
  * @property int $countCars
+ * @property int $countAlerts
  * @property array $dealershipFilters
  */
 class Users extends CActiveRecord
@@ -180,12 +182,14 @@ class Users extends CActiveRecord
             'role' => array(self::BELONGS_TO, 'UserRoles', 'role_id'),
             'sessions' => array(self::HAS_MANY, 'Sessions', 'user_id', 'on' => 'user_type = "user"'),
             'countParked' => array(self::STAT, 'UserParking', 'user_id'),
+            'countAlerts' => array(self::STAT, 'CarAlerts', 'user_id'),
             'countCars' => array(self::STAT, 'Cars', 'user_id', 'condition' => 'status <> :deleted', 'params' => [':deleted' => Cars::STATUS_DELETED]),
             'cars' => array(self::HAS_MANY, 'Cars', 'user_id'),
             'parked' => array(self::HAS_MANY, 'UserParking', 'user_id'),
             'activePlan' => array(self::HAS_ONE, 'UserPlans', 'user_id', 'on' => 'activePlan.expire_date = -1 OR activePlan.expire_date > :time', 'params' => [':time' => time()], 'order' => 'activePlan.id DESC'),
             'plans' => array(self::HAS_MANY, 'UserPlans', 'user_id', 'order' => 'plans.id DESC'),
             'state' => array(self::BELONGS_TO, 'Towns', 'state_id'),
+            'alerts' => array(self::HAS_MANY, 'CarAlerts', 'user_id'),
         );
     }
 
