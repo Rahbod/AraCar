@@ -4,7 +4,7 @@
 ?>
 
 <div class="header<?= $this->layout == '//layouts/inner' || $this->layout == '//layouts/panel'?' inner-page':'' ?>">
-    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+    <div class="col-lg-7 col-md-8 col-sm-8 col-xs-12">
         <div class="row">
             <ul class="nav navbar-nav">
                 <?php
@@ -76,7 +76,7 @@
             </ul>
         </div>
     </div>
-    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+    <div class="col-lg-5 col-md-4 col-sm-4 col-xs-12">
         <a href="<?= Yii::app()->getBaseUrl(true) ?>">
             <div class="logo-box">
                 <img src="<?= Yii::app()->theme->baseUrl.'/images/logo.png' ?>">
