@@ -31,6 +31,7 @@ class Controller extends AuthController
      */
     public $pageHeader;
     public $pageDescription;
+    public $pageLogo;
     //
     public $town = null;
     public $place = null;

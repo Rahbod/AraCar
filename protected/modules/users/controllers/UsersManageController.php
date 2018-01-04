@@ -184,6 +184,7 @@ class UsersManageController extends Controller
     {
         $model = $this->loadModel($id);
         $model->loadPropertyValues();
+        $request = DealershipRequests::model()->findByAttributes(array('email' => $model->email));
 
         $this->performAjaxValidation($model);
 
@@ -199,10 +200,7 @@ class UsersManageController extends Controller
                 Yii::app()->user->setFlash('failed', 'در ثبت اطلاعات خطایی رخ داده است! لطفا مجددا تلاش کنید.');
         }
 
-        $this->render('update-dealership', array(
-            'model' => $model,
-            'avatar' => $avatar,
-        ));
+        $this->render('update-dealership', compact('model', 'avatar', 'request'));
     }
 
     /**

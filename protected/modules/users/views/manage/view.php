@@ -96,10 +96,6 @@ else
 				'value'=>$model->userDetails->phone,
 			),
 			array(
-				'name'=>'کد ملی',
-				'value'=>$model->national_code,
-			),
-			array(
 				'name'=>'کد پستی',
 				'value'=>$model->userDetails->zip_code,
 			),

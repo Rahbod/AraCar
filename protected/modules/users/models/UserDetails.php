@@ -135,10 +135,13 @@ class UserDetails extends CActiveRecord
      */
     public function getShowName()
     {
+		$postfix = '';
+		if($this->user->role_id == 2)
+			$postfix = ' - نمایشگاه '.$this->dealership_name;
         if ($this->first_name or $this->last_name)
-            return $this->first_name . ' ' . $this->last_name;
+            return $this->first_name . ' ' . $this->last_name.$postfix;
         else
-            return $this->user->email;
+            return $this->user->email.$postfix;
     }
 	
 	public function getShowDescription()

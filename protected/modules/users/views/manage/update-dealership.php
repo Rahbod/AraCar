@@ -17,6 +17,6 @@ $this->breadcrumbs=array(
         </a>
     </div>
     <div class="box-body">
-        <?php $this->renderPartial('_dealership_form', array('model'=>$model, 'avatar' => $avatar)); ?>
+        <?php $this->renderPartial('_dealership_form', compact('model', 'avatar', 'request')); ?>
     </div>
 </div>

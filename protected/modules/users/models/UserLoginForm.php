@@ -39,7 +39,7 @@ class UserLoginForm extends CFormModel
             array('verification_field_value', 'length', 'is' => 11, 'on' => 'mobileAuth'),
 			// multiple username
 			array('verification_field_value, verification_field', 'safe'),
-			array('verification_field_value', 'check', 'fields' => ['national_code', 'mobile', 'email']),
+			array('verification_field_value', 'check', 'fields' => ['mobile', 'email']),
 			// authenticate_field needs to be authenticated
 			array('authenticate_field', 'authenticate','except' => 'OAuth'),
 		);
@@ -64,16 +64,6 @@ class UserLoginForm extends CFormModel
                 $this->email = $mobile->user->email;
                 $this->verification_field = 'mobile';
                 $this->scenario = 'mobileAuth';
-            }else{
-                $criteria = new CDbCriteria();
-                $criteria->compare('national_code', $this->{$attribute});
-                $criteria->limit = 1;
-                $national_code = Users::model()->find($criteria);
-                if($national_code){
-                    $this->email = $national_code->email;
-                    $this->verification_field = 'national_code';
-                    $this->scenario = 'nationalAuth';
-                }
             }
         }
 	}

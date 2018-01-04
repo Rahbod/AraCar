@@ -420,8 +420,8 @@ a:focus{
     padding: 20px 0;
 }
 .page-header .top .brand-logo{
-    max-width: 40px;
-    max-height:40px;
+    max-width: 100%;
+    max-height:42px;
     float: right;
 }
 .page-header .top .brand-name{
@@ -2754,6 +2754,7 @@ input.form-control.white-bg {
     padding: 10px 20px;
     min-width:642px;
     width: auto;
+    background-color: #f0f0f0;
     border-radius: 0 !important;
 }
 .navbar-nav .dropdown-menu.price-menu{
@@ -3105,7 +3106,7 @@ footer .nav li:last-of-type a{
 .dealer-item .photo {
     position: absolute;
     right: 0;
-    top: 0;
+    top: 15px;
     width: 150px;
     height: 100px;
     margin-left: 15px;
@@ -3119,7 +3120,7 @@ footer .nav li:last-of-type a{
     padding: 0;
     text-align: right;
     height: 100px;
-    padding-right: 150px;
+    padding-right: 165px;
 }
 .dealer-item .detail h3 {
     font-size: 13px;

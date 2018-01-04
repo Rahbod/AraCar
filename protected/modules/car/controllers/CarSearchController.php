@@ -152,7 +152,7 @@ class CarSearchController extends Controller
             if(isset($_GET['Users'])){
                 $model->attributes = $_GET['Users'];
             }
-            $model->role_id = 1;
+            $model->role_id = 2;
             $this->render('dealerships', compact('model', 'filters'));
             Yii::app()->end();
         }
