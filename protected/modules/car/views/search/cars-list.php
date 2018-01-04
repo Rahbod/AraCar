@@ -14,7 +14,7 @@
                         <div class="filters">
                             <?= $this->createFiltersBar($filters);?>
                             <?php $defaultQuery = Yii::app()->request->getQuery('def');?>
-                            <a href="<?= $this->createUrl('/'.Yii::app()->request->pathInfo.'?'.$defaultQuery.'='.Yii::app()->request->getQuery($defaultQuery).'&def='.$defaultQuery)?>" class="clear-filters-link">پاک کردن همه</a>
+                            <a href="<?= $this->createUrl('/' . Yii::app()->request->pathInfo.'?'.$defaultQuery.'='.Yii::app()->request->getQuery($defaultQuery).'&def='.$defaultQuery)?>" class="clear-filters-link">پاک کردن همه</a>
                         </div>
                     </div>
                 </div>
