@@ -286,7 +286,10 @@ class CarSearchController extends Controller
                     break;
 
                 case "has-image":
-                    $strTemp .= 'عکس دار';
+                    if($value)
+                        $strTemp .= 'عکس دار';
+                    else
+                        $strTemp .= 'عکس مهم نیست';
                     break;
             }
             if(Yii::app()->request->getQuery('def') != $filter) {
