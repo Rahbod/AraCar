@@ -3192,3 +3192,26 @@ footer .nav li:last-of-type a{
     -o-transform: rotate(180deg);
     transform: rotate(180deg);
 }
+.page-header.dealer-page .top .brand-logo{
+    max-height: 82px;
+}
+.page-header.dealer-page .top .brand-name{
+    font-size: 20px;
+    line-height: 25px;
+    margin-bottom: 15px;
+}
+.page-header.dealer-page .top .brand-name small{
+    display: inline-block;
+    float: left;
+}
+.page-header.dealer-page .top p{
+    overflow: hidden;
+    padding-right: 15px;
+    font-size: 13px;
+    color: #777;
+    white-space: nowrap;
+    margin-bottom: 5px;
+}
+.page-header.dealer-page .top p:last-of-type{
+    margin-bottom: 0;
+}

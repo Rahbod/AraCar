@@ -6,14 +6,16 @@
 /* @var $dataProvider CActiveDataProvider */
 ?>
 
-<div class="page-header">
+<div class="page-header dealer-page">
 	<div class="top">
 		<div class="center-box">
 			<div class="row">
 				<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12"></div>
 				<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
 					<?php if($this->pageLogo):?><img src="<?= $this->pageLogo ?>" class="brand-logo" alt="<?= strip_tags($this->pageHeader) ?>"><?php endif; ?>
-					<h2 class="brand-name<?= $this->layout == '//layouts/panel'?' user-detail':'' ?>"><?php echo $this->pageHeader ?><small><?php echo $this->pageDescription ?></small></h2>
+					<h2 class="brand-name"><?php echo $this->pageHeader ?><small style="font-size:11px;font-weight: normal !important;padding-right:5px;">[<?= JalaliDate::differenceTime($model->create_date) ?>]</small></h2>
+					<p><?php echo $this->pageDescription ?></p>
+					<p><?php echo Controller::parseNumbers($model->phone) ?></p>
 				</div>
 			</div>
 		</div>
