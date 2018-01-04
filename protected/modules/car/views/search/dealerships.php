@@ -3,6 +3,7 @@
 /* @var $model Users */
 /* @var $form CActiveForm */
 /* @var $images UploadedFiles|[] */
+/* @var $filters array */
 
 $this->breadcrumbs = array(
 	'داشبورد' => array('/dashboard'),
@@ -14,7 +15,7 @@ $provider = $model->searchDealers();
 	<div class="center-box">
 		<div class="row">
 			<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-				<?php $this->renderPartial('_filter_box', array('filters' => $filters));?>
+				<?php $this->renderPartial('_dealer_filter_box', array('filters' => $filters));?>
 			</div>
 			<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
 				<?php

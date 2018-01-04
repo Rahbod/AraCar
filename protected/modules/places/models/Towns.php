@@ -12,6 +12,7 @@
  * The followings are the available model relations:
  * @property Places[] $places
  * @property integer $carsCount
+ * @property integer $dealershipsCount
  * @property Cars[] $cars
 // * @property Tags[] $tags
  */
@@ -52,8 +53,10 @@ class Towns extends CActiveRecord
 		return array(
 			'places' => array(self::HAS_MANY, 'Places', 'town_id'),
 			'tags' => array(self::HAS_MANY, 'Tags', 'tag_id'),
-			'carsCount' => array(self::STAT, 'Cars', 'state_id', 'condition' => 't.status = :status', 'params' => [':status' => Cars::STATUS_APPROVED]),
 			'cars' => array(self::HAS_MANY, 'Cars', 'state_id'),
+			'carsCount' => array(self::STAT, 'Cars', 'state_id', 'condition' => 't.status = :status', 'params' => [':status' => Cars::STATUS_APPROVED]),
+			'dealerships' => array(self::HAS_MANY, 'Users', 'state_id'),
+			'dealershipsCount' => array(self::STAT, 'Users', 'state_id'),
 		);
 	}
 

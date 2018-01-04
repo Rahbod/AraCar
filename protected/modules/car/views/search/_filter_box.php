@@ -7,7 +7,7 @@ if(Yii::app()->request->getQueryString())
     $queryStrings = explode('&', Yii::app()->request->getQueryString());
 
 $price = [
-    'min' => 0,
+    'min' => 1,
     'max' => 100,
 ];
 if(isset($filters['price'])) {
@@ -23,11 +23,11 @@ if(isset($filters['price'])) {
     </div>
     <div class="context collapse in" aria-expanded="true" id="context-2">
         <div class="range-slider-container">
-            <input type="text" class="range-min-input digitFormat text-field ltr" value="<?= $price['min']?>">
+            <input type="text" class="range-min-input digitFormat text-field ltr" value="<?= $price['min']?>" placeholder="از">
             <span class="currency">میلیون تومان</span>
-            <input type="text" class="range-max-input digitFormat text-field ltr" value="<?= $price['max']?:''?>">
+            <input type="text" class="range-max-input digitFormat text-field ltr" value="<?= $price['max']?:''?>" placeholder="تا">
             <span class="currency">میلیون تومان</span>
-            <a href="<?= $this->createFilterUrl('price', isset($filters['price']) ? $filters['price'] : '0')?>" class="btn-blue center-block text-center">اعمال فیلتر قیمت</a>
+            <a href="<?= $this->createFilterUrl('price', isset($filters['price']) ? $filters['price'] : '1-100')?>" class="btn-blue center-block text-center">اعمال فیلتر قیمت</a>
         </div>
     </div>
 </div>
@@ -173,3 +173,30 @@ if(isset($filters['price'])) {
         </ul>
     </div>
 </div>
+<?php Yii::app()->clientScript->registerScript('changePriceFilterBtnUrl', '
+    function changePriceFilterBtnUrl(min, max) {
+        var queryStrings = ' . (count($queryStrings) == 0 ? "[]" : CJSON::encode($queryStrings)) . ',
+            hasPrice = false
+            filteredQueryStrings = [];
+
+        $.each(queryStrings, function(index, item) {
+            if(!item.match(/price/))
+                filteredQueryStrings[filteredQueryStrings.length] = item;
+        });
+
+        if(min == null && max == null)
+            $(".filter-box .range-slider-container .btn-blue").attr("href", "#");
+        else{
+            if(min == null)
+                min = "";
+
+            if(max == null)
+                max = "";
+
+            if(filteredQueryStrings.length == 0)
+                $(".filter-box .range-slider-container .btn-blue").attr("href", "?price=" + min + "-" + max);
+            else
+                $(".filter-box .range-slider-container .btn-blue").attr("href", "?" + filteredQueryStrings.join("&") + "&price=" + min + "-" + max);
+        }
+    }
+', CClientScript::POS_BEGIN);?>
