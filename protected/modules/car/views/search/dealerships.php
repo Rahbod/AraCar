@@ -3,6 +3,7 @@
 /* @var $model Users */
 /* @var $form CActiveForm */
 /* @var $images UploadedFiles|[] */
+/* @var $filters array */
 
 $this->breadcrumbs = array(
 	'جستجوی نمایشگاه'

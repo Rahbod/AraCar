@@ -29,9 +29,12 @@
  * @property Cars $cars
  * @property int $countParked
  * @property int $countCars
+ * @property array $dealershipFilters
  */
 class Users extends CActiveRecord
 {
+    public $dealershipFilters = [];
+
     /**
      * @return string the associated database table name
      */
@@ -253,15 +256,48 @@ class Users extends CActiveRecord
         // @todo Please modify the following code to remove attributes that should not be searched.
 
         $criteria = new CDbCriteria;
+        $criteria->alias = 'dealership';
         $criteria->compare('role_id', $this->role_id);
         $criteria->compare('userDetails.dealership_name', $this->dealership_name, true);
         $criteria->compare('state_id', $this->state_id);
         $criteria->with = array('userDetails');
         $criteria->order = 'dealership_name';
+
+        if($this->dealershipFilters)
+            $criteria = $this->applyDealershipFilters($criteria, $this->dealershipFilters);
+
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
             'pagination' => array('pageSize' => 20)
         ));
+    }
+
+    /**
+     * Apply selected dealership filters.
+     * @param CDbCriteria $criteria
+     * @param array $filters
+     * @return CDbCriteria
+     */
+    protected function applyDealershipFilters($criteria, $filters)
+    {
+        foreach ($filters as $filter => $value) {
+            switch ($filter) {
+                case "state":
+                    $criteria->with[] = 'state';
+                    $criteria->compare('state.slug', $value, true);
+                    break;
+
+                case "name":
+                    $criteria->with[] = 'userDetails';
+                    $criteria->compare('userDetails.dealership_name', urldecode($value), true);
+                    break;
+            }
+        }
+
+//        if (!isset($filters['order']))
+//            $criteria->order = "car.update_date DESC";
+
+        return $criteria;
     }
 
     /**

@@ -144,7 +144,8 @@ class CarSearchController extends Controller
     public function actionDealership($id = false, $title=  false)
     {
         Yii::app()->theme = "frontend";
-        $this->layout = '//layouts/inner';
+        $this->layout = '//layouts/public';
+
         // list of dealerships
         if(!$id && !$title){
             $this->pageTitle = 'جستجوی نمایشگاه ها';
@@ -157,9 +158,11 @@ class CarSearchController extends Controller
                 $model->attributes = $_GET['Users'];
             }
             $model->role_id = 2;
+            $model->dealershipFilters = $filters;
             $this->render('dealerships', compact('model', 'filters'));
             Yii::app()->end();
         }
+
         // show dealership
         if($id){
             /* @var $model Users */
@@ -255,11 +258,11 @@ class CarSearchController extends Controller
                 case "price":
                     $prices = explode('-', $value);
                     if(isset($prices[0] , $prices[1]) && !empty((float)$prices[0]) && !empty((float)$prices[1]))
-                        $strTemp .= 'از ' . Controller::parseNumbers(number_format($prices[0],1)) . ' تا ' . Controller::parseNumbers(number_format($prices[1],1)) . ' میلیون تومان';
-                    elseif(isset($prices[0]))
-                        $strTemp .= 'از ' . Controller::parseNumbers(number_format($prices[0],1)) .  ' میلیون تومان';
-                    elseif(isset($prices[1]))
-                        $strTemp .= 'تا ' . Controller::parseNumbers(number_format($prices[1],1)) .  ' میلیون تومان';
+                        $strTemp .= 'از ' . Controller::parseNumbers(number_format($prices[0])) . ' تا ' . Controller::parseNumbers(number_format($prices[1])) . ' میلیون تومان';
+                    elseif(isset($prices[0]) and is_numeric($prices[0]))
+                        $strTemp .= 'از ' . Controller::parseNumbers(number_format($prices[0])) .  ' میلیون تومان';
+                    elseif(isset($prices[1]) and is_numeric($prices[1]))
+                        $strTemp .= 'تا ' . Controller::parseNumbers(number_format($prices[1])) .  ' میلیون تومان';
                     break;
 
                 case "min-year":

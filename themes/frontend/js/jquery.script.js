@@ -25,8 +25,8 @@ $(document).ready(function() {
 
         for (var j = 0; j < ($('.range-max-input').val().match(/,/g) || []).length; j++)
             strMax = strMax.replace(/,/, '');
-        $(this).parent().find('.range-slider').slider("option", "values", [parseInt(strMin), parseInt(strMax)]);
-        changePriceFilterBtnUrl(parseInt(strMin), parseInt(strMax));
+        //$(this).parent().find('.range-slider').slider("option", "values", [parseInt(strMin), parseInt(strMax)]);
+        changePriceFilterBtnUrl(strMin ? parseInt(strMin) : null, strMax ? parseInt(strMax) : null);
     }).on('keyup', '.range-max-input', function () {
         var strMax = $(this).val(),
             strMin = $('.range-min-input').val();
@@ -36,7 +36,11 @@ $(document).ready(function() {
         for (var j = 0; j < ($('.range-min-input').val().match(/,/g) || []).length; j++)
             strMin = strMin.replace(/,/, '');
         $(this).parent().find('.range-slider').slider("option", "values", [parseInt(strMin), parseInt(strMax)]);
-        changePriceFilterBtnUrl(parseInt(strMin), parseInt(strMax));
+        changePriceFilterBtnUrl(strMin ? parseInt(strMin) : null, strMax ? parseInt(strMax) : null);
+    }).on('keyup', '.dealership-name', function () {
+        var strName = $(this).val();
+
+        changeNameFilterBtnUrl(strName);
     }).on('keyup', '.filter-box.by-brand .text-field', function () {
         var query = $(this).val();
 
@@ -210,10 +214,6 @@ $(document).ready(function() {
 
 $.fn.digitFormat = function () {
     return this.each(function (event) {
-        if($(this).val() == "")
-            $(this).removeClass("ltr");
-        else
-            $(this).addClass("ltr");
         if (event.which >= 37 && event.which <= 40) return;
         $(this).val(function (index, value) {
             return value
