@@ -3147,4 +3147,23 @@ footer .nav li:last-of-type a{
     position: absolute;
     bottom: 25px;
     font-size: 13px;
+    color: #aaa;
+}
+.dealer-ad-details{
+    color: #aaa;
+    position: absolute;
+    top: 25px;
+    left: 15px;
+    float: left;
+    direction: rtl;
+    width: 152px;
+}
+.dealer-phone{
+    color: #aaa;
+    position: absolute;
+    bottom: 25px;
+    left: 15px;
+    float: left;
+    direction: rtl;
+    width: 152px;
 }

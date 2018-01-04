@@ -1,4 +1,4 @@
-<?
+<?php
 /* @var $data Slideshow*/
 $path = Yii::getPathOfAlias('webroot').'/uploads/slideshow/';
 ?>

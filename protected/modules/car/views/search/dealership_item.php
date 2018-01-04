@@ -42,7 +42,7 @@ $url = $data->id;
                 <span><?= Controller::normalizeNumber($data->countCars, true, true, 'خودرو') ?></span>
             </p>
         </div>
-        <div class="overview">
+        <div class="overview dealer-phone">
             <span class="tn ltr">
                 <?= Controller::normalizeNumber($data->phone, false, true, '') ?>
             </span>
