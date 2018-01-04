@@ -25,7 +25,7 @@
                     <div class="dropdown-menu">
                         <ul class="linear-menu">
                             <?php foreach($this->brands as $brand):?>
-                                <li><a href="<?= $this->createUrl('/car/brand/' . $brand->slug)?>"><?= $brand->title?> <small>( <?= Controller::parseNumbers(number_format($brand->carsCount)) ?> )</small></a></li>
+                                <li><a href="<?= $this->createUrl('/car/brand/' . $brand->slug)?>"><?= $brand->title?><?php if($brand->carsCount>0):?> <small><b>( <?= Controller::parseNumbers(number_format($brand->carsCount)) ?> )</b></small><?php endif; ?></a></li>
                             <?php endforeach;?>
                         </ul>
                     </div>
@@ -62,7 +62,6 @@
                         </ul>
                     </div>
                 </li>
-                <li><a href="<?= $this->createUrl('/research') ?>">بررسی خودرو</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">نمایشگاه <i class="caret"></i></a>
                     <div class="dropdown-menu special-menu">
@@ -72,6 +71,7 @@
                         </ul>
                     </div>
                 </li>
+                <li><a href="<?= $this->createUrl('/research') ?>">بررسی خودرو</a></li>
 <!--                <li><a href="#">قیمت صفر</a></li>-->
             </ul>
         </div>
