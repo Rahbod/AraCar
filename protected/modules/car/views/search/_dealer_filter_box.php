@@ -14,7 +14,6 @@ if(Yii::app()->request->getQueryString())
         <div class="range-slider-container">
             <input type="text" class="text-field" value="<?= isset($_GET['name'])?$_GET['name']:'' ?>" placeholder="نام نمایشگاه را وارد کنید">
             <a href="<?= $this->createFilterUrl('term','')?>" class="btn-blue center-block text-center search-form">
-                <i class="icon-search"></i>
                 جستجو
             </a>
         </div>

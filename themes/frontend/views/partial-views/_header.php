@@ -21,7 +21,7 @@
                 endif;
                 ?>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">برند</a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">برند <i class="caret"></i></a>
                     <div class="dropdown-menu">
                         <ul class="linear-menu">
                             <?php foreach($this->brands as $brand):?>
@@ -31,7 +31,7 @@
                     </div>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">شاسی</a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">شاسی <i class="caret"></i></a>
                     <div class="dropdown-menu">
                         <ul class="linear-menu">
                             <?php foreach($this->chassis as $chassis):?>
@@ -41,7 +41,7 @@
                     </div>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">قیمت</a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">قیمت <i class="caret"></i></a>
                     <div class="dropdown-menu price-menu">
                         <ul class="linear-menu">
                             <!--<li><a href="--><?//= $this->createUrl('/car/search/all?price=0-5')?><!--">تا 5 میلیون تومان</a></li>-->
@@ -54,7 +54,7 @@
                     </div>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">موارد خاص</a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">موارد خاص <i class="caret"></i></a>
                     <div class="dropdown-menu special-menu">
                         <ul class="linear-menu">
                             <li><a href="<?= $this->createUrl('/car/search/all?plate=' . str_replace(' ', '-', 'منطقه آزاد') . '&def=plate')?>">منطقه آزاد</a></li>
