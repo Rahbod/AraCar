@@ -2,6 +2,10 @@
 /* @var $this UsersPublicController */
 /* @var $model DealershipRequestForm */
 /* @var $form CActiveForm */
+$baseUrl = Yii::app()->theme->baseUrl;
+$cs = Yii::app()->getClientScript();
+$cs->registerCssFile($baseUrl.'/css/bootstrap-select.min.css');
+$cs->registerScriptFile($baseUrl.'/js/bootstrap-select.min.js', CClientScript::POS_END);
 ?>
 <div class="content-box white-bg">
     <div class="center-box">
@@ -113,15 +117,6 @@
                                 <?php echo $form->textArea($model,'description',array('class'=>"form-control",'placeholder'=>$model->getAttributeLabel('description')));?>
                                 <?php echo $form->error($model,'description'); ?>
                             </div>
-<!--                            <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">-->
-<!--                                --><?php //echo $form->textField($model, 'verifyCode',array('class'=>"form-control",'placeholder'=>$model->getAttributeLabel('verifyCode'))); ?>
-<!--                                --><?php //echo $form->error($model,'verifyCode'); ?>
-<!--                            </div>-->
-<!--                            <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12 text-nowrap captcha">-->
-<!--                                --><?php //$this->widget('CCaptcha',array(
-//                                    'captchaAction' => '/users/public/captcha',
-//                                )); ?>
-<!--                            </div>-->
                             <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top: 15px">
                                 <button type="submit" class="btn btn-custom green next-in pull-left" id="login-submit-btn">
                                     ارسال درخواست
