@@ -184,7 +184,7 @@ echo $form->errorSummary($model);
             <div class="clearfix"></div>
             <!--Purchase-->
             <div class="form-group col-lg-2 col-md-2 col-sm-2 col-xs-12">
-                <?php echo $form->radioButtonList($model,'purchase_type_id', $model->purchase_types,array(
+                <?php echo $form->radioButtonList($model,'purchase_type_id', Cars::$purchase_types,array(
                     'class'=>'form-control select-picker purchase_type',
                     'separator'=> '',
                     'template'=> '<div class="radio">{input} {label}</div>',
