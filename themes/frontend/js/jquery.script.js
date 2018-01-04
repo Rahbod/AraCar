@@ -204,6 +204,8 @@ $(document).ready(function() {
             $table.find('.not-found').hide();
         }
     });
+
+    $('[data-toggle="popover"]').popover();
 });
 
 $.fn.digitFormat = function () {

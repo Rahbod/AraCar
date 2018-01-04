@@ -49,7 +49,7 @@ class CarSearchController extends Controller
         $filters = $this->getFilters();
 
         $criteria = Cars::duplicateQuery();
-        $criteria->with = ['brand'];
+        $criteria->with[] = 'brand';
         $criteria->compare('brand.slug', $brand, true);
         $criteria = $this->applyFilter($criteria, $filters);
         $dataProvider = new CActiveDataProvider('Cars', [
@@ -176,7 +176,8 @@ class CarSearchController extends Controller
             $queryStrings = explode('&', $queryString);
             foreach ($queryStrings as $queryString) {
                 $arr = explode('=', $queryString);
-                $filters[$arr[0]] = $arr[1];
+                if($arr[0] != 'order')
+                    $filters[$arr[0]] = $arr[1];
             }
         }
 
@@ -240,6 +241,30 @@ class CarSearchController extends Controller
                         $strTemp .= 'از ' . Controller::parseNumbers(number_format($prices[0],1)) .  ' میلیون تومان';
                     elseif(isset($prices[1]))
                         $strTemp .= 'تا ' . Controller::parseNumbers(number_format($prices[1],1)) .  ' میلیون تومان';
+                    break;
+
+                case "min-year":
+                    $strTemp .= "از سال". $value;
+                    break;
+
+                case "max-year":
+                    $strTemp .= "تا سال". $value;
+                    break;
+
+                case "min-distance":
+                    $strTemp .= "حداقل کارکرد ". ($value * 1000) . " کیلومتر";
+                    break;
+
+                case "max-distance":
+                    $strTemp .= "حداکثر کارکرد ". ($value * 1000) . " کیلومتر";
+                    break;
+
+                case "purchase":
+                    $strTemp .= Cars::$purchase_types[$value];
+                    break;
+
+                case "has-image":
+                    $strTemp .= 'عکس دار';
                     break;
             }
             if(Yii::app()->request->getQuery('def') != $filter) {
@@ -339,9 +364,84 @@ class CarSearchController extends Controller
                         $criteria->compare('car.purchase_details', ' <= '.$p0 * 1000000);
                     }
                     break;
+
+                case "min-year":
+                    $criteria->addCondition('car.creation_date >= :minYear');
+                    $criteria->params[':minYear'] = $value;
+                    break;
+
+                case "max-year":
+                    $criteria->addCondition('car.creation_date <= :maxYear');
+                    $criteria->params[':maxYear'] = $value;
+                    break;
+
+                case "min-distance":
+                    $criteria->addCondition('car.distance >= :minDistance');
+                    $criteria->params[':minDistance'] = $value * 1000;
+                    break;
+
+                case "max-distance":
+                    $criteria->addCondition('car.distance <= :maxDistance');
+                    $criteria->params[':maxDistance'] = $value * 1000;
+                    break;
+
+                case "purchase":
+                    $criteria->addCondition('car.purchase_type_id = :purchase');
+                    $criteria->params[':purchase'] = $value;
+                    break;
+
+                case "has-image":
+                    $criteria->with[] = 'carImages';
+                    $criteria->together = true;
+                    $criteria->addCondition('carImages.id IS NOT NULL');
+                    break;
+
+                case "order":
+                    $field = $order = "";
+                    switch($value){
+                        case "time":
+                            $field = "update_date";
+                            $order = "DESC";
+                            break;
+
+                        case "max-cast":
+                            $field = "purchase_details";
+                            $order = "DESC";
+                            break;
+
+                        case "min-cast":
+                            $field = "purchase_details";
+                            $order = "ASC";
+                            break;
+
+                        case "new-year":
+                            $field = "creation_date";
+                            $order = "DESC";
+                            break;
+
+                        case "old-year":
+                            $field = "creation_date";
+                            $order = "ASC";
+                            break;
+
+                        case "min-dist":
+                            $field = "distance";
+                            $order = "ASC";
+                            break;
+
+                        case "max-dist":
+                            $field = "distance";
+                            $order = "DESC";
+                            break;
+                    }
+                    $criteria->order = "car.{$field} {$order}";
+                    break;
             }
         }
-        $criteria->order = "car.update_date DESC";
+
+        if(!isset($filters['order']))
+            $criteria->order = "car.update_date DESC";
+
         return $criteria;
     }
 }
