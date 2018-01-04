@@ -234,12 +234,7 @@ class CarSearchController extends Controller
 
                 case "price":
                     $prices = explode('-', $value);
-                    if(isset($prices[0] , $prices[1]) && !empty((float)$prices[0]) && !empty((float)$prices[1]))
-                        $strTemp .= 'از ' . Controller::parseNumbers(number_format($prices[0],1)) . ' تا ' . Controller::parseNumbers(number_format($prices[1],1)) . ' میلیون تومان';
-                    elseif(isset($prices[0]))
-                        $strTemp .= 'از ' . Controller::parseNumbers(number_format($prices[0],1)) .  ' میلیون تومان';
-                    elseif(isset($prices[1]))
-                        $strTemp .= 'تا ' . Controller::parseNumbers(number_format($prices[1],1)) .  ' میلیون تومان';
+                    $strTemp .= 'از ' . number_format($prices[0] * 1000000) . ' تا ' . number_format($prices[1] * 1000000) . ' میلیون تومان';
                     break;
             }
             if(Yii::app()->request->getQuery('def') != $filter) {
@@ -322,22 +317,8 @@ class CarSearchController extends Controller
 
                 case "price":
                     $prices = explode('-', $value);
-                    if(isset($prices[0] , $prices[1]) && !empty((float)$prices[0]) && !empty((float)$prices[1])){
-                        $p0 = (float)$prices[0];
-                        $p1 = (float)$prices[1];
-                        $criteria->compare('car.purchase_type_id', Cars::PURCHASE_TYPE_CASH, false);
-                        $criteria->addBetweenCondition('car.purchase_details', $p0 * 1000000, $p1 * 1000000);
-                    }
-                    else if(isset($prices[0])){
-                        $p0 = (float)$prices[0];
-                        $criteria->compare('car.purchase_type_id', Cars::PURCHASE_TYPE_CASH, false);
-                        $criteria->compare('car.purchase_details', ' >= '.$p0 * 1000000);
-                    }
-                    else if(isset($prices[1])){
-                        $p0 = (float)$prices[1];
-                        $criteria->compare('car.purchase_type_id', Cars::PURCHASE_TYPE_CASH, false);
-                        $criteria->compare('car.purchase_details', ' <= '.$p0 * 1000000);
-                    }
+                    $criteria->compare('car.purchase_type_id', Cars::PURCHASE_TYPE_CASH, false);
+                    $criteria->addBetweenCondition('car.purchase_details', $prices[0] * 1000000, $prices[1] * 1000000);
                     break;
             }
         }

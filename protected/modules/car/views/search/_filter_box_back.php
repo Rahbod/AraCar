@@ -13,20 +13,21 @@ $price = [
 if(isset($filters['price'])) {
     $prices = explode('-', $filters['price']);
     $price['min'] = $prices[0];
-    $price['max'] = isset($prices[1])?$prices[1]:false;
+    $price['max'] = $prices[1];
 }
 ?>
 <div class="filter-box">
     <div class="head">
         <span>قیمت</span>
-        <i class="toggle-icon minus" data-toggle="collapse" data-target="#context-2"></i>
+        <i class="toggle-icon <?= isset($filters['price']) ? 'minus' : 'plus'?>" data-toggle="collapse" data-target="#context-2"></i>
     </div>
-    <div class="context collapse in" aria-expanded="true" id="context-2">
+    <div class="context collapse<?= isset($filters['price']) ? ' in' : ''?>" aria-expanded="true" id="context-2">
         <div class="range-slider-container">
-            <input type="text" class="range-min-input digitFormat text-field ltr" value="<?= $price['min']?>">
-            <span class="currency">میلیون تومان</span>
-            <input type="text" class="range-max-input digitFormat text-field ltr" value="<?= $price['max']?:''?>">
-            <span class="currency">میلیون تومان</span>
+            <div class="range-slider" data-min="0" data-max="1000000000" data-values="[<?= $price['min'] * 1000000?>, <?= $price['max'] * 1000000?>]" data-step="1000000" data-min-input=".range-min-input" data-max-input=".range-max-input"></div>
+            <input type="text" class="range-min-input digitFormat text-field" value="<?= $price['min'] * 1000000?>">
+            <span class="currency">تومان</span>
+            <input type="text" class="range-max-input digitFormat text-field" value="<?= $price['max'] * 1000000?>">
+            <span class="currency">تومان</span>
             <a href="<?= $this->createFilterUrl('price', isset($filters['price']) ? $filters['price'] : '0')?>" class="btn-blue center-block text-center">اعمال فیلتر قیمت</a>
         </div>
     </div>
@@ -173,3 +174,22 @@ if(isset($filters['price'])) {
         </ul>
     </div>
 </div>
+<?php Yii::app()->clientScript->registerScript('changePriceFilterBtnUrl', '
+    function changePriceFilterBtnUrl(min, max) {
+        var queryStrings = ' . (count($queryStrings) == 0 ? "[]" : CJSON::encode($queryStrings)) . ',
+            hasPrice = false
+            filteredQueryStrings = [];
+
+        min = min / 1000000;
+        max = max / 1000000;
+        $.each(queryStrings, function(index, item) {
+            if(!item.match(/price/))
+                filteredQueryStrings[filteredQueryStrings.length] = item;
+        });
+
+        if(filteredQueryStrings.length == 0)
+            $(".filter-box .range-slider-container .btn-blue").attr("href", "?price=" + min + "-" + max);
+        else
+            $(".filter-box .range-slider-container .btn-blue").attr("href", "?" + filteredQueryStrings.join("&") + "&price=" + min + "-" + max);
+    }
+', CClientScript::POS_BEGIN);?>
