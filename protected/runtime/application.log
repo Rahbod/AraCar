@@ -1549,3 +1549,79 @@ in D:\Important\Xamppp\htdocs\aracar\index.php (11)
 in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersManageController.php (118)
 in D:\Important\Xamppp\htdocs\aracar\protected\components\AuthController.php (108)
 in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2018/01/04 14:54:03 [warning] [application] Failed to set unsafe attribute "id" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersManageController.php (118)
+in D:\Important\Xamppp\htdocs\aracar\protected\components\AuthController.php (108)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2018/01/04 14:54:03 [warning] [application] Failed to set unsafe attribute "manager_name" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersManageController.php (118)
+in D:\Important\Xamppp\htdocs\aracar\protected\components\AuthController.php (108)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2018/01/04 14:54:03 [warning] [application] Failed to set unsafe attribute "manager_last_name" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersManageController.php (118)
+in D:\Important\Xamppp\htdocs\aracar\protected\components\AuthController.php (108)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2018/01/04 14:54:03 [warning] [application] Failed to set unsafe attribute "creator_name" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersManageController.php (118)
+in D:\Important\Xamppp\htdocs\aracar\protected\components\AuthController.php (108)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2018/01/04 14:54:03 [warning] [application] Failed to set unsafe attribute "creator_mobile" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersManageController.php (118)
+in D:\Important\Xamppp\htdocs\aracar\protected\components\AuthController.php (108)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2018/01/04 14:54:03 [warning] [application] Failed to set unsafe attribute "description" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersManageController.php (118)
+in D:\Important\Xamppp\htdocs\aracar\protected\components\AuthController.php (108)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2018/01/04 14:54:03 [warning] [application] Failed to set unsafe attribute "state_id" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersManageController.php (118)
+in D:\Important\Xamppp\htdocs\aracar\protected\components\AuthController.php (108)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2018/01/04 14:57:47 [warning] [application] Failed to set unsafe attribute "id" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersManageController.php (118)
+in D:\Important\Xamppp\htdocs\aracar\protected\components\AuthController.php (108)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2018/01/04 14:57:47 [warning] [application] Failed to set unsafe attribute "manager_name" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersManageController.php (118)
+in D:\Important\Xamppp\htdocs\aracar\protected\components\AuthController.php (108)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2018/01/04 14:57:47 [warning] [application] Failed to set unsafe attribute "manager_last_name" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersManageController.php (118)
+in D:\Important\Xamppp\htdocs\aracar\protected\components\AuthController.php (108)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2018/01/04 14:57:47 [warning] [application] Failed to set unsafe attribute "creator_name" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersManageController.php (118)
+in D:\Important\Xamppp\htdocs\aracar\protected\components\AuthController.php (108)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2018/01/04 14:57:47 [warning] [application] Failed to set unsafe attribute "creator_mobile" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersManageController.php (118)
+in D:\Important\Xamppp\htdocs\aracar\protected\components\AuthController.php (108)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2018/01/04 14:57:47 [warning] [application] Failed to set unsafe attribute "description" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersManageController.php (118)
+in D:\Important\Xamppp\htdocs\aracar\protected\components\AuthController.php (108)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2018/01/04 15:39:27 [warning] [application] Failed to set unsafe attribute "id" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersManageController.php (118)
+in D:\Important\Xamppp\htdocs\aracar\protected\components\AuthController.php (108)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2018/01/04 15:39:27 [warning] [application] Failed to set unsafe attribute "manager_name" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersManageController.php (118)
+in D:\Important\Xamppp\htdocs\aracar\protected\components\AuthController.php (108)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2018/01/04 15:39:27 [warning] [application] Failed to set unsafe attribute "manager_last_name" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersManageController.php (118)
+in D:\Important\Xamppp\htdocs\aracar\protected\components\AuthController.php (108)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2018/01/04 15:39:27 [warning] [application] Failed to set unsafe attribute "creator_name" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersManageController.php (118)
+in D:\Important\Xamppp\htdocs\aracar\protected\components\AuthController.php (108)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2018/01/04 15:39:27 [warning] [application] Failed to set unsafe attribute "creator_mobile" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersManageController.php (118)
+in D:\Important\Xamppp\htdocs\aracar\protected\components\AuthController.php (108)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)
+2018/01/04 15:39:27 [warning] [application] Failed to set unsafe attribute "description" of "Users".
+in D:\Important\Xamppp\htdocs\aracar\protected\modules\users\controllers\UsersManageController.php (118)
+in D:\Important\Xamppp\htdocs\aracar\protected\components\AuthController.php (108)
+in D:\Important\Xamppp\htdocs\aracar\index.php (11)

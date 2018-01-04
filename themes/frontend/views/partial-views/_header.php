@@ -67,7 +67,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">نمایشگاه <i class="caret"></i></a>
                     <div class="dropdown-menu special-menu">
                         <ul class="linear-menu">
-<!--                            <li><a href="--><?//= $this->createUrl('/dealerships')?><!--">نمایشگاه ها</a></li>-->
+                            <li><a href="<?= $this->createUrl('/dealerships')?>">جستجوی نمایشگاه ها</a></li>
                             <li><a href="<?= $this->createUrl('/dealership')?>">ثبت نام نمایشگاه</a></li>
                         </ul>
                     </div>

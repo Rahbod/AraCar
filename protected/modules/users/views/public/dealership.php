@@ -23,7 +23,7 @@
                             $this->renderPartial('//partial-views/_loading');
                             ?>
                             <div class="text-right"><?php $this->renderPartial('//partial-views/_flashMessage'); ?></div>
-                            <p>این فرم جهت ثبت درخواست شما فراهم شده و فقط توسط کارشناسان تیم باما قابل مشاهده است.</p>
+                            <p style="margin-bottom: 15px">این فرم جهت ثبت درخواست شما فراهم شده و فقط توسط کارشناسان تیم باما قابل مشاهده است.</p>
                             <?php
                             Yii::app()->user->returnUrl = Yii::app()->request->url;
                             $form = $this->beginWidget('CActiveForm', array(
@@ -66,9 +66,17 @@
                                     }'
                                 )
                             )); ?>
-                            <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top: 15px">
+                            <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                 <?php echo $form->textField($model,'dealership_name',array('class'=>"form-control",'placeholder'=>$model->getAttributeLabel('dealership_name')));?>
                                 <?php echo $form->error($model,'dealership_name'); ?>
+                            </div>
+                            <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <?php echo $form->dropDownList($model,'state_id', Towns::model()->getTowns(),array(
+                                    'class'=>'form-control select-picker',
+                                    'data-live-search' => true,
+                                    'prompt' => $model->getAttributeLabel('state_id'),
+                                )); ?>
+                                <?php echo $form->error($model,'state_id'); ?>
                             </div>
                             <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                 <?php echo $form->textField($model,'manager_name',array('class'=>"form-control",'placeholder'=>$model->getAttributeLabel('manager_name')));?>
@@ -87,7 +95,7 @@
                                 <?php echo $form->textField($model,'creator_mobile',array('class'=>"form-control numberFormat", 'maxLength' => 11,'placeholder'=>$model->getAttributeLabel('creator_mobile')));?>
                                 <?php echo $form->error($model,'creator_mobile'); ?>
                             </div>
-            
+                            
                             <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                 <?php echo $form->textField($model,'phone',array('class'=>"form-control numberFormat", 'maxLength' => 11, 'placeholder'=>$model->getAttributeLabel('phone')));?>
                                 <?php echo $form->error($model,'phone'); ?>

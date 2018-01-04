@@ -28,6 +28,10 @@ $this->breadcrumbs=array(
                         'value' => '$data->userDetails->getShowName()',
                     ),
                     array(
+                        'header' => 'پست الکترونیک',
+                        'value' => '$data->email',
+                    ),
+                    array(
                         'header' => 'پلن',
                         'value' => '$data->activePlan->plan->title',
                     ),

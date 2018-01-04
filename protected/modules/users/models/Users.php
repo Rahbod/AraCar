@@ -17,6 +17,7 @@
  * @property string $repeatPassword
  * @property string $oldPassword
  * @property string $newPassword
+ * @property string $state_id
  *
  * The followings are the available model relations:
  * @property UserDetails $userDetails
@@ -107,7 +108,7 @@ class Users extends CActiveRecord
             array('role_id', 'length', 'max' => 10),
             array('status', 'length', 'max' => 8),
             array('create_date', 'length', 'max' => 20),
-            array('phone', 'length', 'max' => 11),
+            array('phone, state_id', 'length', 'max' => 11),
             array('mobile', 'length', 'is' => 11, 'message' => 'شماره موبایل اشتباه است'),
             array('address', 'length', 'max' => 1000),
             array('avatar', 'length', 'max' => 255),
@@ -115,7 +116,7 @@ class Users extends CActiveRecord
 
             // Register rules
             array('mobile, first_name, last_name, repeatPassword', 'required', 'on' => 'create, create-dealership'),
-            array('dealership_name', 'required', 'on' => 'create-dealership'),
+            array('dealership_name, state_id', 'required', 'on' => 'create-dealership'),
             array('repeatPassword', 'compare', 'compareAttribute' => 'password', 'on' => 'create, create-dealership', 'message' => 'کلمه های عبور همخوانی ندارند'),
 
             // change password rules
@@ -129,7 +130,7 @@ class Users extends CActiveRecord
 
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('type, roleId, create_date, status, verification_token, change_password_request_count, email ,statusFilter, first_name, last_name, phone, mobile, address, avatar, dealership_name', 'safe', 'on' => 'search'),
+            array('type, state_id, roleId, create_date, status, verification_token, change_password_request_count, email ,statusFilter, first_name, last_name, phone, mobile, address, avatar, dealership_name', 'safe', 'on' => 'search'),
         );
     }
 
@@ -181,6 +182,7 @@ class Users extends CActiveRecord
             'parked' => array(self::HAS_MANY, 'UserParking', 'user_id'),
             'activePlan' => array(self::HAS_ONE, 'UserPlans', 'user_id', 'on' => 'activePlan.expire_date = -1 OR activePlan.expire_date > :time', 'params' => [':time' => time()], 'order' => 'activePlan.id DESC'),
             'plans' => array(self::HAS_MANY, 'UserPlans', 'user_id', 'order' => 'plans.id DESC'),
+            'state' => array(self::BELONGS_TO, 'Towns', 'state_id'),
         );
     }
 
@@ -211,6 +213,7 @@ class Users extends CActiveRecord
             'avatar' => 'تصویر',
             'dealership_name' => 'نام نمایشگاه',
             'verifyCode' => 'کد امنیتی',
+            'state_id' => 'استان',
         );
     }
 
@@ -252,6 +255,7 @@ class Users extends CActiveRecord
         $criteria = new CDbCriteria;
         $criteria->compare('role_id', $this->role_id);
         $criteria->compare('userDetails.dealership_name', $this->dealership_name, true);
+        $criteria->compare('state_id', $this->state_id);
         $criteria->with = array('userDetails');
         $criteria->order = 'dealership_name';
         return new CActiveDataProvider($this, array(

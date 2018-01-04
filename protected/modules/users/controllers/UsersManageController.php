@@ -125,6 +125,7 @@ class UsersManageController extends Controller
             $model->attributes = $_POST['Users'];
             $model->role_id = 2;
             $model->status = 'active';
+            $model->create_date = time();
 
             $avatar = new UploadedFiles($this->tempPath, $model->avatar);
             if($model->save()){
@@ -134,7 +135,7 @@ class UsersManageController extends Controller
                     $request->save(false);
                 }
                 Yii::app()->user->setFlash('success', 'اطلاعات با موفقیت ثبت شد.');
-                $this->refresh();
+                $this->redirect(array('dealershipRequests'));
             }else
                 Yii::app()->user->setFlash('failed', 'در ثبت اطلاعات خطایی رخ داده است! لطفا مجددا تلاش کنید.');
         }
@@ -183,6 +184,7 @@ class UsersManageController extends Controller
     {
         $model = $this->loadModel($id);
         $model->loadPropertyValues();
+        $request = DealershipRequests::model()->findByAttributes(array('email' => $model->email));
 
         $this->performAjaxValidation($model);
 
@@ -198,10 +200,7 @@ class UsersManageController extends Controller
                 Yii::app()->user->setFlash('failed', 'در ثبت اطلاعات خطایی رخ داده است! لطفا مجددا تلاش کنید.');
         }
 
-        $this->render('update-dealership', array(
-            'model' => $model,
-            'avatar' => $avatar,
-        ));
+        $this->render('update-dealership', compact('model', 'avatar', 'request'));
     }
 
     /**

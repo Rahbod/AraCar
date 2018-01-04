@@ -99,7 +99,7 @@ return array(
 				'sell' => 'car/public/sell',
 				'research' => 'car/public/research',
 				'research/<params:(.*)>' => 'car/public/research',
-				'dealership' => 'users/search/dealership',
+				'dealership' => 'users/public/dealership',
 				'dealerships' => 'car/search/dealership',
 				'dealership/<id:\d+>-<title:(.*)>' => 'car/search/dealership',
 				'dealership/<id:\d+>' => 'car/search/dealership',

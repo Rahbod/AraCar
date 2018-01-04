@@ -23,7 +23,6 @@ class UsersPublicController extends Controller
                 'upload',
                 'deleteUpload',
                 'viewProfile',
-                'getUserByCode',
                 'login',
                 'captcha',
                 'upgradePlan',
@@ -41,7 +40,6 @@ class UsersPublicController extends Controller
     {
         return array(
             'checkAccess + dashboard, setting, transactions, upgradePlan, buyPlan',
-            'ajaxOnly + getUserByCode'
         );
     }
 
@@ -99,6 +97,7 @@ class UsersPublicController extends Controller
         $this->pageTitle = 'پروفایل من';
         $this->pageHeader = $user->userDetails->getShowName();
         $this->pageDescription = $user->userDetails->getShowDescription();
+        $this->pageLogo = $user->userDetails->avatar && file_exists(Yii::getPathOfAlias('webroot.uploads').'/users/'.$user->userDetails->avatar)?Yii::app()->getBaseUrl(true).'/uploads/users/'.$user->userDetails->avatar:false;
         $criteria = new CDbCriteria();
         $criteria->compare('user_id' , $user->id);
         $criteria->addCondition('status <> :deleted');
@@ -232,26 +231,6 @@ class UsersPublicController extends Controller
         $this->render('view-profile', array(
             'model' => $model,
         ));
-    }
-
-    public function actionGetUserByCode()
-    {
-        $nationalCode = $_POST['code'];
-        /* @var $model Users */
-        $model = Users::model()->find('national_code = :code', array(':code' => $nationalCode));
-
-        if ($model)
-            echo CJSON::encode(array(
-                'status' => true,
-                'first_name' => $model->userDetails->first_name,
-                'last_name' => $model->userDetails->last_name,
-                'mobile' => $model->userDetails->mobile,
-                'email' => $model->email,
-            ));
-        else
-            echo CJSON::encode(array(
-                'status' => false
-            ));
     }
 
     /**
