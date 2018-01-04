@@ -16,11 +16,12 @@
  * @property string $description
  * @property string $status
  * @property string $create_date
+ * @property string $state_id
  */
 class DealershipRequests extends CActiveRecord
 {
 	const STATUS_PENDING = 0;
-	const STATUS_SAVED = 0;
+	const STATUS_SAVED = 1;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -37,9 +38,9 @@ class DealershipRequests extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('dealership_name, creator_name, creator_mobile, address, phone, email', 'required'),
+			array('dealership_name, creator_name, creator_mobile, address, phone, email, state_id', 'required'),
 			array('dealership_name, manager_name, manager_last_name, creator_name, email', 'length', 'max'=>255),
-			array('creator_mobile, phone', 'length', 'max'=>11),
+			array('creator_mobile, phone, state_id', 'length', 'max'=>11),
 			array('create_date', 'length', 'max'=>20),
 			array('create_date', 'default', 'value'=>time()),
 			array('status', 'length', 'max'=>1),
@@ -47,7 +48,7 @@ class DealershipRequests extends CActiveRecord
 			array('description', 'length', 'max'=>512),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, dealership_name, manager_name, manager_last_name, creator_name, creator_mobile, address, phone, email, description', 'safe', 'on'=>'search'),
+			array('id, dealership_name, manager_name, state_id, manager_last_name, creator_name, creator_mobile, address, phone, email, description', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -59,6 +60,7 @@ class DealershipRequests extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'state' => array(self::BELONGS_TO, 'Towns', 'state_id')
 		);
 	}
 
@@ -79,6 +81,7 @@ class DealershipRequests extends CActiveRecord
 			'email' => 'پست الکترونیک',
 			'description' => 'توضیحات',
 			'create_date' => 'تاریخ ثبت',
+			'state_id' => 'استان',
 		);
 	}
 
@@ -110,6 +113,7 @@ class DealershipRequests extends CActiveRecord
 		$criteria->compare('phone',$this->phone,true);
 		$criteria->compare('email',$this->email,true);
 		$criteria->compare('description',$this->description,true);
+		$criteria->compare('state_id',$this->state_id);
 		$criteria->addCondition('status = :pending');
 		$criteria->params[':pending'] = DealershipRequests::STATUS_PENDING;
 		$criteria->order = 'id DESC';

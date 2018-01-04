@@ -55,7 +55,15 @@
 		<?php echo $form->textField($model,'phone',array('maxlength'=>11,'class' => 'form-control')); ?>
 		<?php echo $form->error($model,'phone'); ?>
 	</div>
-
+	<div class="form-group">
+		<?php echo $form->labelEx($model,'state_id'); ?>
+		<?php echo $form->dropDownList($model,'state_id', Towns::model()->getTowns(),array(
+			'class'=>'form-control select-picker',
+			'data-live-search' => true,
+			'prompt' => $model->getAttributeLabel('state_id'),
+		)); ?>
+		<?php echo $form->error($model,'state_id'); ?>
+	</div>
     <div class="form-group">
 		<?php echo $form->labelEx($model,'address'); ?>
 		<?php echo $form->textField($model,'address',array('maxlength'=>1000,'class' => 'form-control')); ?>

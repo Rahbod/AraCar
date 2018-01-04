@@ -16,6 +16,7 @@ class DealershipRequestForm extends CFormModel
     public $phone;
     public $email;
     public $description;
+    public $state_id;
     public $verifyCode;
 
     /**
@@ -27,11 +28,11 @@ class DealershipRequestForm extends CFormModel
     {
         return array(
             // username and password are required
-            array('dealership_name, creator_name, creator_mobile, address, phone, email', 'required'),
+            array('dealership_name, creator_name, creator_mobile, address, phone, email, state_id', 'required'),
             array('email', 'email'),
             array('email', 'unique', 'className' => 'Users', 'message' => 'پست الکترونیک وارد شده قبلا در سیستم ثبت شده است.'),
             array('dealership_name, manager_name, manager_last_name, creator_name, email', 'length', 'max' => 255),
-            array('creator_mobile, phone', 'length', 'max' => 11, 'message' => '{attribute} باید 11 رقم باشد.'),
+            array('creator_mobile, phone, state_id', 'length', 'max' => 11, 'message' => '{attribute} باید 11 رقم باشد.'),
             array('creator_mobile', 'length', 'is' => 11),
             array('description', 'length', 'max' => 512),
 //            array('verifyCode', 'activeCaptcha'),
@@ -63,6 +64,7 @@ class DealershipRequestForm extends CFormModel
             'email' => 'پست الکترونیک',
             'description' => 'توضحیات',
             'verifyCode' => 'کد امنیتی',
+            'state_id' => 'استان',
         );
     }
 }
