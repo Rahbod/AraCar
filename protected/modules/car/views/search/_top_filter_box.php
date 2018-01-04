@@ -7,6 +7,7 @@ if(Yii::app()->request->getQueryString())
     $queryStrings = explode('&', Yii::app()->request->getQueryString());
 
 $orderTypes = [
+    //"all"     => "مرتب سازی بر اساس",
     "time"     => "به روزترین آگهی",
     "max-cast" => "گرانترین",
     "min-cast" => "ارزانترین",
@@ -33,7 +34,7 @@ $orderTypes = [
     </div>
     <div class="row">
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-            <?= CHtml::dropDownList('', isset($filters['purchase']) ? $filters['purchase'] : Cars::PURCHASE_TYPE_CASH, Cars::$purchase_types, [
+            <?= CHtml::dropDownList('', isset($filters['purchase']) ? $filters['purchase'] : 'all', array_merge(['all' => 'نوع پرداخت مهم نیست'], Cars::$purchase_types), [
                 'class' => 'selectpicker select-field',
                 'id' => 'purchase'
             ])?>
@@ -45,7 +46,7 @@ $orderTypes = [
             ])?>
         </div>
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-            <input type="checkbox" id="has-image"<?= isset($filters['has-image']) ? ' checked' : ''?>>
+            <input type="checkbox" id="has-image"<?= (isset($filters['has-image']) and $filters['has-image']) ? ' checked' : ''?>>
             <label for="has-image">عکس دار</label>
         </div>
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
@@ -60,7 +61,7 @@ $orderTypes = [
             filteredQueryStrings = [];
 
         $.each(queryStrings, function(index, item) {
-            if(!item.match(/min-year/) && !item.match(/max-year/) && !item.match(/min-distance/) && !item.match(/max-distance/) && !item.match(/purchase/))
+            if(!item.match(/min-year/) && !item.match(/max-year/) && !item.match(/min-distance/) && !item.match(/max-distance/) && !item.match(/purchase/) && !item.match(/has-image/) && !item.match(/order/))
                 filteredQueryStrings[filteredQueryStrings.length] = item;
         });
 
@@ -76,14 +77,16 @@ $orderTypes = [
         if($("#max-distance").val() != "")
             topFilters[topFilters.length] = "max-distance="+$("#max-distance").val();
 
-        if($("#purchase").val() != "")
+        if($("#purchase").val() != "" && $("#purchase").val() != "all")
             topFilters[topFilters.length] = "purchase="+$("#purchase").val();
 
-        if($("#order").val() != "")
+        if($("#order").val() != "" && $("#order").val() != "all")
             topFilters[topFilters.length] = "order="+$("#order").val();
 
         if($("#has-image").is(":checked"))
             topFilters[topFilters.length] = "has-image=1";
+        else
+            topFilters[topFilters.length] = "has-image=0";
 
         if(filteredQueryStrings.length == 0) {
             if(topFilters.length != 0)
