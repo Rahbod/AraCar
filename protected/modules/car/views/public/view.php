@@ -89,13 +89,17 @@ $parked = UserParking::model()->findByAttributes(['user_id' => $car->user_id, 'c
                 <div class="row col-lg-7 col-md-7 col-sm-7 col-xs-12">
                     <div class="alert alert-success view-alert hidden">
                         <p>
-                            <span>خودرو با موفقیت از پارکینگ شما خارج شد.</span>
+                            <span>خودرو با موفقیت از پارکینگ شماmo خارج شد.</span>
                             <button type="button" class="close" data-dismiss="alert">&times;</button>
                         </p>
                     </div>
                 </div>
                 <div class="clearfix"></div>
-				<h2 class="title"><?= $car->getTitle(false)?></h2>
+				<h2 class="title"><?= $car->getTitle(false)?>
+					<small>
+                    	<a href="#" data-toggle="modal" data-target="#report-modal"><i class="icon icon-flag-alt"></i> گزارش</a>
+					</small>
+				</h2>
                 <?php
 //				var_dump($parked);exit;
                 if(!Yii::app()->user->isGuest && Yii::app()->user->type == 'user'):
@@ -241,6 +245,26 @@ $parked = UserParking::model()->findByAttributes(['user_id' => $car->user_id, 'c
                     <?php
                 endforeach;
                 ?>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="report-modal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3>
+					گزارش اشکال در آگهی
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</h3>
+			</div>
+			<div class="modal-body">
+				<?php
+				$report = new Reports();
+				$report->car_id = $car->id;
+				$this->renderPartial('_report_car',['model' => $report])
+				?>
 			</div>
 		</div>
 	</div>

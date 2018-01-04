@@ -300,6 +300,12 @@ class Cars extends CActiveRecord
         return $this->brand && $this->model?"{$this->creation_date} | {$this->brand->title}{$separator} {$this->model->title}":null;
     }
 
+    public function getRawTitle()
+    {
+        $separator = Yii::app()->language == 'fa_ir'?'،':',';
+        return $this->brand && $this->model?"{$this->creation_date} | {$this->brand->title}{$separator} {$this->model->title}":null;
+    }
+
 
     /**
      * Returns create advertise count in last month

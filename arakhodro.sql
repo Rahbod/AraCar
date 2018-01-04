@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50616
 File Encoding         : 65001
 
-Date: 2018-01-04 17:12:41
+Date: 2018-01-04 20:02:22
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -66,33 +66,33 @@ CREATE TABLE `ym_admin_role_permissions` (
   PRIMARY KEY (`id`),
   KEY `role_id` (`role_id`),
   CONSTRAINT `ym_admin_role_permissions_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `ym_admin_roles` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1695 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1717 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
 
 -- ----------------------------
 -- Records of ym_admin_role_permissions
 -- ----------------------------
-INSERT INTO `ym_admin_role_permissions` VALUES ('1673', '2', 'base', 'TagsController', 'index,create,update,admin,delete,list');
-INSERT INTO `ym_admin_role_permissions` VALUES ('1674', '2', 'admins', 'AdminsDashboardController', 'index');
-INSERT INTO `ym_admin_role_permissions` VALUES ('1675', '2', 'admins', 'AdminsManageController', 'index,views,create,update,admin,sessions,removeSession,changePass,delete');
-INSERT INTO `ym_admin_role_permissions` VALUES ('1676', '2', 'admins', 'AdminsRolesController', 'create,update,admin,delete');
-INSERT INTO `ym_admin_role_permissions` VALUES ('1677', '2', 'car', 'CarBrandsController', 'index,create,update,admin,delete,upload,deleteUpload,models,modelAdd,modelEdit,modelDelete,modelDetailAdd,modelDetailEdit,modelDetailDelete,order,uploadModelImage,deleteUploadModelImage');
-INSERT INTO `ym_admin_role_permissions` VALUES ('1678', '2', 'car', 'CarManageController', 'index,create,update,admin,recycleBin,restore,delete,changeStatus');
-INSERT INTO `ym_admin_role_permissions` VALUES ('1679', '2', 'contact', 'ContactDepartmentController', 'index,create,update,admin,delete,deleteSelected');
-INSERT INTO `ym_admin_role_permissions` VALUES ('1680', '2', 'contact', 'ContactMessagesController', 'index,create,update,admin,delete,deleteSelected,view');
-INSERT INTO `ym_admin_role_permissions` VALUES ('1681', '2', 'contact', 'ContactReceiversController', 'index,create,update,admin,delete');
-INSERT INTO `ym_admin_role_permissions` VALUES ('1682', '2', 'contact', 'ContactRepliesController', 'index,create,update,admin,delete,deleteSelected');
-INSERT INTO `ym_admin_role_permissions` VALUES ('1683', '2', 'lists', 'ListsManageController', 'index,create,update,admin,delete,options,addOption,editOption');
-INSERT INTO `ym_admin_role_permissions` VALUES ('1684', '2', 'map', 'MapManageController', 'create,update');
-INSERT INTO `ym_admin_role_permissions` VALUES ('1685', '2', 'pages', 'PageCategoriesManageController', 'index,view,create,update,admin,delete');
-INSERT INTO `ym_admin_role_permissions` VALUES ('1686', '2', 'pages', 'PagesManageController', 'index,create,update,admin,delete');
-INSERT INTO `ym_admin_role_permissions` VALUES ('1687', '2', 'places', 'PlacesCitiesController', 'create,update,admin,delete');
-INSERT INTO `ym_admin_role_permissions` VALUES ('1688', '2', 'places', 'PlacesCountriesController', 'create,update,admin,delete,index,view');
-INSERT INTO `ym_admin_role_permissions` VALUES ('1689', '2', 'places', 'PlacesTownsController', 'create,update,admin,delete,index,view');
-INSERT INTO `ym_admin_role_permissions` VALUES ('1690', '2', 'setting', 'SettingManageController', 'gatewaySetting,changeSetting,socialLinks');
-INSERT INTO `ym_admin_role_permissions` VALUES ('1691', '2', 'slideshow', 'SlideShowManageController', 'create,update,admin,delete,upload,deleteUpload');
-INSERT INTO `ym_admin_role_permissions` VALUES ('1692', '2', 'users', 'UsersManageController', 'index,view,create,update,admin,delete,userTransactions,transactions,dealerships,createDealership,updateDealership,upload,deleteUpload,dealershipRequests,dealershipRequest,deleteDealershipRequest');
-INSERT INTO `ym_admin_role_permissions` VALUES ('1693', '2', 'users', 'UsersPlansController', 'update,admin');
-INSERT INTO `ym_admin_role_permissions` VALUES ('1694', '2', 'users', 'UsersRolesController', 'create,update,admin,delete');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1695', '2', 'base', 'TagsController', 'index,create,update,admin,delete,list');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1696', '2', 'admins', 'AdminsDashboardController', 'index');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1697', '2', 'admins', 'AdminsManageController', 'index,views,create,update,admin,sessions,removeSession,changePass,delete');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1698', '2', 'admins', 'AdminsRolesController', 'create,update,admin,delete');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1699', '2', 'car', 'CarBrandsController', 'index,create,update,admin,delete,upload,deleteUpload,models,modelAdd,modelEdit,modelDelete,modelDetailAdd,modelDetailEdit,modelDetailDelete,order,uploadModelImage,deleteUploadModelImage');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1700', '2', 'car', 'CarManageController', 'index,create,update,admin,recycleBin,restore,delete,changeStatus,problemReports');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1701', '2', 'contact', 'ContactDepartmentController', 'index,create,update,admin,delete,deleteSelected');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1702', '2', 'contact', 'ContactMessagesController', 'index,create,update,admin,delete,deleteSelected,view');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1703', '2', 'contact', 'ContactReceiversController', 'index,create,update,admin,delete');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1704', '2', 'contact', 'ContactRepliesController', 'index,create,update,admin,delete,deleteSelected');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1705', '2', 'lists', 'ListsManageController', 'index,create,update,admin,delete,options,addOption,editOption');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1706', '2', 'map', 'MapManageController', 'create,update');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1707', '2', 'pages', 'PageCategoriesManageController', 'index,view,create,update,admin,delete');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1708', '2', 'pages', 'PagesManageController', 'index,create,update,admin,delete');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1709', '2', 'places', 'PlacesCitiesController', 'create,update,admin,delete');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1710', '2', 'places', 'PlacesCountriesController', 'create,update,admin,delete,index,view');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1711', '2', 'places', 'PlacesTownsController', 'create,update,admin,delete,index,view');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1712', '2', 'setting', 'SettingManageController', 'gatewaySetting,changeSetting,socialLinks');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1713', '2', 'slideshow', 'SlideShowManageController', 'create,update,admin,delete,upload,deleteUpload');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1714', '2', 'users', 'UsersManageController', 'index,view,create,update,admin,delete,userTransactions,transactions,dealerships,createDealership,updateDealership,upload,deleteUpload,dealershipRequests,dealershipRequest,deleteDealershipRequest');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1715', '2', 'users', 'UsersPlansController', 'update,admin');
+INSERT INTO `ym_admin_role_permissions` VALUES ('1716', '2', 'users', 'UsersRolesController', 'create,update,admin,delete');
 
 -- ----------------------------
 -- Table structure for ym_brands
@@ -223,7 +223,7 @@ CREATE TABLE `ym_cars` (
 INSERT INTO `ym_cars` VALUES ('2', '1512314228', '1514294500', '1514106725', '45', '10', '112', '45', '48', '16', '16', '227', '35', '33', '12', '8', '0', '150000000', '150000', '-1', 'میدان صدوقی', '', '2014', '80', '73', null, null, '0');
 INSERT INTO `ym_cars` VALUES ('3', '1512319875', '1514311905', '1515175547', '45', '10', '111', '46', '48', '21', '21', '306', '37', '33', '12', '8', '2', '-1', '153000', '-1', 'میدان صدوقی', '', '2017', '80', '54', 'رایگان', '{\"adsCount\":\"3\",\"adsDuration\":\"10\",\"adsImageCount\":\"3\"}', '0');
 INSERT INTO `ym_cars` VALUES ('4', '1513442142', '1514106715', '1514106725', '88', '14', '29', '42', '39', '15', '8', '117', '35', '34', '12', '8', '0', '210000000', '150000', '-1', 'سعادت آباد', '', '2015', '78', '4', null, null, '0');
-INSERT INTO `ym_cars` VALUES ('5', '1513617718', '1514396214', '1514106725', '89', '10', '111', '40', '39', '15', '4', '60', '35', '34', '12', '8', '0', '450000000', '15000', '1', 'اصفهان', 'فروشنده واقعی - فقظ به خریدار واقعی می فروشم- مشابه صفر - فیس جدید - بیمه بدنه یکساله- کیت amg', '2015', '77', '2', null, null, '0');
+INSERT INTO `ym_cars` VALUES ('5', '1513617718', '1514396214', '1514106725', '89', '10', '111', '40', '39', '15', '4', '60', '35', '34', '12', '8', '0', '450000000', '15000', '1', 'اصفهان', 'فروشنده واقعی - فقظ به خریدار واقعی می فروشم- مشابه صفر - فیس جدید - بیمه بدنه یکساله- کیت amg', '2015', '77', '21', null, null, '0');
 INSERT INTO `ym_cars` VALUES ('6', '1514019290', '1514396212', '1514106725', '89', '33', '211', '40', '40', '15', '4', '60', '35', '34', '11', '8', '0', '205000000', '0', '1', 'اصفهان', 'خودروی مورد نظر صفر می باشد', '2017', '77', '1', null, null, '0');
 INSERT INTO `ym_cars` VALUES ('11', '1514213882', '1514311893', '1515175480', '45', '12', '21', '47', '46', '20', '8', '123', '37', '33', '12', '8', '1', '{\"price\":\"150000000\",\"totalPrice\":\"150000000\",\"downPayment\":\"70000000\",\"downPaymentSecondary\":\"\",\"monthlyPayment\":\"30000000\",\"numberOfInstallment\":\"3\",\"numberOfMonth\":\"6\",\"deliveryInDays\":\"\",\"deliveryInFewDays\":\"5\"}', '100000', '-1', 'بلوار فرامرزی', 'ماشین بسیار زیبا و سالم است.\r\nضبط صوت پایونیر به همراه 4 باند 6975', '2014', '78', '0', 'رایگان', '{\"adsCount\":\"3\",\"adsDuration\":\"10\",\"adsImageCount\":\"3\"}', '0');
 
@@ -364,7 +364,7 @@ CREATE TABLE `ym_counter_users` (
 -- ----------------------------
 -- Records of ym_counter_users
 -- ----------------------------
-INSERT INTO `ym_counter_users` VALUES ('837ec5754f503cfaaee0929fd48974e7', '1515073337');
+INSERT INTO `ym_counter_users` VALUES ('837ec5754f503cfaaee0929fd48974e7', '1515083468');
 INSERT INTO `ym_counter_users` VALUES ('f528764d624db129b32c21fbca0cb8d6', '1515011751');
 
 -- ----------------------------
@@ -1840,6 +1840,28 @@ INSERT INTO `ym_plans` VALUES ('1', 'رایگان', '{\"dealership\":{\"adsCount
 INSERT INTO `ym_plans` VALUES ('2', 'برنزی', '{\"dealership\":{\"adsCount\":\"10\",\"adsDuration\":\"20\",\"adsImageCount\":\"5\",\"price\":\"500000\"},\"user\":{\"adsCount\":\"3\",\"adsDuration\":\"15\",\"adsImageCount\":\"4\",\"price\":\"50000\"}}', '1');
 INSERT INTO `ym_plans` VALUES ('3', 'نقره ای', '{\"dealership\":{\"adsCount\":\"12\",\"adsDuration\":\"20\",\"adsImageCount\":\"6\",\"price\":\"700000\"},\"user\":{\"adsCount\":\"2\",\"adsDuration\":\"8\",\"adsImageCount\":\"5\",\"price\":\"70000\"}}', '1');
 INSERT INTO `ym_plans` VALUES ('4', 'طلایی آرا', '{\"dealership\":{\"adsCount\":\"50\",\"adsDuration\":\"30\",\"adsImageCount\":\"5\",\"price\":\"250000\"},\"user\":{\"adsCount\":\"20\",\"adsDuration\":\"30\",\"adsImageCount\":\"5\",\"price\":\"50000\"}}', '1');
+
+-- ----------------------------
+-- Table structure for ym_reports
+-- ----------------------------
+DROP TABLE IF EXISTS `ym_reports`;
+CREATE TABLE `ym_reports` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `car_id` int(10) unsigned NOT NULL,
+  `reason` varchar(255) COLLATE utf8_persian_ci NOT NULL,
+  `description` varchar(512) COLLATE utf8_persian_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `car_id` (`car_id`),
+  CONSTRAINT `ym_reports_ibfk_1` FOREIGN KEY (`car_id`) REFERENCES `ym_cars` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
+
+-- ----------------------------
+-- Records of ym_reports
+-- ----------------------------
+INSERT INTO `ym_reports` VALUES ('10', '5', 'اطلاعات تماس آگهی مشکل دارد.', 'sdf');
+INSERT INTO `ym_reports` VALUES ('11', '5', 'آگهی در برند یا مدل نامناسب قرار گرفته است.', 'faf');
+INSERT INTO `ym_reports` VALUES ('12', '5', 'اطلاعات تماس آگهی مشکل دارد.', 'asfd');
+INSERT INTO `ym_reports` VALUES ('13', '5', 'دلیل دیگر ...', 'asfad');
 
 -- ----------------------------
 -- Table structure for ym_site_setting

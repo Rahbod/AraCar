@@ -679,7 +679,8 @@ a:focus{
 .by-brand .text-field{
     margin: 15px 0;
 }
-input[type="checkbox"]{
+input[type="checkbox"],
+input[type="radio"] {
     display: none;
 }
 input[type="radio"] + label,
@@ -3215,6 +3216,13 @@ footer .nav li:last-of-type a{
 .page-header.dealer-page .top p:last-of-type{
     margin-bottom: 0;
 }
-.auth-tab .select-picker{
-    pa
+.auth-tab .form-group .select-picker{
+    padding: 0;
+    border: none !important;
+}
+.auth-tab .form-group .select-picker > button {
+    border-radius: 50px !important;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    box-shadow: none !important;
 }

@@ -374,6 +374,18 @@ class CarPublicController extends Controller
                 $phone = "{$firstPart} {$secPart} {$thirdPart} {$forthPart}";
                 $this->sendJson(['status' => true, 'phone' => $phone]);
                 break;
+            case 'report':
+                if(!isset($_POST['hash']))
+                    $this->sendJson(['status' => false]);
+                $id = base64_decode($_POST['hash']);
+                $model = new Reports();
+                if(isset($_POST['Reports']))
+                    $model->attributes= $_POST['Reports'];
+                $model->car_id = $id;
+                if($model->save())
+                    $this->sendJson(['status' => true, 'message' => "با تشکر، گزارش شما با موفقیت ثبت گردید و بررسی خواهد شد."]);
+                $this->sendJson(['status' => false, 'message' => "مشکل در ثبت گزارش! لطفا مجددا تلاش فرمایید."]);
+                break;
             default:
                 $this->sendJson(['status' => false]);
         }

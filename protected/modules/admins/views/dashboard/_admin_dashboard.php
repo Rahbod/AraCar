@@ -5,12 +5,14 @@ $permissions = [
     'contact' => false,
     'pendingCars' => false,
     'dealerRequests' => false,
+    'carReports' => false,
     'statistics' => false,
 ];
 if(Yii::app()->user->roles == 'admin'){
     $permissions['contact'] = true;
     $permissions['pendingCars'] = true;
     $permissions['dealerRequests'] = true;
+    $permissions['carReports'] = true;
     $permissions['statistics'] = true;
 }
 ?>
@@ -47,7 +49,7 @@ if(Yii::app()->user->roles == 'admin'){
                     <p>درخواست ثبت نمایشگاه</p>
                 </div>
                 <div class="icon">
-                    <i class="ion ion-android-apps"></i>
+                    <i class="ion ion-android-car"></i>
                 </div>
                 <a href="<?php echo $this->createUrl('/users/manage/dealershipRequests');?>" class="small-box-footer">مشاهده درخواست ها <i class="fa fa-arrow-circle-left"></i></a>
             </div>
@@ -68,9 +70,30 @@ if(Yii::app()->user->roles == 'admin'){
                     <p>پیام خوانده نشده</p>
                 </div>
                 <div class="icon">
-                    <i class="ion ion-android-apps"></i>
+                    <i class="ion ion-headphone"></i>
                 </div>
                 <a href="<?php echo $this->createUrl('/contact/messages/admin');?>" class="small-box-footer">مشاهده پیام ها <i class="fa fa-arrow-circle-left"></i></a>
+            </div>
+        </div>
+        <?php
+    endif;
+    ?>
+
+    <!-- Car Reports-->
+    <?php
+    if($permissions['carReports']):
+        ?>
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-fuchsia">
+                <div class="inner">
+                    <h3><?php echo $statistics['carReports'];?></h3>
+                    <p>گزارشات اشکال در آگهی</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-ios-flag"></i>
+                </div>
+                <a href="<?php echo $this->createUrl('/car/manage/problemReports');?>" class="small-box-footer">مشاهده گزارشات <i class="fa fa-arrow-circle-left"></i></a>
             </div>
         </div>
         <?php

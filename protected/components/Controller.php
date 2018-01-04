@@ -135,6 +135,7 @@ class Controller extends AuthController
                     'items' => array(
                         array('label' => '<i class="fa fa-circle-o"></i>مدیریت آگهی های ماشین', 'url' => Yii::app()->createUrl('/car/manage/admin/')),
                         array('label' => '<i class="fa fa-circle-o"></i>مدیریت برندها', 'url' => Yii::app()->createUrl('/car/brands/admin')),
+                        array('label' => '<i class="fa fa-circle-o"></i>گزارشات اشکال در آگهی', 'url' => Yii::app()->createUrl('/car/manage/problemReports')),
                     )
                 ),
                 array(

@@ -28,7 +28,7 @@ class CarManageController extends Controller
     {
         return array(
             'backend' => array(
-                'index', 'create', 'update', 'admin', 'recycleBin', 'restore', 'delete', 'changeStatus'
+                'index', 'create', 'update', 'admin', 'recycleBin', 'restore', 'delete', 'changeStatus', 'problemReports', 'deleteReport'
             )
         );
     }
@@ -167,6 +167,14 @@ class CarManageController extends Controller
             $this->redirect(isset($_POST['returnUrl'])?$_POST['returnUrl']:array('recycleBin'));
     }
 
+    public function actionProblemReports()
+    {
+        $model = new Reports();
+        if(isset($_GET['Reports']))
+            $model->attributes = $_GET['Reports'];
+        $this->render('problem_reports', array('model' => $model));
+    }
+
     /**
      * Returns the data model based on the primary key given in the GET variable.
      * If the data model is not found, an HTTP exception will be raised.
@@ -213,5 +221,12 @@ class CarManageController extends Controller
             'status' => false,
             'message' => 'خطا در انجام عملیات.'
         ));
+    }
+
+    public function actionDeleteReport($id)
+    {
+        $model = Reports::model()->findByPk($id);
+        if($model !== null)
+            $model->delete();
     }
 }
