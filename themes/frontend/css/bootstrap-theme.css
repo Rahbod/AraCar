@@ -3137,6 +3137,7 @@ footer .nav li:last-of-type a{
     position: absolute;
     direction: rtl;
     min-width: 430px;
+    color: #888;
 }
 .dealer-ad-details {
     float: left;
@@ -3147,10 +3148,10 @@ footer .nav li:last-of-type a{
     position: absolute;
     bottom: 25px;
     font-size: 13px;
-    color: #aaa;
+    color: #888;
 }
 .dealer-ad-details{
-    color: #aaa;
+    color: #888;
     position: absolute;
     top: 25px;
     left: 15px;
@@ -3159,11 +3160,12 @@ footer .nav li:last-of-type a{
     width: 152px;
 }
 .dealer-phone{
-    color: #aaa;
+    color: #888;
+    font-size: 14px;
+    font-weight: 500;
     position: absolute;
     bottom: 25px;
     left: 15px;
     float: left;
     direction: rtl;
-    width: 152px;
 }
