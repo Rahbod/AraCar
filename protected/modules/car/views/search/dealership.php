@@ -1,24 +1,21 @@
 <?php
 /* @var $this CarManageController */
-/* @var $model Cars */
-/* @var $user Users */
+/* @var $model Users */
+/* @var $filters [] */
 /* @var $form CActiveForm */
-/* @var $images UploadedFiles|[] */
+/* @var $dataProvider CActiveDataProvider */
 ?>
 
-
-<div class="page-header">
+<div class="page-header dealer-page">
 	<div class="top">
 		<div class="center-box">
 			<div class="row">
 				<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12"></div>
 				<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-					<img src="<?= Yii::app()->baseUrl . '/uploads/brands/' . $brand->logo;?>" class="brand-logo">
-					<?php if(isset($model)):?>
-						<h2 class="brand-name"><?= $brand->title?><span> | <?= $model->title?></span><small><b><?= strtoupper(str_replace('-', ' ', $brand->slug))?></b> | <?= str_replace('-', ' ', $model->slug)?></small></h2>
-					<?php else:?>
-						<h2 class="brand-name"><?= $brand->title?><small><b><?= strtoupper(str_replace('-', ' ', $brand->slug))?></b></small></h2>
-					<?php endif;?>
+					<?php if($this->pageLogo):?><img src="<?= $this->pageLogo ?>" class="brand-logo" alt="<?= strip_tags($this->pageHeader) ?>"><?php endif; ?>
+					<h2 class="brand-name"><?php echo $this->pageHeader ?><small style="font-size:11px;font-weight: normal !important;padding-right:5px;">[<?= JalaliDate::differenceTime($model->create_date) ?>]</small></h2>
+					<p><?php echo $this->pageDescription ?></p>
+					<p><?php echo Controller::parseNumbers($model->phone) ?></p>
 				</div>
 			</div>
 		</div>
@@ -44,7 +41,7 @@
 	<div class="center-box">
 		<div class="row">
 			<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-				<?php $this->renderPartial('_filter_box', array('filters' => $filters, 'selectedBrand' => $brand));?>
+				<?php $this->renderPartial('_filter_box', array('filters' => $filters));?>
 			</div>
 			<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
 				<?php $this->widget('zii.widgets.CListView', array(
@@ -62,8 +59,6 @@
 						'options' => array('history' => false, 'triggerPageTreshold' => 1, 'trigger'=>'Load more'),
 					)
 				)); ?>
-				<!--                <a href="#" class="load-more">موارد بیشتر</a>-->
-				<!--                <a href="#" class="load-more on-loading">در حال بارگذاری</a>-->
 			</div>
 		</div>
 	</div>

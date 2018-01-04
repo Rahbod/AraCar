@@ -4,7 +4,7 @@
 ?>
 
 <div class="header<?= $this->layout == '//layouts/inner' || $this->layout == '//layouts/panel'?' inner-page':'' ?>">
-    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+    <div class="col-lg-7 col-md-8 col-sm-8 col-xs-12">
         <div class="row">
             <ul class="nav navbar-nav">
                 <?php
@@ -21,17 +21,17 @@
                 endif;
                 ?>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">برند</a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">برند <i class="caret"></i></a>
                     <div class="dropdown-menu">
                         <ul class="linear-menu">
                             <?php foreach($this->brands as $brand):?>
-                                <li><a href="<?= $this->createUrl('/car/brand/' . $brand->slug)?>"><?= $brand->title?> <small>( <?= Controller::parseNumbers(number_format($brand->carsCount)) ?> )</small></a></li>
+                                <li><a href="<?= $this->createUrl('/car/brand/' . $brand->slug)?>"><?= $brand->title?><?php if($brand->carsCount>0):?> <small><b>( <?= Controller::parseNumbers(number_format($brand->carsCount)) ?> )</b></small><?php endif; ?></a></li>
                             <?php endforeach;?>
                         </ul>
                     </div>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">شاسی</a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">شاسی <i class="caret"></i></a>
                     <div class="dropdown-menu">
                         <ul class="linear-menu">
                             <?php foreach($this->chassis as $chassis):?>
@@ -41,7 +41,7 @@
                     </div>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">قیمت</a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">قیمت <i class="caret"></i></a>
                     <div class="dropdown-menu price-menu">
                         <ul class="linear-menu">
                             <!--<li><a href="--><?//= $this->createUrl('/car/search/all?price=0-5')?><!--">تا 5 میلیون تومان</a></li>-->
@@ -54,7 +54,7 @@
                     </div>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">موارد خاص</a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">موارد خاص <i class="caret"></i></a>
                     <div class="dropdown-menu special-menu">
                         <ul class="linear-menu">
                             <li><a href="<?= $this->createUrl('/car/search/all?plate=' . str_replace(' ', '-', 'منطقه آزاد') . '&def=plate')?>">منطقه آزاد</a></li>
@@ -62,7 +62,6 @@
                         </ul>
                     </div>
                 </li>
-                <li><a href="<?= $this->createUrl('/research') ?>">بررسی خودرو</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">نمایشگاه <i class="caret"></i></a>
                     <div class="dropdown-menu special-menu">
@@ -72,11 +71,12 @@
                         </ul>
                     </div>
                 </li>
+                <li><a href="<?= $this->createUrl('/research') ?>">بررسی خودرو</a></li>
 <!--                <li><a href="#">قیمت صفر</a></li>-->
             </ul>
         </div>
     </div>
-    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+    <div class="col-lg-5 col-md-4 col-sm-4 col-xs-12">
         <a href="<?= Yii::app()->getBaseUrl(true) ?>">
             <div class="logo-box">
                 <img src="<?= Yii::app()->theme->baseUrl.'/images/logo.png' ?>">

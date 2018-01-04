@@ -13,10 +13,7 @@ if(Yii::app()->request->getQueryString())
     <div class="context collapse in" style="padding: 15px 0">
         <div class="range-slider-container">
             <input type="text" class="text-field dealership-name" value="<?= isset($_GET['name'])?$_GET['name']:'' ?>" placeholder="نام نمایشگاه را وارد کنید">
-            <a href="<?= $this->createFilterUrl('name', '')?>" class="btn-blue center-block text-center search-form">
-                <i class="icon-search"></i>
-                جستجو
-            </a>
+            <a href="<?= $this->createFilterUrl('name', '')?>" class="btn-blue center-block text-center search-form">جستجو</a>
         </div>
     </div>
 </div>

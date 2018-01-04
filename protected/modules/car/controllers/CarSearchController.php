@@ -148,6 +148,10 @@ class CarSearchController extends Controller
 
         // list of dealerships
         if(!$id && !$title){
+            $this->pageTitle = 'جستجوی نمایشگاه ها';
+            $this->pageHeader = 'جستجوی نمایشگاه ها';
+            $this->pageDescription = 'با استفاده از فیلتر ها نمایشگاه موردنظر خود را جستجو کنید.';
+
             $filters = $this->getFilters();
             $model = new Users('search');
             if(isset($_GET['Users'])){
@@ -163,7 +167,22 @@ class CarSearchController extends Controller
         if($id){
             /* @var $model Users */
             $model = Users::model()->findByPk($id);
-            $this->render('dealership', compact('model'));
+            $model->loadPropertyValues();
+            $this->pageTitle = strpos('نمایشگاه',$model->dealership_name,0) ===0?$model->dealership_name:'نمایشگاه '.$model->dealership_name;
+            $this->pageHeader = strpos('نمایشگاه',$model->dealership_name,0) ===0?$model->dealership_name:'نمایشگاه '.$model->dealership_name;
+            $this->pageDescription = 'نشانی: '.strip_tags($model->userDetails->address);
+            $this->pageLogo = $model->userDetails->avatar && file_exists(Yii::getPathOfAlias('webroot.uploads').'/users/'.$model->userDetails->avatar)?Yii::app()->getBaseUrl(true).'/uploads/users/'.$model->userDetails->avatar:false;
+
+            $filters = $this->getFilters();
+
+            $criteria = Cars::duplicateQuery();
+            $criteria->compare('user_id', $id, true);
+            $criteria = $this->applyFilter($criteria, $filters);
+            $dataProvider = new CActiveDataProvider('Cars', [
+                'criteria' => $criteria,
+            ]);
+
+            $this->render('dealership', compact('model', 'dataProvider', 'filters'));
             Yii::app()->end();
         }
     }

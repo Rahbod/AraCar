@@ -6,8 +6,7 @@
 /* @var $filters array */
 
 $this->breadcrumbs = array(
-	'داشبورد' => array('/dashboard'),
-	'ویرایش خودرو'
+	'جستجوی نمایشگاه'
 );
 $provider = $model->searchDealers();
 ?>

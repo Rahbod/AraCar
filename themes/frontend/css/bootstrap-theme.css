@@ -3102,14 +3102,17 @@ footer .nav li:last-of-type a{
     overflow: hidden;
     position: relative;
     height: auto;
+    background-color: #f9f9f9;
+    margin-bottom: 2px;
 }
 .dealer-item .photo {
     position: absolute;
-    right: 0;
+    right: 15px;
     top: 15px;
     width: 150px;
     height: 100px;
     margin-left: 15px;
+    background-color: #eee;
 }
 .dealer-item .photo img {
     height: 100px !important;
@@ -3120,7 +3123,7 @@ footer .nav li:last-of-type a{
     padding: 0;
     text-align: right;
     height: 100px;
-    padding-right: 165px;
+    padding-right: 180px;
 }
 .dealer-item .detail h3 {
     font-size: 13px;
@@ -3164,8 +3167,51 @@ footer .nav li:last-of-type a{
     font-size: 14px;
     font-weight: 500;
     position: absolute;
-    bottom: 25px;
+    bottom: 20px;
     left: 15px;
     float: left;
     direction: rtl;
+}
+
+.navbar-nav .caret{
+    width: 8px;
+    height: 4px;
+    border: none !important;
+    background: url("../svg/arrow-down-sign-to-navigate.svg") no-repeat scroll center transparent;
+    background-size: 8px;
+    -webkit-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -ms-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+}
+.navbar-nav .open .caret{
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+.page-header.dealer-page .top .brand-logo{
+    max-height: 82px;
+}
+.page-header.dealer-page .top .brand-name{
+    font-size: 20px;
+    line-height: 25px;
+    margin-bottom: 15px;
+}
+.page-header.dealer-page .top .brand-name small{
+    display: inline-block;
+    float: left;
+}
+.page-header.dealer-page .top p{
+    overflow: hidden;
+    padding-right: 15px;
+    font-size: 13px;
+    color: #777;
+    white-space: nowrap;
+    margin-bottom: 5px;
+}
+.page-header.dealer-page .top p:last-of-type{
+    margin-bottom: 0;
 }
