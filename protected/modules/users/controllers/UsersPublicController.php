@@ -109,7 +109,7 @@ class UsersPublicController extends Controller
         $criteria = new CDbCriteria();
         $criteria->compare('user_id', $user->id);
         $alerts = CarAlerts::model()->findAll($criteria);
-
+        
         $this->render('dashboard', compact('user', 'sells', 'alerts'));
     }
 

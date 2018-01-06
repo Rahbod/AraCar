@@ -11,9 +11,9 @@ $imagePath = Yii::getPathOfAlias('webroot').'/uploads/cars/';
     <?php $this->renderPartial('//partial-views/_loading') ?>
     <div class="item-image">
         <?php
-        if($data->car->mainImage && file_exists($imagePath.$data->car->mainImage->filename)):
+        if($data->car->mainImage && file_exists($imagePath.'thumbs/180x140/'.$data->car->mainImage->filename)):
         ?>
-            <img src="<?= Yii::app()->getBaseUrl(true).'/uploads/cars/'.$data->car->mainImage->filename ?>">
+            <img src="<?= Yii::app()->getBaseUrl(true).'/uploads/cars/thumbs/180x140/'.$data->car->mainImage->filename ?>">
         <?php
         else:
             ?>

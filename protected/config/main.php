@@ -109,7 +109,7 @@ return array(
 				'<action:(logout|dashboard|googleLogin|transactions|login|register|changePassword|profile|upgradePlan)>' => 'users/public/<action>',
 				'<action:(buyPlan|verifyPlan)>/<id:\d+>' => 'users/public/<action>',
 				'car/<action:(brand)>/<title:.*>' => 'car/search/<action>',
-				'users/<id:\d+>'=>'users/public/viewProfile',
+//				'users/<id:\d+>'=>'users/public/viewProfile',
 				'<module:\w+>/<id:\d+>'=>'<module>/manage/view',
 				'<module:\w+>/<controller:\w+>'=>'<module>/<controller>/index',
 				'<controller:\w+>/<action:\w+>/<id:\d+>/<title:(.*)>'=>'<controller>/<action>',

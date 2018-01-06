@@ -57,8 +57,7 @@ $(document).ready(function() {
         }
     }).on('click', '.advertise-info-box .image-container .image-slider-item', function (e) {
         e.preventDefault();
-        var src = $(this).find('img').attr('src');
-
+        var src = $(this).find('img').data('origin') ? $(this).find('img').data('origin') : $(this).find('img').attr('src');
         $(this).parents('.image-container').find('.main-image-container img').attr('src', src);
     }).on('click', '.advertise-info-box #show-full-phone', function (e) {
         e.preventDefault();
@@ -110,12 +109,12 @@ $(document).ready(function() {
         $(this).numericFormat();
     }).on("click", function (e) {
         // Hidden auto complete result box
-        if($(e.target).hasClass("autocomplete-item") || $(e.target).hasClass("auto-complete"))
+        if ($(e.target).hasClass("autocomplete-item") || $(e.target).hasClass("auto-complete"))
             return;
         else
             $('.autocomplete-result').addClass('hidden');
     }).on("focus", ".auto-complete", function () {
-        if($('.autocomplete-result ul li').length != 0)
+        if ($('.autocomplete-result ul li').length != 0)
             $('.autocomplete-result').removeClass('hidden');
     });
 

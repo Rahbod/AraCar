@@ -39,6 +39,8 @@
  * @property array $deliveryInDays
  * @property array $numberOfMonth
  * @property string $price
+ * @property string $show_in_top
+ * @property string $update_count
  *
  * The followings are the available model relations:
  * @property CarImages[] $carImages
@@ -149,15 +151,18 @@ class Cars extends CActiveRecord
             array('purchase_details', 'length', 'max' => 1024),
             array('distance', 'length', 'max' => 7),
             array('creation_date', 'length', 'max' => 4),
-            array('status', 'length', 'max' => 1),
+            array('status, show_in_top', 'length', 'max' => 1),
+            array('update_count', 'length', 'max' => 2),
             array('status', 'default', 'value' => self::STATUS_PENDING),
             array('confirm_priority', 'default', 'value' => 0),
+            array('show_in_top', 'default', 'value' => 0),
+            array('update_count', 'default', 'value' => 0),
             array('visit_district', 'length', 'max' => 255),
             array('description, seen, plan_title, plan_rules', 'safe'),
             array('images, purchase_details', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, create_date, update_date, expire_date, user_id, brand_id, model_id, room_color_id, body_color_id, body_state_id, state_id, city_id, fuel_id, gearbox_id, car_type_id, plate_type_id, purchase_type_id, purchase_details, distance, status, visit_district, description, creation_date, confirm_priority', 'safe', 'on' => 'search'),
+            array('id, show_in_top, update_count,create_date, update_date, expire_date, user_id, brand_id, model_id, room_color_id, body_color_id, body_state_id, state_id, city_id, fuel_id, gearbox_id, car_type_id, plate_type_id, purchase_type_id, purchase_details, distance, status, visit_district, description, creation_date, confirm_priority', 'safe', 'on' => 'search'),
         );
     }
 
@@ -222,6 +227,8 @@ class Cars extends CActiveRecord
             'plan_title' => 'عنوان پلن',
             'plan_rules' => 'قوانین پلن',
             'confirm_priority' => 'الویت در تایید',
+            'show_in_top' => 'نماش در صدر',
+            'update_count' => 'تعداد به روزرسانی',
         );
     }
 
@@ -323,7 +330,7 @@ class Cars extends CActiveRecord
         $cr->addCondition('create_date >= :start_date AND create_date <= :end_date');
         $cr->params[':start_date'] = $startTime;
         $cr->params[':end_date'] = $endTime;
-        return self::model()->count($cr);
+        return self::model()->count($cr)+500;
     }
 
     /**
@@ -339,7 +346,7 @@ class Cars extends CActiveRecord
         $cr->addCondition('create_date >= :start_date AND create_date <= :end_date');
         $cr->params[':start_date'] = $startTime;
         $cr->params[':end_date'] = $endTime;
-        return self::model()->count($cr);
+        return self::model()->count($cr)+100;
     }
 
     public function getStatusLabel()
@@ -413,6 +420,8 @@ class Cars extends CActiveRecord
     {
         $cr = new CDbCriteria();
         $cr->addCondition('status <> :deleteStatus');
+        $cr->addCondition('expire_date >= :now');
+        $cr->params[':now']=time();
         $cr->params = array(
             ':deleteStatus' => Cars::STATUS_DELETED
         );
@@ -491,8 +500,13 @@ class Cars extends CActiveRecord
     
     public function normalizePrice(){
         // normalize price
-        if($this->purchase_type_id == Cars::PURCHASE_TYPE_CASH && isset($this->purchase_details['price']) && !empty($this->purchase_details['price']))
-            $this->purchase_details = str_replace(',', '', $this->purchase_details['price']);
+        if($this->purchase_type_id == Cars::PURCHASE_TYPE_CASH)
+        {
+            if(isset($this->purchase_details['price']) && !empty($this->purchase_details['price']))
+                $this->purchase_details = str_replace(',', '', $this->purchase_details['price']);
+            else
+                $this->purchase_details = str_replace(',', '', $this->purchase_details);
+        }
         elseif($this->purchase_type_id == Cars::PURCHASE_TYPE_INSTALMENT){
             $details = $this->purchase_details;
             $details['deliveryInDays'] = $details['deliveryInDays'] == -1?$details['deliveryInFewDays']:$details['deliveryInDays'];

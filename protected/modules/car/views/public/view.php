@@ -59,7 +59,7 @@ $parked = UserParking::model()->findByAttributes(['user_id' => $car->user_id, 'c
 				<div class="image-container">
 					<div class="main-image-container">
 						<?php
-						if($car->mainImage && $car->mainImage->filename && file_exists($imagePath.$car->mainImage->filename)):
+						if($car->mainImage && $car->mainImage->filename && is_file($imagePath.$car->mainImage->filename)):
 						?>
 							<img src="<?= $imageUrl.$car->mainImage->filename ?>" alt="<?= $car->getTitle(false)?>">
 						<?php
@@ -73,10 +73,12 @@ $parked = UserParking::model()->findByAttributes(['user_id' => $car->user_id, 'c
 					<div class="is-carousel" data-margin="10" data-dots="1" data-nav="0" data-mouse-drag="1" data-responsive='{"1920":{"items":5},"1200":{"items":4},"992":{"items":3},"768":{"items":3},"480":{"items":2},"0":{"items":1}}'>
 						<?php
 						foreach($images as $image):
-						if($image && $image->filename && file_exists($imagePath.$image->filename)):
+						if($image && $image->filename && is_file($imagePath.$this->thumbPath.DIRECTORY_SEPARATOR.$image->filename)):
 						?>
 							<a href="#" class="image-slider-item">
-								<img src="<?= $imageUrl.$image->filename ?>" alt="<?= $car->getTitle(false)?>">
+								<img src="<?= $imageUrl.$this->thumbPath.DIRECTORY_SEPARATOR.$image->filename ?>"
+										data-origin="<?= $imageUrl.$image->filename ?>"
+									 	alt="<?= $car->getTitle(false)?>">
 							</a>
 						<?php
 						endif;
@@ -89,7 +91,7 @@ $parked = UserParking::model()->findByAttributes(['user_id' => $car->user_id, 'c
                 <div class="row col-lg-7 col-md-7 col-sm-7 col-xs-12">
                     <div class="alert alert-success view-alert hidden">
                         <p>
-                            <span>خودرو با موفقیت از پارکینگ شماmo خارج شد.</span>
+                            <span>خودرو با موفقیت از پارکینگ <شما></شما> خارج شد.</span>
                             <button type="button" class="close" data-dismiss="alert">&times;</button>
                         </p>
                     </div>
@@ -224,9 +226,9 @@ $parked = UserParking::model()->findByAttributes(['user_id' => $car->user_id, 'c
                         <a href="<?= $item->getViewUrl() ?>">
                             <div class="image-container">
 								<?php
-								if($item->mainImage && file_exists($imagePath.$item->mainImage->filename)):
+								if($item->mainImage && is_file($imagePath.$this->thumbPath.DIRECTORY_SEPARATOR.$item->mainImage->filename)):
 									?>
-									<img src="<?= Yii::app()->getBaseUrl(true).'/uploads/cars/'.$item->mainImage->filename ?>" alt="<?= $item->getTitle(false)?>">
+									<img src="<?= $imageUrl.$this->thumbPath.DIRECTORY_SEPARATOR.$item->mainImage->filename ?>" alt="<?= $item->getTitle(false)?>">
 									<?php
 								else:
 									?>

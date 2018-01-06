@@ -9,8 +9,10 @@ class CarPublicController extends Controller
     public $layout = '//layouts/public';
     public $tempPath = 'uploads/temp';
     public $imagePath = 'uploads/cars';
+    public $thumbPath = 'thumbs/180x140';
     public $brandImagePath = 'uploads/brands';
     public $modelImagePath = 'uploads/brands/models';
+    public $fileOptions = ['thumbnail' => ['width' => 180, 'height' => 140]];
 
 
     /**
@@ -52,7 +54,10 @@ class CarPublicController extends Controller
                 'modelName' => 'CarImages',
                 'attribute' => 'filename',
                 'uploadDir' => '/uploads/cars/',
-                'storedMode' => 'record'
+                'storedMode' => 'record',
+                'thumbSizes' => array(
+                    $this->thumbPath
+                )
             )
         );
     }
@@ -105,7 +110,7 @@ class CarPublicController extends Controller
             $model->confirm_priority = $user->getActivePlanRule('confirmPriority');
             if(count($model->images) > $adImageCount)
                 $model->addError('images', "تعداد تصویر مجاز {$adImageCount} می باشد.");
-            $images = new UploadedFiles($this->tempPath, $model->images);
+            $images = new UploadedFiles($this->tempPath, $model->images,$this->fileOptions);
             if($model->save()){
                 $images->move($this->imagePath);
                 Yii::app()->user->setFlash('sells-success', '<span class="icon-check"></span>&nbsp;&nbsp;خودرو با موفقیت ثبت شد و پس از تایید توسط کارشناسان در سایت قرار خواهد گرفت.');
@@ -160,17 +165,18 @@ class CarPublicController extends Controller
         $images = [];
         if($model->carImages){
             $model->oldImages = CHtml::listData($model->carImages, 'id', 'filename');
-            $images = new UploadedFiles($this->imagePath, $model->oldImages);
+            $images = new UploadedFiles($this->imagePath, $model->oldImages,$this->fileOptions);
         }
         if(isset($_POST['Cars'])){
             $model->attributes = $_POST['Cars'];
+            $model->status = Cars::STATUS_PENDING;
             $model->normalizePrice();
             // set plan details if is null
             $model->plan_title = $model->plan_title?:$user->getActivePlanTitle();
             $model->plan_rules = $model->plan_rules?:$user->getActivePlanRules(true);
             if($model->save()){
                 if(!$images){
-                    $images = new UploadedFiles($this->tempPath, $model->images);
+                    $images = new UploadedFiles($this->tempPath, $model->images,$this->fileOptions);
                     $images->move($this->imagePath);
                 }else
                     $images->update($model->oldImages, $model->images, $this->tempPath, true);
@@ -211,18 +217,22 @@ class CarPublicController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->loadModel($id);
-        if(!Yii::app()->user->isGuest && (Yii::app()->user->type == 'admin' || (Yii::app()->user->type == 'user' && Yii::app()->user->getId() == $model->user_id))){
+        $adsUpdateCount = $model->getCarPlanRule('adsUpdateCount');
+        if($adsUpdateCount - $model->update_count > 0 && !Yii::app()->user->isGuest && (Yii::app()->user->type == 'admin' || (Yii::app()->user->type == 'user' && Yii::app()->user->getId() == $model->user_id))){
             $user = Users::model()->findByPk(Yii::app()->user->getId());
             $model->plan_title = $model->plan_title?:$user->getActivePlanTitle();
             $model->plan_rules = $model->plan_rules?:$user->getActivePlanRules(true);
             $adLifeTime = $model->getCarPlanRule('adsDuration')?:$user->getActivePlanRule('adsDuration');
             $model->expire_date = time() + $adLifeTime * 24 * 60 * 60;
             $model->normalizePrice();
+            $model->update_count++;
             if($model->save(false))
                 Yii::app()->user->setFlash('sells-success', 'خودروی شما با موفقیت به روزرسانی گردید.');
             else
                 Yii::app()->user->setFlash('sells-failed', 'متاسفانه در به روزرسانی آگهی مشکلی بوجود آمده است! لطفا مجددا بررسی فرمایید.');
-        }
+        }else if($adsUpdateCount - $model->update_count <= 0)
+            Yii::app()->user->setFlash('sells-failed', 'تعداد به روزرسانی مجار به اتمام رسیده است.');
+
         $this->redirect(['/dashboard']);
     }
 

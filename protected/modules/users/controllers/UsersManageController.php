@@ -214,8 +214,10 @@ class UsersManageController extends Controller
 //        if($model->status == 'deleted')
 //            $model->delete();
 //        $model->updateByPk($model->id, array('status' => 'deleted'));
-        $avatar = new UploadedFiles($this->avatarPath, $model->userDetails->avatar);
-        $avatar->removeAll(true);
+        if($model->userDetails->avatar && is_file($this->avatarPath . $model->userDetails->avatar)){
+            $avatar = new UploadedFiles($this->avatarPath, $model->userDetails->avatar);
+            $avatar->removeAll(true);
+        }
         $model->delete();
 
         // if AJAX request (triggered by deletion via admin grid views), we should not redirect the browser

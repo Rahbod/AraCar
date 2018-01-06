@@ -3,13 +3,14 @@
 /* @var $data Cars */
 /* @var $form CActiveForm */
 $imagePath = Yii::getPathOfAlias('webroot').'/uploads/cars/';
+$adsUpdateCount = $data->getCarPlanRule('adsUpdateCount');
 ?>
 <article>
     <div class="item-image">
         <?php
-        if($data->mainImage && file_exists($imagePath.$data->mainImage->filename)):
+        if($data->mainImage && file_exists($imagePath.'thumbs/180x140/'.$data->mainImage->filename)):
             ?>
-            <img src="<?= Yii::app()->getBaseUrl(true).'/uploads/cars/'.$data->mainImage->filename ?>">
+            <img src="<?= Yii::app()->getBaseUrl(true).'/uploads/cars/thumbs/180x140/'.$data->mainImage->filename ?>">
             <?php
         else:
             ?>
@@ -27,8 +28,8 @@ $imagePath = Yii::getPathOfAlias('webroot').'/uploads/cars/';
                 <div class="item-attribute"><?= $data->bodyState->title  ?></div>
             </div>
             <div class="col-lg-3 col-md-3 item-col">
-                <div class="item-attribute">آرا دوست</div>
-<!--                <div class="item-attribute">به روزرسانی مجاز</div>-->
+                <div class="item-attribute">عضویت: <?= $data->plan_title ?></div>
+                <div class="item-attribute">به روزرسانی مجاز</div>
                 <div class="item-attribute">تاریخ درج</div>
                 <div class="item-attribute">تاریخ انقضا</div>
             </div>
@@ -38,7 +39,7 @@ $imagePath = Yii::getPathOfAlias('webroot').'/uploads/cars/';
                     if($data->status == Cars::STATUS_APPROVED) echo 'success';
                     if($data->status == Cars::STATUS_REFUSED) echo 'danger';
                     ?>"><?= $data->getStatusLabel() ?></b></div>
-<!--                <div class="item-attribute">1</div>-->
+                <div class="item-attribute"><?= Controller::parseNumbers(number_format($adsUpdateCount - $data->update_count)) ?></div>
                 <div class="item-attribute text-blue"><?= JalaliDate::date('Y/m/d', $data->create_date) ?></div>
                 <div class="item-attribute text-blue"><?= $data->expire_date?JalaliDate::date('Y/m/d', $data->expire_date):'-' ?></div>
             </div>
@@ -49,7 +50,7 @@ $imagePath = Yii::getPathOfAlias('webroot').'/uploads/cars/';
             نمایش خودرو
             <i class="addon-icon icon icon-search"></i>
         </a>
-        <a href="<?= $this->createUrl('/car/public/update/'.$data->id) ?>" class="btn btn-gray">
+        <?php if($adsUpdateCount - $data->update_count > 0): ?><a href="<?= $this->createUrl('/car/public/update/'.$data->id) ?>" class="btn btn-gray"><?php else: ?><a class="btn btn-gray" disabled="disabled" ><?php endif; ?>
             به روزرسانی
             <i class="addon-icon icon icon-refresh"></i>
         </a>

@@ -982,8 +982,23 @@ input[type="checkbox"]:checked + label::before {
     margin-top: 10px;
     height: 110px;
 }
-.advertise-info-box .image-container .main-image-container img{
+.advertise-info-box .image-container .main-image-container{
     max-width: 100%;
+    display: block;
+    text-align: center;
+    height: 350px;
+    position: relative;
+    overflow: hidden;
+}
+.advertise-info-box .image-container .main-image-container img{
+    display: inline-block;
+    max-width: 100%;
+    width: 100%;
+    max-height: 100%;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
 }
 .overflow-fix{
     overflow: hidden;
@@ -2967,6 +2982,11 @@ footer .nav li:last-of-type a{
 .list-view .no-image{
     min-height: 0;
     height: 100%;
+}
+.similar-box .no-image{
+    min-height: 140px;
+    height: 100%;
+    width: 100%;
 }
 .car-image-item{
     display: block;

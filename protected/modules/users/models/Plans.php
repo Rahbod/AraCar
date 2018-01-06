@@ -48,7 +48,7 @@ class Plans extends CActiveRecord
 				'title'=>'تعداد به روز رسانی آگهی',
 				'name'=>'adsUpdateCount',
 				'type' => 'num',
-				'addon' => 'روز'
+				'addon' => 'بار'
 			],
 			[
 				'title'=>'ارسال ایمیل و پیامک',
@@ -93,7 +93,7 @@ class Plans extends CActiveRecord
 				'title'=>'تعداد به روز رسانی آگهی',
 				'name'=>'adsUpdateCount',
 				'type' => 'num',
-				'addon' => 'روز'
+				'addon' => 'بار'
 			],
 			[
 				'title'=>'ارسال ایمیل و پیامک',

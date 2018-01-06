@@ -27,7 +27,7 @@ $cs->registerScriptFile($baseUrl.'/js/bootstrap-select.min.js', CClientScript::P
                             $this->renderPartial('//partial-views/_loading');
                             ?>
                             <div class="text-right"><?php $this->renderPartial('//partial-views/_flashMessage'); ?></div>
-                            <p style="margin-bottom: 15px">این فرم جهت ثبت درخواست شما فراهم شده و فقط توسط کارشناسان تیم باما قابل مشاهده است.</p>
+                            <p style="margin-bottom: 15px">این فرم جهت ثبت درخواست شما فراهم شده و فقط توسط کارشناسان تیم آرا قابل مشاهده است.</p>
                             <?php
                             Yii::app()->user->returnUrl = Yii::app()->request->url;
                             $form = $this->beginWidget('CActiveForm', array(
