@@ -168,7 +168,9 @@ class CarPublicController extends Controller
             $images = new UploadedFiles($this->imagePath, $model->oldImages,$this->fileOptions);
         }
         if(isset($_POST['Cars'])){
+            $exp = $model->expire_date;
             $model->attributes = $_POST['Cars'];
+            $model->expire_date = $exp;
             $model->status = Cars::STATUS_PENDING;
             $model->normalizePrice();
             // set plan details if is null
@@ -218,7 +220,7 @@ class CarPublicController extends Controller
     {
         $model = $this->loadModel($id);
         $adsUpdateCount = $model->getCarPlanRule('adsUpdateCount');
-        if($adsUpdateCount - $model->update_count > 0 && !Yii::app()->user->isGuest && (Yii::app()->user->type == 'admin' || (Yii::app()->user->type == 'user' && Yii::app()->user->getId() == $model->user_id))){
+        if($model->expire_date < time() && $adsUpdateCount - $model->update_count > 0 && !Yii::app()->user->isGuest && (Yii::app()->user->type == 'admin' || (Yii::app()->user->type == 'user' && Yii::app()->user->getId() == $model->user_id))){
             $user = Users::model()->findByPk(Yii::app()->user->getId());
             $model->plan_title = $model->plan_title?:$user->getActivePlanTitle();
             $model->plan_rules = $model->plan_rules?:$user->getActivePlanRules(true);
@@ -232,6 +234,8 @@ class CarPublicController extends Controller
                 Yii::app()->user->setFlash('sells-failed', 'متاسفانه در به روزرسانی آگهی مشکلی بوجود آمده است! لطفا مجددا بررسی فرمایید.');
         }else if($adsUpdateCount - $model->update_count <= 0)
             Yii::app()->user->setFlash('sells-failed', 'تعداد به روزرسانی مجار به اتمام رسیده است.');
+        else if($model->expire_date > time())
+            Yii::app()->user->setFlash('sells-failed', 'تا زمانیکه آگهی منقضی نشده به روزرسانی مجاز نیست.');
 
         $this->redirect(['/dashboard']);
     }

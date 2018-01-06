@@ -421,9 +421,9 @@ class Cars extends CActiveRecord
         $cr = new CDbCriteria();
         $cr->addCondition('status <> :deleteStatus');
         $cr->addCondition('expire_date >= :now');
-        $cr->params[':now']=time();
         $cr->params = array(
-            ':deleteStatus' => Cars::STATUS_DELETED
+            ':deleteStatus' => Cars::STATUS_DELETED,
+            ':now' => time()
         );
         return $cr;
     }
@@ -436,8 +436,12 @@ class Cars extends CActiveRecord
         $criteria = new CDbCriteria();
         $criteria->alias = 'car';
         $criteria->addCondition('status = :status');
-        $criteria->params[':status'] = Cars::STATUS_APPROVED;
-        $criteria->order = 't.update_date DESC';
+        $criteria->addCondition('expire_date >= :now');
+        $criteria->params = array(
+            ':status' => Cars::STATUS_APPROVED,
+            ':now' => time()
+        );
+        $cr->order = 't.show_in_top DESC, t.update_date DESC';
         return $criteria;
     }
 
@@ -449,7 +453,7 @@ class Cars extends CActiveRecord
         $cr->addCondition('model_id = :model_id OR brand_id = :brand_id');
         $cr->params[':model_id'] = $this->model_id;
         $cr->params[':brand_id'] = $this->brand_id;
-        $cr->order = 't.update_date DESC';
+        $cr->order = 't.show_in_top DESC, t.update_date DESC';
         return $activeProvider?new CActiveDataProvider('Cars', array(
             'criteria' => $cr
         )):$this->findAll($cr);
