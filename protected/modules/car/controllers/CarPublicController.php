@@ -105,9 +105,12 @@ class CarPublicController extends Controller
             $model->expire_date = time() + $adLifeTime*24*60*60;
             $model->status = Cars::STATUS_PENDING;
             $model->normalizePrice();
+            // plan rules set
             $model->plan_title = $user->getActivePlanTitle();
             $model->plan_rules = $user->getActivePlanRules(true);
             $model->confirm_priority = $user->getActivePlanRule('confirmPriority');
+            $model->show_in_top = $user->getActivePlanRule('showOnTop');
+
             if(count($model->images) > $adImageCount)
                 $model->addError('images', "تعداد تصویر مجاز {$adImageCount} می باشد.");
             $images = new UploadedFiles($this->tempPath, $model->images,$this->fileOptions);

@@ -805,10 +805,13 @@ input[type="checkbox"]:checked + label::before {
     float: right;
     position: relative;
     z-index:2;
+    background-color: #fff;
 }
 .advertising-list .advertising-item .image-container img {
     max-width: 100%;
     max-height: 100%;
+    width: 180px;
+    height: 140px;
 }
 .advertising-list .advertising-item .info-container{
     overflow: hidden;

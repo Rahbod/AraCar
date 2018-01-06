@@ -441,7 +441,7 @@ class Cars extends CActiveRecord
             ':status' => Cars::STATUS_APPROVED,
             ':now' => time()
         );
-        $cr->order = 't.show_in_top DESC, t.update_date DESC';
+        $criteria->order = 't.show_in_top DESC, t.update_date DESC';
         return $criteria;
     }
 

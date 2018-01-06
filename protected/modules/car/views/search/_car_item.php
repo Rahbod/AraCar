@@ -2,7 +2,7 @@
 /* @var $data Cars */
 $imagePath = Yii::getPathOfAlias('webroot').'/uploads/cars/';
 ?>
-<div class="advertising-item">
+<div class="advertising-item<?= $data->show_in_top?' special':'' ?>">
     <a href="<?php echo $data->getViewUrl(); ?>" class="link"></a>
     <div class="image-container">
         <?php
