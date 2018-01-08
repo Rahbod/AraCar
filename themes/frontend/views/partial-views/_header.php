@@ -85,14 +85,16 @@
             </div>
         </a>
         <?php
-        if(Yii::app()->user->isGuest || Yii::app()->user->type == 'admin'):
-            ?>
-            <a href="#" class="new-link floating-button left" data-toggle="modal" data-target="#login-modal" data-title="ثبت آگهی جدید"></a>
-            <?php
-        else:
-            ?>
-            <a href="<?= Yii::app()->createUrl('/sell') ?>" class="new-link floating-button" data-placement="bottom" title="ثبت آگهی جدید"></a>
-            <?
+        if(Yii::app()->controller->action->id != 'sell'):
+            if(Yii::app()->user->isGuest || Yii::app()->user->type == 'admin'):
+                ?>
+                <a href="#" class="new-link floating-button left" data-toggle="modal" data-target="#login-modal" data-title="ثبت آگهی جدید"></a>
+                <?php
+            else:
+                ?>
+                <a href="<?= Yii::app()->createUrl('/sell') ?>" class="new-link floating-button" data-placement="bottom" title="ثبت آگهی جدید"></a>
+                <?
+            endif;
         endif;
         ?>
     </div>
