@@ -43,14 +43,14 @@ $this->breadcrumbs =[
                         </tr>
                         </tbody>
                     </table>
-                    <?php
-                    echo CHtml::beginForm('','post',array('csrf' => true));
-                    ?>
-                        <button type="submit" name="buy" class="btn btn-success pull-left">پرداخت</button>
-                    <?php
-                    echo CHtml::endForm();
-                    ?>
                 </div>
+                <?php
+                echo CHtml::beginForm('','post',array('csrf' => true));
+                ?>
+                <button type="submit" name="buy" class="btn btn-success pull-left">پرداخت</button>
+                <?php
+                echo CHtml::endForm();
+                ?>
             <?php
             else:
                 ?>

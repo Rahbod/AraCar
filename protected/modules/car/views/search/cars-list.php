@@ -24,8 +24,10 @@
 <?php endif;?>
 <div class="content-box">
     <div class="center-box">
+        <a href="#" class="filter-btn floating-button left filter-box-trigger" data-title="فیلترها"></a>
         <div class="row">
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 filters-container">
+                <div class="close-container"><i class="menu-close-icon filter-box-trigger"></i></div>
                 <?php $this->renderPartial('_filter_box', array('filters' => $filters));?>
             </div>
             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">

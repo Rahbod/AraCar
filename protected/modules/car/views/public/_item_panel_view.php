@@ -21,19 +21,19 @@ $adsUpdateCount = $data->getCarPlanRule('adsUpdateCount');
     </div>
     <div class="item-content">
         <div class="row">
-            <div class="col-lg-6 col-md-6 item-col">
+            <div class="col-lg-6 col-md-4 item-col">
                 <div class="item-title text-blue "><?= $data->title ?></div>
                 <div class="item-attribute"><?= $data->getPrice() ?></div>
                 <div class="item-attribute"><?= Controller::parseNumbers(number_format($data->distance)) ?> کیلومتر</div>
                 <div class="item-attribute"><?= $data->bodyState->title  ?></div>
             </div>
-            <div class="col-lg-3 col-md-3 item-col">
+            <div class="col-lg-3 col-md-4 item-col">
                 <div class="item-attribute">عضویت: <?= $data->plan_title ?></div>
                 <div class="item-attribute">به روزرسانی مجاز</div>
                 <div class="item-attribute">تاریخ درج</div>
                 <div class="item-attribute">تاریخ انقضا</div>
             </div>
-            <div class="col-lg-3 col-md-3 item-col">
+            <div class="col-lg-3 col-md-4 item-col">
                 <div class="item-attribute"><b class="text-<?php
                     if($data->status == Cars::STATUS_PENDING) echo 'warning';
                     if($data->status == Cars::STATUS_APPROVED) echo 'success';

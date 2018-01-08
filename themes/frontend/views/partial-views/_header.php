@@ -5,8 +5,10 @@
 
 <div class="header<?= $this->layout == '//layouts/inner' || $this->layout == '//layouts/panel'?' inner-page':'' ?>">
     <div class="col-lg-7 col-md-8 col-sm-8 col-xs-12">
+        <div class="hidden-lg menu-trigger menu-btn"><i class="menu-icon"></i></div>
         <div class="row">
             <ul class="nav navbar-nav">
+                <div class="hidden-lg hidden-md menu-trigger"><i class="menu-close-icon"></i></div>
                 <?php
                 if(Yii::app()->user->isGuest || Yii::app()->user->type == 'admin'):
                 ?>
@@ -85,13 +87,14 @@
         <?php
         if(Yii::app()->user->isGuest || Yii::app()->user->type == 'admin'):
             ?>
-            <a href="#" class="new-link" data-toggle="modal" data-target="#login-modal" data-title="ثبت آگهی جدید"></a>
+            <a href="#" class="new-link floating-button left" data-toggle="modal" data-target="#login-modal" data-title="ثبت آگهی جدید"></a>
             <?php
         else:
             ?>
-            <a href="<?= Yii::app()->createUrl('/sell') ?>" class="new-link" data-placement="bottom" title="ثبت آگهی جدید"></a>
+            <a href="<?= Yii::app()->createUrl('/sell') ?>" class="new-link floating-button" data-placement="bottom" title="ثبت آگهی جدید"></a>
             <?
         endif;
         ?>
     </div>
+    <div class="overlay fade menu-trigger"></div>
 </div>

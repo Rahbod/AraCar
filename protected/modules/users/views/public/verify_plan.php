@@ -45,9 +45,8 @@ $this->breadcrumbs =[
                     </tr>
                     </tbody>
                 </table>
-                <a href="<?= $this->createUrl('/dashboard') ?>" class="btn btn-info pull-left">بازگشت به داشبورد</a>
             </div>
-
+            <a href="<?= $this->createUrl('/dashboard') ?>" class="btn btn-info pull-left">بازگشت به داشبورد</a>
         </div>
     </div>
 </div>

@@ -14,7 +14,7 @@ $this->breadcrumbs =[
         <h4>ارتقای حساب کاربری</h4>
         <div class="plans">
             <?php foreach($plans as $plan): $price = $plan->getPrice($user->role->role);?>
-                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
                     <div class="plan-box <?= $plan->getCssClass() ?>">
 <!--                        <div class="clearfix text-center fa-2x">-->
 <!--                            <div class="badge badge-circle badge-circle-2x">-->

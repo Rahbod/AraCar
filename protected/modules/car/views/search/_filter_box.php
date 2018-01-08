@@ -17,9 +17,9 @@ if(isset($filters['price'])) {
 }
 ?>
 <div class="filter-box">
-    <div class="head">
+    <div class="head" data-toggle="collapse" data-target="#context-2">
         <span>قیمت</span>
-        <i class="toggle-icon minus" data-toggle="collapse" data-target="#context-2"></i>
+        <i class="toggle-icon minus"></i>
     </div>
     <div class="context collapse in" aria-expanded="true" id="context-2">
         <div class="range-slider-container">
@@ -32,9 +32,9 @@ if(isset($filters['price'])) {
     </div>
 </div>
 <div class="filter-box by-brand">
-    <div class="head">
+    <div class="head" data-toggle="collapse" data-target="#context-3">
         <span>بر اساس برند</span>
-        <i class="toggle-icon minus" data-toggle="collapse" data-target="#context-3"></i>
+        <i class="toggle-icon minus"></i>
     </div>
     <div class="context collapse in" aria-expanded="true" id="context-3">
         <input type="text" class="text-field" placeholder="جستجو برند...">
@@ -56,9 +56,9 @@ if(isset($filters['price'])) {
 </div>
 <?php if(isset($selectedBrand)):?>
 <div class="filter-box">
-    <div class="head">
+    <div class="head" data-toggle="collapse" data-target="#context-8">
         <span>مدل</span>
-        <i class="toggle-icon <?= isset($filters['model']) ? 'minus' : 'plus'?>" data-toggle="collapse" data-target="#context-8"></i>
+        <i class="toggle-icon <?= isset($filters['model']) ? 'minus' : 'plus'?>"></i>
     </div>
     <div class="context collapse<?= isset($filters['model']) ? ' in' : ''?>" aria-expanded="true" id="context-8">
         <ul class="list nicescroll" data-cursorcolor="#b7b7b7" data-cursorborder="none" data-railpadding='js:{"top":0,"right":-12,"bottom":0,"left":0}' data-autohidemode="leave">
@@ -70,9 +70,9 @@ if(isset($filters['price'])) {
 </div>
 <?php endif; ?>
 <div class="filter-box">
-    <div class="head">
+    <div class="head" data-toggle="collapse" data-target="#context-1">
         <span>استان</span>
-        <i class="toggle-icon <?= isset($filters['state']) ? 'minus' : 'plus'?>" data-toggle="collapse" data-target="#context-1"></i>
+        <i class="toggle-icon <?= isset($filters['state']) ? 'minus' : 'plus'?>"></i>
     </div>
     <div class="context collapse<?= isset($filters['state']) ? ' in' : ''?>" aria-expanded="true" id="context-1">
         <ul class="list nicescroll" data-cursorcolor="#b7b7b7" data-cursorborder="none" data-railpadding='js:{"top":0,"right":-12,"bottom":0,"left":0}' data-autohidemode="leave">
@@ -83,9 +83,9 @@ if(isset($filters['price'])) {
     </div>
 </div>
 <div class="filter-box">
-    <div class="head">
+    <div class="head" data-toggle="collapse" data-target="#context-4">
         <span>شاسی</span>
-        <i class="toggle-icon <?= isset($filters['body']) ? 'minus' : 'plus'?>" data-toggle="collapse" data-target="#context-4"></i>
+        <i class="toggle-icon <?= isset($filters['body']) ? 'minus' : 'plus'?>"></i>
     </div>
     <div class="context collapse<?= isset($filters['body']) ? ' in' : ''?>" aria-expanded="true" id="context-4">
         <ul class="list nicescroll" data-cursorcolor="#b7b7b7" data-cursorborder="none" data-railpadding='js:{"top":0,"right":-12,"bottom":0,"left":0}' data-autohidemode="leave">
@@ -96,9 +96,9 @@ if(isset($filters['price'])) {
     </div>
 </div>
 <div class="filter-box">
-    <div class="head">
+    <div class="head" data-toggle="collapse" data-target="#context-5">
         <span>وضعیت خودرو</span>
-        <i class="toggle-icon <?= isset($filters['car_type']) ? 'minus' : 'plus'?>" data-toggle="collapse" data-target="#context-5"></i>
+        <i class="toggle-icon <?= isset($filters['car_type']) ? 'minus' : 'plus'?>"></i>
     </div>
     <div class="context collapse<?= isset($filters['car_type']) ? ' in' : ''?>" aria-expanded="true" id="context-5">
         <ul class="list nicescroll" data-cursorcolor="#b7b7b7" data-cursorborder="none" data-railpadding='js:{"top":0,"right":-12,"bottom":0,"left":0}' data-autohidemode="leave">
@@ -109,9 +109,9 @@ if(isset($filters['price'])) {
     </div>
 </div>
 <div class="filter-box">
-    <div class="head">
+    <div class="head" data-toggle="collapse" data-target="#context-6">
         <span>گیربکس</span>
-        <i class="toggle-icon <?= isset($filters['gearbox']) ? 'minus' : 'plus'?>" data-toggle="collapse" data-target="#context-6"></i>
+        <i class="toggle-icon <?= isset($filters['gearbox']) ? 'minus' : 'plus'?>"></i>
     </div>
     <div class="context collapse<?= isset($filters['gearbox']) ? ' in' : ''?>" aria-expanded="true" id="context-6">
         <ul class="list nicescroll" data-cursorcolor="#b7b7b7" data-cursorborder="none" data-railpadding='js:{"top":0,"right":-12,"bottom":0,"left":0}' data-autohidemode="leave">
@@ -122,9 +122,9 @@ if(isset($filters['price'])) {
     </div>
 </div>
 <div class="filter-box">
-    <div class="head">
+    <div class="head" data-toggle="collapse" data-target="#context-7">
         <span>وضعیت بدنه</span>
-        <i class="toggle-icon <?= isset($filters['body_state']) ? 'minus' : 'plus'?>" data-toggle="collapse" data-target="#context-7"></i>
+        <i class="toggle-icon <?= isset($filters['body_state']) ? 'minus' : 'plus'?>"></i>
     </div>
     <div class="context collapse<?= isset($filters['body_state']) ? ' in' : ''?>" aria-expanded="true" id="context-7">
         <ul class="list nicescroll" data-cursorcolor="#b7b7b7" data-cursorborder="none" data-railpadding='js:{"top":0,"right":-12,"bottom":0,"left":0}' data-autohidemode="leave">
@@ -135,9 +135,9 @@ if(isset($filters['price'])) {
     </div>
 </div>
 <div class="filter-box">
-    <div class="head">
+    <div class="head" data-toggle="collapse" data-target="#context-9">
         <span>سوخت</span>
-        <i class="toggle-icon <?= isset($filters['fuel']) ? 'minus' : 'plus'?>" data-toggle="collapse" data-target="#context-9"></i>
+        <i class="toggle-icon <?= isset($filters['fuel']) ? 'minus' : 'plus'?>"></i>
     </div>
     <div class="context collapse<?= isset($filters['fuel']) ? ' in' : ''?>" aria-expanded="true" id="context-9">
         <ul class="list nicescroll" data-cursorcolor="#b7b7b7" data-cursorborder="none" data-railpadding='js:{"top":0,"right":-12,"bottom":0,"left":0}' data-autohidemode="leave">
@@ -148,9 +148,9 @@ if(isset($filters['price'])) {
     </div>
 </div>
 <div class="filter-box">
-    <div class="head">
+    <div class="head" data-toggle="collapse" data-target="#context-10">
         <span>موارد خاص</span>
-        <i class="toggle-icon <?= isset($filters['plate']) ? 'minus' : 'plus'?>" data-toggle="collapse" data-target="#context-10"></i>
+        <i class="toggle-icon <?= isset($filters['plate']) ? 'minus' : 'plus'?>"></i>
     </div>
     <div class="context collapse<?= isset($filters['plate']) ? ' in' : ''?>" aria-expanded="true" id="context-10">
         <ul class="list nicescroll" data-cursorcolor="#b7b7b7" data-cursorborder="none" data-railpadding='js:{"top":0,"right":-12,"bottom":0,"left":0}' data-autohidemode="leave">
@@ -161,9 +161,9 @@ if(isset($filters['price'])) {
     </div>
 </div>
 <div class="filter-box">
-    <div class="head">
+    <div class="head" data-toggle="collapse" data-target="#context-11">
         <span>رنگ</span>
-        <i class="toggle-icon <?= isset($filters['color']) ? 'minus' : 'plus'?>" data-toggle="collapse" data-target="#context-11"></i>
+        <i class="toggle-icon <?= isset($filters['color']) ? 'minus' : 'plus'?>"></i>
     </div>
     <div class="context collapse<?= isset($filters['color']) ? ' in' : ''?>" aria-expanded="true" id="context-11">
         <ul class="list nicescroll" data-cursorcolor="#b7b7b7" data-cursorborder="none" data-railpadding='js:{"top":0,"right":-12,"bottom":0,"left":0}' data-autohidemode="leave">

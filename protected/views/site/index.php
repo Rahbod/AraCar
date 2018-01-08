@@ -28,17 +28,19 @@ $baseUrl = Yii::app()->theme->baseUrl;
             endforeach;
             $skinPath = $baseUrl.'/assets/slider/layerslider_skins/';
             $cs->registerScript('slider-js','
-                var sh;
-                sh = $(window).width() * 600 / 1920 - 5;
-                $("#slider").css({height:sh});
+                if($(window).width() > 768){
+                    var sh;
+                    sh = $(window).width() * 600 / 1920 - 5;
+                    $("#slider").css({height:sh});
+                }
                 $("#slider").layerSlider({
                     startInViewport: false,
-                    responsive : false ,
-                    responsiveUnder : 1024 ,
+                    responsive : true,
+                    responsiveUnder : 768,
                     forceLoopNum: false,
                     autoPlayVideos: false,
                     skinsPath: \''.$skinPath.'\',
-                    skin: \'fullwidth\',
+                    skin: \'fullsize\',
                     navPrevNext: false,
                     navStartStop: false,
                     pauseOnHover: false,
@@ -69,7 +71,7 @@ $baseUrl = Yii::app()->theme->baseUrl;
 
 
 <div class="boxes-container">
-    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 right-side">
+    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 right-side">
 <!--                <a href="#suggest-way-modal" data-toggle="modal" class="linear-link">روش پیشنهادی</a>-->
         <div class="content">
             <div class="steps">
@@ -82,7 +84,7 @@ $baseUrl = Yii::app()->theme->baseUrl;
             <p>در این روش شما می توانید به صورت مرحله ای و به صورت هوشمند، وسیله نقیله، برند، شاسی، مدل، قیمت را انتخاب نموده و سریعتر و دقیقتر به نتیجه برسید.</p>
         </div>
     </div>
-    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left-side">
+    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 left-side">
         <div class="search-box">
             <h4>جستجوی وسیله نقلیه</h4>
             <div class="input-group">
@@ -115,7 +117,7 @@ $cs->registerScriptFile($baseUrl.'/js/owl.carousel.min.js', CClientScript::POS_E
 ?>
 
 <div class="top-brands">
-    <div class="is-carousel" data-margin="10" data-dots="0" data-nav="1" data-mouse-drag="1" data-responsive='{"1920":{"items":"11"},"1200":{"items":"9"},"992":{"items":"7"},"768":{"items":"5"},"480":{"items":"3"},"0":{"items":"2"}}'>
+    <div class="is-carousel" data-margin="10" data-dots="0" data-nav="1" data-mouse-drag="1" data-responsive='{"1920":{"items":"11"},"1200":{"items":"9"},"992":{"items":"7"},"768":{"items":"5"},"480":{"items":"4"},"320":{"items":"3"},"0":{"items":"2"}}'>
         <?php
         $logoPath = Yii::getPathOfAlias("webroot").'/uploads/brands/';
         foreach($topBrands as $brand):

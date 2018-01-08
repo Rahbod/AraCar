@@ -416,9 +416,11 @@ class CarSearchController extends Controller
                     break;
 
                 case "has-image":
-                    $criteria->with[] = 'carImages';
-                    $criteria->together = true;
-                    $criteria->addCondition('carImages.id IS NOT NULL');
+                    if($value == 1){
+                        $criteria->with[] = 'carImages';
+                        $criteria->together = true;
+                        $criteria->addCondition('carImages.id IS NOT NULL');
+                    }
                     break;
 
                 case "order":

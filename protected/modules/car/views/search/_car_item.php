@@ -6,9 +6,9 @@ $imagePath = Yii::getPathOfAlias('webroot').'/uploads/cars/';
     <a href="<?php echo $data->getViewUrl(); ?>" class="link"></a>
     <div class="image-container">
         <?php
-        if($data->mainImage && file_exists($imagePath.$data->mainImage->filename)):
+        if($data->mainImage && file_exists($imagePath.'thumbs/180x140/'.$data->mainImage->filename)):
             ?>
-            <img src="<?= Yii::app()->getBaseUrl(true).'/uploads/cars/'.$data->mainImage->filename ?>">
+            <img src="<?= Yii::app()->getBaseUrl(true).'/uploads/cars/thumbs/180x140/'.$data->mainImage->filename ?>">
             <?php
         else:
             ?>
@@ -18,7 +18,7 @@ $imagePath = Yii::getPathOfAlias('webroot').'/uploads/cars/';
         ?>
     </div>
     <div class="info-container">
-        <?php if($data->purchase_type_id == Cars::PURCHASE_TYPE_INSTALMENT):?>
+        <?php if($data->purchase_type_id != Cars::PURCHASE_TYPE_INSTALMENT):?>
             <span class="instalment-box">اقساطی</span>
         <?php endif;?>
         <h2><?= $data->getTitle()?> | <span class="time"><?= JalaliDate::differenceTime($data->update_date)?></span></h2>

@@ -55,10 +55,15 @@ class Brands extends CActiveRecord
 		return array(
 			'country' => array(self::BELONGS_TO, 'Countries', 'country_id'),
 			'cars' => array(self::HAS_MANY, 'Cars', 'brand_id'),
-			'carsCount' => array(self::STAT, 'Cars', 'brand_id', 'condition' => 't.status = :status', 'params' => [':status' => Cars::STATUS_APPROVED]),
 			'models' => array(self::HAS_MANY, 'Models', 'brand_id', 'order' => 'models.order'),
 			'modelCount' => array(self::STAT, 'Models', 'brand_id', 'condition' => 'md.id IS NOT NULL', 'join' => 'LEFT JOIN {{model_details}} md ON md.model_id=t.id'),
 		);
+	}
+
+	public function getCarsCount(){
+		$criteria = Cars::duplicateQuery();
+		$criteria->compare('brand_id', $this->id);
+		return Cars::model()->count($criteria);
 	}
 
 	/**
