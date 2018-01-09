@@ -9,6 +9,10 @@ $cs->registerCssFile($baseUrl.'/css/owl.carousel.css');
 $cs->registerCssFile($baseUrl.'/css/owl.theme.default.min.css');
 $cs->registerScriptFile($baseUrl.'/js/owl.carousel.min.js', CClientScript::POS_END);
 
+// jquery mobile
+$cs->registerCssFile($baseUrl.'/css/jquery.mobile.structure-1.4.5.min.css');
+$cs->registerScriptFile($baseUrl.'/js/jquery.mobile-1.4.5.min.js', CClientScript::POS_HEAD);
+
 $breadcrumbs= [
 	$car->brand->title => array('/car/brand/'.$car->brand->slug),
 	$car->model->title => array('/car/brand/'.$car->brand->slug.'?model='.$car->model->slug),
@@ -53,6 +57,7 @@ $parked = UserParking::model()->findByAttributes(['user_id' => $car->user_id, 'c
 <div class="content-box view-page-box">
 	<div class="center-box">
 		<div class="row advertise-info-box">
+			<a href="#" class="call-btn floating-button left" data-title="تماس" data-url="<?= $this->createUrl('/car/public/json') ?>" data-hash="<?= base64_encode($car->id) ?>"></a>
 			<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
 				<div class="image-container">
 					<div class="hidden-sm hidden-xs">
@@ -323,5 +328,26 @@ $(window).resize(function(){
 		$(".main-image-container").css({height:sh});
 	//	$(".main-image-container img").css({height:sh});
 	}
+});
+
+var phone=null;
+$("body").on("click", ".call-btn", function(e){
+	if(!phone){
+		e.preventDefault();
+		$.ajax({
+            url: $(this).data("url"),
+            type: "POST",
+            data: {method: "getPhone", hash: $(this).data("hash")},
+            dataType: "JSON",
+            success: function (data) {
+                if (data.status){
+                    phone = data.phone;
+                	$(".call-btn").attr("href", "tel:"+phone);
+                	$(".call-btn").click();
+				}
+            }
+        });
+	}
+	console.log(1);
 });
 ');

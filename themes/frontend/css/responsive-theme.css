@@ -22,8 +22,11 @@
     .view-page-box .center-box{
         padding: 0 !important;
     }
+    .view-page-box .center-box > .row{
+        margin: 0 !important;
+    }
     .view-page-box .car-info{
-        padding: 0 30px !important;
+        padding: 0 15px !important;
     }
     .advertise-info-box .image-container .mobile-view .main-image-container{
         width: 100%;
@@ -376,7 +379,7 @@
         padding: 0 !important;
     }
     .view-page-box .car-info{
-        padding: 0 30px !important;
+        padding: 0 15px !important;
     }
     .advertise-info-box .add-to-park,
     .advertise-info-box .add-to-park:hover{

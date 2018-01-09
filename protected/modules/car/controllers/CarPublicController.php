@@ -416,6 +416,16 @@ class CarPublicController extends Controller
                 $phone = "{$firstPart} {$secPart} {$thirdPart} {$forthPart}";
                 $this->sendJson(['status' => true, 'phone' => $phone]);
                 break;
+            case 'getPhone':
+                if(!isset($_POST['hash']))
+                    $this->sendJson(['status' => false]);
+                $id = base64_decode($_POST['hash']);
+                $model = Cars::model()->findByPk($id);
+                if($model === null)
+                    $this->sendJson(['status' => false]);
+                $phone = $model->user->userDetails->mobile;
+                $this->sendJson(['status' => true, 'phone' => $phone]);
+                break;
             case 'report':
                 if(!isset($_POST['hash']))
                     $this->sendJson(['status' => false]);
