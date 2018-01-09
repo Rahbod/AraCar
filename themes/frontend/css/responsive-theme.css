@@ -498,8 +498,67 @@
         min-height: 0;
         height: auto;
     }
+    .car-list .models-box,
+    .car-list .brand-list .accordion-heading .accordion-toggle{
+        padding:0;
+        line-height: 60px;
+    }
+
+    .car-list .model-row{
+        position: relative;
+    }
+    .car-list .model-title{
+        padding-left: 60px;
+        width: 100%;
+    }
+    .car-list .model-count{
+        width: 60px;
+        position: absolute;
+        left: 5px;
+        top: 0;
+    }
+    .compare-panel .btn-sm{
+        width: 100%;
+    }
+    .panel-default .panel-body .car-header .logo{
+        display: none;
+    }
+    .panel-default .panel-body .car-header .car-title {
+        width: 100%;
+        font-size: 12px;
+        font-weight: bold;
+    }
+    .compare-panel .form-control.select-picker{
+        height: 38px !important;
+    }
+    .compare-panel .btn{
+        font-size: 12px;
+    }
+    .compare-panel .car-image.owl-theme .owl-controls .owl-nav [class*="owl-"]{
+        display: none !important;
+    }
+    .compare-panel .car-image.owl-theme .owl-item{
+        cursor: hand !important;
+    }
 }
 @media screen and (max-width: 650px){
+    .car-details{
+        background-color: transparent;
+        font-size: 11px !important;
+        padding: 15px 30px !important;
+    }
+    .car-details .row-title{
+        font-size: 11px !important;
+        color: #333 !important;
+        padding-right: 0;
+    }
+    .car-details [class*="svg-"]{
+        display: none !important;
+    }
+    .car-image-item,
+    .panel-default .panel-body .car-image{
+        height: 200px;
+    }
     .advertise-info-box .features .feature-item{
         font-size: 12px;
     }
@@ -594,6 +653,10 @@
     }
 }
 @media screen and (max-width: 450px){
+    .car-image-item,
+    .panel-default .panel-body .car-image{
+        height: 140px;
+    }
     .similar-box .items{
         padding: 0;
     }
@@ -642,6 +705,10 @@
     }
 }
 @media screen and (max-width: 350px){
+    .car-image-item,
+    .panel-default .panel-body .car-image{
+        height: 110px;
+    }
     .nav.navbar-nav{
         max-width: 270px;
     }

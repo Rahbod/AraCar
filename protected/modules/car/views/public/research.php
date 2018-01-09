@@ -73,7 +73,17 @@ $brandImageUrl = Yii::app()->getBaseUrl(true).'/'.$this->brandImagePath.'/';
                                 ?>
                             </div>
                             <div class="car-header">
-                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 pull-left">
+                                    <div class="row">
+                                        <div class="logo pull-left">
+                                            <img class="grayscale-static" src="<?= $brandImageUrl.$brand1->logo ?>">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="car-title pull-left"><?= $brand1->title ?> | <?= $model1->title ?></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 pull-right">
                                     <div class="row">
                                         <?php
                                         $preUri = '/research/'.$brand1->slug.'/'.$model1->slug.'/';
@@ -86,16 +96,6 @@ $brandImageUrl = Yii::app()->getBaseUrl(true).'/'.$this->brandImagePath.'/';
                                                 'class' => 'form-control select-picker change-year'
                                             ))
                                         ?>
-                                    </div>
-                                </div>
-                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-6">
-                                    <div class="row">
-                                        <div class="logo pull-left">
-                                            <img class="grayscale-static" src="<?= $brandImageUrl.$brand1->logo ?>">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="car-title pull-left"><?= $brand1->title ?> | <?= $model1->title ?></div>
                                     </div>
                                 </div>
                             </div>
@@ -131,7 +131,7 @@ $brandImageUrl = Yii::app()->getBaseUrl(true).'/'.$this->brandImagePath.'/';
                             <div class="brand-list accordion-group">
                                 <div class="accordion-heading">
                                     <a href="#car-model-list-1-<?= $brand->id ?>" data-toggle="collapse" data-parent="#car-list-1" class="accordion-toggle">
-                                        <div class="logo">
+                                        <div class="logo hidden-xs">
                                             <img src="<?= $brandImageUrl.$brand->logo ?>" class="grayscale-static">
                                         </div>
                                         <div class="list-title"><?= $brand->title ?></div>
@@ -212,22 +212,7 @@ $brandImageUrl = Yii::app()->getBaseUrl(true).'/'.$this->brandImagePath.'/';
                                 ?>
                             </div>
                             <div class="car-header">
-                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
-                                    <div class="row">
-                                        <?php
-                                        $uri = '/research/';
-                                        $uri .= $b1?$b1.'/'.($m1?$m1.'/'.($y1?$y1.'/':''):''):'';
-                                        $uri .= 'vs/'.$brand2->slug.'/'.$model2->slug.'/';
-                                        echo CHtml::dropDownList('year',$year2->product_year,
-                                        CHtml::listData($model2->years(array('order' => 'years.product_year DESC')),'product_year','product_year'),
-                                        array(
-                                        'data-url' => $this->createAbsoluteUrl($uri).'/',
-                                        'class' => 'form-control select-picker change-year y2'
-                                        ))
-                                        ?>
-                                    </div>
-                                </div>
-                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-6">
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 pull-left">
                                     <div class="row">
                                         <div class="logo pull-left">
                                             <img class="grayscale-static" src="<?= $brandImageUrl.$brand2->logo ?>">
@@ -237,13 +222,28 @@ $brandImageUrl = Yii::app()->getBaseUrl(true).'/'.$this->brandImagePath.'/';
                                         <div class="car-title pull-left"><?= $brand2->title ?> | <?= $model2->title ?></div>
                                     </div>
                                 </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 pull-right">
+                                    <div class="row">
+                                        <?php
+                                        $uri = '/research/';
+                                        $uri .= $b1?$b1.'/'.($m1?$m1.'/'.($y1?$y1.'/':''):''):'';
+                                        $uri .= 'vs/'.$brand2->slug.'/'.$model2->slug.'/';
+                                        echo CHtml::dropDownList('year',$year2->product_year,
+                                            CHtml::listData($model2->years(array('order' => 'years.product_year DESC')),'product_year','product_year'),
+                                            array(
+                                                'data-url' => $this->createAbsoluteUrl($uri).'/',
+                                                'class' => 'form-control select-picker change-year y2'
+                                            ))
+                                        ?>
+                                    </div>
+                                </div>
                             </div>
                             <div class="car-details">
                                 <?php
                                 foreach(ModelDetails::$detailFields as $group => $items):
                                 ?>
                                 <div class="row">
-                                    <div class="svg svg-<?= $group ?>"></div>
+                                    <div class="svg svg-<?= $group ?> hidden-xs"></div>
                                     <div class="cell-content">
                                         <?php
                                         foreach($items as $item):
@@ -270,7 +270,7 @@ $brandImageUrl = Yii::app()->getBaseUrl(true).'/'.$this->brandImagePath.'/';
                             <div class="brand-list accordion-group">
                                 <div class="accordion-heading">
                                     <a href="#car-model-list-2-<?= $brand->id ?>" data-toggle="collapse" data-parent="#car-list-2" class="accordion-toggle">
-                                        <div class="logo">
+                                        <div class="logo hidden-xs">
                                             <img src="<?= $brandImageUrl.$brand->logo ?>" class="grayscale-static">
                                         </div>
                                         <div class="list-title"><?= $brand->title ?></div>
