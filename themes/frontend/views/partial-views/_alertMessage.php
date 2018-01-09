@@ -14,9 +14,11 @@ if(!isset($id) || empty($id))
 if(!isset($hideTimer) || empty($hideTimer))
     $hideTimer = 5000;
 ?>
-<div class="alert alert-<?= $type ?> fade in <?= isset($class)?$class:'' ?>" id="<?= $id ?>">
-    <?if(isset($closeButton) && $closeButton):?><button class="close close-sm" type="button" data-dismiss="alert"><i class="icon-remove"></i></button><?endif;?>
-    <?php echo $message ?>
+<div class="alert alert-<?= $type ?> view-alert <?= isset($class)?$class:'' ?>" id="<?= $id ?>">
+    <p>
+        <span><?php echo $message ?></span>
+        <?if(isset($closeButton) && $closeButton):?><button class="close" type="button" data-dismiss="alert">&times;</button><?endif;?>
+    </p>
 </div>
 
 <?php

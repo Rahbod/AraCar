@@ -4,10 +4,8 @@
 <div class="page-header inner-page">
     <div class="top">
         <div class="center-box">
-            <div class="row">
-                <?php if($this->pageLogo):?><img src="<?= $this->pageLogo ?>" class="brand-logo" alt="<?= strip_tags($this->pageHeader) ?>"><?php endif; ?>
-                <h2 class="brand-name<?= $this->layout == '//layouts/panel'?' user-detail':'' ?>"><?php echo $this->pageHeader ?><small><?php echo $this->pageDescription ?></small></h2>
-            </div>
+            <?php if($this->pageLogo):?><img src="<?= $this->pageLogo ?>" class="brand-logo" alt="<?= strip_tags($this->pageHeader) ?>"><?php endif; ?>
+            <h2 class="brand-name<?= $this->layout == '//layouts/panel'?' user-detail':'' ?>"><?php echo $this->pageHeader ?><small><?php echo $this->pageDescription ?></small></h2>
         </div>
     </div>
     

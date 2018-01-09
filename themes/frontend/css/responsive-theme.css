@@ -13,6 +13,60 @@
     }
 }
 @media screen and (max-width: 992px){
+    .view-page-box{
+        padding-top: 0;
+    }
+    .view-page-box .main-image-container{
+        margin-top: 0 !important;
+    }
+    .view-page-box .center-box{
+        padding: 0 !important;
+    }
+    .view-page-box .car-info{
+        padding: 0 30px !important;
+    }
+    .advertise-info-box .image-container .mobile-view .main-image-container{
+        width: 100%;
+        display: block;
+        text-align: center;
+        height: 500px;
+        position: relative;
+        overflow: hidden;
+    }
+    .advertise-info-box .image-container .mobile-view .main-image-container img{
+        display: inline-block;
+        max-width: 100%;
+        width: 100%;
+        height: auto;
+        min-height: 300px;
+        position: static !important;
+        -webkit-transform: none !important;
+        -moz-transform: none !important;
+        -ms-transform: none !important;
+        -o-transform: none !important;
+        transform: none !important;
+    }
+    .similar-box .owl-theme .owl-controls .owl-nav .owl-prev{
+        right:0;
+    }
+    .similar-box .owl-theme .owl-controls .owl-nav .owl-next{
+        left:0;
+    }
+    .page-header.view-page .bottom .breadcrumb > li{
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+    .page-header.view-page .bottom .page-info{
+        margin-top: 0;
+        display: block;
+        overflow: hidden;
+    }
+    .advertise-info-box .image-container{
+        padding-right: 0;
+    }
+    .page-header.inner-page .bottom .breadcrumb{
+        padding: 0 15px !important;
+    }
     .close-container .menu-close-icon{
         display: inline-block;
     }
@@ -62,8 +116,11 @@
         transform: translateY(0);
     }
     .plans > div{ margin-bottom: 30px; }
+    .page-header .bottom .breadcrumb,
+    .page-header.inner-page .bottom .breadcrumb,
+    .upgrade-user-btn b,
     .center-box{
-        padding: 0 50px;
+        padding: 0 15px !important;
     }
     .boxes-container .desc-box{
         min-height: 176px;
@@ -303,11 +360,73 @@
     }
 }
 @media screen and (max-width: 768px){
+    .modal-body{
+        padding: 15px;
+    }
+    .modal-header h3{
+        font-size: 20px;
+    }
+    .view-page-box{
+        padding-top: 0;
+    }
+    .view-page-box .main-image-container{
+        margin-top: 0 !important;
+    }
+    .view-page-box .center-box{
+        padding: 0 !important;
+    }
+    .view-page-box .car-info{
+        padding: 0 30px !important;
+    }
+    .advertise-info-box .add-to-park,
+    .advertise-info-box .add-to-park:hover{
+        position: static !important;
+        width: 212px;
+        display: inline-block;
+        margin-bottom: 15px;
+        float: right;
+        padding: 12px 9px 9px !important;
+    }
+    .advertise-info-box .add-to-park:not(.parked) > span:first-of-type{
+        opacity: 1!important;
+    }
+    .advertise-info-box .add-to-park.parked > span:last-of-type{
+        opacity: 1;
+    }
+    .advertise-info-box .report-mobile{
+        border:2px solid #313131;
+        border-radius: 5px;
+        padding: 12px 12px 9px;
+        font-size: 17px;
+        line-height:20px;
+        font-weight: bolder;
+        height:45px;
+        overflow: hidden;
+        text-align: left;
+        display: inline-block;
+        float: right;
+        margin-right: 15px;
+    }
+    .advertise-info-box .report-mobile i{
+        font-weight: bolder;
+    }
+    .advertise-info-box .image-container .mobile-view .main-image-container{
+        height: 300px;
+    }
+    .advertise-info-box .image-container .mobile-view .main-image-container img{
+        min-height: 300px;
+    }
+    .compare-box > .row{
+        margin: 0 -10px;
+    }
+    .compare-box [class*="col-"]{
+        padding: 0 5px;
+    }
+    .panel-default .panel-body .car-image{
+
+    }
     .page-header .bottom .page-info{
         padding-left: 50px !important;
-    }
-    .page-header.inner-page .bottom .breadcrumb{
-        padding-right: 50px !important;
     }
     .boxes-container .right-side, .boxes-container .left-side{
         min-height: 250px;
@@ -366,22 +485,121 @@
     .copyright-box{
         height: auto;
     }
-}
-@media screen and (max-width: 650px){
-    .page-header.inner-page .bottom .breadcrumb{
-        display: block;
-        width: 100%;
+    .page-header .bottom .breadcrumb > li{
+        margin-top: 5px;
+        margin-bottom: 5px;
     }
     .page-header .bottom .page-info{
         margin-top: 0;
         display: block;
         overflow: hidden;
     }
+    .advertise-info-box .image-container .mobile-view .main-image-container img{
+        min-height: 0;
+        height: auto;
+    }
+}
+@media screen and (max-width: 650px){
+    .advertise-info-box .features .feature-item{
+        font-size: 12px;
+    }
+    .advertise-info-box .features .feature-item.last .price{
+        margin-top: 30px;
+        width: 100%;
+    }
+    .advertise-info-box .features .feature-item.last .value{
+        display: inline-block;
+        overflow: hidden;
+        padding: 0;
+    }
+    .advertise-info-box .features .feature-item .name{
+        width: 100px;
+    }
+    .page-header.inner-page .bottom .breadcrumb{
+        display: block;
+        width: 100%;
+    }
     .upgrade-user-btn b{
         padding-left: 30px;
     }
+    .page-header .bottom .breadcrumb,
+    .page-header.inner-page .bottom .breadcrumb,
+    .upgrade-user-btn b,
+    .center-box{
+        padding-right: 10px !important;
+    }
+    .advertising-list .advertising-item{
+        padding: 5px;
+        background-color: #fff;
+    }
+    .advertising-list .advertising-item .image-container{
+        width: 120px;
+        height: 90px;
+    }
+    .advertising-list .advertising-item .info-container h2{
+        font-size: 11px;
+        margin: 5px 0;
+    }
+    .instalment-box {
+        top: auto;
+        left: auto;
+        bottom: 15px;
+        right: 10px;
+        width: 120px;
+    }
+    .advertising-list .advertising-item .info-container{
+        padding-right: 5px;
+    }
+    .advertising-list .advertising-item .info-container .public-info{
+        padding: 0;
+        font-size: 11px;
+        height: auto;
+        padding-bottom: 10px;
+    }
+    .advertising-list .advertising-item .info-container .price{
+        line-height: 20px;
+        bottom: 5px;
+        left: 5px;
+    }
+    .btn-blue,
+    .select-field .btn.dropdown-toggle.btn-default,
+    .text-field{
+        padding: 10px 15px !important;
+    }
+    .content-box .filter-box .context .range-slider-container .currency{
+        margin-top: -40px;
+    }
+    .center-box form.sell-form{
+        padding: 0 !important;
+    }
+    .dealer-item{
+        padding: 5px 0;
+    }
+    .dealer-item .photo{
+        top:10px;
+        right: 10px;
+        width: 120px;
+        height: 90px;
+    }
+    .dealer-item .photo img{
+        width: 100% !important;
+        height: 100% !important;
+    }
+    .dealer-item .listdata{
+        height: 100px;
+        padding-right: 140px;
+    }
+    .dealer-item .detail h3{
+        margin: 5px 0 30px 0;
+    }
 }
 @media screen and (max-width: 450px){
+    .similar-box .items{
+        padding: 0;
+    }
+    .similar-box .item{
+        margin: 0 auto;
+    }
     .page-header .bottom .breadcrumb,
     .page-header.inner-page .bottom .breadcrumb,
     .upgrade-user-btn b,
@@ -391,10 +609,6 @@
     .page-header .bottom .page-info{
         width: 100%;
         padding-right: 50px;
-    }
-    .page-header .bottom .breadcrumb > li{
-        margin-top: 5px;
-        margin-bottom: 5px;
     }
     .upgrade-user-btn b{
         padding-left: 30px;
@@ -427,7 +641,11 @@
         margin: 15px auto;
     }
 }
-
+@media screen and (max-width: 350px){
+    .nav.navbar-nav{
+        max-width: 270px;
+    }
+}
 
 
 @media (min-width: 768px) and (max-width: 991px){
@@ -449,8 +667,17 @@
     .header.inner-page .nav > li.login-link .logout-link{
         right: 60px;
     }
+    .page-header .bottom .breadcrumb,
+    .page-header.inner-page .bottom .breadcrumb,
+    .upgrade-user-btn b,
     .center-box{
-        padding: 0 15px;
+        padding: 0 15px !important;
+    }
+    .similar-box .owl-theme .owl-controls .owl-nav .owl-prev{
+        right:0;
+    }
+    .similar-box .owl-theme .owl-controls .owl-nav .owl-next{
+        left:0;
     }
     .header .logo-box{
         width: 100%;
@@ -500,6 +727,17 @@
         display: none !important;
     }
     .slideshow-container .ls-gpuhack{
+        width: 100% !important;
+    }
+}
+
+
+@media screen and (width: 992px){
+    .page-header.inner-page .bottom .breadcrumb{
+        padding: 0 15px !important;
+    }
+    .list-container,
+    .brand-show{
         width: 100% !important;
     }
 }

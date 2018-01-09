@@ -68,11 +68,11 @@ class UploadedFiles
 
         if((string)$filename && file_exists($path . $filename))
             $this->_storedFiles[] = [
-                    'name' => $filename,
-                    'src' => $url . $filename,
-                    'size' => filesize($path . $filename),
-                    'serverName' => $filename,
-                ];
+                'name' => $filename,
+                'src' => $url . $filename,
+                'size' => filesize($path . $filename),
+                'serverName' => $filename,
+            ];
     }
 
     /**
@@ -87,7 +87,7 @@ class UploadedFiles
         if($sf)
             foreach($sf as $k => $f)
                 if($f && isset($f['serverName']) && $f['serverName'] == $filename){
-                    if($deleteFile) {
+                    if($deleteFile){
                         @unlink($this->_path . $filename);
                         if($this->getOption('thumbnail'))
                             @unlink($this->getThumbPath() . $filename);
@@ -106,7 +106,7 @@ class UploadedFiles
             foreach($sf as $k => $f)
                 if($f && isset($f['serverName']) && file_exists($this->_path . $f['serverName'])){
                     $filename = $f['serverName'];
-                    if($deleteFile) {
+                    if($deleteFile){
                         @unlink($this->_path . $filename);
                         if($this->getOption('thumbnail'))
                             @unlink($this->getThumbPath() . $filename);
@@ -167,18 +167,29 @@ class UploadedFiles
                 }
             if($newFilename)
                 foreach($newFilename as $filename){
-                    if(is_file($this->normalizePath($newFilePath) . $filename)){
-                        if(@rename($this->normalizePath($newFilePath) . $filename, $this->getPath() . $filename) && $this->getOption('thumbnail'))
-                            $this->createThumbnail($this->getPath() . $filename, $this->getThumbPath() . $filename);
-                    }
+                    $this->saveFile($this->normalizePath($newFilePath) . $filename, $this->getPath() . $filename);
                     $this->add($filename);
                 }
         }else{
             if($oldFilename != $newFilename){
-                if(file_exists($this->normalizePath($newFilePath) . $newFilename))
-                    @rename($this->normalizePath($newFilePath) . $newFilename, $this->getPath() . $newFilename);
+                $this->saveFile($this->normalizePath($newFilePath) . $newFilename, $this->getPath() . $newFilename);
                 $this->replace($oldFilename, $newFilename);
             }
+        }
+    }
+
+    private function saveFile($oldFilename, $newFilename, $thumbPath = false)
+    {
+        if(is_file($oldFilename)){
+            // resize
+            if($this->getOption('resize')){
+                $flag = @rename($oldFilename, $newFilename);
+                $this->doResize($newFilename);
+            }else
+                $flag = @rename($oldFilename, $newFilename);
+            // create thumbnail
+            if($flag && $this->getOption('thumbnail'))
+                $this->createThumbnail($newFilename, ($thumbPath?$thumbPath:$this->getThumbPath()) . basename($oldFilename));
         }
     }
 
@@ -219,11 +230,8 @@ class UploadedFiles
 
     public function moveFile($destinationPath, $fileName)
     {
-        if(is_file($this->_path . $fileName)){
-            if(@rename($this->_path . $fileName, $this->normalizePath($destinationPath) . $fileName) && $this->getOption('thumbnail')){
-                $this->createThumbnail($this->normalizePath($destinationPath) . $fileName, $this->getThumbPath($destinationPath) . $fileName);
-            }
-        }
+        if(is_file($this->_path . $fileName))
+            $this->saveFile($this->_path . $fileName, $this->normalizePath($destinationPath) . $fileName, $this->getThumbPath($destinationPath));
         $index = $this->exists($fileName);
         if($index !== false)
             unset($this->_storedFiles[$index]);
@@ -265,13 +273,24 @@ class UploadedFiles
     {
         $w = isset($this->getOption('thumbnail')['width']) && $this->getOption('thumbnail')['width']?$this->getOption('thumbnail')['width']:150;
         $h = isset($this->getOption('thumbnail')['height']) && $this->getOption('thumbnail')['height']?$this->getOption('thumbnail')['height']:150;
-        if($w && $h){
+        $this->getImager()->createThumbnail($image, $w, $h, false, $destination);
+    }
+
+    public function doResize($image, $destination = false)
+    {
+        $w = isset($this->getOption('resize')['width']) && $this->getOption('resize')['width']?$this->getOption('resize')['width']:600;
+        $h = isset($this->getOption('resize')['height']) && $this->getOption('resize')['height']?$this->getOption('resize')['height']:400;
+        $this->getImager()->resize($image, $destination?:$image, $w, $h);
+    }
+
+    public function getImager()
+    {
+        if(!$this->_imager)
             try{
                 $this->_imager = new Imager();
-                $this->_imager->createThumbnail($image, $w, $h, false, $destination);
             }catch(Exception $e){
                 throw new CException("Create new Imager instance error. Imager Class not found.", 500, $e);
             }
-        }
+        return $this->_imager;
     }
 }

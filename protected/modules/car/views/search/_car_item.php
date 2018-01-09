@@ -18,17 +18,22 @@ $imagePath = Yii::getPathOfAlias('webroot').'/uploads/cars/';
         ?>
     </div>
     <div class="info-container">
-        <?php if($data->purchase_type_id != Cars::PURCHASE_TYPE_INSTALMENT):?>
+        <?php if($data->purchase_type_id == Cars::PURCHASE_TYPE_INSTALMENT):?>
             <span class="instalment-box">اقساطی</span>
         <?php endif;?>
-        <h2><?= $data->getTitle()?> | <span class="time"><?= JalaliDate::differenceTime($data->update_date)?></span></h2>
+<!--        --><?php //if($data->user->role_id == 2):?>
+<!--            <span class="dealership-box">نمایشگاه</span>-->
+<!--        --><?php //endif;?>
+        <h2>
+            <span class="hidden-xs"><?= $data->getTitle()?> | <span class="time"><?= JalaliDate::differenceTime($data->update_date)?></span></span>
+            <span class="hidden-lg hidden-md hidden-sm"><?= $data->getRawTitle()?></span>
+        </h2>
         <div class="public-info">
-            <span class="place"><?= $data->city->name?>/ <?= $data->visit_district?></span>
-            <div class="desc"><?= strip_tags($data->description)?></div>
-            <div class="last-row">
-                <span>کارکرد <?= $data->distance == 0 ? "صفر کیلومتر" : Controller::normalizeNumber($data->distance,true, true,'کیلومتر')?></span>
-                <span class="pull-left price"><?php if($data->purchase_type_id == Cars::PURCHASE_TYPE_INSTALMENT) echo 'قیمت تمام شده '?><?= $data->getPrice() ?></span>
-            </div>
+            <div class="last-row hidden-lg hidden-md- hidden-sm"><span class="time"><?= JalaliDate::differenceTime($data->update_date)?></span></div>
+            <span class="place"><?= $data->city->name?> / <?= $data->visit_district?></span>
+            <div class="last-row">کارکرد <?= $data->distance == 0 ? "صفر کیلومتر" : Controller::normalizeNumber($data->distance,true, true,'کیلومتر')?></div>
+            <div class="desc hidden-xs"><?= strip_tags($data->description)?></div>
+            <span class="pull-left price"><?php if($data->purchase_type_id == Cars::PURCHASE_TYPE_INSTALMENT) echo 'قیمت تمام شده '?><?= $data->getPrice() ?></span>
         </div>
         <div class="full-info">
             <div class="info-item">کارکرد<span class="pull-left"><?= $data->distance?> کیلومتر</span></div>

@@ -27,10 +27,10 @@
         <a href="#" class="filter-btn floating-button left filter-box-trigger" data-title="فیلترها"></a>
         <div class="row">
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 filters-container">
-                <div class="close-container"><i class="menu-close-icon filter-box-trigger"></i></div>
+                <div class="close-container col-md-12"><i class="menu-close-icon filter-box-trigger"></i><h4>فیلتر های خودرو</h4></div>
                 <?php $this->renderPartial('_filter_box', array('filters' => $filters));?>
             </div>
-            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 list-container">
                 <?php $this->renderPartial('_top_filter_box', array('filters' => $filters));?>
                 <?php $this->widget('zii.widgets.CListView', array(
                     'id' => 'advertising-list',
@@ -38,6 +38,9 @@
                     'itemView'=>'_car_item',
                     'itemsCssClass' => 'advertising-list',
                     'template' => '{items}{pager}',
+                    'emptyCssClass' => 'sell-not-allow silver',
+                    'emptyTagName' => 'div',
+                    'emptyText' => '<div class="inner-flex"><h3>چیزی پیدا نشد.</h3><p>فیلترها رو تغییر بده! </p></div>',
                     'pager' => array(
                         'class' => 'ext.infiniteScroll.IasPager',
                         'rowSelector'=>'.advertising-item',

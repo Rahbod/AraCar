@@ -36,6 +36,9 @@ $this->breadcrumbs =[
                     'dataProvider'=>new CArrayDataProvider($sells),
                     'itemsCssClass'=>'advertise-panel-list',
                     'template' => '{items} {pager}',
+                    'emptyCssClass' => 'sell-not-allow silver',
+                    'emptyTagName' => 'div',
+                    'emptyText' => '<div class="inner-flex"><h3>آگهی ثبت نکردی!</h3><p>همین الان ثبت کن</p><a href="'.$this->createUrl('/sell').'" class="btn btn-success">درج آگهی جدید</a></div>',
                     'ajaxUpdate' => true,
                     'afterAjaxUpdate' => "function(id, data){
                         $('html, body').animate({
@@ -74,6 +77,9 @@ $this->breadcrumbs =[
                     'dataProvider'=>new CArrayDataProvider($user->parked),
                     'itemsCssClass'=>'advertise-panel-list',
                     'template' => '{items} {pager}',
+                    'emptyCssClass' => 'sell-not-allow silver',
+                    'emptyTagName' => 'div',
+                    'emptyText' => '<div class="inner-flex"><h3>پارکینگ خالی است.</h3></div>',
                     'ajaxUpdate' => true,
                     'afterAjaxUpdate' => "function(id, data){
                         $('html, body').animate({
@@ -96,9 +102,16 @@ $this->breadcrumbs =[
                 )); ?>
             </div>
             <div class="tab-pane fade" id="alerts-tab">
+                <?php $this->renderPartial('//partial-views/_flashMessage', ['prefix' => 'alerts-']) ?>
+                <div class="alert alert-success view-alert hidden">
+                    <p>
+                        <span>گوش به زنگ با موفقیت حذف شد.</span>
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    </p>
+                </div>
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                        <a type="button" class="btn btn-success btn-wide-2x" href="<?= $this->createUrl('/car/public/alert') ?>">
+                        <a type="button" class="btn btn-success btn-wide-2x alert-btn<?php if($user->countAlerts !==0):?> hidden<?php endif; ?>" href="<?= $this->createUrl('/car/public/alert') ?>">
                             <i class="addon-icon icon icon-plus"></i>
                             درج گوش به زنگ
                         </a>
@@ -107,17 +120,14 @@ $this->breadcrumbs =[
                         <h5 class="text-blue pull-left">تعداد گوش به زنگ <span id="count-alert"><?= $user->countAlerts ?></span></h5>
                     </div>
                 </div>
-                <div class="alert alert-success view-alert hidden">
-                    <p>
-                        <span>گوش به زنگ با موفقیت حذف شد.</span>
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    </p>
-                </div>
                 <?php $this->widget('zii.widgets.CListView', array(
                     'id'=>'alerts-list',
                     'dataProvider'=>new CArrayDataProvider($user->alerts),
                     'itemsCssClass'=>'advertise-panel-list',
                     'template' => '{items} {pager}',
+                    'emptyCssClass' => 'sell-not-allow silver',
+                    'emptyTagName' => 'div',
+                    'emptyText' => '<div class="inner-flex"><h3>گوش به زنگ نداری!</h3><p>همین الان ثبت کن</p><a href="'.$this->createUrl('/car/public/alert').'" class="btn btn-success">درج گوش به زنگ</a></div>',
                     'ajaxUpdate' => true,
                     'afterAjaxUpdate' => "function(id, data){
                         $('html, body').animate({

@@ -12,7 +12,7 @@ class CarPublicController extends Controller
     public $thumbPath = 'thumbs/180x140';
     public $brandImagePath = 'uploads/brands';
     public $modelImagePath = 'uploads/brands/models';
-    public $fileOptions = ['thumbnail' => ['width' => 180, 'height' => 140]];
+    public $fileOptions = ['thumbnail' => ['width' => 180, 'height' => 140], 'resize' => ['width' => 450, 'height' => 300]];
 
 
     /**
@@ -141,10 +141,10 @@ class CarPublicController extends Controller
             $model->user_id = Yii::app()->user->getId();
             $model->create_date = time();
             if($model->save()){
-                Yii::app()->user->setFlash('sells-success', '<span class="icon-check"></span>&nbsp;&nbsp;گوش به زنگ با موفقیت ثبت شد.');
+                Yii::app()->user->setFlash('alerts-success', '<span class="icon-check"></span>&nbsp;&nbsp;گوش به زنگ با موفقیت ثبت شد.');
                 $this->redirect(array('/dashboard#alerts-tab'));
             }else
-                Yii::app()->user->setFlash('sells-failed', 'در ثبت اطلاعات خطایی رخ داده است! لطفا مجددا تلاش کنید.');
+                Yii::app()->user->setFlash('alerts-failed', 'در ثبت اطلاعات خطایی رخ داده است! لطفا مجددا تلاش کنید.');
         }
 
         $this->render('alert', compact('model', 'images', 'user','adImageCount'));

@@ -5,7 +5,6 @@
 $queryStrings = [];
 if(Yii::app()->request->getQueryString())
     $queryStrings = explode('&', Yii::app()->request->getQueryString());
-
 $orderTypes = [
     //"all"     => "مرتب سازی بر اساس",
     "time"     => "به روزترین آگهی",
@@ -40,7 +39,7 @@ $orderTypes = [
             ])?>
         </div>
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-            <?= CHtml::dropDownList('', isset($filters['order']) ? $filters['order'] : 'time', $orderTypes, [
+            <?= CHtml::dropDownList('', isset($_GET['order']) ? $_GET['order'] : 'time', $orderTypes, [
                 'class' => 'selectpicker select-field',
                 'id' => 'order'
             ])?>
@@ -85,8 +84,8 @@ $orderTypes = [
 
         if($("#has-image").is(":checked"))
             topFilters[topFilters.length] = "has-image=1";
-        else
-            topFilters[topFilters.length] = "has-image=0";
+//        else
+//            topFilters[topFilters.length] = "has-image=0";
 
         if(filteredQueryStrings.length == 0) {
             if(topFilters.length != 0)

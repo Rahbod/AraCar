@@ -88,7 +88,7 @@
         if(Yii::app()->controller->action->id != 'sell'):
             if(Yii::app()->user->isGuest || Yii::app()->user->type == 'admin'):
                 ?>
-                <a href="#" class="new-link floating-button left" data-toggle="modal" data-target="#login-modal" data-title="ثبت آگهی جدید"></a>
+                <a href="#" class="new-link floating-button" data-toggle="modal" data-target="#login-modal" data-title="ثبت آگهی جدید"></a>
                 <?php
             else:
                 ?>

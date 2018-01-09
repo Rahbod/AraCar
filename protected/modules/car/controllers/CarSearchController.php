@@ -144,7 +144,7 @@ class CarSearchController extends Controller
     public function actionDealership($id = false, $title=  false)
     {
         Yii::app()->theme = "frontend";
-        $this->layout = '//layouts/public';
+        $this->layout = '//layouts/inner';
 
         // list of dealerships
         if(!$id && !$title){
@@ -198,8 +198,7 @@ class CarSearchController extends Controller
             $queryStrings = explode('&', $queryString);
             foreach ($queryStrings as $queryString) {
                 $arr = explode('=', $queryString);
-                if($arr[0] != 'order')
-                    $filters[$arr[0]] = $arr[1];
+                $filters[$arr[0]] = $arr[1];
             }
         }
 
@@ -290,6 +289,20 @@ class CarSearchController extends Controller
                         $strTemp .= 'عکس دار';
                     else
                         $strTemp .= 'عکس مهم نیست';
+                    break;
+                case "order":
+                    $orderTypes = [
+                        //"all"     => "مرتب سازی بر اساس",
+                        "time"     => "به روزترین آگهی",
+                        "max-cast" => "گرانترین",
+                        "min-cast" => "ارزانترین",
+                        "new-year" => "جدیدترین سال",
+                        "old-year" => "قدیمی ترین سال",
+                        "min-dist" => "کم کارکرد ترین",
+                        "max-dist" => "پر کارکرد ترین"
+                    ];
+                    if($value)
+                        $strTemp .= $orderTypes[$value];
                     break;
             }
             if(Yii::app()->request->getQuery('def') != $filter) {

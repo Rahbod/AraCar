@@ -29,7 +29,7 @@ $brandImageUrl = Yii::app()->getBaseUrl(true).'/'.$this->brandImagePath.'/';
 <div class="content-box white-bg">
     <div class="center-box compare-box">
         <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                 <div class="panel panel-default compare-panel">
                     <div class="panel-heading">
                         <div class="row">
@@ -168,7 +168,7 @@ $brandImageUrl = Yii::app()->getBaseUrl(true).'/'.$this->brandImagePath.'/';
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                 <div class="panel panel-default compare-panel">
                     <div class="panel-heading">
                         <div class="row">

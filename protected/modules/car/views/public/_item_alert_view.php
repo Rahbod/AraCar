@@ -60,7 +60,9 @@ $imagePath = Yii::getPathOfAlias('webroot').'/uploads/brands/';
                 if(data.status){
                     alert.remove();
                     $("#alerts-tab #count-alert").text((parseInt($("#alerts-tab #count-alert").text()) - 1));
-                    $("#alerts-tab .view-alert").addClass("alert-success").find("span").text(data.message);
+                    $("#alerts-tab .view-alert").addClass("alert-success").find("span").text(data.message);                   
+                    if($(\'.alerts-item\').length == 0)
+                        $(\'.alert-btn\').removeClass(\'hidden\');
                 }
                 else{
                     $("#alerts-tab .view-alert").addClass("alert-warning").find("span").text(data.message); 

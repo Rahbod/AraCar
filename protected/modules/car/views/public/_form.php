@@ -24,8 +24,9 @@ if(!$model->car_type_id)
 echo $form->errorSummary($model);
 ?>
 	<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-		<p class="form-title">
-		</p>
+        <p class="form-title">
+            <h5 class="text-center hidden-lg hidden-md hidden-sm">با تکمیل فرم زیر خودرو خود را به سرعت بفروشید</h5>
+        </p>
 		<div class="row month-statistics">
 			<div class="pull-right month-vector"></div>
 			<div class="pull-right">
@@ -74,8 +75,8 @@ echo $form->errorSummary($model);
 		</div>
 	</div>
 	<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-		<p class="form-title">
-			شما نیز با تکمیل فرم زیر خودرو را به سرعت بفروشید
+		<p class="form-title hidden-xs">
+			با تکمیل فرم زیر خودرو خود را به سرعت بفروشید
 		</p>
 		<div class="row">
 			<div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
