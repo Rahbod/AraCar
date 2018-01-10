@@ -13,6 +13,13 @@
     }
 }
 @media screen and (max-width: 992px){
+    .nav-pills .btn-wide{
+        padding:10px 15px !important;
+    }
+    .btn-wide-2x{
+        padding:10px 15px !important;
+        width: 100%;
+    }
     .advertise-panel-list .item-content .row > .item-col .item-attribute{
         font-size: 12px;
     }

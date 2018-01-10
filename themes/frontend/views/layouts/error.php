@@ -20,9 +20,9 @@
     Yii::app()->clientScript->registerCoreScript('jquery');
 
     $cs->registerCssFile($baseUrl.'/css/bootstrap.min.css');
-    $cs->registerCssFile($baseUrl.'/css/bootstrap-theme.css?3.1');
-    $cs->registerCssFile($baseUrl.'/css/bootstrap-rtl.css?3.1');
-    $cs->registerCssFile($baseUrl.'/css/error-style.css?3.1');
+    $cs->registerCssFile($baseUrl.'/css/bootstrap-theme.css?3.3');
+    $cs->registerCssFile($baseUrl.'/css/bootstrap-rtl.css?3.3');
+    $cs->registerCssFile($baseUrl.'/css/error-style.css?3.3');
     $cs->registerScriptFile($baseUrl.'/js/bootstrap.min.js', CClientScript::POS_END);
     ?>
 </head>
