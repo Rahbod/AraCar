@@ -331,23 +331,22 @@ $(window).resize(function(){
 });
 
 var phone=null;
-$("body").on("click", ".call-btn", function(e){
-	if(!phone){
-		e.preventDefault();
-		$.ajax({
-            url: $(this).data("url"),
-            type: "POST",
-            data: {method: "getPhone", hash: $(this).data("hash")},
-            dataType: "JSON",
-            success: function (data) {
-                if (data.status){
-                    phone = data.phone;
-                	$(".call-btn").attr("href", "tel:"+phone);
-                	$(".call-btn").click();
-				}
-            }
-        });
-	}
-	console.log(1);
-});
-');
+if(!phone){
+	$.ajax({
+		url: $(".call-btn").data("url"),
+		type: "POST",
+		data: {method: "getPhone", hash: $(".call-btn").data("hash")},
+		dataType: "JSON",
+		success: function (data) {
+			if (data.status){
+				phone = data.phone;
+				$(".call-btn").attr("href", "tel:"+phone);
+			}
+		}
+	});
+}
+//$("body").on("click", ".call-btn", function(e){
+//	
+//	$(".call-btn").click();
+//});
+', CClientScript::POS_READY);	

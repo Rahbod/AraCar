@@ -13,6 +13,16 @@
     }
 }
 @media screen and (max-width: 992px){
+    .advertise-panel-list .item-content .row > .item-col .item-attribute{
+        font-size: 12px;
+    }
+    .nav.nav-pills,
+    .panel-tabs .tab-pane{
+        padding-left: 0;
+    }
+    .header{
+        overflow: hidden;
+    }
     .view-page-box{
         padding-top: 0;
     }
@@ -363,6 +373,10 @@
     }
 }
 @media screen and (max-width: 768px){
+    .nav.nav-pills{
+        display: block;
+        overflow: hidden;
+    }
     .modal-body{
         padding: 15px;
     }
@@ -545,6 +559,45 @@
     }
 }
 @media screen and (max-width: 650px){
+    .advertise-panel-list .item-title {
+        font-size: 13px;
+        line-height: 25px;
+        display: block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+    .advertise-panel-list article{
+        height: 110px;
+    }
+    .advertise-panel-list .item-image{
+        width: 120px;
+        height: 90px;
+    }
+    .advertise-panel-list .item-content{
+        padding: 0 140px 0 85px;
+    }
+    .advertise-panel-list .item-col > :first-child{
+        margin: 0;
+    }
+    .advertise-panel-list .item-actions{
+        width: 80px;
+        height: 70px;
+        margin-top: 10px;
+    }
+    .advertise-panel-list .item-actions .btn{
+        width: 34px;
+        float: left;
+        margin-right: 6px;
+        margin-bottom: 6px;
+    }
+    .advertise-panel-list .item-actions .btn > span{
+        opacity: 0;
+        visibility: hidden;
+    }
+    .advertise-panel-list .item-actions .btn .addon-icon{
+        left: 10px !important;
+    }
     .car-details{
         background-color: transparent;
         font-size: 11px !important;
@@ -656,6 +709,12 @@
     }
 }
 @media screen and (max-width: 450px){
+    .advertise-panel-list .item-image{
+        display: none;
+    }
+    .advertise-panel-list .item-content{
+        padding-right: 15px;
+    }
     .car-image-item,
     .panel-default .panel-body .car-image{
         height: 140px;
@@ -728,9 +787,6 @@
     .navbar-nav .dropdown-menu.price-menu{
         min-width: 642px;
     }
-    .panel-tabs .tab-pane{
-        padding-left: 0;
-    }
     .header.inner-page .nav > li.login-link{
         padding-right: 15px;
     }
@@ -764,6 +820,7 @@
     .header .nav > li > a{
         padding: 20px 10px;
     }
+    .nav.nav-pills,
     .panel-tabs .tab-pane{
         padding-left: 200px;
     }

@@ -34,11 +34,11 @@ $imagePath = Yii::getPathOfAlias('webroot').'/uploads/cars/';
     </div>
     <div class="item-actions">
         <a href="<?php echo $data->car->getViewUrl(); ?>" class="btn btn-gray">
-            نمایش خودرو
+            <span>نمایش خودرو</span>
             <i class="addon-icon icon icon-search"></i>
         </a>
         <?php
-        echo CHtml::ajaxLink('حذف از پارکینگ<i class="addon-icon icon icon-remove"></i>',array('/car/public/authJson'),array(
+        echo CHtml::ajaxLink('<span>حذف از پارکینگ</span><i class="addon-icon icon icon-remove"></i>',array('/car/public/authJson'),array(
             'type' => 'POST',
             'dataType' => 'JSON',
             'data' => array('method' => 'park','hash'=>base64_encode($data->car->id)),
