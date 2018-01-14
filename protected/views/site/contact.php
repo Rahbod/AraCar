@@ -18,10 +18,10 @@ $this->breadcrumbs=array(
 				<div class="contact-icon"></div>
 			</div>
 			<div class="row">
-				<div class="col-lg-7 col-md-6 col-sm-6 col-xs-12">
+				<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
 					<p>                        در صورتی که مایل به تماس با شرکت هستید، می توانید از طریق فرم زیر بخش مورد نظر خود را انتخاب و موضوع خود را مطرح کنید. همچنین می توانید با شماره تماس های درج شده نیز تماس حاصل فرمایید.</p>
 				</div>
-				<div class="col-lg-5 col-md-6 col-sm-6 col-xs-12">
+				<div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
 					<?php $this->renderPartial('//partial-views/_socials') ?>
 				</div>
 			</div>

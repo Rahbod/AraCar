@@ -18,37 +18,37 @@ $orderTypes = [
 ?>
 <div class="top-filter-box">
     <div class="row">
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
             <input type="text" value="<?= isset($filters['min-year']) ? $filters['min-year'] : '' ?>" class="text-field" id="min-year" data-toggle="popover" data-placement="bottom" data-trigger="focus" data-content="4 رقمی، شمسی یا میلادی" placeholder="از سال">
         </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
             <input type="text" value="<?= isset($filters['max-year']) ? $filters['max-year'] : '' ?>" class="text-field" id="max-year" data-toggle="popover" data-placement="bottom" data-trigger="focus" data-content="4 رقمی، شمسی یا میلادی" placeholder="تا سال">
         </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
             <input type="text" value="<?= isset($filters['min-distance']) ? $filters['min-distance'] : '' ?>" class="text-field" id="min-distance" data-toggle="popover" data-placement="bottom" data-trigger="focus" data-content="بر حسب هزار کیلومتر" placeholder="از کارکرد">
         </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
             <input type="text" value="<?= isset($filters['max-distance']) ? $filters['max-distance'] : '' ?>" class="text-field" id="max-distance" data-toggle="popover" data-placement="bottom" data-trigger="focus" data-content="بر حسب هزار کیلومتر" placeholder="تا کارکرد">
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
             <?= CHtml::dropDownList('', isset($filters['purchase']) ? $filters['purchase'] : 'all', array_merge(['all' => 'نوع پرداخت مهم نیست'], Cars::$purchase_types), [
                 'class' => 'selectpicker select-field',
                 'id' => 'purchase'
             ])?>
         </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
             <?= CHtml::dropDownList('', isset($_GET['order']) ? $_GET['order'] : 'time', $orderTypes, [
                 'class' => 'selectpicker select-field',
                 'id' => 'order'
             ])?>
         </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
             <input type="checkbox" id="has-image"<?= (isset($filters['has-image']) and $filters['has-image']) ? ' checked' : ''?>>
             <label for="has-image">عکس دار</label>
         </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
             <input type="button" class="btn-blue center-block text-center" onclick="submitTopFilter()" value="جستجو">
         </div>
     </div>

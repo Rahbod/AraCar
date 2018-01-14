@@ -13,6 +13,9 @@
     }
 }
 @media screen and (max-width: 992px){
+    .contact-icon-outer{
+        position: relative;
+    }
     .nav-pills .btn-wide{
         padding:10px 15px !important;
     }
@@ -378,6 +381,9 @@
     .top-filter-box label{
         margin: 13px 0;
     }
+    .contact-box{
+        padding: 0;
+    }
 }
 @media screen and (max-width: 768px){
     .nav.nav-pills{
@@ -564,6 +570,12 @@
     .compare-panel .car-image.owl-theme .owl-item{
         cursor: hand !important;
     }
+    .top-filter-box .col-xs-6{
+        margin-bottom: 4px;
+    }
+    .page-header.inner-page{
+        overflow: hidden;
+    }
 }
 @media screen and (max-width: 650px){
     .advertise-panel-list .item-title {
@@ -716,6 +728,14 @@
     }
 }
 @media screen and (max-width: 450px){
+    .contact-form .captcha{
+        width: 100%;
+        margin-top: 15px;
+    }
+    .contact-form .btn-blue{
+        width: 100%;
+        margin-top: 15px;
+    }
     .advertise-panel-list .item-image{
         display: none;
     }
@@ -774,6 +794,9 @@
     }
 }
 @media screen and (max-width: 350px){
+    .contact-box .contact-form{
+        padding: 15px;
+    }
     .car-image-item,
     .panel-default .panel-body .car-image{
         height: 110px;
@@ -874,4 +897,12 @@
     .brand-show{
         width: 100% !important;
     }
+    footer .nav li {
+        height: 60px;
+        padding: 20px 0;
+    }
+    .contact-icon-outer{
+        position: relative;
+    }
+    
 }

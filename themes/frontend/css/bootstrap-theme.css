@@ -176,7 +176,6 @@ a:focus{
     padding: 0;
     height:356px;
     display: inline-block;
-    width: 100%;
 }
 .boxes-container .right-side{
     background: #313131;
@@ -1469,6 +1468,8 @@ input.form-control.white-bg {
     position: relative;
     cursor: pointer;
     text-align: center;
+    display: inline-block;
+    overflow: hidden;
     overflow-y: auto;
 }
 .image-uploader .dz-error-message {
@@ -3468,4 +3469,7 @@ footer .nav li:last-of-type a{
     border-radius: 0;
     background-color: #eee;
     color: #222;
+}
+.dz-hidden-input{
+    display: none !important;
 }
