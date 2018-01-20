@@ -3473,3 +3473,10 @@ footer .nav li:last-of-type a{
 .dz-hidden-input{
     display: none !important;
 }
+
+#report-modal input[type="checkbox"],
+#report-modal input[type="radio"]{
+    display: inline-block;
+    float: right;
+    margin: 2px 0 0 5px;
+}

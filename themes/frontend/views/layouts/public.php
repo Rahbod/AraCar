@@ -19,9 +19,9 @@
     $baseUrl = Yii::app()->theme->baseUrl;
     $cs = Yii::app()->getClientScript();
     Yii::app()->clientScript->registerCoreScript('jquery');
-    Yii::app()->clientScript->registerCoreScript('jquery.ui');
     $cssCoreUrl = $cs->getCoreScriptUrl();
-    $cs->registerCssFile($cssCoreUrl . '/jui/css/base/jquery-ui.css');
+//    Yii::app()->clientScript->registerCoreScript('jquery.ui');
+//    $cs->registerCssFile($cssCoreUrl . '/jui/css/base/jquery-ui.css');
 
     $cs->registerCssFile($baseUrl.'/css/bootstrap.min.css');
     $cs->registerCssFile($baseUrl.'/css/bootstrap-rtl.min.css');

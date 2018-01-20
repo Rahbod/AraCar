@@ -10,8 +10,8 @@ $cs->registerCssFile($baseUrl.'/css/owl.theme.default.min.css');
 $cs->registerScriptFile($baseUrl.'/js/owl.carousel.min.js', CClientScript::POS_END);
 
 // jquery mobile
-$cs->registerCssFile($baseUrl.'/css/jquery.mobile.structure-1.4.5.min.css');
-$cs->registerScriptFile($baseUrl.'/js/jquery.mobile-1.4.5.min.js', CClientScript::POS_HEAD);
+//$cs->registerCssFile($baseUrl.'/css/jquery.mobile.structure-1.4.5.min.css');
+//$cs->registerScriptFile($baseUrl.'/js/jquery.mobile-1.4.5.min.js', CClientScript::POS_HEAD);
 
 $breadcrumbs= [
 	$car->brand->title => array('/car/brand/'.$car->brand->slug),
@@ -54,7 +54,7 @@ $parked = UserParking::model()->findByAttributes(['user_id' => $car->user_id, 'c
 		<div class="pull-left page-info"><?= $car->getTitle(false)?> برای فروش در <?= $car->state->name ?></div>
 	</div>
 </div>
-<div class="content-box view-page-box">
+<div class="content-box view-page-box" data-enhance="false">
 	<div class="center-box">
 		<div class="row advertise-info-box">
 			<a href="#" class="call-btn floating-button left" data-title="تماس" data-url="<?= $this->createUrl('/car/public/json') ?>" data-hash="<?= base64_encode($car->id) ?>"></a>
@@ -293,7 +293,7 @@ $parked = UserParking::model()->findByAttributes(['user_id' => $car->user_id, 'c
 	?>
 </div>
 
-<div id="report-modal" class="modal fade" role="dialog">
+<div id="report-modal" class="modal fade" data-enhance="false" role="nojs">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -349,4 +349,4 @@ if(!phone){
 //	
 //	$(".call-btn").click();
 //});
-', CClientScript::POS_READY);	
+', CClientScript::POS_READY);

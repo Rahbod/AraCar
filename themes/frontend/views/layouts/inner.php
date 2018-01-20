@@ -19,9 +19,9 @@
     $baseUrl = Yii::app()->theme->baseUrl;
     $cs = Yii::app()->getClientScript();
     Yii::app()->clientScript->registerCoreScript('jquery');
-    Yii::app()->clientScript->registerCoreScript('jquery.ui');
     $cssCoreUrl = $cs->getCoreScriptUrl();
-    $cs->registerCssFile($cssCoreUrl . '/jui/css/base/jquery-ui.css');
+//    Yii::app()->clientScript->registerCoreScript('jquery.ui');
+//    $cs->registerCssFile($cssCoreUrl . '/jui/css/base/jquery-ui.css');
 
     $cs->registerCssFile($baseUrl.'/css/bootstrap.min.css');
     $cs->registerCssFile($baseUrl.'/css/bootstrap-rtl.min.css');
@@ -36,6 +36,17 @@
     $cs->registerScriptFile($baseUrl.'/js/jquery.nicescroll.min.js', CClientScript::POS_END);
     $cs->registerScriptFile($baseUrl.'/js/jquery.script.js?3.3', CClientScript::POS_END);
     ?>
+<!--    <script>-->
+<!--        $(document).on('mobileinit', function () {-->
+<!--            $.mobile.ignoreContentEnabled = true;-->
+<!--            $.mobile.ajaxEnabled = false;-->
+<!--        });-->
+<!--    </script>-->
+<!--    <style>-->
+<!--        .ui-loader{-->
+<!--            display:none !important;-->
+<!--        }-->
+<!--    </style>-->
 </head>
 <body>
 <?php $this->renderPartial('//partial-views/_header');?>
