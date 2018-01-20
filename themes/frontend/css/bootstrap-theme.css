@@ -2827,10 +2827,13 @@ input.form-control.white-bg {
 }
 .navbar-nav .dropdown-menu{
     padding: 10px 20px;
-    min-width:642px;
+    min-width:664px;
     width: auto;
     background-color: #f0f0f0;
     border-radius: 0 !important;
+    max-height: 500px;
+    overflow: hidden;
+    overflow-y: auto;
 }
 .navbar-nav .dropdown-menu.price-menu{
     min-width:842px;

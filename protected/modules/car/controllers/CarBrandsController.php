@@ -18,7 +18,7 @@ class CarBrandsController extends Controller
 	public function filters()
 	{
 		return array(
-			'checkAccess'
+			'checkAccess - imager'
 		);
 	}
 
@@ -31,7 +31,7 @@ class CarBrandsController extends Controller
 			'backend' => array(
 				'index', 'create', 'update', 'admin', 'delete', 'upload', 'deleteUpload',
 				'models', 'modelAdd', 'modelEdit', 'modelDelete', 'modelDetailAdd', 'modelDetailEdit', 'modelDetailDelete',
-				'order', 'uploadModelImage', 'deleteUploadModelImage'
+				'order', 'uploadModelImage', 'deleteUploadModelImage', 'imager'
 			)
 		);
 	}
