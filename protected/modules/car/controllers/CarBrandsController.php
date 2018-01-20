@@ -9,6 +9,8 @@ class CarBrandsController extends Controller
 	public $layout = '//layouts/column2';
 	public $logoPath = 'uploads/brands';
 	public $modelImagePath = 'uploads/brands/models';
+	public $fileOptions = ['thumbnail' => ['width' => 100, 'height' => 100], 'resize' => ['width' => 200, 'height' => 200]];
+	public $modelFileOptions = ['resize' => ['width' => 545, 'height' => 270]];
 
 	/**
 	 * @return array action filters
@@ -94,7 +96,7 @@ class CarBrandsController extends Controller
 		$logo = [];
 		if(isset($_POST['Brands'])){
 			$model->attributes = $_POST['Brands'];
-			$logo = new UploadedFiles($this->tempPath, $model->logo);
+			$logo = new UploadedFiles($this->tempPath, $model->logo, $this->fileOptions);
 			if($model->save()){
 				$logo->move($this->logoPath);
 				Yii::app()->user->setFlash('success', '<span class="icon-check"></span>&nbsp;&nbsp;اطلاعات با موفقیت ذخیره شد. لطفا مدل های این برند را ثبت کنید.');
@@ -118,7 +120,7 @@ class CarBrandsController extends Controller
 	{
 		$model = $this->loadModel($id);
 
-		$logo = new UploadedFiles($this->logoPath, $model->logo);
+		$logo = new UploadedFiles($this->logoPath, $model->logo, $this->fileOptions);
 		if(isset($_POST['Brands'])){
 			// store model image value in oldImage variable
 			$oldLogo = $model->logo;
@@ -145,11 +147,11 @@ class CarBrandsController extends Controller
 	public function actionDelete($id)
 	{
 		$model = $this->loadModel($id);
-		$logo = new UploadedFiles($this->logoPath, $model->logo);
+		$logo = new UploadedFiles($this->logoPath, $model->logo, $this->fileOptions);
 		$logo->remove($model->logo, true);
 		foreach($model->models as $m){
 			foreach($m->years as $detail){
-				$images = new UploadedFiles($this->modelImagePath, $detail->images);
+				$images = new UploadedFiles($this->modelImagePath, $detail->images, $this->modelFileOptions);
 				$images->removeAll(true);
 			}
 		}
@@ -242,7 +244,7 @@ class CarBrandsController extends Controller
 			'modelsSearch' => $modelsSearch
 		]);
 	}
-	
+
 	public function actionModelAdd()
 	{
 		$model = new Models;
@@ -258,8 +260,8 @@ class CarBrandsController extends Controller
 		if(isset($_POST['Models'])){
 			$model->attributes = $_POST['Models'];
 			if($model->save()){
-				echo CJSON::encode(array('status' => true, 'msg' => 'اطلاعات با موفقیت ذخیره شد.', 
-					'url' => $this->createUrl('brands/modelEdit/'.$model->id)));
+				echo CJSON::encode(array('status' => true, 'msg' => 'اطلاعات با موفقیت ذخیره شد.',
+					'url' => $this->createUrl('brands/modelEdit/' . $model->id)));
 			}else
 				echo CJSON::encode(array('status' => false, 'msg' => 'در ثبت اطلاعات خطایی رخ داده است! لطفا مجددا تلاش کنید.'));
 		}
@@ -300,14 +302,14 @@ class CarBrandsController extends Controller
 		$model = $this->loadModel($id, true);
 		$brID = $model->brand_id;
 		foreach($model->years as $detail){
-			$images = new UploadedFiles($this->modelImagePath, $detail->images);
+			$images = new UploadedFiles($this->modelImagePath, $detail->images, $this->modelFileOptions);
 			$images->removeAll(true);
 		}
 		$model->delete();
 
 		if(!isset($_GET['ajax'])){
 			Yii::app()->user->setFlash('success', '<span class="icon-check"></span>&nbsp;&nbsp;آیتم با موفقیت حذف شد.');
-			$this->redirect(isset($_POST['returnUrl'])?$_POST['returnUrl']:array('brands/models/'.$brID));
+			$this->redirect(isset($_POST['returnUrl'])?$_POST['returnUrl']:array('brands/models/' . $brID));
 		}
 	}
 
@@ -326,11 +328,11 @@ class CarBrandsController extends Controller
 		}
 		if(isset($_POST['ModelDetails'])){
 			$model->attributes = $_POST['ModelDetails'];
-			$images = new UploadedFiles($this->tempPath,$model->images);
+			$images = new UploadedFiles($this->tempPath, $model->images, $this->modelFileOptions);
 			if($model->save()){
 				$images->move($this->modelImagePath);
 				echo CJSON::encode(array('status' => true, 'msg' => 'اطلاعات با موفقیت ذخیره شد.',
-					'url' => $this->createUrl('brands/modelEdit/'.$model->model_id)));
+					'url' => $this->createUrl('brands/modelEdit/' . $model->model_id)));
 			}else
 				echo CJSON::encode(array('status' => false, 'msg' => 'در ثبت اطلاعات خطایی رخ داده است! لطفا مجددا تلاش کنید.'));
 		}
@@ -345,7 +347,7 @@ class CarBrandsController extends Controller
 	public function actionModelDetailEdit($id)
 	{
 		$model = $this->loadDetailsModel($id);
-		$images = new UploadedFiles($this->modelImagePath, $model->images);
+		$images = new UploadedFiles($this->modelImagePath, $model->images, $this->modelFileOptions);
 
 		if(isset($_POST['ModelDetails'])){
 			// store model image value in oldImage variable
@@ -369,13 +371,13 @@ class CarBrandsController extends Controller
 	{
 		$model = $this->loadDetailsModel($id);
 		$mID = $model->model_id;
-		$images = new UploadedFiles($this->modelImagePath, $model->images);
+		$images = new UploadedFiles($this->modelImagePath, $model->images, $this->modelFileOptions);
 		$images->removeAll(true);
 		$model->delete();
 
 		if(!isset($_GET['ajax'])){
 			Yii::app()->user->setFlash('success', '<span class="icon-check"></span>&nbsp;&nbsp;آیتم با موفقیت حذف شد.');
-			$this->redirect(isset($_POST['returnUrl'])?$_POST['returnUrl']:array('brands/modelEdit/'.$mID));
+			$this->redirect(isset($_POST['returnUrl'])?$_POST['returnUrl']:array('brands/modelEdit/' . $mID));
 		}
 	}
 }
