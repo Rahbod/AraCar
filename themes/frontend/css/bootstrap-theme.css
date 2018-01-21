@@ -3994,3 +3994,7 @@ footer .nav li:last-of-type a{
 .news-tags .label-blue:hover{
     background-color: #158eff;
 }
+.enamad-logo{
+    background-color: #e1deed;
+    padding: 60px 15px;
+}
