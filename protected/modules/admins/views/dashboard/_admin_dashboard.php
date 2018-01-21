@@ -6,6 +6,7 @@ $permissions = [
     'pendingCars' => false,
     'dealerRequests' => false,
     'carReports' => false,
+    'newsComments' => false,
     'statistics' => false,
 ];
 if(Yii::app()->user->roles == 'admin'){
@@ -13,6 +14,7 @@ if(Yii::app()->user->roles == 'admin'){
     $permissions['pendingCars'] = true;
     $permissions['dealerRequests'] = true;
     $permissions['carReports'] = true;
+    $permissions['newsComments'] = true;
     $permissions['statistics'] = true;
 }
 ?>
@@ -79,6 +81,27 @@ if(Yii::app()->user->roles == 'admin'){
     endif;
     ?>
 
+    <!-- Car Reports-->
+    <?php
+    if($permissions['newsComments']):
+        ?>
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-lime-active">
+                <div class="inner">
+                    <h3><?php echo $statistics['newsComments'];?></h3>
+                    <p>نظرات اخبار تایید نشده</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-android-chat"></i>
+                </div>
+                <a href="<?php echo $this->createUrl('/comments/manage/admin');?>" class="small-box-footer">مشاهده نظرات <i class="fa fa-arrow-circle-left"></i></a>
+            </div>
+        </div>
+        <?php
+    endif;
+    ?>
+    
     <!-- Car Reports-->
     <?php
     if($permissions['carReports']):

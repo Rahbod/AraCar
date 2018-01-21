@@ -43,6 +43,49 @@ return array(
 		'contact',
 		'lists',
 		'car',
+		'news',
+		'newsletters',
+		'comments'=>array(
+			//you may override default config for all connecting models
+			'defaultModelConfig' => array(
+				//only registered users can post comments
+				'registeredOnly' => true,
+				'useCaptcha' => true,
+				//allow comment tree
+				'allowSubcommenting' => true,
+				//display comments after moderation
+				'premoderate' => true,
+				//action for postig comment
+				'postCommentAction' => '/comments/manage/postComment',
+				//super user condition(display comment list in admin view and automoderate comments)
+				'isSuperuser'=>'Yii::app()->user->checkAccess("moderate")',
+				//order direction for comments
+				'orderComments'=>'DESC',
+				'showEmail' => false
+			),
+			//the models for commenting
+			'commentableModels'=>array(
+				//model with individual settings
+				'News'=>array(
+					'registeredOnly'=>false,
+					'useCaptcha'=>false,
+					'premoderate' => true,
+					'orderComments'=>'DESC',
+					//config for create link to view model page(page with comments)
+					'module' => 'news',
+					'pageUrl'=>array(
+						'route'=>'news/',
+						'data'=>array('id'=>'id'),
+					)
+				),
+			),
+			//config for user models, which is used in application
+			'userConfig'=>array(
+				'class'=>'Users',
+				'nameProperty'=>'userDetails.showName',
+				'emailProperty'=>'email',
+			),
+		),
 	),
 
 	// application components
@@ -96,6 +139,8 @@ return array(
 			'showScriptName'=>false,
 			'appendParams'=>true,
 			'rules'=>array(
+				'news'=>'news/manage/all',
+				'news/tag/<id:\d+>/<title:(.*)>'=>'news/manage/tag',
 				'sell' => 'car/public/sell',
 				'research' => 'car/public/research',
 				'research/<params:(.*)>' => 'car/public/research',

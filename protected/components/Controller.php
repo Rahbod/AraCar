@@ -160,6 +160,28 @@ class Controller extends AuthController
                     )
                 ),
                 array(
+                    'label' => '<i class="fa fa-newspaper-o"></i><span>اخبار</span> <i class="fa fa-angle-left pull-left"></i>',
+                    'url' => '#',
+                    'itemOptions' => array('class' => 'treeview', 'tabindex' => "-1"),
+                    'submenuOptions' => array('class' => 'treeview-menu'),
+                    'items' => array(
+                        array('label' => '<i class="fa fa-circle-o"></i>مدیریت دسته بندی اخبار', 'url' => Yii::app()->createUrl('/news/category/admin')),
+                        array('label' => '<i class="fa fa-circle-o"></i>مدیریت اخبار', 'url' => Yii::app()->createUrl('/news/manage/admin')),
+                        array('label' => '<i class="fa fa-circle-o"></i>افزودن خبر', 'url' => Yii::app()->createUrl('/news/manage/create')),
+                    )
+                ),
+                array(
+                    'label' => '<i class="fa fa-paper-plane"></i><span>خبرنامه</span> <i class="fa fa-angle-left pull-left"></i>',
+                    'url' => '#',
+                    'itemOptions' => array('class' => 'treeview', 'tabindex' => "-1"),
+                    'submenuOptions' => array('class' => 'treeview-menu'),
+                    'items' => array(
+                        array('label' => '<i class="fa fa-circle-o"></i>مدیریت گیرندگان', 'url' => Yii::app()->createUrl('/newsletters/manage/admin')),
+                        array('label' => '<i class="fa fa-circle-o"></i>تاریخچه خبرنامه ها', 'url' => Yii::app()->createUrl('/newsletters/manage/messages')),
+                        array('label' => '<i class="fa fa-circle-o"></i>ارسال خبرنامه', 'url' => Yii::app()->createUrl('/newsletters/manage/send')),
+                    )
+                ),
+                array(
                     'label' => '<i class="fa fa-support"></i><span>تماس با ما</span> <i class="fa fa-angle-left pull-left"></i>',
                     'url' => '#',
                     'itemOptions' => array('class' => 'treeview', 'tabindex' => "-1"),
@@ -281,7 +303,7 @@ class Controller extends AuthController
      * @param string $postfix
      * @return mixed|string
      */
-    public static function normalizeNumber($number,$numberFormat = true, $persianNumber = true, $postfix = 'تومان')
+    public static function normalizeNumber($number, $numberFormat = true, $persianNumber = true, $postfix = 'تومان')
     {
         $number = $numberFormat?number_format($number):$number;
         $number = $persianNumber?Controller::parseNumbers($number):$number;
@@ -443,5 +465,18 @@ class Controller extends AuthController
         if($active_gateway != 'zarinpal' && $active_gateway != 'mellat')
             die('Gateway invalid!! Valid gateways is "zarinpal" or "mellat". Please change gateway in main.php file.');
         return $active_gateway;
+    }
+
+    public function getLatestNews()
+    {
+        Yii::app()->getModule('news');
+        return News::model()->findAll(News::getValidNews());
+    }
+
+    public function getPopularNews()
+    {
+        $criteria = News::getValidNews();
+        $criteria->order = 'seen DESC';
+        return News::model()->findAll($criteria);
     }
 }
