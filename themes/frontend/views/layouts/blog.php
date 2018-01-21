@@ -46,7 +46,7 @@
             <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
                 <?php echo $content;?>
             </div>
-            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 hidden-xs">
                 <div class="news-list">
                     <div class="head">RSS</div>
                     <div class="content">
@@ -58,14 +58,14 @@
                             <div id="latest" class="tab-pane fade in active">
                                 <ul>
                                     <?php foreach($this->getLatestNews() as $news):?>
-                                        <li><a href="<?php echo $this->createUrl('/news/'.$news->id);?>"><?php echo $news->title;?></a></li>
+                                        <li><a href="<?php echo $news->getViewUrl();?>"><?php echo $news->title;?></a></li>
                                     <?php endforeach;?>
                                 </ul>
                             </div>
                             <div id="popular" class="tab-pane fade">
                                 <ul>
                                     <?php foreach($this->getPopularNews() as $news):?>
-                                        <li><a href="<?php echo $this->createUrl('/news/'.$news->id);?>"><?php echo $news->title;?></a></li>
+                                        <li><a href="<?php echo $news->getViewUrl();?>"><?php echo $news->title;?></a></li>
                                     <?php endforeach;?>
                                 </ul>
                             </div>

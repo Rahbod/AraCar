@@ -470,13 +470,16 @@ class Controller extends AuthController
     public function getLatestNews()
     {
         Yii::app()->getModule('news');
-        return News::model()->findAll(News::getValidNews());
+        $criteria = News::getValidNews();
+        $criteria->limit = 15;
+        return News::model()->findAll($criteria);
     }
 
     public function getPopularNews()
     {
         $criteria = News::getValidNews();
         $criteria->order = 'seen DESC';
+        $criteria->limit = 15;
         return News::model()->findAll($criteria);
     }
 }

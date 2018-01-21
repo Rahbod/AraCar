@@ -43,28 +43,6 @@
                     </div>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">قیمت <i class="caret"></i></a>
-                    <div class="dropdown-menu price-menu">
-                        <ul class="linear-menu">
-                            <!--<li><a href="--><?//= $this->createUrl('/car/search/all?price=0-5')?><!--">تا 5 میلیون تومان</a></li>-->
-                            <?php foreach($this->prices as $price):?>
-                                <li><a href="<?= $this->createUrl('/car/search/all?price=' . $price . '&def=price')?>"><?= "از ".implode(' تا ', explode('-', $price))." میلیون تومان"?></a></li>
-                            <?php endforeach;?>
-                            <li><a href="<?= $this->createUrl('/car/search/all?price=900-1000&def=price')?>">از 900 تا یک میلیارد تومان</a></li>
-                            <li><a href="<?= $this->createUrl('/car/search/all?price=1000&def=price')?>">از یک میلیارد به بالا</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">موارد خاص <i class="caret"></i></a>
-                    <div class="dropdown-menu special-menu">
-                        <ul class="linear-menu">
-                            <li><a href="<?= $this->createUrl('/car/search/all?plate=' . str_replace(' ', '-', 'منطقه آزاد') . '&def=plate')?>">منطقه آزاد</a></li>
-                            <li><a href="<?= $this->createUrl('/car/search/all?plate=' . str_replace(' ', '-', 'گذر موقت') . '&def=plate')?>">گذر موقت</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">نمایشگاه <i class="caret"></i></a>
                     <div class="dropdown-menu special-menu">
                         <ul class="linear-menu">
@@ -74,7 +52,7 @@
                     </div>
                 </li>
                 <li><a href="<?= $this->createUrl('/research') ?>">بررسی خودرو</a></li>
-<!--                <li><a href="#">قیمت صفر</a></li>-->
+                <li><a href="<?= $this->createUrl('/research') ?>">تازه ترین اخبار</a></li>
             </ul>
         </div>
     </div>

@@ -140,7 +140,9 @@ return array(
 			'appendParams'=>true,
 			'rules'=>array(
 				'news'=>'news/manage/all',
+				'news/latest'=>'news/manage/latest',
 				'news/tag/<id:\d+>/<title:(.*)>'=>'news/manage/tag',
+				'news/<id:\d+>/<title:(.*)>'=>'news/manage/view',
 				'sell' => 'car/public/sell',
 				'research' => 'car/public/research',
 				'research/<params:(.*)>' => 'car/public/research',

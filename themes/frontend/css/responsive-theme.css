@@ -386,6 +386,9 @@
     }
 }
 @media screen and (max-width: 768px){
+    .news-view-box .text-container .text{
+        padding: 15px;
+    }
     .nav.nav-pills{
         display: block;
         overflow: hidden;

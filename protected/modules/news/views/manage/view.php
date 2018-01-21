@@ -4,24 +4,28 @@
 /* @var $similarNewsProvider CActiveDataProvider */
 $this->pageTitle = $model->title;
 $this->pageHeader = $model->title;
-$this->pageDescription = $model->summary;
+//$this->pageDescription = $model->summary;
 $this->breadcrumbs = array(
     'اخبار' => array('/news'),
     $model->title
 );
 ?>
 <div class="news-view-box">
+    <div class="head">
+        <h2><?php echo $model->title;?></h2>
+    </div>
     <div class="info">
         <span><b>دسته بندی </b></span>
         <span><?php echo $model->category->title;?></span>
-        <span class="date"><?php echo JalaliDate::date('d F Y - H:i', $model->publish_date);?></span>
+        <span class="date"><?php echo $model->publish_date?JalaliDate::date('d F Y - H:i', $model->publish_date):'---';?></span>
         <!--                        <a href="#" class="print"></a>-->
     </div>
     <div class="text-container">
         <div class="image-container text-center">
-            <img src="<?php echo Yii::app()->baseUrl.'/uploads/news/'.$model->image; ?>" alt="">
+            <img src="<?php echo Yii::app()->baseUrl.'/uploads/news/'.$model->image; ?>" alt="<?= $model->title ?>">
         </div>
         <div class="text">
+            <div class="well"><?= CHtml::encode(nl2br($model->summary)) ?></div>
             <?php
             $purifier=new CHtmlPurifier();
             echo $purifier->purify($model->body);
