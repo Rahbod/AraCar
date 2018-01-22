@@ -3853,6 +3853,7 @@ footer .nav li:last-of-type a{
 }
 
 .comment-date{
+    display: inline-block;
     font-size: 10px;
 }
 .comment-like,

@@ -52,7 +52,7 @@
                     </div>
                 </li>
                 <li><a href="<?= $this->createUrl('/research') ?>">بررسی خودرو</a></li>
-                <li><a href="<?= $this->createUrl('/research') ?>">تازه ترین اخبار</a></li>
+                <li><a href="<?= $this->createUrl('/news/latest') ?>">تازه ترین اخبار</a></li>
             </ul>
         </div>
     </div>
