@@ -3640,14 +3640,15 @@ footer .nav li:last-of-type a{
 }
 .related-news-box .items{
     overflow: hidden;
-    padding: 15px 0;
+    padding-bottom: 30px;
+    margin:-5px;
 }
 .related-news-box .items .item{
     float: right;
     width: 150px;
     height: 270px;
     border-radius: 5px;
-    margin-left: 5px;
+    margin: 5px;
     overflow: hidden;
     background: #fff;
     position: relative;
@@ -3666,11 +3667,8 @@ footer .nav li:last-of-type a{
     -moz-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
-.related-news-box .items .item:first-child{
-    margin-right: 2px;
-}
-.related-news-box .items .item:last-child{
-    margin-left: 3px;
+.related-news-box .items .item{
+    margin: 3px !important;
 }
 .related-news-box .item a.link{
     position: absolute;
@@ -3998,4 +3996,12 @@ footer .nav li:last-of-type a{
 .enamad-logo{
     background-color: #e1deed;
     padding: 60px 15px;
+}
+#similar-list{
+    padding: 20px 0;
+}
+
+.text img {
+    max-width: 100% !important;
+    height: auto !important;
 }

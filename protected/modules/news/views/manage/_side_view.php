@@ -1,7 +1,7 @@
 <?php
 /* @var $this NewsManageController */
 /* @var $data News */
-$thumbPath = Yii::getPathOfAlias("webroot").'/uploads/news/200x200/';
+$thumbPath = Yii::getPathOfAlias("webroot").'/uploads/news/thumbs/150x150/';
 $date = Yii::app()->language=="fa"?JalaliDate::date("Y/m/d - H:i",$data->publish_date):date("Y/m/d - H:i",$data->publish_date);
 ?>
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 news-item-container">
@@ -10,7 +10,7 @@ $date = Yii::app()->language=="fa"?JalaliDate::date("Y/m/d - H:i",$data->publish
 			<?php
 			if($data->image && file_exists($thumbPath.$data->image)):
 			?>
-				<img src="<?= Yii::app()->baseUrl.'/uploads/news/200x200/'.$data->image ?>" alt="<?= CHtml::encode($data->title) ?>">
+				<img src="<?= Yii::app()->baseUrl.'/uploads/news/thumbs/150x150/'.$data->image ?>" alt="<?= CHtml::encode($data->title) ?>">
 			<?php
 			else:
 			?>

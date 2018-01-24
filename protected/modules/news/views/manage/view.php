@@ -15,7 +15,7 @@ $this->breadcrumbs = array(
         <h2><?php echo $model->title;?></h2>
     </div>
     <div class="info">
-        <span><b>دسته بندی </b></span>
+        <span><b>دسته بندی </b>&nbsp;&nbsp;&nbsp;</span>
         <span><?php echo $model->category->title;?></span>
         <span class="date"><?php echo $model->publish_date?JalaliDate::date('d F Y - H:i', $model->publish_date):'---';?></span>
         <!--                        <a href="#" class="print"></a>-->
@@ -25,7 +25,7 @@ $this->breadcrumbs = array(
             <img src="<?php echo Yii::app()->baseUrl.'/uploads/news/'.$model->image; ?>" alt="<?= $model->title ?>">
         </div>
         <div class="text">
-            <div class="well"><?= CHtml::encode(nl2br($model->summary)) ?></div>
+            <?php if(!empty($model->summary)):?><div class="well"><?= CHtml::encode(nl2br($model->summary)) ?></div><?php endif;?>
             <?php
             $purifier=new CHtmlPurifier();
             echo $purifier->purify($model->body);

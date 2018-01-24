@@ -386,6 +386,9 @@
     }
 }
 @media screen and (max-width: 768px){
+    .news-view-box .head{
+        height: auto !important;
+    }
     .news-view-box .text-container .text{
         padding: 15px;
     }

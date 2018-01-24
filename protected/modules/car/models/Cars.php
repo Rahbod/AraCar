@@ -330,7 +330,7 @@ class Cars extends CActiveRecord
         $cr->addCondition('create_date >= :start_date AND create_date <= :end_date');
         $cr->params[':start_date'] = $startTime;
         $cr->params[':end_date'] = $endTime;
-        return self::model()->count($cr)+500;
+        return self::model()->count($cr);
     }
 
     /**
@@ -346,7 +346,7 @@ class Cars extends CActiveRecord
         $cr->addCondition('create_date >= :start_date AND create_date <= :end_date');
         $cr->params[':start_date'] = $startTime;
         $cr->params[':end_date'] = $endTime;
-        return self::model()->count($cr)+100;
+        return self::model()->count($cr);
     }
 
     public function getStatusLabel()
