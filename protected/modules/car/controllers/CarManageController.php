@@ -9,6 +9,7 @@ class CarManageController extends Controller
     public $layout = '//layouts/column2';
     public $tempPath = 'uploads/temp';
     public $imagePath = 'uploads/cars';
+    public $fileOptions = ['thumbnail' => ['width' => 180, 'height' => 140], 'resize' => ['width' => 450, 'height' => 300]];
 
     /**
      * @return array action filters
@@ -104,7 +105,7 @@ class CarManageController extends Controller
             $model->save(false);
         }else{
             // delete for ever
-            $images = new UploadedFiles($this->imagePath, CHtml::listData($model->carImages, 'id', 'filename'));
+            $images = new UploadedFiles($this->imagePath, CHtml::listData($model->carImages, 'id', 'filename'), $this->fileOptions);
             $images->removeAll(true);
             $model->delete();
         }
