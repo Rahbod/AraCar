@@ -81,7 +81,7 @@ class UsersPublicController extends Controller
     public function actionLogout()
     {
         Yii::app()->user->logout();
-        Yii::app()->user->setState('clinic',null);
+        Yii::app()->user->setState('clinic', null);
         $this->redirect(Yii::app()->createAbsoluteUrl('//'));
     }
 
@@ -109,7 +109,7 @@ class UsersPublicController extends Controller
         $criteria = new CDbCriteria();
         $criteria->compare('user_id', $user->id);
         $alerts = CarAlerts::model()->findAll($criteria);
-        
+
         $this->render('dashboard', compact('user', 'sells', 'alerts'));
     }
 
@@ -126,15 +126,15 @@ class UsersPublicController extends Controller
         $this->pageDescription = 'جهت تغییر کلمه عبور فرم زیر را تکمیل فرمایید.';
         $model->setScenario('change_password');
 
-        if (isset($_POST['Users'])) {
+        if(isset($_POST['Users'])){
             $model->attributes = $_POST['Users'];
-            if ($model->validate()) {
+            if($model->validate()){
                 $model->password = $_POST['Users']['newPassword'];
                 $model->password = $model->encrypt($model->password);
-                if ($model->save(false)) {
+                if($model->save(false)){
                     Yii::app()->user->setFlash('success', 'کلمه عبور با موفقیت تغییر یافت.');
                     $this->redirect($this->createUrl('/dashboard'));
-                } else
+                }else
                     Yii::app()->user->setFlash('failed', 'در ثبت اطلاعات خطایی رخ داده است! لطفا مجددا تلاش کنید.');
             }
         }
@@ -171,7 +171,7 @@ class UsersPublicController extends Controller
         $this->performAjaxValidation($model);
 
         $avatar = array();
-        if (!is_null($model->avatar))
+        if(!is_null($model->avatar))
             $avatar = array(
                 'name' => $model->avatar,
                 'src' => $avatarUrl . '/' . $model->avatar,
@@ -179,11 +179,11 @@ class UsersPublicController extends Controller
                 'serverName' => $model->avatar
             );
 
-        if (isset($_POST['UserDetails'])) {
+        if(isset($_POST['UserDetails'])){
             unset($_POST['UserDetails']['user_id']);
 
             $avatarFlag = false;
-            if (isset($_POST['UserDetails']['avatar']) && file_exists($tmpDIR . $_POST['UserDetails']['avatar']) && $_POST['UserDetails']['avatar'] != $model->avatar) {
+            if(isset($_POST['UserDetails']['avatar']) && file_exists($tmpDIR . $_POST['UserDetails']['avatar']) && $_POST['UserDetails']['avatar'] != $model->avatar){
                 $file = $_POST['UserDetails']['avatar'];
                 $avatar = array(array(
                     'name' => $file,
@@ -195,15 +195,15 @@ class UsersPublicController extends Controller
             }
 
             $model->attributes = $_POST['UserDetails'];
-            if ($model->save()) {
-                if ($avatarFlag) {
+            if($model->save()){
+                if($avatarFlag){
                     @rename($tmpDIR . $model->avatar, $avatarDIR . $model->avatar);
                     Yii::app()->user->setState('avatar', $model->avatar);
                 }
 
                 Yii::app()->user->setFlash('success', 'اطلاعات با موفقیت ثبت شد.');
                 $this->refresh();
-            } else
+            }else
                 Yii::app()->user->setFlash('failed', 'در ثبت اطلاعات خطایی رخ داده است! لطفا مجددا تلاش کنید.');
         }
 
@@ -223,12 +223,12 @@ class UsersPublicController extends Controller
         $this->layout = '//layouts/public';
 
         $model = Users::model()->findByPk($id);
-        if ($clinicID = Yii::app()->request->getQuery('clinic')) {
+        if($clinicID = Yii::app()->request->getQuery('clinic')){
             $criteria = new CDbCriteria();
             $criteria->addCondition('clinics.id = :id');
             $criteria->params[':id'] = $clinicID;
             $model->clinic = $model->clinics($criteria);
-            if ($model->clinic)
+            if($model->clinic)
                 $model->clinic = $model->clinic[0];
         }
 
@@ -242,36 +242,36 @@ class UsersPublicController extends Controller
      */
     public function actionVerify()
     {
-        if (!Yii::app()->user->isGuest and Yii::app()->user->type != 'admin')
+        if(!Yii::app()->user->isGuest and Yii::app()->user->type != 'admin')
             $this->redirect($this->createAbsoluteUrl('//'));
-        else if (!Yii::app()->user->isGuest and Yii::app()->user->type == 'admin')
+        else if(!Yii::app()->user->isGuest and Yii::app()->user->type == 'admin')
             Yii::app()->user->logout(false);
 
         $token = Yii::app()->request->getQuery('token');
         $model = Users::model()->find('verification_token=:token', array(':token' => $token));
-        if ($model) {
-            if ($model->status == 'pending') {
-                if (time() <= (double)$model->create_date + 259200) {
+        if($model){
+            if($model->status == 'pending'){
+                if(time() <= (double)$model->create_date + 259200){
                     $model->updateByPk($model->id, array('status' => 'active'));
                     Yii::app()->user->setFlash('success', 'حساب کاربری شما فعال گردید.');
                     $login = new UserLoginForm('OAuth');
                     $login->verification_field_value = $model->email;
                     $login->OAuth = true;
-                    if ($login->validate() && $login->login(true) === true)
+                    if($login->validate() && $login->login(true) === true)
                         $this->redirect(array('/dashboard'));
                     $this->redirect($this->createUrl('/login'));
-                } else {
+                }else{
                     Yii::app()->user->setFlash('failed', 'لینک فعال سازی منقضی شده و نامعتبر می باشد. لطفا مجددا ثبت نام کنید.');
                     $this->redirect($this->createUrl('/login'));
                 }
-            } elseif ($model->status == 'active') {
+            }elseif($model->status == 'active'){
                 Yii::app()->user->setFlash('failed', 'این حساب کاربری قبلا فعال شده است.');
                 $this->redirect($this->createUrl('/login'));
-            } else {
+            }else{
                 Yii::app()->user->setFlash('failed', 'امکان فعال سازی این کاربر وجود ندارد. لطفا مجددا ثبت نام کنید.');
                 $this->redirect($this->createUrl('/login'));
             }
-        } else {
+        }else{
             Yii::app()->user->setFlash('failed', 'لینک فعال سازی نامعتبر می باشد.');
             $this->redirect($this->createUrl('/login'));
         }
@@ -284,18 +284,18 @@ class UsersPublicController extends Controller
     {
         Yii::app()->theme = 'frontend';
         $this->layout = '//layouts/public';
-        if (!Yii::app()->user->isGuest and Yii::app()->user->type != 'admin')
+        if(!Yii::app()->user->isGuest and Yii::app()->user->type != 'admin')
             $this->redirect($this->createAbsoluteUrl('//'));
-        else if (!Yii::app()->user->isGuest and Yii::app()->user->type == 'admin')
+        else if(!Yii::app()->user->isGuest and Yii::app()->user->type == 'admin')
             Yii::app()->user->logout(false);
 
         $model = new UsersForgetPassword;
-        if (isset($_POST['UsersForgetPassword'])) {
+        if(isset($_POST['UsersForgetPassword'])){
             $model->attributes = $_POST['UsersForgetPassword'];
-            if ($model->isRegistereduser()) {
+            if($model->isRegistereduser()){
                 $model = Users::model()->find("`email`=:email", array(":email" => $model->email));
-                if ($model->status == 'active') {
-                    if ($model->change_password_request_count != 3) {
+                if($model->status == 'active'){
+                    if($model->change_password_request_count != 3){
                         $token = md5($model->id . '#' . $model->password . '#' . $model->email . '#' . $model->create_date . '#' . time());
                         $count = intval($model->change_password_request_count);
                         $model->updateByPk($model->id, array('verification_token' => $token, 'change_password_request_count' => $count + 1));
@@ -303,52 +303,50 @@ class UsersPublicController extends Controller
                         $message .= '<div style="text-align: right;font-size: 9pt;">';
                         $message .= '<a href="' . Yii::app()->getBaseUrl(true) . '/users/public/recoverPassword/token/' . $token . '">' . Yii::app()->getBaseUrl(true) . '/users/public/recoverPassword/token/' . $token . '</a>';
                         $message .= '</div>';
-                        $message .= '<div style="font-size: 8pt;color: #888;text-align: right;">اگر شخص دیگری غیر از شما این درخواست را صادر نموده است، یا شما کلمه عبور خود را به یاد آورده‌اید و دیگر نیازی به تغییر آن ندارید، کلمه عبور قبلی/موجود شما همچنان فعال می‌باشد و می توانید از طریق <a href="' . ((strpos($_SERVER['SERVER_PROTOCOL'], 'https')) ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . '/login">این صفحه</a> وارد حساب کاربری خود شوید.</div>';
+                        $message .= '<div style="font-size: 8pt;color: #888;text-align: right;">اگر شخص دیگری غیر از شما این درخواست را صادر نموده است، یا شما کلمه عبور خود را به یاد آورده‌اید و دیگر نیازی به تغییر آن ندارید، کلمه عبور قبلی/موجود شما همچنان فعال می‌باشد و می توانید از طریق <a href="' . ((strpos($_SERVER['SERVER_PROTOCOL'], 'https'))?'https://':'http://') . $_SERVER['HTTP_HOST'] . '/login">این صفحه</a> وارد حساب کاربری خود شوید.</div>';
                         $result = Mailer::mail($model->email, 'درخواست تغییر کلمه عبور در ' . Yii::app()->name, $message, Yii::app()->params['noReplyEmail']);
-                        if ($result) {
-                            if (isset($_GET['ajax'])) {
-                                echo CJSON::encode(array('state' => 1, 'url' => Yii::app()->baseUrl,  'msg' => 'ایمیل بازیابی رمز عبور به پست الکترونیکی شما ارسال شد. لطفا Inbox و Spam پست الکترونیکی خود را چک کنید.'));
+                        if($result){
+                            if(isset($_GET['ajax'])){
+                                echo CJSON::encode(array('state' => 1, 'url' => Yii::app()->baseUrl, 'msg' => 'ایمیل بازیابی رمز عبور به پست الکترونیکی شما ارسال شد. لطفا Inbox و Spam پست الکترونیکی خود را چک کنید.'));
                                 Yii::app()->end();
-                            } else {
+                            }else{
                                 Yii::app()->user->setFlash('success', 'ایمیل بازیابی رمز عبور به پست الکترونیکی شما ارسال شد. لطفا Inbox و Spam پست الکترونیکی خود را چک کنید.');
                                 $this->refresh();
                             }
-                        } else
-                        {
-                            if (isset($_GET['ajax'])) {
+                        }else{
+                            if(isset($_GET['ajax'])){
                                 echo CJSON::encode(array('state' => 0, 'msg' => 'در ارسال ایمیل مشکلی ایجاد شده است، لطفاً مجددا تلاش کنید.'));
                                 Yii::app()->end();
-                            } else {
+                            }else{
                                 Yii::app()->user->setFlash('failed', 'در انجام عملیات خطایی رخ داده است لطفا مجددا تلاش کنید.');
                                 $this->refresh();
                             }
                         }
-                    } else
-                    {
-                        if (isset($_GET['ajax'])) {
+                    }else{
+                        if(isset($_GET['ajax'])){
                             echo CJSON::encode(array('state' => 0, 'msg' => 'بیش از 3 بار نمی توانید درخواست تغییر کلمه عبور بدهید.'));
                             Yii::app()->end();
-                        } else {
+                        }else{
                             Yii::app()->user->setFlash('failed', 'بیش از 3 بار نمی توانید درخواست تغییر کلمه عبور بدهید.');
                             $this->refresh();
                         }
                     }
-                } elseif ($model->status == 'pending')
+                }elseif($model->status == 'pending')
                     $msg = 'این حساب کاربری هنوز فعال نشده است.';
-                elseif ($model->status == 'blocked')
+                elseif($model->status == 'blocked')
                     $msg = 'این حساب کاربری مسدود می باشد.';
-                elseif ($model->status == 'deleted')
+                elseif($model->status == 'deleted')
                     $msg = 'این حساب کاربری حذف شده است.';
-            } else
+            }else
                 $msg = $model->getErrors('email');
-            if (isset($_GET['ajax'])) {
+            if(isset($_GET['ajax'])){
                 echo CJSON::encode(array('state' => 0, 'msg' => $msg));
                 Yii::app()->end();
-            } else
+            }else
                 Yii::app()->user->setFlash('failed', $msg);
         }
 
-        if (!isset($_GET['ajax']))
+        if(!isset($_GET['ajax']))
             $this->render('forget_password');
     }
 
@@ -360,26 +358,26 @@ class UsersPublicController extends Controller
         Yii::app()->theme = 'frontend';
         $this->layout = '//layouts/public';
 
-        if (!Yii::app()->user->isGuest and Yii::app()->user->type != 'admin')
+        if(!Yii::app()->user->isGuest and Yii::app()->user->type != 'admin')
             $this->redirect($this->createAbsoluteUrl('//'));
-        else if (!Yii::app()->user->isGuest and Yii::app()->user->type == 'admin')
+        else if(!Yii::app()->user->isGuest and Yii::app()->user->type == 'admin')
             Yii::app()->user->logout(false);
 
         $token = Yii::app()->request->getQuery('token');
         $model = Users::model()->find('verification_token=:token', array(':token' => $token));
 
-        if (!$model)
+        if(!$model)
             $this->redirect($this->createAbsoluteUrl('//'));
-        elseif ($model->change_password_request_count == 0)
+        elseif($model->change_password_request_count == 0)
             $this->redirect($this->createAbsoluteUrl('//'));
 
         $model->setScenario('recover_password');
 
         $this->performAjaxValidation($model);
 
-        if ($model->status == 'active') {
+        if($model->status == 'active'){
 
-            if (isset($_POST['Users'])) {
+            if(isset($_POST['Users'])){
                 $model->password = $_POST['Users']['password'];
                 $model->repeatPassword = $_POST['Users']['repeatPassword'];
                 if($model->validate()){
@@ -397,7 +395,7 @@ class UsersPublicController extends Controller
             $this->render('recover_password', array(
                 'model' => $model
             ));
-        } else
+        }else
             $this->redirect($this->createAbsoluteUrl('//'));
     }
 
@@ -411,7 +409,7 @@ class UsersPublicController extends Controller
 
         $model = new UserTransactions('search');
         $model->unsetAttributes();
-        if (isset($_GET['UserTransactions']))
+        if(isset($_GET['UserTransactions']))
             $model->attributes = $_GET['UserTransactions'];
         $model->user_id = Yii::app()->user->getId();
         //
@@ -427,7 +425,7 @@ class UsersPublicController extends Controller
      */
     protected function performAjaxValidation($model)
     {
-        if (isset($_POST['ajax']) && $_POST['ajax'] === 'users-form') {
+        if(isset($_POST['ajax']) && $_POST['ajax'] === 'users-form'){
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }
@@ -447,54 +445,54 @@ class UsersPublicController extends Controller
         Yii::app()->theme = 'frontend';
         $this->layout = '//layouts/public';
 
-        if (!Yii::app()->user->isGuest && Yii::app()->user->type == 'user')
+        if(!Yii::app()->user->isGuest && Yii::app()->user->type == 'user')
             $this->redirect($this->createAbsoluteUrl('//'));
 
         $login = new UserLoginForm;
         $register = new Users('create');
 
         // Login codes
-        if (isset($_POST['ajax']) && $_POST['ajax'] === 'login-form') {
+        if(isset($_POST['ajax']) && $_POST['ajax'] === 'login-form'){
             $errors = CActiveForm::validate($login);
-            if (CJSON::decode($errors)) {
+            if(CJSON::decode($errors)){
                 echo $errors;
                 Yii::app()->end();
             }
         }
         // collect user input data
-        if (isset($_POST['UserLoginForm'])) {
+        if(isset($_POST['UserLoginForm'])){
             $login->attributes = $_POST['UserLoginForm'];
             if(isset($_POST['returnUrl']))
                 Yii::app()->user->returnUrl = $_POST['returnUrl'];
             // validate user input and redirect to the previous page if valid
-            if ($login->validate() && $login->login()) {
-                if (Yii::app()->user->returnUrl != Yii::app()->request->baseUrl . '/')
-                    $redirect = Yii::app()->createUrl('/'.Yii::app()->user->returnUrl);
+            if($login->validate() && $login->login()){
+                if(Yii::app()->user->returnUrl != Yii::app()->request->baseUrl . '/')
+                    $redirect = Yii::app()->createUrl('/' . Yii::app()->user->returnUrl);
                 else
                     $redirect = Yii::app()->createAbsoluteUrl('/users/public/dashboard');
-                if (isset($_POST['ajax'])) {
+                if(isset($_POST['ajax'])){
                     echo CJSON::encode(array('status' => true, 'url' => $redirect, 'msg' => 'در حال انتقال ...'));
                     Yii::app()->end();
-                } else
+                }else
                     $this->redirect($redirect);
-            } else
+            }else
                 $login->password = '';
         }
         // End of login codes
-        
+
         // Register codes
-        if (isset($_POST['ajax']) && $_POST['ajax'] === 'register-form') {
+        if(isset($_POST['ajax']) && $_POST['ajax'] === 'register-form'){
             $errors = CActiveForm::validate($register);
-            if (CJSON::decode($errors)) {
+            if(CJSON::decode($errors)){
                 echo $errors;
                 Yii::app()->end();
             }
         }
-        if (isset($_POST['Users'])) {
+        if(isset($_POST['Users'])){
             $register->attributes = $_POST['Users'];
             $register->status = 'pending';
             $register->create_date = time();
-            if ($register->save()) {
+            if($register->save()){
                 $token = md5($register->id . '#' . $register->password . '#' . $register->email . '#' . $register->create_date);
                 $register->updateByPk($register->id, array('verification_token' => $token));
                 $message = '<div style="color: #2d2d2d;font-size: 14px;text-align: right;">با سلام<br>برای فعال کردن حساب کاربری خود در ' . Yii::app()->name . ' بر روی لینک زیر کلیک کنید:</div>';
@@ -503,14 +501,13 @@ class UsersPublicController extends Controller
                 $message .= '</div>';
                 $message .= '<div style="font-size: 8pt;color: #888;text-align: right;">این لینک فقط 3 روز اعتبار دارد.</div>';
                 Mailer::mail($register->email, 'ثبت نام در ' . Yii::app()->name, $message, Yii::app()->params['noReplyEmail']);
-                if (isset($_POST['ajax'])) {
+                if(isset($_POST['ajax'])){
                     echo CJSON::encode(array('status' => true, 'msg' => 'ایمیل فعال سازی به پست الکترونیکی شما ارسال شد. لطفا Inbox و Spam پست الکترونیکی خود را چک کنید.'));
                     Yii::app()->end();
                 }else
                     Yii::app()->user->setFlash('register-success', 'ایمیل فعال سازی به پست الکترونیکی شما ارسال شد. لطفا Inbox و Spam پست الکترونیکی خود را چک کنید.');
-            } else
-            {
-                if (isset($_POST['ajax'])) {
+            }else{
+                if(isset($_POST['ajax'])){
                     echo CJSON::encode(array('status' => false, 'msg' => 'متاسفانه در ثبت نام مشکلی بوجود آمده است. لطفا مجددا سعی کنید.'));
                     Yii::app()->end();
                 }else
@@ -530,25 +527,25 @@ class UsersPublicController extends Controller
         Yii::app()->theme = 'frontend';
         $this->layout = '//layouts/public';
 
-        if (!Yii::app()->user->isGuest && Yii::app()->user->type == 'user')
+        if(!Yii::app()->user->isGuest && Yii::app()->user->type == 'user')
             $this->redirect($this->createAbsoluteUrl('//'));
 
         $model = new UserLoginForm;
         // Login codes
-        if (isset($_GET['ajax']) && ($_GET['ajax'] === 'users-login-modal-form' || $_GET['ajax'] === 'users-login-form')) {
+        if(isset($_GET['ajax']) && ($_GET['ajax'] === 'users-login-modal-form' || $_GET['ajax'] === 'users-login-form')){
             $errors = CActiveForm::validate($model);
-            if (CJSON::decode($errors)) {
+            if(CJSON::decode($errors)){
                 echo $errors;
                 Yii::app()->end();
             }
         }
         // collect user input data
-        if (isset($_POST['UserLoginForm'])) {
+        if(isset($_POST['UserLoginForm'])){
             $model->attributes = $_POST['UserLoginForm'];
             if(isset($_POST['returnUrl']))
                 Yii::app()->user->returnUrl = $_POST['returnUrl'];
             // validate user input and redirect to the previous page if valid
-            if ($model->validate() && $model->login()) {
+            if($model->validate() && $model->login()){
                 $user = Users::model()->findByPk(Yii::app()->user->getId());
                 if(!$user->activePlan){
                     $freePlan = Plans::model()->findByPk(1);
@@ -562,21 +559,22 @@ class UsersPublicController extends Controller
                         @$model->save();
                     }
                 }
-                if (Yii::app()->user->returnUrl != Yii::app()->request->baseUrl . '/' &&
-                    Yii::app()->user->returnUrl != 'logout')
+                if(Yii::app()->user->returnUrl != Yii::app()->request->baseUrl . '/' &&
+                    Yii::app()->user->returnUrl != 'logout'
+                )
                     $redirect = Yii::app()->user->returnUrl;
                 else
                     $redirect = $this->createUrl('/dashboard');
-                if (isset($_GET['ajax'])) {
+                if(isset($_GET['ajax'])){
                     echo CJSON::encode(array('status' => true, 'url' => $redirect, 'msg' => 'در حال انتقال ...'));
                     Yii::app()->end();
-                } else
+                }else
                     $this->redirect($redirect);
-            } else
+            }else
                 $model->password = '';
         }
         // End of login codes
-        if (!isset($_GET['ajax']))
+        if(!isset($_GET['ajax']))
             $this->render('login', array(
                 'model' => $model,
             ));
@@ -589,21 +587,21 @@ class UsersPublicController extends Controller
 
         $model = new Users('create');
 
-        if (isset($_GET['ajax']) && $_GET['ajax'] === 'users-register-modal-form') {
+        if(isset($_GET['ajax']) && $_GET['ajax'] === 'users-register-modal-form'){
             $errors = CActiveForm::validate($model);
-            if (CJSON::decode($errors)) {
+            if(CJSON::decode($errors)){
                 echo $errors;
                 Yii::app()->end();
             }
         }
 
-        if (isset($_POST['Users'])) {
+        if(isset($_POST['Users'])){
             $model->attributes = $_POST['Users'];
             $model->status = 'pending';
             $model->create_date = time();
             $pwd = $model->password;
             $username = $model->email;
-            if ($model->save()) {
+            if($model->save()){
                 $token = md5($model->id . '#' . $model->password . '#' . $model->email . '#' . $model->create_date);
                 $model->updateByPk($model->id, array('verification_token' => $token));
                 $message = '<div style="color: #2d2d2d;font-size: 14px;text-align: right;">با سلام<br>برای فعال کردن حساب کاربری خود در ' . Yii::app()->name . ' بر روی لینک زیر کلیک کنید:</div>';
@@ -620,21 +618,21 @@ class UsersPublicController extends Controller
                 $phone = $model->userDetails->mobile;
 //                if($phone)
 //                    Notify::SendSms($message, $phone);
-                if (isset($_GET['ajax'])) {
+                if(isset($_GET['ajax'])){
                     echo CJSON::encode(array('status' => true, 'msg' => 'ایمیل فعال سازی به پست الکترونیکی شما ارسال شد. لطفا Inbox و Spam پست الکترونیکی خود را چک کنید.'));
                     Yii::app()->end();
-                } else
+                }else
                     Yii::app()->user->setFlash('register-success', 'ایمیل فعال سازی به پست الکترونیکی شما ارسال شد. لطفا Inbox و Spam پست الکترونیکی خود را چک کنید.');
-            } else {
-                if (isset($_GET['ajax'])) {
+            }else{
+                if(isset($_GET['ajax'])){
                     echo CJSON::encode(array('status' => false, 'msg' => 'متاسفانه در ثبت نام مشکلی بوجود آمده است. لطفا مجددا سعی کنید.'));
                     Yii::app()->end();
-                } else
+                }else
                     Yii::app()->user->setFlash('register-failed', 'متاسفانه در ثبت نام مشکلی بوجود آمده است. لطفا مجددا سعی کنید.');
             }
         }
 
-        if (!isset($_GET['ajax']))
+        if(!isset($_GET['ajax']))
             $this->render('register', array(
                 'model' => $model,
             ));
@@ -643,7 +641,7 @@ class UsersPublicController extends Controller
     public function actionResendVerification()
     {
         $email = Yii::app()->request->getQuery('email');
-        if (!is_null($email)) {
+        if(!is_null($email)){
             $model = Users::model()->find('email = :email', array(':email' => $email));
             $token = md5($model->id . '#' . $model->password . '#' . $model->email . '#' . $model->create_date);
             $model->updateByPk($model->id, array('verification_token' => $token));
@@ -655,7 +653,7 @@ class UsersPublicController extends Controller
             Mailer::mail($model->email, 'ثبت نام در ' . Yii::app()->name, $message, Yii::app()->params['noReplyEmail']);
             Yii::app()->user->setFlash('success', 'ایمیل فعال سازی به پست الکترونیکی شما ارسال شد. لطفا Inbox و Spam پست الکترونیکی خود را چک کنید.');
             $this->redirect(array('/login'));
-        } else
+        }else
             $this->redirect(array('/site'));
     }
 
@@ -668,7 +666,7 @@ class UsersPublicController extends Controller
         $this->pageHeader = $user->userDetails->getShowName();
         $this->pageDescription = $user->userDetails->getShowDescription();
         $plans = Plans::model()->findAll('status = 1');
-        $this->render('upgrade_plan',compact('plans', 'user'));
+        $this->render('upgrade_plan', compact('plans', 'user'));
     }
 
     public function actionBuyPlan($id)
@@ -683,7 +681,7 @@ class UsersPublicController extends Controller
         $this->pageDescription = $user->userDetails->getShowDescription();
         $active_gateway = $this->getActiveGateway();
         if(!Yii::app()->user->isGuest && Yii::app()->user->type == 'admin')
-            throw new CHttpException(401,'لطفا جهت خرید نرم افزار ابتدا وارد حساب کاربری خود شوید.');
+            throw new CHttpException(401, 'لطفا جهت خرید نرم افزار ابتدا وارد حساب کاربری خود شوید.');
         else{
             if(isset($_POST['buy'])){
                 if($user->activePlan->plan_id != $plan->id){
@@ -704,7 +702,7 @@ class UsersPublicController extends Controller
                                 $ref_id = $result['responseCode'];
                                 $transaction->authority = $ref_id;
                                 $transaction->save(false);
-                                $this->render('ext.MellatPayment.views._redirect', array('ReferenceId' => $result['responseCode']));
+                                $this->render('ext.mellatPayment.views._redirect', array('ReferenceId' => $result['responseCode']));
                             }else
                                 Yii::app()->user->setFlash('failed', Yii::app()->mellat->getResponseText($result['responseCode']));
                         }else if($active_gateway == 'zarinpal'){
@@ -722,10 +720,10 @@ class UsersPublicController extends Controller
                         }
                     }
                 }else
-                    Yii::app()->user->setFlash('warning', 'هم اکنون این عضویت برای شما فعال است.  <a class="btn btn-info btn-xs" href="'.$this->createUrl('/upgradePlan').'">بازگشت</a>');
+                    Yii::app()->user->setFlash('warning', 'هم اکنون این عضویت برای شما فعال است.  <a class="btn btn-info btn-xs" href="' . $this->createUrl('/upgradePlan') . '">بازگشت</a>');
             }
         }
-        
+
         $this->render('buy_plan', compact('plan', 'transaction', 'user', 'active_gateway'));
     }
 
@@ -745,7 +743,7 @@ class UsersPublicController extends Controller
         $transactionResult = false;
         $result = null;
         $active_gateway = $this->getActiveGateway();
-        
+
         if($active_gateway == 'mellat'){
             $model = UserTransactions::model()->findByAttributes(array(
                 'user_id' => Yii::app()->user->getId(),
@@ -829,19 +827,19 @@ class UsersPublicController extends Controller
 
         $model = new DealershipRequestForm;
         $request = new DealershipRequests();
-        
+
         // collect user input data
-        if (isset($_POST['DealershipRequestForm'])) {
+        if(isset($_POST['DealershipRequestForm'])){
             $model->attributes = $_POST['DealershipRequestForm'];
             // validate user input and redirect to the previous page if valid
-            if ($model->validate()) {
+            if($model->validate()){
                 $request->attributes = $_POST['DealershipRequestForm'];
                 if($request->save()){
                     Yii::app()->user->setFlash('success', 'درخواست شما با موفقیت ارسال و ثبت گردید. در اسرع وقت کارشناسان با شما تماس خواهند گرفت.');
                     $this->refresh();
                 }else
                     Yii::app()->user->setFlash('failed', 'متاسفانه در ثبت نام مشکلی بوجود آمده است. لطفا مجددا سعی کنید.');
-            } else
+            }else
                 Yii::app()->user->setFlash('failed', 'متاسفانه در ثبت نام مشکلی بوجود آمده است. لطفا مجددا سعی کنید.');
         }
 

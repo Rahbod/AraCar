@@ -91,7 +91,11 @@ return array(
 	// application components
 	'components'=>array(
 		'request'=>array(
+			'class' => 'YMHttpRequest',
 			'enableCsrfValidation'=>true,
+			'noValidationRoutes'=>array(
+				'users/public/verifyPlan'
+			),
 		),
 		'JWT' => array(
 			'class' => 'ext.jwt.JWT',
