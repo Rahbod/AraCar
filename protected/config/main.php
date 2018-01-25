@@ -144,6 +144,7 @@ return array(
 			'showScriptName'=>false,
 			'appendParams'=>true,
 			'rules'=>array(
+				'sitemap'=>'site/sitemap',
 				'sitemap.xml'=>'site/sitemapxml',
 				'news'=>'news/manage/all',
 				'news/latest'=>'news/manage/latest',

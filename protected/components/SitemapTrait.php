@@ -17,7 +17,7 @@ trait SitemapTrait{
             'routeRegex'=>'/news/{id}/{title}',
             'params' => array(
                 'id' => 'id',
-                'title' => 'title',
+                'title:urlencode' => 'title',
             )
         ),
     ];
@@ -26,26 +26,31 @@ trait SitemapTrait{
 
         $list = array(
             array(
+                'label' => 'صفحه اصلی',
                 'loc'=>Yii::app()->createAbsoluteUrl('/'),
                 'frequency'=>'weekly',
                 'priority'=>'1',
             ),
             array(
+                'label' => 'اخبار',
                 'loc'=>Yii::app()->createAbsoluteUrl('/news'),
                 'frequency'=>'daily',
                 'priority'=>'1',
             ),
             array(
+                'label' => 'تماس با ما',
                 'loc'=>Yii::app()->createAbsoluteUrl('/contact'),
                 'frequency'=>'yearly',
                 'priority'=>'0.8',
             ),
             array(
+                'label' => 'درباره ما',
                 'loc'=>Yii::app()->createAbsoluteUrl('/about'),
                 'frequency'=>'monthly',
                 'priority'=>'0.8',
             ),
             array(
+                'label' => 'شرایط',
                 'loc'=>Yii::app()->createAbsoluteUrl('/terms'),
                 'frequency'=>'yearly',
                 'priority'=>'0.3',

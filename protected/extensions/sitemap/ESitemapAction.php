@@ -47,6 +47,11 @@ class ESitemapAction extends CAction
 	public $sitemapView = 'ext.sitemap.views.sitemap';
 
 	/**
+	 * @var string
+	 */
+	public $theme;
+
+	/**
 	 * @var string Alternate layout to be used by this action
 	 */
 	public $layout;
@@ -118,6 +123,9 @@ class ESitemapAction extends CAction
 	{
 		// based on CViewAction - if layout is set, cache the current and
 		// apply the specific alternate
+		if($this->theme)
+			Yii::app()->theme = $this->theme;
+
 		if($this->layout !== null){
 			$layout = $this->controller->layout;
 			$this->controller->layout = $this->layout;

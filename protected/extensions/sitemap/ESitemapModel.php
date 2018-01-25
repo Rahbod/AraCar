@@ -28,6 +28,8 @@ class ESitemapModel extends CModel {
 	 * Should be a string representation of a number between 0.1 and 1.0
 	 */
 	public $priority = '0.5';
+
+	public $label = 'title';
 	/**
 	 * @var string The primary route that the model's view path should contain
 	 */
@@ -138,15 +140,29 @@ class ESitemapModel extends CModel {
 		foreach($this->params as $key => $attr){
 			$keys[] = $this->formatParam($attr, true);
 			if(strpos($attr, '.') === false)
-				$vals[] = $model->$attr;
+				$val = $model->$attr;
 			else{
 				$attribute = $model;
 				foreach(explode('.', $attr) as $item)
 					$attribute = $attribute->$item;
-				$vals[] = $attribute;
+				$val = $attribute;
 			}
+			if(strpos($key, ':') !== false){
+				$filter = explode(':', $key);
+				$filter = end($filter);
+				$val = call_user_func($filter, $val);
+			}
+			$vals[] = $val;
 		}
 		return str_replace($keys, $vals, $path);
+	}
+
+	public function label($model)
+	{
+		if($model === null){
+			throw new CException('No model set for path.');
+		}
+		return $model->{$this->label};
 	}
 	
 	/**

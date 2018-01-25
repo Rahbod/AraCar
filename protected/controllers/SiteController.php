@@ -17,6 +17,7 @@ class SiteController extends Controller
                 'terms',
                 'contactUs',
                 'help',
+                'sitemap',
             )
         );
     }
@@ -41,11 +42,12 @@ class SiteController extends Controller
                 'class'=>'ext.sitemap.ESitemapAction',
                 'importListMethod'=>'getBaseSitePageList',
                 'classConfig'=>$this->sitemapClassConfig,
+                'theme' => 'frontend',
+                'layout' => '//layouts/sitemap',
             ),
             'sitemapxml'=>array(
                 'class'=>'ext.sitemap.ESitemapXMLAction',
                 'classConfig'=>$this->sitemapClassConfig,
-                //'bypassLogs'=>true, // if using yii debug toolbar enable this line
                 'importListMethod'=>'getBaseSitePageList',
             ),
         );
