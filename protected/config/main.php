@@ -22,6 +22,7 @@ return array(
 		'application.modules.lists.models.*',
 		'application.modules.car.models.*',
 		'application.modules.setting.models.*',
+		'application.modules.news.models.*',
 	),
 
 	'modules'=>array(
@@ -143,6 +144,7 @@ return array(
 			'showScriptName'=>false,
 			'appendParams'=>true,
 			'rules'=>array(
+				'sitemap.xml'=>'site/sitemapxml',
 				'news'=>'news/manage/all',
 				'news/latest'=>'news/manage/latest',
 				'news/tag/<id:\d+>/<title:(.*)>'=>'news/manage/tag',

@@ -2,6 +2,7 @@
 
 class SiteController extends Controller
 {
+    use SitemapTrait;
     /**
      * @return array actions type list
      */
@@ -35,9 +36,22 @@ class SiteController extends Controller
             // They can be accessed via: index.php?r=site/page&views=FileName
             'page' => array(
                 'class' => 'CViewAction',
-            )
+            ),
+            'sitemap'=>array(
+                'class'=>'ext.sitemap.ESitemapAction',
+                'importListMethod'=>'getBaseSitePageList',
+                'classConfig'=>$this->sitemapClassConfig,
+            ),
+            'sitemapxml'=>array(
+                'class'=>'ext.sitemap.ESitemapXMLAction',
+                'classConfig'=>$this->sitemapClassConfig,
+                //'bypassLogs'=>true, // if using yii debug toolbar enable this line
+                'importListMethod'=>'getBaseSitePageList',
+            ),
         );
     }
+
+    
 
     /**
      * This is the default 'index' action that is invoked

@@ -41,6 +41,13 @@ class News extends CActiveRecord
 		'pending' => 'تایید نشده',
 	];
 
+	public function scopes()
+	{
+		return array(
+			'sitemap' => $this->getValidNews(),
+		);
+	}
+
 	/**
 	 * @return array validation rules for model attributes.
 	 */
