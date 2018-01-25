@@ -7,6 +7,7 @@ $permissions = [
     'dealerRequests' => false,
     'carReports' => false,
     'newsComments' => false,
+    'transactionStatistics' => false,
     'statistics' => false,
 ];
 if(Yii::app()->user->roles == 'admin'){
@@ -16,6 +17,7 @@ if(Yii::app()->user->roles == 'admin'){
     $permissions['carReports'] = true;
     $permissions['newsComments'] = true;
     $permissions['statistics'] = true;
+    $permissions['transactionStatistics'] = true;
 }
 ?>
 <div class="row boxed-statistics">
@@ -117,6 +119,26 @@ if(Yii::app()->user->roles == 'admin'){
                     <i class="ion ion-ios-flag"></i>
                 </div>
                 <a href="<?php echo $this->createUrl('/car/manage/problemReports');?>" class="small-box-footer">مشاهده گزارشات <i class="fa fa-arrow-circle-left"></i></a>
+            </div>
+        </div>
+        <?php
+    endif;
+    ?>
+    <!--Transaction Statistics-->
+    <?php
+    if($permissions['transactionStatistics']):
+        ?>
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-blue">
+                <div class="inner">
+                    <h3><?php echo $statistics['transactions'];?></h3>
+                    <p>تراکنش های امروز</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-cash"></i>
+                </div>
+                <a href="<?php echo $this->createUrl('/users/manage/transactions');?>" class="small-box-footer">مشاهده تراکنش ها <i class="fa fa-arrow-circle-left"></i></a>
             </div>
         </div>
         <?php

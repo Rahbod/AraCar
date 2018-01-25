@@ -729,7 +729,7 @@ class UsersPublicController extends Controller
 
     public function actionVerifyPlan($id)
     {
-        Yii::app()->theme = 'market';
+        Yii::app()->theme = 'frontend';
         $this->layout = '//layouts/panel';
         $plan = Plans::model()->findByPk($id);
         $user = Users::model()->findByPk(Yii::app()->user->getId());

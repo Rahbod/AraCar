@@ -392,7 +392,7 @@ class Users extends CActiveRecord
         $model->user_id = $this->id;
         $model->join_date = time();
         $model->expire_date = strtotime(date('Y/m/d 23:59:59', ($model->join_date + 30 * 24 * 60 * 60))); // 30 days
-        $model->price = $plan->price;
+        $model->price = $plan->getPrice($this->role->role);
         if($model->save())
             return $model->id;
         return false;
