@@ -72,6 +72,7 @@ $this->menu=array(
                                 $class = 'warning';
                             return "<div class='label label-{$class}'>{$data->statusLabel}</div>";
                         },
+                        'filter' => $model->statusLabels,
                         'type' => 'raw'
                     ],
                     [

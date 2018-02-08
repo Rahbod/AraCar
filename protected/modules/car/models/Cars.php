@@ -298,7 +298,7 @@ class Cars extends CActiveRecord
             $criteria->addCondition('status <> :deleted');
         $criteria->params[':deleted'] = Cars::STATUS_DELETED;
         if ($admin)
-            $criteria->order = 'confirm_priority DESC, id';
+            $criteria->order = 'status, confirm_priority, id';
         else
             $criteria->order = 'id DESC';
         return new CActiveDataProvider($this, array(
