@@ -361,10 +361,10 @@ class CarPublicController extends Controller
     {
         if(isset($_GET['id']) && !empty((int)$_GET['id'])){
             $id = $_GET['id'];
-            $models = Models::model()->findAllByAttributes(['brand_id' => $id]);
+            $models = Models::getList($id);
             $list = [];
-            foreach($models as $item)
-                $list[] = array('id' => $item->id, 'title' => $item->title);
+            foreach($models as $id => $title)
+                $list[] = array('id' => $id, 'title' => $title);
             echo CJSON::encode(['status' => true, 'list' => $list]);
         }else if(!isset($_GET['id']))
             echo CJSON::encode(['status' => false, 'message' => 'خطا در دریافت اطلاعات.']);

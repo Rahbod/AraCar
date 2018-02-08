@@ -101,7 +101,7 @@ class Cars extends CActiveRecord
     public function getNumberOfInstallments()
     {
         $arr = [2 => 'قسط دوم'];
-        for($i = 3;$i <= 60;$i++)
+        for ($i = 3; $i <= 60; $i++)
             $arr[$i] = Controller::parseNumbers($i) . ' اقساط';
         return $arr;
     }
@@ -133,7 +133,7 @@ class Cars extends CActiveRecord
     public function getNumberOfMonth()
     {
         $arr = [1 => 'ماهیانه'];
-        for($i = 2;$i <= 6;$i++)
+        for ($i = 2; $i <= 6; $i++)
             $arr[$i] = Controller::parseNumbers($i) . ' ماه';
         return $arr;
     }
@@ -292,12 +292,12 @@ class Cars extends CActiveRecord
         $criteria->compare('visit_district', $this->visit_district, true);
         $criteria->compare('description', $this->description, true);
         $criteria->compare('creation_date', $this->creation_date, true);
-        if($deleted)
+        if ($deleted)
             $criteria->addCondition('status = :deleted');
         else
             $criteria->addCondition('status <> :deleted');
         $criteria->params[':deleted'] = Cars::STATUS_DELETED;
-        if($admin)
+        if ($admin)
             $criteria->order = 'confirm_priority DESC, id';
         else
             $criteria->order = 'id DESC';
@@ -319,16 +319,16 @@ class Cars extends CActiveRecord
 
     public function getTitle($html = true)
     {
-        $separator = Yii::app()->language == 'fa_ir'?'،':',';
-        if($html)
-            return $this->brand && $this->model?"<span>{$this->creation_date}</span> | <span>{$this->brand->title}{$separator} {$this->model->title}</span>":null;
-        return $this->brand && $this->model?"{$this->creation_date} | {$this->brand->title}{$separator} {$this->model->title}":null;
+        $separator = Yii::app()->language == 'fa_ir' ? '،' : ',';
+        if ($html)
+            return $this->brand && $this->model ? "<span>{$this->creation_date}</span> | <span>{$this->brand->title}{$separator} {$this->model->title}</span>" : null;
+        return $this->brand && $this->model ? "{$this->creation_date} | {$this->brand->title}{$separator} {$this->model->title}" : null;
     }
 
     public function getRawTitle()
     {
-        $separator = Yii::app()->language == 'fa_ir'?'،':',';
-        return $this->brand && $this->model?"{$this->creation_date} | {$this->brand->title}{$separator} {$this->model->title}":null;
+        $separator = Yii::app()->language == 'fa_ir' ? '،' : ',';
+        return $this->brand && $this->model ? "{$this->creation_date} | {$this->brand->title}{$separator} {$this->model->title}" : null;
     }
 
 
@@ -341,7 +341,7 @@ class Cars extends CActiveRecord
         $cr = new CDbCriteria();
         $startDate = JalaliDate::toGregorian(JalaliDate::date('Y', time(), false), JalaliDate::date('m', time(), false), 1);
         $startTime = strtotime($startDate[0] . '/' . $startDate[1] . '/' . $startDate[2]);
-        if(JalaliDate::date('m', time(), false) <= 6)
+        if (JalaliDate::date('m', time(), false) <= 6)
             $endTime = $startTime + (60 * 60 * 24 * 31);
         else
             $endTime = $startTime + (60 * 60 * 24 * 30);
@@ -377,24 +377,24 @@ class Cars extends CActiveRecord
         if ($this->isNewRecord)
             $this->update_date = time();
         $this->distance = $this->distance ? str_replace(',', '', $this->distance) : 0;
-        $this->creation_date= empty($this->sh_date) ? $this->m_date : $this->sh_date;
+        $this->creation_date = empty($this->sh_date) ? $this->m_date : $this->sh_date;
         $this->plan_rules = is_array($this->plan_rules) ? CJSON::encode($this->plan_rules) : null;
         return parent::beforeSave();
     }
 
     protected function afterSave()
     {
-        if($this->isNewRecord){
-            if($this->images)
-                foreach($this->images as $image){
+        if ($this->isNewRecord) {
+            if ($this->images)
+                foreach ($this->images as $image) {
                     $model = new CarImages();
                     $model->car_id = $this->id;
                     $model->filename = $image;
                     @$model->save();
                 }
-        }else if($this->images){
-            $newImages = $this->oldImages?array_diff($this->images, $this->oldImages):$this->images;
-            foreach($newImages as $image){
+        } else if ($this->images) {
+            $newImages = $this->oldImages ? array_diff($this->images, $this->oldImages) : $this->images;
+            foreach ($newImages as $image) {
                 $model = new CarImages();
                 $model->car_id = $this->id;
                 $model->filename = $image;
@@ -407,34 +407,34 @@ class Cars extends CActiveRecord
     protected function afterFind()
     {
         parent::afterFind();
-        if($this->purchase_type_id == self::PURCHASE_TYPE_INSTALMENT && $this->purchase_details)
+        if ($this->purchase_type_id == self::PURCHASE_TYPE_INSTALMENT && $this->purchase_details)
             $this->purchase_details = CJSON::decode($this->purchase_details);
-        if($this->creation_date) {
+        if ($this->creation_date) {
             if ($this->creation_date >= 1340 && $this->creation_date <= JalaliDate::date('Y'))
                 $this->sh_date = $this->creation_date;
             if ($this->creation_date >= 1930 && $this->creation_date <= date('Y'))
                 $this->m_date = $this->creation_date;
         }
-        $this->plan_rules = $this->plan_rules?CJSON::decode($this->plan_rules):null;
+        $this->plan_rules = $this->plan_rules ? CJSON::decode($this->plan_rules) : null;
     }
 
     public function getCarPlanRule($name)
     {
-        return $this->plan_rules && isset($this->plan_rules[$name]) && !empty($this->plan_rules[$name])?$this->plan_rules[$name]:null;
+        return $this->plan_rules && isset($this->plan_rules[$name]) && !empty($this->plan_rules[$name]) ? $this->plan_rules[$name] : null;
     }
 
     public function getViewUrl()
     {
-        return Yii::app()->createUrl('/car/'.$this->id.'-'.$this->creation_date.'-'.$this->brand->slug.'-'.$this->model->slug.'-for-sale');
+        return Yii::app()->createUrl('/car/' . $this->id . '-' . $this->creation_date . '-' . $this->brand->slug . '-' . $this->model->slug . '-for-sale');
     }
 
     public function getSecureMobile()
     {
-        if($this->user && $this->user->userDetails && $this->user->userDetails->mobile){
+        if ($this->user && $this->user->userDetails && $this->user->userDetails->mobile) {
             $firstPart = substr($this->user->userDetails->mobile, 0, 4);
             $secPart = substr($this->user->userDetails->mobile, 4, 3);
             return $firstPart . ' ' . $secPart . ' ' . 'xx xxx';
-        }else
+        } else
             return false;
     }
 
@@ -479,21 +479,21 @@ class Cars extends CActiveRecord
         $cr->params[':model_id'] = $this->model_id;
         $cr->params[':brand_id'] = $this->brand_id;
         $cr->order = 't.show_in_top DESC, t.update_date DESC';
-        return $activeProvider?new CActiveDataProvider('Cars', array(
+        return $activeProvider ? new CActiveDataProvider('Cars', array(
             'criteria' => $cr
-        )):$this->findAll($cr);
+        )) : $this->findAll($cr);
     }
 
     public function getStatusLabels($withDelete = true)
     {
-        if(!$withDelete)
+        if (!$withDelete)
             unset($this->statusLabels[Cars::STATUS_DELETED]);
         return $this->statusLabels;
     }
 
     public function getMainImage()
     {
-        if($this->carImages)
+        if ($this->carImages)
             return $this->carImages[0];
         return null;
     }
@@ -510,39 +510,38 @@ class Cars extends CActiveRecord
 
     public function getPurchaseDetail($name)
     {
-        return $this->purchase_details && is_array($this->purchase_details) && isset($this->purchase_details[$name])?$this->purchase_details[$name]:null;
+        return $this->purchase_details && is_array($this->purchase_details) && isset($this->purchase_details[$name]) ? $this->purchase_details[$name] : null;
     }
 
     public function getPrice($convert = true, $postfix = 'تومان')
     {
-        if($this->purchase_details == -1)
+        if ($this->purchase_details == -1)
             return 'توافقی';
-        if($this->purchase_type_id == Cars::PURCHASE_TYPE_CASH)
+        if ($this->purchase_type_id == Cars::PURCHASE_TYPE_CASH)
             $p = $this->purchase_details;
-        elseif($this->purchase_type_id == Cars::PURCHASE_TYPE_INSTALMENT)
+        elseif ($this->purchase_type_id == Cars::PURCHASE_TYPE_INSTALMENT)
             $p = $this->getPurchaseDetail('totalPrice');
 
-        $p = !is_array($p)?number_format($p):($this->getPurchaseDetail('totalPrice')?:0);
-        $p = $postfix?$p . ' ' . $postfix:$p;
-        return $convert?Controller::parseNumbers($p):$p;
+        $p = !is_array($p) ? number_format($p) : ($this->getPurchaseDetail('totalPrice') ?: 0);
+        $p = $postfix ? $p . ' ' . $postfix : $p;
+        return $convert ? Controller::parseNumbers($p) : $p;
     }
-    
-    public function normalizePrice(){
+
+    public function normalizePrice()
+    {
         // normalize price
-        if($this->purchase_type_id == Cars::PURCHASE_TYPE_CASH)
-        {
-            if(isset($this->purchase_details['price']) && !empty($this->purchase_details['price']))
+        if ($this->purchase_type_id == Cars::PURCHASE_TYPE_CASH) {
+            if (isset($this->purchase_details['price']) && !empty($this->purchase_details['price']))
                 $this->purchase_details = str_replace(',', '', $this->purchase_details['price']);
             else
                 $this->purchase_details = str_replace(',', '', $this->purchase_details);
-        }
-        elseif($this->purchase_type_id == Cars::PURCHASE_TYPE_INSTALMENT){
+        } elseif ($this->purchase_type_id == Cars::PURCHASE_TYPE_INSTALMENT) {
             $details = $this->purchase_details;
-            $details['deliveryInDays'] = $details['deliveryInDays'] == -1?$details['deliveryInFewDays']:$details['deliveryInDays'];
-            foreach($details as $key => $detail)
+            $details['deliveryInDays'] = $details['deliveryInDays'] == -1 ? $details['deliveryInFewDays'] : $details['deliveryInDays'];
+            foreach ($details as $key => $detail)
                 $details[$key] = str_replace(',', '', $detail);
             $this->purchase_details = CJSON::encode($details);
-        }else
+        } else
             $this->purchase_details = -1;
         //
     }
@@ -568,5 +567,32 @@ class Cars extends CActiveRecord
                     $list[] = array('id' => $i, 'title' => Controller::parseNumbers($i));
         }
         return $list;
+    }
+
+
+    public function SendCarAlerts()
+    {
+        $criteria = new CDbCriteria();
+//	    $criteria->
+
+        $alerts = CarAlerts::model()->findAll($criteria);
+        $phones = [];
+        foreach ($alerts as $alert) {
+            $user = $alert->user;
+            $email = $user->email;
+            $phone = $user->userDetails && $user->userDetails->mobile ? $user->userDetails->mobile : null;
+            $phones[] = $phone;
+        }
+
+        $sms = "کاربر گرامی،
+خودروی درخواستی شما در آراخودرو ثبت گردید.
+در اولین فرصت به وبسایت آراخودرو مراجعه فرمایید.";
+        try {
+            $smsObj = new SendSMS();
+            $smsObj->AddMessage($sms);
+            $smsObj->AddNumbers($phones);
+            @$smsObj->SendWithLine();
+        } catch (CException $e) {
+        }
     }
 }

@@ -104,7 +104,7 @@ class Models extends SortableCActiveRecord
         $criteria->compare('brand_id', $this->brand_id, true);
         $criteria->compare('body_type_id', $this->body_type_id, true);
         $criteria->compare('order', $this->order, true);
-//        $criteria->order = 'order';
+        $criteria->order = 'title';
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));
@@ -129,7 +129,10 @@ class Models extends SortableCActiveRecord
 
     public static function getList($id)
     {
-        return CHtml::listData(self::model()->findAllByAttributes(array('brand_id'=>$id)), 'id', 'title');
+        $criteria = new CDbCriteria();
+        $criteria->compare('brand_id', $id);
+        $criteria->order = 't.title';
+        return CHtml::listData(self::model()->findAll($criteria), 'id', 'title');
     }
 
     public function getYears($mode = 'list')

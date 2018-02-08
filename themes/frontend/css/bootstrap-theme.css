@@ -91,7 +91,7 @@ a:focus{
     width: 400px;
     text-align: left;
     float: left;
-    margin-left: 85px;
+    padding-left: 85px;
 }
 .header .new-link{
     border-radius: 50%;
@@ -2922,7 +2922,7 @@ footer{
     text-align: center;
     border-radius: 4px;
     display: block;
-    height: 500px;
+    height: 550px;
     background-color: #eee;
     color: white;
     max-width: 300px;
@@ -2988,7 +2988,7 @@ footer{
     font-size: 14px !important;
     font-weight: 400;
     color: white;
-    margin-top: 30px;
+    margin-top: 15px;
 }
 .plan-box .clearfix{
     min-height: 20px;

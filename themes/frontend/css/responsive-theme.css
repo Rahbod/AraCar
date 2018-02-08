@@ -13,6 +13,9 @@
     }
 }
 @media screen and (max-width: 992px){
+    .header .logo-box{
+        padding-left: 15px;
+    }
     .contact-icon-outer{
         position: relative;
     }

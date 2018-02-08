@@ -103,7 +103,7 @@ class Brands extends CActiveRecord
 		$criteria->compare('title',$this->title,true);
 		$criteria->compare('slug',$this->slug,true);
 		$criteria->compare('country_id',$this->country_id,true);
-		$criteria->order = 'id DESC';
+        $criteria->order = 'title';
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
@@ -140,6 +140,6 @@ class Brands extends CActiveRecord
 
 	public static function getList()
 	{
-		return CHtml::listData(self::model()->findAll(), 'id', 'title');
+		return CHtml::listData(self::model()->findAll(array('order' => 'title')), 'id', 'title');
 	}
 }

@@ -66,6 +66,11 @@ class Plans extends CActiveRecord
 				'type' => 'check'
 			],
 			[
+				'title'=>'نمایش در شبکه های اجتماعی',
+				'name'=>'socialNetworks',
+				'type' => 'check'
+			],
+			[
 				'title'=>'تعرفه',
 				'name'=>'price',
 				'type' => 'num',
@@ -110,6 +115,11 @@ class Plans extends CActiveRecord
 				'name'=>'confirmPriority',
 				'type' => 'check'
 			],
+            [
+                'title'=>'نمایش در شبکه های اجتماعی',
+                'name'=>'socialNetworks',
+                'type' => 'check'
+            ],
             [
                 'title'=>'تعرفه',
                 'name'=>'price',
