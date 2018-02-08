@@ -401,6 +401,9 @@ class Cars extends CActiveRecord
                 @$model->save();
             }
         }
+
+        // send alerts to users
+        $this->SendCarAlerts();
         parent::afterSave();
     }
 
@@ -513,14 +516,17 @@ class Cars extends CActiveRecord
         return $this->purchase_details && is_array($this->purchase_details) && isset($this->purchase_details[$name]) ? $this->purchase_details[$name] : null;
     }
 
-    public function getPrice($convert = true, $postfix = 'تومان')
+    public function getPrice($convert = true, $postfix = 'تومان', $blank = false)
     {
         if ($this->purchase_details == -1)
-            return 'توافقی';
+            return $blank ? -1 : 'توافقی';
         if ($this->purchase_type_id == Cars::PURCHASE_TYPE_CASH)
             $p = $this->purchase_details;
         elseif ($this->purchase_type_id == Cars::PURCHASE_TYPE_INSTALMENT)
             $p = $this->getPurchaseDetail('totalPrice');
+
+        if ($blank)
+            return $p;
 
         $p = !is_array($p) ? number_format($p) : ($this->getPurchaseDetail('totalPrice') ?: 0);
         $p = $postfix ? $p . ' ' . $postfix : $p;
@@ -573,8 +579,11 @@ class Cars extends CActiveRecord
     public function SendCarAlerts()
     {
         $criteria = new CDbCriteria();
-//	    $criteria->
-
+        $criteria->compare("model_id", $this->model_id);
+        $criteria->addCondition("(from_year IS NULL OR from_year = '' OR from_year <= :creation) AND (to_year IS NULL OR to_year = '' OR to_year >= :creation) AND 
+	        (from_price IS NULL OR from_price = 0 OR from_price <= :price) AND (to_price IS NULL OR to_price = 0 OR to_price >= :price)");
+        $criteria->params[':creation'] = $this->creation_date;
+        $criteria->params[':price'] = $this->getPrice(true, '', true);
         $alerts = CarAlerts::model()->findAll($criteria);
         $phones = [];
         foreach ($alerts as $alert) {
