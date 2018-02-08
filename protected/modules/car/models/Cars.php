@@ -71,6 +71,8 @@ class Cars extends CActiveRecord
 
     public $oldImages = [];
     public $images;
+    public $m_date;
+    public $sh_date;
 
     /**
      * @return string the associated database table name
@@ -151,13 +153,13 @@ class Cars extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('user_id, brand_id, model_id, room_color_id, body_color_id, body_state_id, body_type_id, state_id, city_id, fuel_id, gearbox_id, car_type_id, plate_type_id, purchase_type_id, creation_date', 'required'),
+            array('user_id, brand_id, model_id, room_color_id, body_color_id, body_state_id, body_type_id, state_id, city_id, fuel_id, gearbox_id, car_type_id, plate_type_id, purchase_type_id', 'required'),
             array('create_date, update_date, expire_date', 'length', 'max' => 20),
             array('user_id, brand_id, model_id, room_color_id, body_color_id, body_state_id, state_id, city_id, fuel_id, gearbox_id, car_type_id, plate_type_id', 'length', 'max' => 10),
             array('purchase_type_id', 'length', 'max' => 1),
             array('purchase_details', 'length', 'max' => 1024),
             array('distance', 'length', 'max' => 7),
-            array('creation_date', 'length', 'max' => 4),
+            array('creation_date, m_date, sh_date', 'length', 'max' => 4),
             array('status, show_in_top', 'length', 'max' => 1),
             array('update_count', 'length', 'max' => 2),
             array('status', 'default', 'value' => self::STATUS_PENDING),
@@ -167,10 +169,17 @@ class Cars extends CActiveRecord
             array('visit_district', 'length', 'max' => 255),
             array('description, seen, plan_title, plan_rules', 'safe'),
             array('images, purchase_details', 'safe'),
+            array('m_date, sh_date', 'check_creation_date'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
             array('id, show_in_top, update_count,create_date, update_date, expire_date, user_id, brand_id, model_id, room_color_id, body_color_id, body_state_id, state_id, city_id, fuel_id, gearbox_id, car_type_id, plate_type_id, purchase_type_id, purchase_details, distance, status, visit_district, description, creation_date, confirm_priority', 'safe', 'on' => 'search'),
         );
+    }
+
+    public function check_creation_date($attribure, $params)
+    {
+        if (empty($this->m_date) && empty($this->sh_date))
+            $this->addError("creation_date", "لطفا تاریخ تولید شمسی یا میلادی را انتخاب کنید.");
     }
 
     /**
@@ -236,6 +245,8 @@ class Cars extends CActiveRecord
             'confirm_priority' => 'الویت در تایید',
             'show_in_top' => 'نماش در صدر',
             'update_count' => 'تعداد به روزرسانی',
+            'm_date' => 'تولید میلادی',
+            'sh_date' => 'تولید شمسی',
         );
     }
 
@@ -363,10 +374,11 @@ class Cars extends CActiveRecord
 
     protected function beforeSave()
     {
-        if($this->isNewRecord)
+        if ($this->isNewRecord)
             $this->update_date = time();
-        $this->distance = str_replace(',', '', $this->distance);
-        $this->plan_rules = is_array($this->plan_rules)?CJSON::encode($this->plan_rules):null;
+        $this->distance = $this->distance ? str_replace(',', '', $this->distance) : 0;
+        $this->creation_date= empty($this->sh_date) ? $this->m_date : $this->sh_date;
+        $this->plan_rules = is_array($this->plan_rules) ? CJSON::encode($this->plan_rules) : null;
         return parent::beforeSave();
     }
 
@@ -397,6 +409,12 @@ class Cars extends CActiveRecord
         parent::afterFind();
         if($this->purchase_type_id == self::PURCHASE_TYPE_INSTALMENT && $this->purchase_details)
             $this->purchase_details = CJSON::decode($this->purchase_details);
+        if($this->creation_date) {
+            if ($this->creation_date >= 1340 && $this->creation_date <= JalaliDate::date('Y'))
+                $this->sh_date = $this->creation_date;
+            if ($this->creation_date >= 1930 && $this->creation_date <= date('Y'))
+                $this->m_date = $this->creation_date;
+        }
         $this->plan_rules = $this->plan_rules?CJSON::decode($this->plan_rules):null;
     }
 
@@ -527,5 +545,28 @@ class Cars extends CActiveRecord
         }else
             $this->purchase_details = -1;
         //
+    }
+
+    public function getYears($type = 'miladi', $mode = 'list')
+    {
+        $list = [];
+        if ($type == 'shamsi') {
+            $start = 1340;
+            $end = (int)JalaliDate::date('Y', time(), false);
+            for ($i = $end; $i >= $start; $i--)
+                if ($mode == 'list')
+                    $list[$i] = Controller::parseNumbers($i);
+                else
+                    $list[] = array('id' => $i, 'title' => Controller::parseNumbers($i));
+        } else {
+            $start = 1930;
+            $end = (int)date('Y');
+            for ($i = $end; $i >= $start; $i--)
+                if ($mode == 'list')
+                    $list[$i] = Controller::parseNumbers($i);
+                else
+                    $list[] = array('id' => $i, 'title' => Controller::parseNumbers($i));
+        }
+        return $list;
     }
 }

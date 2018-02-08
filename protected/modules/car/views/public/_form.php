@@ -20,9 +20,6 @@ if(!$model->car_type_id)
 		'validateOnSubmit' => true
 	)
 )); ?>
-<?php
-echo $form->errorSummary($model);
-?>
 	<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
         <p class="form-title">
             <h5 class="text-center hidden-lg hidden-md hidden-sm">با تکمیل فرم زیر خودرو خود را به سرعت بفروشید</h5>
@@ -77,6 +74,7 @@ echo $form->errorSummary($model);
 	<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
 		<p class="form-title hidden-xs">
 			با تکمیل فرم زیر خودرو خود را به سرعت بفروشید
+            <?php echo $form->error($model,'creation_date'); ?>
 		</p>
 		<div class="row">
 			<div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
@@ -93,22 +91,29 @@ echo $form->errorSummary($model);
                 <?php echo $form->dropDownList($model,'model_id', $model->brand_id?Models::getList($model->brand_id):[],array(
                     'class'=>'form-control select-picker load-list',
                     'data-live-search' => true,
-                    'data-url'=>$this->createUrl('/car/public/getModelYears'),
-                    'data-target' => '#Cars_creation_date',
+//                    'data-url'=>$this->createUrl('/car/public/getModelYears'),
+//                    'data-target' => '#Cars_creation_date',
+//                    'data-target' => '.c_date',
                     'disabled'=>$model->brand_id?false:'disabled',
                     'prompt' => $model->getAttributeLabel('model_id'),
                 )); ?>
                 <?php echo $form->error($model,'model_id'); ?>
 			</div>
-			<div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                <?php echo $form->dropDownList($model,'creation_date', $model->model_id?$model->model->getYears():[],array(
-                    'class'=>'form-control select-picker',
+            <div class="form-group col-lg-2 col-md-2 col-sm-2 col-xs-6">
+                <?php echo $form->dropDownList($model,'sh_date', $model->getYears('shamsi'),array(
+                    'class'=>'form-control select-picker c_date',
                     'data-live-search' => true,
-                    'disabled'=>$model->model_id?false:'disabled',
-                    'prompt' => $model->getAttributeLabel('creation_date'),
+                    'prompt' => $model->getAttributeLabel('sh_date'),
                 )); ?>
-                <?php echo $form->error($model,'creation_date'); ?>
-			</div>
+            </div>
+            <div class="form-group col-lg-2 col-md-2 col-sm-2 col-xs-6">
+                <?php echo $form->dropDownList($model,'m_date', $model->getYears(),array(
+                    'class'=>'form-control select-picker c_date',
+                    'data-live-search' => true,
+//                    'disabled'=>$model->model_id?false:'disabled',
+                    'prompt' => $model->getAttributeLabel('m_date'),
+                )); ?>
+            </div>
 			<div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
                 <?php echo $form->dropDownList($model,'fuel_id', Lists::getList('fuel_types'),array(
                     'class'=>'form-control select-picker',
@@ -349,27 +354,33 @@ Yii::app()->clientScript->registerScript("sell-js","
         var url = $(this).data('url');
         var target = $($(this).data('target'));
         var id = $(this).val();
-        target.attr('disabled', 'disabled');
-        $.ajax({
-            url: url,
-            type: 'GET',
-            data:{id: id},
-            dataType: 'json',
-            success: function(data){
-                if(data.status){
-                    target.find('option:not(:first-of-type)').remove();
-                    for (var i = 0; i < data.list.length; i++) {
-                      target.append($('<option>', {
-                        value: data.list[i].id,
-                        text: data.list[i].title
-                      }));
-                    }
-                    target.attr('disabled', false); 
-                    target.selectpicker('refresh');
-                }else
-                    alert(data.message);
-            }
-        });
+        if(typeof url == 'undefined'){
+            target.each(function(){
+                $(this).attr('disabled', false);
+            });
+        }else{
+            target.attr('disabled', 'disabled');
+            $.ajax({
+                url: url,
+                type: 'GET',
+                data:{id: id},
+                dataType: 'json',
+                success: function(data){
+                    if(data.status){
+                        target.find('option:not(:first-of-type)').remove();
+                        for (var i = 0; i < data.list.length; i++) {
+                          target.append($('<option>', {
+                            value: data.list[i].id,
+                            text: data.list[i].title
+                          }));
+                        }
+                        target.attr('disabled', false); 
+                        target.selectpicker('refresh');
+                    }else
+                        alert(data.message);
+                }
+            });
+        }
     }).on('change', '.deliveryInDays', function(){
         var val=$('#Cars_purchase_details_deliveryInDays').val();
         console.log(val == -1);

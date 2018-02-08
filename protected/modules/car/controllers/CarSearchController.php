@@ -99,13 +99,12 @@ class CarSearchController extends Controller
         Yii::app()->theme = 'frontend';
 
         $filters = $this->getFilters();
-
         $criteria = Cars::duplicateQuery();
         $criteria = $this->applyFilter($criteria, $filters);
         $dataProvider = new CActiveDataProvider('Cars', [
             'criteria' => $criteria,
             'pagination' => [
-                'pageSize' => 1
+                'pageSize' => 10
             ]
         ]);
 
@@ -480,7 +479,7 @@ class CarSearchController extends Controller
         }
 
         if(!isset($filters['order']))
-            $criteria->order = "car.update_date DESC";
+            $criteria->order = "car.show_in_top DESC, car.update_date DESC";
 
         return $criteria;
     }

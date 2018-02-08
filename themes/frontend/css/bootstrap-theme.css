@@ -4005,3 +4005,6 @@ footer .nav li:last-of-type a{
     max-width: 100% !important;
     height: auto !important;
 }
+#car-report-form input[type=radio]{
+    display: none;
+}

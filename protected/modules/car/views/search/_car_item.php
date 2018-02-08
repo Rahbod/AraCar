@@ -38,7 +38,7 @@ $imagePath = Yii::getPathOfAlias('webroot').'/uploads/cars/';
         <div class="full-info">
             <div class="info-item">کارکرد<span class="pull-left"><?= $data->distance?> کیلومتر</span></div>
             <div class="info-item">سوخت<span class="pull-left"><?= $data->fuel->title?></span></div>
-            <div class="info-item">رنگ<span class="pull-left"><?= $data->bodyColor->title?>/ داخل <?= $data->roomColor->title?></span></div>
+            <div class="info-item">رنگ<span class="pull-left"><?= $data->bodyColor->title?></span></div>
             <div class="clearfix"></div>
             <div class="info-item">گیربکس<span class="pull-left"><?= $data->gearbox->title?></span></div>
             <div class="info-item">بدنه<span class="pull-left"><?= $data->bodyState->title?></span></div>

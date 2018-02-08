@@ -38,6 +38,14 @@ $(document).ready(function() {
             strMin = strMin.replace(/,/, '');
         $(this).parent().find('.range-slider').slider("option", "values", [parseInt(strMin), parseInt(strMax)]);
         changePriceFilterBtnUrl(strMin ? parseInt(strMin) : null, strMax ? parseInt(strMax) : null);
+    }).on('click', '.price-filter', function () {
+        var strMax = $('.range-max-input').val(),
+            strMin = $('.range-min-input').val();
+        for (var i = 0; i < ($('.range-max-input').val().match(/,/g) || []).length; i++)
+            strMax = strMax.replace(/,/, '');
+        for (var j = 0; j < ($('.range-min-input').val().match(/,/g) || []).length; j++)
+            strMin = strMin.replace(/,/, '');
+        changePriceFilterBtnUrl(strMin ? parseInt(strMin) : null, strMax ? parseInt(strMax) : null);
     }).on('keyup', '.dealership-name', function () {
         var strName = $(this).val();
 

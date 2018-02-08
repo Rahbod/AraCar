@@ -27,7 +27,7 @@ if(isset($filters['price'])) {
             <span class="currency">میلیون تومان</span>
             <input type="text" class="range-max-input digitFormat text-field ltr" value="<?= $price['max']?:''?>" placeholder="تا">
             <span class="currency">میلیون تومان</span>
-            <a href="<?= $this->createFilterUrl('price', isset($filters['price']) ? $filters['price'] : '1-100')?>" class="btn-blue center-block text-center">اعمال فیلتر قیمت</a>
+            <a href="<?= $this->createFilterUrl('price', isset($filters['price']) ? $filters['price'] : '1-100')?>" class="price-filter btn-blue center-block text-center">اعمال فیلتر قیمت</a>
         </div>
     </div>
 </div>
