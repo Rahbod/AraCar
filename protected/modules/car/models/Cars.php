@@ -403,7 +403,8 @@ class Cars extends CActiveRecord
         }
 
         // send alerts to users
-        $this->SendCarAlerts();
+        if($this->status == Cars::STATUS_APPROVED)
+            $this->SendCarAlerts();
         parent::afterSave();
     }
 
@@ -583,7 +584,7 @@ class Cars extends CActiveRecord
         $criteria->addCondition("(from_year IS NULL OR from_year = '' OR from_year <= :creation) AND (to_year IS NULL OR to_year = '' OR to_year >= :creation) AND 
 	        (from_price IS NULL OR from_price = 0 OR from_price <= :price) AND (to_price IS NULL OR to_price = 0 OR to_price >= :price)");
         $criteria->params[':creation'] = $this->creation_date;
-        $criteria->params[':price'] = $this->getPrice(true, '', true);
+        $criteria->params[':price'] = (int) ($this->getPrice(true, '', true) /1000/1000);
         $alerts = CarAlerts::model()->findAll($criteria);
         $phones = [];
         foreach ($alerts as $alert) {
@@ -591,6 +592,7 @@ class Cars extends CActiveRecord
             $email = $user->email;
             $phone = $user->userDetails && $user->userDetails->mobile ? $user->userDetails->mobile : null;
             $phones[] = $phone;
+            @$alert->delete();
         }
 
         $sms = "کاربر گرامی،
