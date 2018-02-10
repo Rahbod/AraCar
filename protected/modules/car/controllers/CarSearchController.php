@@ -387,18 +387,22 @@ class CarSearchController extends Controller
                     if(isset($prices[0] , $prices[1]) && !empty((float)$prices[0]) && !empty((float)$prices[1])){
                         $p0 = (float)$prices[0];
                         $p1 = (float)$prices[1];
+                        $p0 = $p0 * 1000000;
+                        $p1 = $p1 * 1000000;
                         $criteria->compare('car.purchase_type_id', Cars::PURCHASE_TYPE_CASH, false);
-                        $criteria->addBetweenCondition('car.purchase_details', $p0 * 1000000, $p1 * 1000000);
+                        $criteria->addCondition("car.purchase_details >= {$p0} AND car.purchase_details <= {$p1}");
                     }
                     else if(isset($prices[0])){
                         $p0 = (float)$prices[0];
+                        $p0 = $p0 * 1000000;
                         $criteria->compare('car.purchase_type_id', Cars::PURCHASE_TYPE_CASH, false);
-                        $criteria->compare('car.purchase_details', ' >= '.$p0 * 1000000);
+                        $criteria->addCondition("car.purchase_details >= {$p0}");
                     }
                     else if(isset($prices[1])){
                         $p0 = (float)$prices[1];
+                        $p0 = $p0 * 1000000;
                         $criteria->compare('car.purchase_type_id', Cars::PURCHASE_TYPE_CASH, false);
-                        $criteria->compare('car.purchase_details', ' <= '.$p0 * 1000000);
+                        $criteria->addCondition("car.purchase_details <= {$p0}");
                     }
                     break;
 
@@ -480,7 +484,6 @@ class CarSearchController extends Controller
 
         if(!isset($filters['order']))
             $criteria->order = "car.show_in_top DESC, car.update_date DESC";
-
         return $criteria;
     }
 }

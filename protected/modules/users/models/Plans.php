@@ -71,6 +71,11 @@ class Plans extends CActiveRecord
 				'type' => 'check'
 			],
 			[
+				'title'=>'نمایش در آگهی های مرتبط',
+				'name'=>'relatedCars',
+				'type' => 'check'
+			],
+			[
 				'title'=>'تعرفه',
 				'name'=>'price',
 				'type' => 'num',
@@ -118,6 +123,11 @@ class Plans extends CActiveRecord
             [
                 'title'=>'نمایش در شبکه های اجتماعی',
                 'name'=>'socialNetworks',
+                'type' => 'check'
+            ],
+            [
+                'title'=>'نمایش در آگهی های مرتبط',
+                'name'=>'relatedCars',
                 'type' => 'check'
             ],
             [
