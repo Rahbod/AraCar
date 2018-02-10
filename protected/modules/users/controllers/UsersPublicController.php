@@ -752,11 +752,13 @@ class UsersPublicController extends Controller
         $result = null;
         $active_gateway = $this->getActiveGateway();
         if($active_gateway == 'mellat'){
-            $model = UserTransactions::model()->findByAttributes(array(
-                'user_id' => Yii::app()->user->getId(),
-                'model_name' => Plans::class,
-                'model_id' => $id,
-                'status' => 'unpaid'));
+            $criteria = new CDbCriteria();
+            $criteria->order = 'id DESC';
+            $criteria->compare('user_id', $user->id);
+            $criteria->compare('model_name', Plans::class);
+            $criteria->compare('model_id', $id);
+            $criteria->compare('status', UserTransactions::TRANSACTION_STATUS_UNPAID);
+            $model = UserTransactions::model()->find($criteria);
             if($_POST['ResCode'] == 0)
                 $result = Yii::app()->mellat->VerifyRequest($model->id, $_POST['SaleOrderId'], $_POST['SaleReferenceId']);
 
@@ -764,17 +766,17 @@ class UsersPublicController extends Controller
                 $ResponseCode = (!is_array($result)?$result:$result['responseCode']);
                 if($ResponseCode == 0){
                     // Settle Payment
-                    $settle = Yii::app()->mellat->SettleRequest($model->id, $_POST['SaleOrderId'], $_POST['SaleReferenceId']);
+                    Yii::app()->mellat->SettleRequest($model->id, $_POST['SaleOrderId'], $_POST['SaleReferenceId']);
                     $model->scenario = 'update';
-                    $model->status = 'paid';
+                    $model->status = UserTransactions::TRANSACTION_STATUS_PAID;
                     $model->token = $_POST['SaleReferenceId'];
-                    $model->save();
+                    @$model->save();
                     $transactionResult = true;
                     $up = $user->upgradePlan($plan);
                     if($up){
                         $model->model_name = UserPlans::class;
                         $model->model_id = $up;
-                        @$model->save(false);
+                        @$model->save();
                     }
                     Yii::app()->user->setFlash('success', 'پرداخت شما با موفقیت انجام شد.');
                 }else
