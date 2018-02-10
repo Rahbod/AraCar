@@ -3174,6 +3174,8 @@ footer .nav li:last-of-type a{
     padding:0 10px 15px;
     border-bottom: 1px solid #ccc;
 }
+.top-filter-box .col-lg-2,
+.top-filter-box .col-lg-4,
 .top-filter-box .col-lg-3{
     padding: 0 5px;
 }

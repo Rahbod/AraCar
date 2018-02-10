@@ -140,31 +140,15 @@ $(document).ready(function() {
             $('body').addClass('overflow-fix filter-box-open');
     });
 
-    if($(window).width <= 992) {
-        $(".nicescroll").each(function () {
-            var options = $(this).data();
+    $(".nicescroll").each(function () {
+        var options = $(this).data();
 
-            $.each(options, function (key, value) {
-                if (typeof value == "string" && value.indexOf("js:") != -1)
-                    options[key] = JSON.parse(value.substr(3));
-            });
-
-            $(this).niceScroll(options);
+        $.each(options, function (key, value) {
+            if (typeof value == "string" && value.indexOf("js:") != -1)
+                options[key] = JSON.parse(value.substr(3));
         });
-    }
-    $(window).resize(function () {
-        if($(window).width <= 992) {
-            $(".nicescroll").each(function () {
-                var options = $(this).data();
 
-                $.each(options, function (key, value) {
-                    if (typeof value == "string" && value.indexOf("js:") != -1)
-                        options[key] = JSON.parse(value.substr(3));
-                });
-
-                $(this).niceScroll(options);
-            });
-        }
+        $(this).niceScroll(options);
     });
 
     $(".datepicker").each(function () {

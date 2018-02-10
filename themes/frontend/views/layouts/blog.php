@@ -27,12 +27,12 @@
     $cs->registerCssFile($baseUrl.'/css/bootstrap-rtl.min.css');
     $cs->registerCssFile($baseUrl.'/css/fontiran.css');
     $cs->registerCssFile($baseUrl.'/css/font-awesome.css');
-    $cs->registerCssFile($baseUrl.'/css/bootstrap-theme.css?4.2');
-    $cs->registerCssFile($baseUrl.'/css/responsive-theme.css?4.2');
+    $cs->registerCssFile($baseUrl.'/css/bootstrap-theme.css?4.3');
+    $cs->registerCssFile($baseUrl.'/css/responsive-theme.css?4.3');
 
     $cs->registerScriptFile($baseUrl.'/js/bootstrap.min.js', CClientScript::POS_END);
     $cs->registerScriptFile($baseUrl.'/js/jquery.nicescroll.min.js', CClientScript::POS_END);
-    $cs->registerScriptFile($baseUrl.'/js/jquery.script.js?4.2', CClientScript::POS_END);
+    $cs->registerScriptFile($baseUrl.'/js/jquery.script.js?4.3', CClientScript::POS_END);
     ?>
 </head>
 <body class="blog-page">

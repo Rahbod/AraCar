@@ -13,10 +13,10 @@
 
     <div class="buttons">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                 <a href="<?php echo Yii::app()->getBaseUrl(true);?>" class="btn btn-danger btn-block">صفحه اصلی <i class="arrow-icon right"></i></a>
             </div>
-            <div class="col-md-6">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                 <button id="back-btn" onclick="history.back();" class="btn btn-info btn-block"><i class="arrow-icon left"></i> بازگشت</button>
             </div>
         </div>
