@@ -38,10 +38,10 @@ $this->breadcrumbs =[
                         <th>وضعیت تراکنش</th><td><span class="label label-<?= $transaction->status=='paid'?'success':'danger' ?>"><?= $transaction->statusLabels[$transaction->status]?></span></td>
                     </tr>
                     <tr>
-                        <th>تاریخ تراکنش</th><td class="ltr"><?= JalaliDate::date('Y/m/d - H:i', $transaction->date) ?></td>
+                        <th>تاریخ تراکنش</th><td class="ltr text-right"><?= JalaliDate::date('Y/m/d - H:i', $transaction->date) ?></td>
                     </tr>
                     <tr>
-                        <th>مبلغ پرداختی</th><td><?= Controller::parseNumbers(number_format($plan->price)) ?> تومان</td>
+                        <th>مبلغ پرداختی</th><td><?= Controller::parseNumbers(number_format($plan->getPrice($user->role->role))) ?> تومان</td>
                     </tr>
                     </tbody>
                 </table>

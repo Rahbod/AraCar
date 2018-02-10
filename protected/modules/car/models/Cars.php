@@ -73,6 +73,7 @@ class Cars extends CActiveRecord
     public $images;
     public $m_date;
     public $sh_date;
+    public $titleSearch;
 
     /**
      * @return string the associated database table name
@@ -172,7 +173,7 @@ class Cars extends CActiveRecord
             array('m_date, sh_date', 'check_creation_date'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, show_in_top, update_count,create_date, update_date, expire_date, user_id, brand_id, model_id, room_color_id, body_color_id, body_state_id, state_id, city_id, fuel_id, gearbox_id, car_type_id, plate_type_id, purchase_type_id, purchase_details, distance, status, visit_district, description, creation_date, confirm_priority', 'safe', 'on' => 'search'),
+            array('id, titleSearch, show_in_top, update_count,create_date, update_date, expire_date, user_id, brand_id, model_id, room_color_id, body_color_id, body_state_id, state_id, city_id, fuel_id, gearbox_id, car_type_id, plate_type_id, purchase_type_id, purchase_details, distance, status, visit_district, description, creation_date, confirm_priority', 'safe', 'on' => 'search'),
         );
     }
 
@@ -268,7 +269,6 @@ class Cars extends CActiveRecord
 
         $criteria = new CDbCriteria;
 
-        $criteria->compare('id', $this->id, true);
         $criteria->compare('create_date', $this->create_date, true);
         $criteria->compare('update_date', $this->update_date, true);
         $criteria->compare('expire_date', $this->expire_date, true);
@@ -292,15 +292,21 @@ class Cars extends CActiveRecord
         $criteria->compare('visit_district', $this->visit_district, true);
         $criteria->compare('description', $this->description, true);
         $criteria->compare('creation_date', $this->creation_date, true);
+        if($this->titleSearch){
+            $criteria->with[] = 'brand';
+            $criteria->with[] = 'model';
+            $criteria->addCondition('brand.title LIKE :title OR model.title LIKE :title OR creation_date LIKE :title');
+            $criteria->params[':title'] = $this->titleSearch;
+        }
         if ($deleted)
             $criteria->addCondition('status = :deleted');
         else
             $criteria->addCondition('status <> :deleted');
         $criteria->params[':deleted'] = Cars::STATUS_DELETED;
         if ($admin)
-            $criteria->order = 'status, confirm_priority, id';
+            $criteria->order = 'status, confirm_priority, t.id';
         else
-            $criteria->order = 'id DESC';
+            $criteria->order = 't.id DESC';
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));

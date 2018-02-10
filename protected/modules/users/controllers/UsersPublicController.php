@@ -751,7 +751,6 @@ class UsersPublicController extends Controller
         $transactionResult = false;
         $result = null;
         $active_gateway = $this->getActiveGateway();
-
         if($active_gateway == 'mellat'){
             $model = UserTransactions::model()->findByAttributes(array(
                 'user_id' => Yii::app()->user->getId(),

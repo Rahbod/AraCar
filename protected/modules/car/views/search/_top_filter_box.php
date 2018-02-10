@@ -34,11 +34,13 @@ $orderTypes = [
 <!--                    </div>-->
 <!--                </div>-->
 <!--            --><?php //endif; ?>
-            <?= CHtml::dropDownList('model_id',isset($filters['model']) ? $filters['model'] : '', isset($selectedBrand)?CHtml::listData($selectedBrand->models, function ($model){ return urlencode($model->slug); }, 'title'):array(), [
-                'class' => 'selectpicker select-field',
-                'id' => 'Cars_brand',
-                'disabled' => !isset($selectedBrand),
-                'prompt' => "همه مدل ها",
+            <?= CHtml::dropDownList('model_id',isset($filters['model']) ? $filters['model'] : '',
+                isset($selectedBrand)?CHtml::listData($selectedBrand->models, function ($model){ return urlencode($model->slug); }, "title"):array(), [
+                    'class' => 'selectpicker select-field',
+                    'data-live-search' => true,
+                    'id' => 'Cars_brand',
+                    'disabled' => !isset($selectedBrand),
+                    'prompt' => "همه مدل ها",
             ])?>
         </div>
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">

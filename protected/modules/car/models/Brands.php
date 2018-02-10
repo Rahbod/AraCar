@@ -55,7 +55,7 @@ class Brands extends CActiveRecord
 		return array(
 			'country' => array(self::BELONGS_TO, 'Countries', 'country_id'),
 			'cars' => array(self::HAS_MANY, 'Cars', 'brand_id'),
-			'models' => array(self::HAS_MANY, 'Models', 'brand_id', 'order' => 'models.order'),
+			'models' => array(self::HAS_MANY, 'Models', 'brand_id', 'order' => 'models.title'),
 			'modelCount' => array(self::STAT, 'Models', 'brand_id', 'condition' => 'md.id IS NOT NULL', 'join' => 'LEFT JOIN {{model_details}} md ON md.model_id=t.id'),
 		);
 	}

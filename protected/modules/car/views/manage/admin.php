@@ -49,7 +49,11 @@ $this->menu=array(
                 ),
                 'pagerCssClass' => 'blank',
                 'columns'=>array(
-            		'title:html',
+                    [
+                        'name' => 'title',
+                        'type' => 'raw',
+                        'filter' => CHtml::activeTextField($model, 'titleSearch')
+                    ],
                     [
                         'name' => 'state_id',
                         'value' => '$data->state->name'

@@ -30,11 +30,13 @@ $this->breadcrumbs=array(
         </p>
         <?php $this->renderPartial("//partial-views/_flashMessage"); ?>
         <div class="table-responsive">
-            <?php $this->widget('ext.yiiSortableModel.widgets.SortableCGridView', array(
-                'orderField' => 'order',
-                'idField' => 'id',
-	            'orderUrl' => 'order',
-                'jqueryUiSortableOptions' => array('handle' => '.sortable-handle'),
+            <?php
+            $this->widget('zii.widgets.grid.CGridView', array(
+//            $this->widget('ext.yiiSortableModel.widgets.SortableCGridView', array(
+//                'orderField' => 'order',
+//                'idField' => 'id',
+//	            'orderUrl' => 'order',
+//                'jqueryUiSortableOptions' => array('handle' => '.sortable-handle'),
                 'id'=>'brands-grid',
                 'dataProvider'=>$modelsSearch->search(),
                 'filter'=>$modelsSearch,
@@ -59,9 +61,9 @@ $this->breadcrumbs=array(
                 ),
                 'pagerCssClass' => 'blank',
                 'columns'=>array(
-                    [
-                        'class'=>'SortableGridColumn',
-                    ],
+//                    [
+//                        'class'=>'SortableGridColumn',
+//                    ],
                     'title',
                     'slug',
                     array(
