@@ -79,7 +79,7 @@ class UserLoginForm extends CFormModel
 			'rememberMe'=>'مرا بخاطر بسپار',
             'email' => 'پست الکترونیک',
             'authenticate_field' => 'Authenticate Field',
-            'verification_field_value' => 'پست الکترونیکی',
+            'verification_field_value' => 'شماره موبایل یا پست الکترونیکی',
 		);
 	}
 

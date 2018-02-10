@@ -28,13 +28,13 @@
     $cs->registerCssFile($baseUrl.'/css/bootstrap-select.min.css');
     $cs->registerCssFile($baseUrl.'/css/fontiran.css');
     $cs->registerCssFile($baseUrl.'/css/font-awesome.css');
-    $cs->registerCssFile($baseUrl.'/css/bootstrap-theme.css?4.1');
-    $cs->registerCssFile($baseUrl.'/css/responsive-theme.css?4.1');
+    $cs->registerCssFile($baseUrl.'/css/bootstrap-theme.css?4.2');
+    $cs->registerCssFile($baseUrl.'/css/responsive-theme.css?4.2');
 
     $cs->registerScriptFile($baseUrl.'/js/bootstrap.min.js', CClientScript::POS_END);
     $cs->registerScriptFile($baseUrl.'/js/bootstrap-select.min.js', CClientScript::POS_END);
     $cs->registerScriptFile($baseUrl.'/js/jquery.nicescroll.min.js', CClientScript::POS_END);
-    $cs->registerScriptFile($baseUrl.'/js/jquery.script.js?4.1', CClientScript::POS_END);
+    $cs->registerScriptFile($baseUrl.'/js/jquery.script.js?4.2', CClientScript::POS_END);
     /* @var $this SiteController */
     /* @var $model Pages */
     $this->pageTitle='نقشه سایت';

@@ -597,32 +597,40 @@ class UsersPublicController extends Controller
 
         if(isset($_POST['Users'])){
             $model->attributes = $_POST['Users'];
-            $model->status = 'pending';
+            $model->status = 'active';
             $model->create_date = time();
             $pwd = $model->password;
             $username = $model->email;
+            $model->username = "";
             if($model->save()){
-                $token = md5($model->id . '#' . $model->password . '#' . $model->email . '#' . $model->create_date);
-                $model->updateByPk($model->id, array('verification_token' => $token));
-                $message = '<div style="color: #2d2d2d;font-size: 14px;text-align: right;">با سلام<br>برای فعال کردن حساب کاربری خود در ' . Yii::app()->name . ' بر روی لینک زیر کلیک کنید:</div>';
-                $message .= '<div style="text-align: right;font-size: 9pt;">';
-                $message .= '<a href="' . Yii::app()->getBaseUrl(true) . '/users/public/verify/token/' . $token . '">' . Yii::app()->getBaseUrl(true) . '/users/public/verify/token/' . $token . '</a>';
-                $message .= '</div>';
-                $message .= '<div style="font-size: 8pt;color: #888;text-align: right;">این لینک فقط 3 روز اعتبار دارد.</div>';
-                Mailer::mail($model->email, 'ثبت نام در ' . Yii::app()->name, $message, Yii::app()->params['noReplyEmail']);
+                $login = new UserLoginForm();
+                $login->verification_field_value = $username;
+                $login->password = $pwd;
+                @($login->validate() && $login->login());
+//                $token = md5($model->id . '#' . $model->password . '#' . $model->email . '#' . $model->create_date);
+//                $model->updateByPk($model->id, array('verification_token' => $token));
+//                $message = '<div style="color: #2d2d2d;font-size: 14px;text-align: right;">با سلام<br>برای فعال کردن حساب کاربری خود در ' . Yii::app()->name . ' بر روی لینک زیر کلیک کنید:</div>';
+//                $message .= '<div style="text-align: right;font-size: 9pt;">';
+//                $message .= '<a href="' . Yii::app()->getBaseUrl(true) . '/users/public/verify/token/' . $token . '">' . Yii::app()->getBaseUrl(true) . '/users/public/verify/token/' . $token . '</a>';
+//                $message .= '</div>';
+//                $message .= '<div style="font-size: 8pt;color: #888;text-align: right;">این لینک فقط 3 روز اعتبار دارد.</div>';
+//                Mailer::mail($model->email, 'ثبت نام در ' . Yii::app()->name, $message, Yii::app()->params['noReplyEmail']);
                 // Send Sms
                 $siteName = Yii::app()->name;
                 $message = "ثبت نام شما در سایت {$siteName} با موفقیت انجام شد.
-نام کاربری: {$username}
+پست الکترونیک: {$username}
 کلمه عبور: {$pwd}";
                 $phone = $model->userDetails->mobile;
 //                if($phone)
 //                    Notify::SendSms($message, $phone);
                 if(isset($_GET['ajax'])){
-                    echo CJSON::encode(array('status' => true, 'msg' => 'ایمیل فعال سازی به پست الکترونیکی شما ارسال شد. لطفا Inbox و Spam پست الکترونیکی خود را چک کنید.'));
+//                    echo CJSON::encode(array('status' => true, 'msg' => 'ایمیل فعال سازی به پست الکترونیکی شما ارسال شد. لطفا Inbox و Spam پست الکترونیکی خود را چک کنید.'));
+                    echo CJSON::encode(array('status' => true, 'msg' => 'ثبت نام شما با موفقیت انجام شد. لطفا صبر کنید ...', 'url' => $this->createUrl('/sell')));
                     Yii::app()->end();
-                }else
+                }else{
+//                    Yii::app()->user->setFlash('register-success', 'ایمیل فعال سازی به پست الکترونیکی شما ارسال شد. لطفا Inbox و Spam پست الکترونیکی خود را چک کنید.');
                     Yii::app()->user->setFlash('register-success', 'ایمیل فعال سازی به پست الکترونیکی شما ارسال شد. لطفا Inbox و Spam پست الکترونیکی خود را چک کنید.');
+                }
             }else{
                 if(isset($_GET['ajax'])){
                     echo CJSON::encode(array('status' => false, 'msg' => 'متاسفانه در ثبت نام مشکلی بوجود آمده است. لطفا مجددا سعی کنید.'));

@@ -4,7 +4,7 @@
             <div class="modal-header">
                 <h4>
                     <span class="svg svg-user-login"></span>
-                    <span>ثبت نام / ورود</span>
+                    <span>ثبت آگهی / ورود به حساب کاربری</span>
                     <span><button type="button" data-dismiss="modal" class="close">&times;</button></span>
                 </h4>
             </div>
@@ -21,7 +21,7 @@
                             </div>
                             <div class="button-box">
                                 <p>عضو سایت هستید؟
-                                    برای ثبت سفارش خود وارد شوید</p>
+                                    برای ثبت آگهی خود وارد شوید</p>
                                 <button type="button" data-toggle="tab" data-target="#login-modal-login-tab" class="btn btn-custom blue next-in">
                                     ورود به حساب کاربری
                                     <span class="next-span"><i class="icon-chevron-left"></i></span>
@@ -39,7 +39,7 @@
                             </div>
                             <div class="button-box">
                                 <p>تازه وارد هستید؟
-                                    برای ثبت سفارش خود ثبت‌نام کنید</p>
+                                    برای ثبت آگهی خود ثبت‌نام کنید</p>
                                 <button type="button" data-toggle="tab" data-target="#login-modal-register-tab" class="btn btn-custom green next-in">
                                     ساخت حساب کاربری
                                     <span class="next-span"><i class="icon-chevron-left"></i></span>

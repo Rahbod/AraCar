@@ -12,7 +12,7 @@
                 <?php
                 if(Yii::app()->user->isGuest || Yii::app()->user->type == 'admin'):
                 ?>
-                    <li class="login-link"><a href="#" data-toggle="modal" data-target="#login-modal">ثبت نام / ورود</a></li>
+                    <li class="login-link"><a href="#" data-toggle="modal" data-target="#login-modal">ثبت آگهی / ورود</a></li>
                 <?php
                 else:
                     ?>

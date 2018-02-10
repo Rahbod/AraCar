@@ -13,6 +13,12 @@
     }
 }
 @media screen and (max-width: 992px){
+    .content-box .filter-box .nicescroll{
+        overflow-y: auto !important;
+    }
+    .content-box .filter-box .nicescroll > li{
+        padding-left: 15px !important;
+    }
     .header .logo-box{
         padding-left: 15px;
     }

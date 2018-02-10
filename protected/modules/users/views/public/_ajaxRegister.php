@@ -12,7 +12,7 @@ if(!isset($loading_parent) || empty($loading_parent))
 </div>
 <div class="button-box">
     <p>تازه وارد هستید؟
-        برای ثبت سفارش خود ثبت‌نام کنید</p>
+        برای ثبت آگهی خود ثبت‌نام کنید</p>
     <div class="register-form">
         <?php
         $model = new Users;
