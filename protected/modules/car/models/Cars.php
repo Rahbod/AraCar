@@ -483,12 +483,12 @@ class Cars extends CActiveRecord
 
     public function getSimilar($activeProvider = false)
     {
-        $cr = Cars::getValidQuery();
+        $cr = Cars::duplicateQuery();
         $cr->compare('id', '<> ' . $this->id);
         $cr->addCondition('model_id = :model_id OR brand_id = :brand_id');
         $cr->params[':model_id'] = $this->model_id;
         $cr->params[':brand_id'] = $this->brand_id;
-        $cr->order = 't.show_in_top DESC, t.update_date DESC';
+        $cr->order = 'car.show_in_top DESC, car.update_date DESC';
         return $activeProvider ? new CActiveDataProvider('Cars', array(
             'criteria' => $cr
         )) : $this->findAll($cr);
