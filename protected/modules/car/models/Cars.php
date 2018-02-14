@@ -564,7 +564,7 @@ class Cars extends CActiveRecord
         $list = [];
         if ($type == 'shamsi') {
             $start = 1340;
-            $end = (int)JalaliDate::date('Y', time(), false);
+            $end = (int)JalaliDate::date('Y', time(), false)+1;
             for ($i = $end; $i >= $start; $i--)
                 if ($mode == 'list')
                     $list[$i] = Controller::parseNumbers($i);
@@ -572,7 +572,7 @@ class Cars extends CActiveRecord
                     $list[] = array('id' => $i, 'title' => Controller::parseNumbers($i));
         } else {
             $start = 1930;
-            $end = (int)date('Y');
+            $end = (int)date('Y')+1;
             for ($i = $end; $i >= $start; $i--)
                 if ($mode == 'list')
                     $list[$i] = Controller::parseNumbers($i);
