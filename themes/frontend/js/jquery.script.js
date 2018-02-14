@@ -133,6 +133,14 @@ $(document).ready(function() {
             $('.header').addClass('open');
             $('body').addClass('overflow-fix');
         }
+    }).on("click", ".item-actions-trigger", function () {
+        var $article = $(this).parents('article');
+        if($article.hasClass('open-menu')){
+            $article.removeClass('open-menu');
+        }else{
+            $('.advertise-panel-list article').removeClass('open-menu');
+            $article.addClass('open-menu');
+        }
     }).on("click", ".filter-box-trigger", function () {
         if ($('body').hasClass('filter-box-open')) {
             $('body').removeClass('overflow-fix filter-box-open');

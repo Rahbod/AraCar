@@ -27,12 +27,11 @@
     $cs->registerCssFile($baseUrl.'/css/bootstrap-rtl.min.css');
     $cs->registerCssFile($baseUrl.'/css/fontiran.css');
     $cs->registerCssFile($baseUrl.'/css/font-awesome.css');
-    $cs->registerCssFile($baseUrl.'/css/bootstrap-theme.css?4.4');
-    $cs->registerCssFile($baseUrl.'/css/responsive-theme.css?4.4');
+    $cs->registerCssFile($baseUrl.'/css/bootstrap-theme.css?4.6');
 
     $cs->registerScriptFile($baseUrl.'/js/bootstrap.min.js', CClientScript::POS_END);
     $cs->registerScriptFile($baseUrl.'/js/jquery.nicescroll.min.js', CClientScript::POS_END);
-    $cs->registerScriptFile($baseUrl.'/js/jquery.script.js?4.4', CClientScript::POS_END);
+    $cs->registerScriptFile($baseUrl.'/js/jquery.script.js?4.6', CClientScript::POS_END);
     ?>
 </head>
 <body>

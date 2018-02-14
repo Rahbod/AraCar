@@ -46,6 +46,7 @@ $imagePath = Yii::getPathOfAlias('webroot').'/uploads/brands/';
             </div>
         </div>
     </div>
+    <div class="actions-icon-btn item-actions-trigger"><i class="actions-icon"></i></div>
     <div class="item-actions">
         <?php
         echo CHtml::ajaxLink(' حذف<i class="addon-icon icon icon-remove"></i>',array('/car/public/authJson'),array(

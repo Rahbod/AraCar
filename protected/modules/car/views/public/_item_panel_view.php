@@ -45,6 +45,7 @@ $adsUpdateCount = $data->getCarPlanRule('adsUpdateCount');
             </div>
         </div>
     </div>
+    <div class="actions-icon-btn item-actions-trigger"><i class="actions-icon"></i></div>
     <div class="item-actions">
         <a href="<?php echo $data->getViewUrl(); ?>" class="btn btn-gray">
             <span>نمایش خودرو</span>
