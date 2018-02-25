@@ -206,7 +206,7 @@ $parked = UserParking::model()->findByAttributes(['user_id' => $car->user_id, 'c
                     </div>
 					<div class="feature-item">
 						<span class="name">کارکرد</span>
-						<span class="value"><?= Controller::parseNumbers(number_format($car->distance))?> کیلومتر</span>
+						<span class="value"><?= (double)$car->distance?Controller::parseNumbers(number_format($car->distance)):$car->distance?> کیلومتر</span>
 					</div>
 					<div class="feature-item">
 						<span class="name">گیربکس</span>
@@ -277,7 +277,7 @@ $parked = UserParking::model()->findByAttributes(['user_id' => $car->user_id, 'c
                             </div>
                             <div class="info-container">
                                 <h4><?= $item->getTitle(false) ?></h4>
-                                <div class="text"><?= Controller::parseNumbers(number_format($item->distance)) ?> کیلومتر - <?= $item->gearbox->title ?> - <?= $item->fuel->title ?> - <?= $item->bodyState->title ?> - <?= $item->bodyColor->title ?> - <?= $item->state->name ?> - <?= $item->city->name ?></div>
+                                <div class="text"><?= (double)$item->distance?Controller::parseNumbers(number_format($item->distance)):$item->distance ?> کیلومتر - <?= $item->gearbox->title ?> - <?= $item->fuel->title ?> - <?= $item->bodyState->title ?> - <?= $item->bodyColor->title ?> - <?= $item->state->name ?> - <?= $item->city->name ?></div>
                                 <div class="price"><?= $item->getPrice() ?></div>
                             </div>
                         </a>

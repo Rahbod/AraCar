@@ -535,7 +535,7 @@ class Cars extends CActiveRecord
         if ($blank)
             return $p;
 
-        $p = !is_array($p) ? number_format($p) : ($this->getPurchaseDetail('totalPrice') ?: 0);
+        $p = !is_array($p) && doubleval($p) != 0? number_format(doubleval($p)) : ($this->getPurchaseDetail('totalPrice') ?: 0);
         $p = $postfix ? $p . ' ' . $postfix : $p;
         return $convert ? Controller::parseNumbers($p) : $p;
     }
