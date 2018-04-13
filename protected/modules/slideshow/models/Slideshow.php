@@ -58,7 +58,8 @@ class Slideshow extends CActiveRecord
 			'id' => 'کد',
 			'title' => 'عنوان',
 			'description' => 'توضیحات',
-			'image' => 'آدرس عکس',
+			'image' => 'تصویر',
+			'mobile_image' => 'تصویر در حالت موبایل',
 			'link' => 'لینک',
 		);
 	}

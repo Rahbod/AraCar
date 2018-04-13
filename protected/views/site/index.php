@@ -28,7 +28,7 @@ $baseUrl = Yii::app()->theme->baseUrl;
             endforeach;
             $skinPath = $baseUrl.'/assets/slider/layerslider_skins/';
             $cs->registerScript('slider-js','
-                if($(window).width() > 768){
+                if($(window).width() > 992){
                     var sh;
                     sh = $(window).width() * 600 / 1920 - 5;
                     $("#slider").css({height:sh});
@@ -36,11 +36,11 @@ $baseUrl = Yii::app()->theme->baseUrl;
                 $("#slider").layerSlider({
                     startInViewport: false,
                     responsive : true,
-                    responsiveUnder : 768,
+                    responsiveUnder : 992,
                     forceLoopNum: false,
                     autoPlayVideos: false,
                     skinsPath: \''.$skinPath.'\',
-                    skin: \'fullsize\',
+                    skin: \'fullwidth\',
                     navPrevNext: false,
                     navStartStop: false,
                     pauseOnHover: false,

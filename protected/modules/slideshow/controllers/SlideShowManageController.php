@@ -9,8 +9,10 @@ class SlideShowManageController extends Controller
 	public $layout='//layouts/column2';
     public $tempPath = 'uploads/temp';
     public $imagePath = 'uploads/slideshow';
-    public $imageOptions = ['resize' => ['width' => 200, 'height' => 200]];
-    public $mobileImageOptions = ['thumbnail' => ['width' => 100, 'height' => 100], 'resize' => ['width' => 545, 'height' => 270]];
+    public $imageOptions = ['resize' => ['width' => 1920, 'height' => 600]];
+    public $mobileImageOptions = [
+//        'thumbnail' => ['width' => 100, 'height' => 100],
+        'resize' => ['width' => 400, 'height' => 400]];
 
 	/**
 	 * @return array action filters
@@ -25,7 +27,9 @@ class SlideShowManageController extends Controller
 				'admin',
 				'delete',
 				'upload',
+				'uploadMobile',
 				'deleteUpload',
+				'deleteUploadMobile',
 			)
 		);
 	}
