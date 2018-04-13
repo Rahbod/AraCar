@@ -29,10 +29,34 @@ $baseUrl = Yii::app()->theme->baseUrl;
             $skinPath = $baseUrl.'/assets/slider/layerslider_skins/';
             $cs->registerScript('slider-js','
                 if($(window).width() > 992){
-                    var sh;
-                    sh = $(window).width() * 600 / 1920 - 5;
-                    $("#slider").css({height:sh});
+                    if($("#slider").find(".ls-bg.hidden-sm.hidden-xs").length ==0)
+                        $("#slider").addClass("hidden");
+                    else{
+                        var sh;
+                        sh = $(window).width() * 600 / 1920 - 5;
+                        $("#slider").css({height:sh});
+                    }
+                }else{
+                    if($("#slider").find(".ls-bg.hidden-lg.hidden-md").length ==0)
+                        $("#slider").addClass("hidden");
                 }
+                $(window).resize(function(){
+                    if($(window).width() > 992){
+                        if($("#slider").find(".ls-bg.hidden-sm.hidden-xs").length ==0)
+                            $("#slider").addClass("hidden");
+                        else{
+                            var sh;
+                            sh = $(window).width() * 600 / 1920 - 5;
+                            $("#slider").css({height:sh}).removeClass("hidden");
+                        }
+                    }else{
+                        if($("#slider").find(".ls-bg.hidden-lg.hidden-md").length ==0)
+                            $("#slider").addClass("hidden");
+                        else
+                            $("#slider").removeClass("hidden");
+                    }
+                });
+                
                 $("#slider").layerSlider({
                     startInViewport: false,
                     responsive : true,
