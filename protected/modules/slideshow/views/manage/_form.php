@@ -2,7 +2,8 @@
 /* @var $this SlideShowManageController */
 /* @var $model Slideshow */
 /* @var $form CActiveForm */
-/* @var $image array */
+/* @var $image UploadedFiles */
+/* @var $mobileImage UploadedFiles */
 ?>
 
 <div class="form">
@@ -34,21 +35,52 @@
 			'name' => 'image',
 			'maxFiles' => 1,
 			'maxFileSize' => 2, //MB
-			'url' => $this->createUrl('/slideshow/manage/upload'),
-			'deleteUrl' => $this->createUrl('/slideshow/manage/deleteUpload'),
-			'acceptedFiles' => '.jpeg, .jpg, .png, .gif',
-			'serverFiles' => $image,
-			'onSuccess' => '
+			'url' => $this->createUrl('upload'),
+			'deleteUrl' => $this->createUrl('deleteUpload'),
+			'acceptedFiles' => '.jpeg, .jpg, .png',
+            'serverFiles' => $image,
+            'onSuccess' => '
 				var responseObj = JSON.parse(res);
-				if(responseObj.state == "ok")
-				{
+				if(responseObj.status){
 					{serverName} = responseObj.fileName;
-				}else if(responseObj.state == "error"){
-					console.log(responseObj.msg);
+					$(".uploader-message").html("");
 				}
-		',
-		));
-		?>
+				else{
+					$(".uploader-message").html(responseObj.message);
+                    this.removeFile(file);
+                }
+            ',
+        )); ?>
+        <?php echo $form->error($model,'image'); ?>
+        <div class="uploader-message error"></div>
+	</div>
+
+    <div class="form-group">
+		<?php echo $form->labelEx($model,'mobile_image'); ?>
+		<?php $this->widget('ext.dropZoneUploader.dropZoneUploader', array(
+			'id' => 'uploaderMobileFile',
+			'model' => $model,
+			'name' => 'mobile_image',
+			'maxFiles' => 1,
+			'maxFileSize' => 2, //MB
+			'url' => $this->createUrl('uploadMobile'),
+			'deleteUrl' => $this->createUrl('deleteUploadMobile'),
+			'acceptedFiles' => '.jpeg, .jpg, .png',
+            'serverFiles' => $mobileImage,
+            'onSuccess' => '
+				var responseObj = JSON.parse(res);
+				if(responseObj.status){
+					{serverName} = responseObj.fileName;
+					$(".uploader-message").html("");
+				}
+				else{
+					$(".uploader-message").html(responseObj.message);
+                    this.removeFile(file);
+                }
+            ',
+        )); ?>
+        <?php echo $form->error($model,'mobile_image'); ?>
+        <div class="uploader-message error"></div>
 	</div>
 
 	<div class="form-group">

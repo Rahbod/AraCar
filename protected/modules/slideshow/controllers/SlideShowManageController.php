@@ -7,6 +7,10 @@ class SlideShowManageController extends Controller
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
 	public $layout='//layouts/column2';
+    public $tempPath = 'uploads/temp';
+    public $imagePath = 'uploads/slideshow';
+    public $imageOptions = ['resize' => ['width' => 200, 'height' => 200]];
+    public $mobileImageOptions = ['thumbnail' => ['width' => 100, 'height' => 100], 'resize' => ['width' => 545, 'height' => 270]];
 
 	/**
 	 * @return array action filters
@@ -25,6 +29,42 @@ class SlideShowManageController extends Controller
 			)
 		);
 	}
+
+    public function actions()
+    {
+        return array(
+            'upload' => array( // brand logo upload
+                'class' => 'ext.dropZoneUploader.actions.AjaxUploadAction',
+                'attribute' => 'image',
+                'rename' => 'random',
+                'validateOptions' => array(
+                    'acceptedTypes' => array('png', 'jpg', 'jpeg')
+                )
+            ),
+            'deleteUpload' => array( // delete brand logo uploaded
+                'class' => 'ext.dropZoneUploader.actions.AjaxDeleteUploadedAction',
+                'modelName' => 'Slideshow',
+                'attribute' => 'image',
+                'uploadDir' => '/uploads/slideshow/',
+                'storedMode' => 'field'
+            ),
+            'uploadMobile' => array( // brand logo upload
+                'class' => 'ext.dropZoneUploader.actions.AjaxUploadAction',
+                'attribute' => 'mobile_image',
+                'rename' => 'random',
+                'validateOptions' => array(
+                    'acceptedTypes' => array('png', 'jpg', 'jpeg')
+                )
+            ),
+            'deleteUploadMobile' => array( // delete brand logo uploaded
+                'class' => 'ext.dropZoneUploader.actions.AjaxDeleteUploadedAction',
+                'modelName' => 'Slideshow',
+                'attribute' => 'mobile_image',
+                'uploadDir' => '/uploads/slideshow/',
+                'storedMode' => 'field'
+            ),
+        );
+    }
 
 	/**
 	 * @return array action filters
@@ -45,106 +85,56 @@ class SlideShowManageController extends Controller
 	{
 		$model=new Slideshow;
 
-        $tmpDIR = Yii::getPathOfAlias("webroot") . '/uploads/temp/';
-        if (!is_dir($tmpDIR))
-            mkdir($tmpDIR);
-        $tmpUrl = Yii::app()->baseUrl .'/uploads/temp/';
-        $imageDIR = Yii::getPathOfAlias("webroot") . "/uploads/slideshow/";
-        if (!is_dir($imageDIR))
-            mkdir($imageDIR);
-
-		 $this->performAjaxValidation($model);
-
         $image = array();
+        $mobileImage = array();
 		if(isset($_POST['Slideshow']))
 		{
 			$model->attributes=$_POST['Slideshow'];
-            if (isset($_POST['Slideshow']['image'])) {
-                $file = $_POST['Slideshow']['image'];
-                $image = array(
-                    'name' => $file,
-                    'src' => $tmpUrl . '/' . $file,
-                    'size' => filesize($tmpDIR . $file),
-                    'serverName' => $file,
-                );
-            }
+            $image = new UploadedFiles($this->tempPath, $model->image, $this->imageOptions);
+            $mobileImage = new UploadedFiles($this->tempPath, $model->mobile_image, $this->mobileImageOptions);
 			if($model->save()) {
-                if ($model->image and file_exists($tmpDIR.$model->image))
-                    rename($tmpDIR . $model->image, $imageDIR . $model->image);
-
-				Yii::app()->user->setFlash('success', 'تصویر با موفقیت افزوده شد');
+                $image->move($this->imagePath);
+                $mobileImage->move($this->imagePath);
+                Yii::app()->user->setFlash('success', '<span class="icon-check"></span>&nbsp;&nbsp;اطلاعات با موفقیت ذخیره شد.');
+                $this->redirect(array('admin'));
 			}
 			else
 				Yii::app()->user->setFlash('failed' , 'متاسفانه در افزودن تصویر مشکل رخ داده است.');
-			$this->redirect('admin');
 		}
 
-		$this->render('create',array(
-			'model'=>$model,
-            'image' => $image
-		));
+        $this->render('create',compact('model', 'image', 'mobileImage'));
 	}
 
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
+    /**
+     * @param $id
+     * @throws CHttpException
+     */
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
 
-        $tmpDIR = Yii::getPathOfAlias("webroot") . '/uploads/temp/';
-        if (!is_dir($tmpDIR))
-            mkdir($tmpDIR);
-        $tmpUrl = Yii::app()->baseUrl .'/uploads/temp/';
-        $imageDIR = Yii::getPathOfAlias("webroot") . "/uploads/slideshow/";
-        $imageUrl = Yii::app()->baseUrl .'/uploads/slideshow/';
-
-        $image = array();
-        if ($model->image and file_exists($imageDIR.$model->image)) {
-            $file = $model->image;
-            $image = array(
-                'name' => $file,
-                'src' => $imageUrl . '/' . $file,
-                'size' => filesize($imageDIR . $file),
-                'serverName' => $file,
-            );
-        }
-
-		$this->performAjaxValidation($model);
-
+        $image = new UploadedFiles($this->imagePath, $model->image, $this->imageOptions);
+        $mobileImage = new UploadedFiles($this->imagePath, $model->mobile_image, $this->mobileImageOptions);
 		if(isset($_POST['Slideshow']))
 		{
-			$model->attributes=$_POST['Slideshow'];
+            // store model image value in oldImage variable
+            $oldImage= $model->image;
+            $oldMobileIMage = $model->mobile_image;
 
-            if (isset($_POST['Slideshow']['image']) and file_exists($tmpDIR.$_POST['Slideshow']['image'])) {
-                $file = $_POST['Slideshow']['image'];
-                $image = array(
-                    'name' => $file,
-                    'src' => $tmpUrl . '/' . $file,
-                    'size' => filesize($tmpDIR . $file),
-                    'serverName' => $file,
-                );
-            }
+			$model->attributes=$_POST['Slideshow'];
 
 			if($model->save())
 			{
-                if ($model->image and file_exists($tmpDIR.$model->image))
-                    rename($tmpDIR . $model->image, $imageDIR . $model->image);
-
-				Yii::app()->user->setFlash('success' , 'تصویر با موفقیت افزوده شد');
+                $image->update($oldImage, $model->image, $this->tempPath);
+                $mobileImage->update($oldMobileIMage, $model->mobile_image, $this->tempPath);
+                Yii::app()->user->setFlash('success', '<span class="icon-check"></span>&nbsp;&nbsp;اطلاعات با موفقیت ذخیره شد.');
+                $this->redirect(array('admin'));
 			}
 			else
-				Yii::app()->user->setFlash('failed' , 'متاسفانه در افزودن تصویر مشکل رخ داده است.');
-			$this->redirect(Yii::app()->createUrl('/slideshow/manage/admin'));
-			Yii::app()->end;
+                Yii::app()->user->setFlash('failed', 'در ثبت اطلاعات خطایی رخ داده است! لطفا مجددا تلاش کنید.');
 		}
 
-		$this->render('update',array(
-			'model'=>$model,
-            'image' => $image
-		));
+		$this->render('update',compact('model', 'image', 'mobileImage'));
 	}
 
 	/**
@@ -153,15 +143,17 @@ class SlideShowManageController extends Controller
 	 * @param integer $id the ID of the model to be deleted
 	 */
 	public function actionDelete($id)
-	{
-		$model = $this->loadModel($id);
-		$filePath = Yii::getPathOfAlias('webroot') . '/uploads/slideshow/';
-		@unlink($filePath.$model->image);
-		$model->delete();
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-	}
+    {
+        $model = $this->loadModel($id);
+        $image = new UploadedFiles($this->imagePath, $model->image, $this->imageOptions);
+        $image->removeAll(true);
+        $mobileImage = new UploadedFiles($this->imagePath, $model->mobile_image, $this->mobileImageOptions);
+        $mobileImage->removeAll(true);
+        $model->delete();
+        // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+        if (!isset($_GET['ajax']))
+            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+    }
 
 	/**
 	 * Manages all models.
@@ -205,52 +197,4 @@ class SlideShowManageController extends Controller
 			Yii::app()->end();
 		}
 	}
-    public function actionUpload()
-    {
-        $tempDir = Yii::getPathOfAlias("webroot") . '/uploads/temp';
-
-        if (!is_dir($tempDir))
-            mkdir($tempDir);
-        if (isset($_FILES)) {
-            $file = $_FILES['image'];
-            $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
-            $file['name'] = Controller::generateRandomString(5) . time();
-            while (file_exists($tempDir . DIRECTORY_SEPARATOR . $file['name'].'.'.$ext))
-                $file['name'] = Controller::generateRandomString(5) . time();
-            $file['name'] = $file['name'] . '.' . $ext;
-            if (move_uploaded_file($file['tmp_name'], $tempDir . DIRECTORY_SEPARATOR . CHtml::encode($file['name'])))
-                $response = ['state' => 'ok', 'fileName' => CHtml::encode($file['name'])];
-            else
-                $response = ['state' => 'error', 'msg' => 'فایل آپلود نشد.'];
-        } else
-            $response = ['state' => 'error', 'msg' => 'فایلی ارسال نشده است.'];
-        echo CJSON::encode($response);
-        Yii::app()->end();
-    }
-
-    public function actionDeleteUpload()
-    {
-        $Dir = Yii::getPathOfAlias("webroot") . '/uploads/slideshow/';
-
-        if (isset($_POST['fileName'])) {
-
-            $fileName = $_POST['fileName'];
-
-            $tempDir = Yii::getPathOfAlias("webroot") . '/uploads/temp/';
-
-            $model = Slideshow::model()->findByAttributes(array('image' => $fileName));
-            if ($model) {
-                if (@unlink($Dir . $model->image)) {
-                    $model->updateByPk($model->id,array('image'=>null));
-                    $response = ['state' => 'ok', 'msg' => $this->implodeErrors($model)];
-                } else
-                    $response = ['state' => 'error', 'msg' => 'مشکل ایجاد شده است'];
-            } else {
-                @unlink($tempDir . $fileName);
-                $response = ['state' => 'ok', 'msg' => 'حذف شد.'];
-            }
-            echo CJSON::encode($response);
-            Yii::app()->end();
-        }
-    }
 }

@@ -177,13 +177,4 @@ class SiteController extends Controller
         $model = Pages::model()->findByPk(3);
         $this->render('//site/pages/page', array('model' => $model));
     }
-
-    public function actionSms()
-    {
-        $s= new SendSMS();
-        $s->AddNumber("09358389265");
-        $s->AddMessage("تست
-آرا خودرو");
-        $s->SendWithLine();
-    }
 }

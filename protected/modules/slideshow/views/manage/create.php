@@ -1,7 +1,8 @@
 <?php
 /* @var $this SlideShowManageController */
 /* @var $model Slideshow */
-/* @var $image array */
+/* @var $image UploadedFiles */
+/* @var $mobileImage UploadedFiles */
 
 $this->breadcrumbs=array(
 	'مدیریت'=>array('admin'),
@@ -22,9 +23,6 @@ $this->menu=array(
 			</a>
 		</div>
 		<div class="box-body">
-			<?php $this->renderPartial('_form', array(
-				'model'=>$model,
-				'image'=>$image,
-			)); ?>
+			<?php $this->renderPartial('_form', compact('model', 'image', 'mobileImage')); ?>
 		</div>
 	</div>

@@ -482,4 +482,41 @@ class Controller extends AuthController
         $criteria->limit = 15;
         return News::model()->findAll($criteria);
     }
+
+    public function actionBackup()
+    {
+        $dbPath = Yii::getPathOfAlias('webroot') . DIRECTORY_SEPARATOR . 'db_backup';
+        if(!is_dir($dbPath))
+            mkdir($dbPath);
+
+        Yii::import('ext.yii-database-dumper.SDatabaseDumper');
+        $dumper = new SDatabaseDumper;
+        // Get path to backup file
+
+        // Gzip dump
+        $file = $dbPath . DIRECTORY_SEPARATOR . 'sql-dump-' . date('Y-m-d');
+        if(function_exists('gzencode'))
+            file_put_contents($file . '.sql.gz', gzencode($dumper->getDump()));
+        else
+            file_put_contents($file . '.sql', $dumper->getDump());
+
+        if(file_exists($file . '.sql') || file_exists($file . '.sql.gz'))
+            echo 'OK';
+        else
+            echo 'NOK';
+
+        $files = scandir($dbPath);
+        unset($files[0]);
+        unset($files[1]);
+        $expireTime = time() - 7 * 24 * 60 * 60;
+        $index = 0;
+        foreach($files as $key => $file){
+            if(strpos($file, 'sql-dump-' . date('Y-m-d', $expireTime)) !== false){
+                $index = $key;
+                break;
+            }
+        }
+        for($i = 2;$i <= $index;$i++)
+            @unlink($dbPath . DIRECTORY_SEPARATOR . $files[$i]);
+    }
 }

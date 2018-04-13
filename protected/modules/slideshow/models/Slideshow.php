@@ -8,6 +8,7 @@
  * @property string $title
  * @property string $description
  * @property string $image
+ * @property string $mobile_image
  * @property string $link
  */
 class Slideshow extends CActiveRecord
@@ -28,7 +29,7 @@ class Slideshow extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('title, image', 'length', 'max'=>100),
+			array('title, image,mobile_image', 'length', 'max'=>100),
 			array('link', 'length', 'max'=>2000),
 			array('description', 'safe'),
 			// The following rule is used by search().
