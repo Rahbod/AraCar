@@ -28,8 +28,8 @@ $baseUrl = Yii::app()->theme->baseUrl;
             endforeach;
             $skinPath = $baseUrl.'/assets/slider/layerslider_skins/';
             $cs->registerScript('slider-js','
-                if($(window).width() > 992){
-                    if($("#slider").find(".ls-bg.hidden-sm.hidden-xs").length ==0)
+                if($(window).width() > 768){
+                    if($("#slider").find(".ls-bg.hidden-xs").length ==0)
                         $("#slider").addClass("hidden");
                     else{
                         var sh;
@@ -37,12 +37,12 @@ $baseUrl = Yii::app()->theme->baseUrl;
                         $("#slider").css({height:sh});
                     }
                 }else{
-                    if($("#slider").find(".ls-bg.hidden-lg.hidden-md").length ==0)
+                    if($("#slider").find(".ls-bg.hidden-lg.hidden-md.hidden-sm").length ==0)
                         $("#slider").addClass("hidden");
                 }
                 $(window).resize(function(){
-                    if($(window).width() > 992){
-                        if($("#slider").find(".ls-bg.hidden-sm.hidden-xs").length ==0)
+                    if($(window).width() > 768){
+                        if($("#slider").find(".ls-bg.hidden-xs").length ==0)
                             $("#slider").addClass("hidden");
                         else{
                             var sh;
@@ -50,7 +50,7 @@ $baseUrl = Yii::app()->theme->baseUrl;
                             $("#slider").css({height:sh}).removeClass("hidden");
                         }
                     }else{
-                        if($("#slider").find(".ls-bg.hidden-lg.hidden-md").length ==0)
+                        if($("#slider").find(".ls-bg.hidden-lg.hidden-md.hidden-sm").length ==0)
                             $("#slider").addClass("hidden");
                         else
                             $("#slider").removeClass("hidden");
@@ -60,7 +60,7 @@ $baseUrl = Yii::app()->theme->baseUrl;
                 $("#slider").layerSlider({
                     startInViewport: false,
                     responsive : true,
-                    responsiveUnder : 992,
+                    responsiveUnder : 768,
                     forceLoopNum: false,
                     autoPlayVideos: false,
                     skinsPath: \''.$skinPath.'\',
