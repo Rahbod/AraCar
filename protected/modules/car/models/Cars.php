@@ -476,7 +476,7 @@ class Cars extends CActiveRecord
             ':status' => Cars::STATUS_APPROVED,
             ':now' => time()
         );
-        $criteria->order = 'car.show_in_top DESC, car.update_date DESC';
+        $criteria->order = 'car.create_date DESC';
         return $criteria;
     }
 
@@ -488,7 +488,7 @@ class Cars extends CActiveRecord
         $cr->addCondition('model_id = :model_id OR brand_id = :brand_id');
         $cr->params[':model_id'] = $this->model_id;
         $cr->params[':brand_id'] = $this->brand_id;
-        $cr->order = 'car.show_in_top DESC, car.update_date DESC';
+        $cr->order = 'car.create_date DESC';
         return $activeProvider ? new CActiveDataProvider('Cars', array(
             'criteria' => $cr
         )) : $this->findAll($cr);
