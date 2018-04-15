@@ -3584,6 +3584,9 @@ footer .nav li:last-of-type a{
     line-height: 25px;
     padding: 30px;
 }
+.news-view-box .text-container .text table{
+    width: 100% !important;
+}
 .news-view-box .sharing{
     width: 180px;
     border-bottom: 4px solid #1272d1;
