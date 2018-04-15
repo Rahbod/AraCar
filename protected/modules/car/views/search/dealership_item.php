@@ -12,7 +12,7 @@ $url = $data->id;
             <?php
             if($data->avatar && file_exists($imagePath.$data->avatar)):
                 ?>
-                <img src="<?= Yii::app()->getBaseUrl(true).'/uploads/users/'.$data->avatar ?>" alt="<?= $data->dealership_name ?>">
+                <img src="<?= Yii::app()->getBaseUrl(true).'/uploads/users/avatars/'.$data->avatar ?>" alt="<?= $data->dealership_name ?>">
                 <?php
             else:
                 ?>

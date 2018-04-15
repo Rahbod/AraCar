@@ -5,6 +5,11 @@ $(document).ready(function() {
             'YII_CSRF_TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+    $(window).resize(function () {
+        if($(window).width() > 992)
+            $("body").removeClass("overflow-fix filter-box-open");
+            $(".header").removeClass("open");
+    });
 
     if($(window).width() > 992)
         $('[data-title]').tooltip();

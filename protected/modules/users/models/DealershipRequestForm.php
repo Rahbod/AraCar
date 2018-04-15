@@ -62,7 +62,7 @@ class DealershipRequestForm extends CFormModel
             'address' => 'نشانی نمایشگاه',
             'phone' => 'تلفن ثابت نمایشگاه (همراه با کد استان)',
             'email' => 'پست الکترونیک',
-            'description' => 'توضحیات',
+            'description' => 'توضیحات',
             'verifyCode' => 'کد امنیتی',
             'state_id' => 'استان',
         );
