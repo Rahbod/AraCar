@@ -439,11 +439,15 @@ class CarSearchController extends Controller
                     }
                     break;
 
+                case "special":
+                    $criteria->compare('car.show_in_top', 1);
+                    break;
+
                 case "order":
                     $field = $order = "";
                     switch($value){
                         case "time":
-                            $field = "update_date";
+                            $field = "create_date";
                             $order = "DESC";
                             break;
 
@@ -484,7 +488,7 @@ class CarSearchController extends Controller
         }
 
         if(!isset($filters['order']))
-            $criteria->order = "car.show_in_top DESC, car.update_date DESC";
+            $criteria->order = "car.create_date DESC";
         return $criteria;
     }
 }

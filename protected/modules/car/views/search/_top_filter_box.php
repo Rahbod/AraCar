@@ -70,8 +70,16 @@ $orderTypes = [
             ])?>
         </div>
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
-            <input type="checkbox" id="has-image"<?= (isset($filters['has-image']) and $filters['has-image']) ? ' checked' : ''?>>
-            <label for="has-image">عکس دار</label>
+            <div class="row">
+                <span class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <input type="checkbox" id="has-image"<?= (isset($filters['has-image']) and $filters['has-image']) ? ' checked' : ''?>>
+                    <label for="has-image">عکس دار</label>
+                </span>
+                <span class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <input type="checkbox" id="special"<?= (isset($filters['special']) and $filters['special']) ? ' checked' : ''?>>
+                    <label for="special">ویژه</label>
+                </span>
+            </div>
         </div>
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
             <input type="button" class="btn-blue center-block text-center" onclick="submitTopFilter()" value="جستجو">
@@ -112,6 +120,9 @@ $orderTypes = [
 
         if($("#has-image").is(":checked"))
             topFilters[topFilters.length] = "has-image=1";
+            
+        if($("#special").is(":checked"))
+            topFilters[topFilters.length] = "special=1";
 
         if(filteredQueryStrings.length == 0) {
             if(topFilters.length != 0)

@@ -27,7 +27,7 @@ $url = $data->id;
             <div class="detail">
                 <h3>
                     <span><?= $data->dealership_name ?></span>
-                    <span class="dealer-ad-details hidden-xs" style="width:100% !important;margin-bottom:2px; font-size:11px;">
+                    <span class="dealer-ad-details hidden-xs">
                             <span><?= Controller::normalizeNumber($data->countCars, true, true, 'خودرو') ?></span>
                     </span>
                     <small style="font-size:11px;font-weight: normal !important;padding-right:5px;">[<?= JalaliDate::differenceTime($data->create_date) ?>]</small>
@@ -36,8 +36,8 @@ $url = $data->id;
                     <?= strip_tags($data->userDetails->address) ?>
                 </p>
             </div>
-            <div class="dealer-ad-details-fix">
-                <p style="float: left;">
+            <div class="dealer-ad-details-fix hidden-lg hidden-md hidden-sm">
+                <p style="float: right;">
                     <span><?= Controller::normalizeNumber($data->countCars, true, true, 'خودرو') ?></span>
                 </p>
             </div>

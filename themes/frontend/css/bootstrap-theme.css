@@ -3247,12 +3247,10 @@ footer .nav li:last-of-type a{
 .dealer-item .detail h3 {
     font-size: 13px;
     font-weight: bold;
-    margin: -2px 0 55px;
-    margin-bottom: 55px;
     padding: 0;
     line-height: 16px;
     color: #000;
-    margin: 0 0 40px 0;
+    margin: 0 0 30px 0;
 }
 .dealer-item .listdata .address {
     bottom: 17px;
@@ -3275,9 +3273,10 @@ footer .nav li:last-of-type a{
 .dealer-ad-details{
     color: #888;
     position: absolute;
-    top: 25px;
+    top: 16px;
     left: 15px;
     float: left;
+    text-align: left;
     direction: rtl;
     width: 152px;
 }
@@ -4823,7 +4822,7 @@ footer .nav li:last-of-type a{
         padding-right: 140px;
     }
     .dealer-item .detail h3{
-        margin: 5px 0 30px 0;
+        margin: 5px 0 10px 0;
     }
 }
 @media screen and (max-width: 450px){
