@@ -170,7 +170,7 @@ class CarSearchController extends Controller
             $this->pageTitle = strpos('نمایشگاه',$model->dealership_name,0) ===0?$model->dealership_name:'نمایشگاه '.$model->dealership_name;
             $this->pageHeader = strpos('نمایشگاه',$model->dealership_name,0) ===0?$model->dealership_name:'نمایشگاه '.$model->dealership_name;
             $this->pageDescription = 'نشانی: '.strip_tags($model->userDetails->address);
-            $this->pageLogo = $model->userDetails->avatar && file_exists(Yii::getPathOfAlias('webroot.uploads').'/users/'.$model->userDetails->avatar)?Yii::app()->getBaseUrl(true).'/uploads/users/'.$model->userDetails->avatar:false;
+            $this->pageLogo = $model->userDetails->avatar && file_exists(Yii::getPathOfAlias('webroot.uploads').'/users/avatar/'.$model->userDetails->avatar)?Yii::app()->getBaseUrl(true).'/uploads/users/avatar/'.$model->userDetails->avatar:false;
 
             $filters = $this->getFilters();
 

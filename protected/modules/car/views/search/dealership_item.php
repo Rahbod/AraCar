@@ -2,7 +2,7 @@
 /* @var $this CarPublicController */
 /* @var $data Users */
 $data->loadPropertyValues();
-$imagePath = Yii::getPathOfAlias("webroot.uploads").'/users/';
+$imagePath = Yii::getPathOfAlias("webroot.uploads").'/users/avatar/';
 $url = $data->id;
 ?>
 <li class="dealer-item">
@@ -12,7 +12,7 @@ $url = $data->id;
             <?php
             if($data->avatar && file_exists($imagePath.$data->avatar)):
                 ?>
-                <img src="<?= Yii::app()->getBaseUrl(true).'/uploads/users/avatars/'.$data->avatar ?>" alt="<?= $data->dealership_name ?>">
+                <img src="<?= Yii::app()->getBaseUrl(true).'/uploads/users/avatar/'.$data->avatar ?>" alt="<?= $data->dealership_name ?>">
                 <?php
             else:
                 ?>
