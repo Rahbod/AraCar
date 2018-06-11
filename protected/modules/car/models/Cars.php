@@ -485,9 +485,12 @@ class Cars extends CActiveRecord
     {
         $cr = Cars::duplicateQuery();
         $cr->compare('id', '<> ' . $this->id);
-        $cr->addCondition('model_id = :model_id OR brand_id = :brand_id');
+        // $cr->addCondition('model_id = :model_id OR brand_id = :brand_id'); // similar with brand and model
+        // $cr->params[':brand_id'] = $this->brand_id;
+
+        $cr->addCondition('model_id = :model_id'); // similar only with model
         $cr->params[':model_id'] = $this->model_id;
-        $cr->params[':brand_id'] = $this->brand_id;
+
         $cr->order = 'car.create_date DESC';
         return $activeProvider ? new CActiveDataProvider('Cars', array(
             'criteria' => $cr

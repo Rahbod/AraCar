@@ -26,6 +26,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">برند <i class="caret"></i></a>
                     <div class="dropdown-menu">
                         <ul class="linear-menu">
+                            <li><a href="<?= $this->createUrl('/car/search/all')?>">همه آگهی ها <small><b>( <?= Controller::parseNumbers(number_format(Cars::model()->count(Cars::duplicateQuery()))) ?> )</b></small></a></li>
                             <?php foreach($this->brands as $brand):?>
                                 <li><a href="<?= $this->createUrl('/car/brand/' . $brand->slug)?>"><?= $brand->title?><?php if($brand->carsCount>0):?> <small><b>( <?= Controller::parseNumbers(number_format($brand->carsCount)) ?> )</b></small><?php endif; ?></a></li>
                             <?php endforeach;?>
