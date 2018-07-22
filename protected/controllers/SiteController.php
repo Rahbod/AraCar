@@ -109,7 +109,7 @@ class SiteController extends Controller
             $dep = ContactDepartment::model()->findByPk($contactModel->department_id);
             if($model->validate() && $contactModel->save()){
                 $siteName = Yii::app()->name;
-                $subject = 'وبسايت مستر کیتچنز - پیغام در بخش ' . $dep->title . ($model->subject && !empty($model->subject)?' - ' . $model->subject:'');
+                $subject = 'وبسايت آراخودرو - پیغام در بخش ' . $dep->title . ($model->subject && !empty($model->subject)?' - ' . $model->subject:'');
                 $body = "<div style='padding:15px;white-space: pre-line'>"
                     . "<p>متن پیام:</p>"
                     . "<p>" . $model->body . "</p>"
