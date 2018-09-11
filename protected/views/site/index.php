@@ -135,10 +135,15 @@ $baseUrl = Yii::app()->theme->baseUrl;
 <!--        samandehi-->
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-left">
             <img id='jxlzesgtfukzfukznbqefukz' style='cursor:pointer' onclick='window.open("https://logo.samandehi.ir/Verify.aspx?id=106626&p=rfthobpdgvkagvkauiwkgvka", "Popup","toolbar=no, scrollbars=no, location=no, statusbar=no, menubar=no, resizable=0, width=450, height=630, top=30")' alt='logo-samandehi' src='https://logo.samandehi.ir/logo.aspx?id=106626&p=nbpdlymawlbqwlbqodrfwlbq'/>
+            <img src="https://trustseal.enamad.ir/logo.aspx?id=78522&amp;p=yAB3wY5aHpIEuczA" alt="" onclick="window.open(&quot;https://trustseal.enamad.ir/Verify.aspx?id=78522&amp;p=yAB3wY5aHpIEuczA&quot;, &quot;Popup&quot;,&quot;toolbar=no, location=no, statusbar=no, menubar=no, scrollbars=1, resizable=0, width=580, height=600, top=30&quot;)" style="cursor:pointer" id="yAB3wY5aHpIEuczA">
         </div>
 <!--        enamad-->
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-            <img src="https://trustseal.enamad.ir/logo.aspx?id=78522&amp;p=yAB3wY5aHpIEuczA" alt="" onclick="window.open(&quot;https://trustseal.enamad.ir/Verify.aspx?id=78522&amp;p=yAB3wY5aHpIEuczA&quot;, &quot;Popup&quot;,&quot;toolbar=no, location=no, statusbar=no, menubar=no, scrollbars=1, resizable=0, width=580, height=600, top=30&quot;)" style="cursor:pointer" id="yAB3wY5aHpIEuczA">
+            <div class="app-logo-box">
+                <a class="app-logo android-logo"></a>
+                <a class="app-logo ios-logo"></a>
+                <h3>به زودی ...</h3>
+            </div>
         </div>
     </div>
 </div>

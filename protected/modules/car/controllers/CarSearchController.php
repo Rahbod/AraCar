@@ -452,13 +452,13 @@ class CarSearchController extends Controller
                             break;
 
                         case "max-cast":
-                            $criteria->addCondition("CAST(car.purchase_details AS INTEGER) > 0");
-                            $criteria->order = "CAST(car.purchase_details AS INTEGER) DESC";
+                            $criteria->addCondition("CAST(car.purchase_details AS SIGNED) > 0");
+                            $criteria->order = "CAST(car.purchase_details AS SIGNED) DESC";
                             break;
 
                         case "min-cast":
-                            $criteria->addCondition("CAST(car.purchase_details AS INTEGER) > 0");
-                            $criteria->order = "CAST(car.purchase_details AS INTEGER) ASC";
+                            $criteria->addCondition("CAST(car.purchase_details AS SIGNED) > 0");
+                            $criteria->order = "CAST(car.purchase_details AS SIGNED) ASC";
                             break;
 
                         case "new-year":
