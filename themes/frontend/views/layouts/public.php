@@ -18,8 +18,6 @@
     $cs = Yii::app()->getClientScript();
     Yii::app()->clientScript->registerCoreScript('jquery');
     $cssCoreUrl = $cs->getCoreScriptUrl();
-//    Yii::app()->clientScript->registerCoreScript('jquery.ui');
-//    $cs->registerCssFile($cssCoreUrl . '/jui/css/base/jquery-ui.css');
 
     $cs->registerCssFile($baseUrl.'/css/bootstrap.min.css');
     $cs->registerCssFile($baseUrl.'/css/bootstrap-rtl.min.css');

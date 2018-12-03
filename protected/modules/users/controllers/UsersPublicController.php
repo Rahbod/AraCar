@@ -92,12 +92,15 @@ class UsersPublicController extends Controller
     {
         Yii::app()->theme = 'frontend';
         $this->layout = '//layouts/panel';
+
         /* @var $user Users */
         $user = Users::model()->findByPk(Yii::app()->user->id);
         $this->pageTitle = 'پروفایل من';
         $this->pageHeader = $user->userDetails->getShowName();
         $this->pageDescription = $user->userDetails->getShowDescription();
         $this->pageLogo = $user->userDetails->avatar && file_exists(Yii::getPathOfAlias('webroot.uploads') . '/users/' . $user->userDetails->avatar)?Yii::app()->getBaseUrl(true) . '/uploads/users/' . $user->userDetails->avatar:false;
+
+        $user->checkPlan();
 
         $criteria = new CDbCriteria();
         $criteria->compare('user_id', $user->id);

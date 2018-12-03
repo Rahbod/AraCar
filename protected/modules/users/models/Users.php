@@ -26,8 +26,9 @@
  * @property UserParking[] $parked
  * @property CarAlerts[] $alerts
  * @property UserPlans[] $plans
+ * @property UserPlans $lastPlan
  * @property UserPlans $activePlan
- * @property Cars $cars
+ * @property Cars[] $cars
  * @property int $countParked
  * @property int $countCars
  * @property int $countAlerts
@@ -187,6 +188,7 @@ class Users extends CActiveRecord
             'cars' => array(self::HAS_MANY, 'Cars', 'user_id'),
             'parked' => array(self::HAS_MANY, 'UserParking', 'user_id'),
             'activePlan' => array(self::HAS_ONE, 'UserPlans', 'user_id', 'on' => 'activePlan.expire_date = -1 OR activePlan.expire_date > :time', 'params' => [':time' => time()], 'order' => 'activePlan.id DESC'),
+            'lastPlan' => array(self::HAS_ONE, 'UserPlans', 'user_id', 'order' => 'lastPlan.id DESC'),
             'plans' => array(self::HAS_MANY, 'UserPlans', 'user_id', 'order' => 'plans.id DESC'),
             'state' => array(self::BELONGS_TO, 'Towns', 'state_id'),
             'alerts' => array(self::HAS_MANY, 'CarAlerts', 'user_id'),
@@ -342,18 +344,7 @@ class Users extends CActiveRecord
             $model->dealership_name = $this->dealership_name;
             if(!$model->save())
                 $this->addErrors($model->errors);
-
-            $freePlan = Plans::model()->findByPk(1);
-            if($freePlan){
-                $model = new UserPlans;
-                $model->user_id = $this->id;
-                $model->plan_id = $freePlan->id;
-                $model->join_date = time();
-                $model->expire_date = -1;
-                $model->price = 0;
-                if(!$model->save())
-                    $this->addErrors($model->errors);
-            }
+            $this->setFreePlan();
         }elseif($this->scenario == 'update'){
             $model = UserDetails::model()->findByPk($this->id);
             $model->first_name = $this->first_name;
@@ -368,6 +359,21 @@ class Users extends CActiveRecord
         }
         parent::afterSave();
         return true;
+    }
+
+    public function setFreePlan()
+    {
+        $freePlan = Plans::model()->findByPk(1);
+        if($freePlan){
+            $model = new UserPlans;
+            $model->user_id = $this->id;
+            $model->plan_id = $freePlan->id;
+            $model->join_date = time();
+            $model->expire_date = -1;
+            $model->price = 0;
+            if(!$model->save())
+                $this->addErrors($model->errors);
+        }
     }
 
     public function generatePassword()
@@ -394,8 +400,49 @@ class Users extends CActiveRecord
         $model->expire_date = strtotime(date('Y/m/d 23:59:59', ($model->join_date + 30 * 24 * 60 * 60))); // 30 days
         $model->price = $plan->getPrice($this->role->role);
         if($model->save())
+        {
+            // upgrade all ads plan
+            $adImageCount = $this->getActivePlanRule('adsImageCount');
+            $adLifeTime = $this->getActivePlanRule('adsDuration');
+            if($this->cars)
+                foreach ($this->cars as $car){
+                    $car->expire_date = intval($car->create_date) + $adLifeTime*24*60*60;
+                    $car->normalizePrice();
+                    // plan rules set
+                    $car->plan_title = $this->getActivePlanTitle();
+                    $car->plan_rules = $this->getActivePlanRules(true);
+                    $car->confirm_priority = $this->getActivePlanRule('confirmPriority');
+                    $car->show_in_top = $this->getActivePlanRule('showOnTop');
+                    @$car->save(false);
+                }
+
             return $model->id;
+        }
         return false;
+    }
+
+    public function checkPlan()
+    {
+        if ($this->userDetails->mobile == '09358389265') {
+            if ($this->activePlan->id !== $this->lastPlan->id) {
+                // upgrade all ads plan
+                $adImageCount = $this->getActivePlanRule('adsImageCount');
+                $adLifeTime = $this->getActivePlanRule('adsDuration');
+                if ($this->cars)
+                    foreach ($this->cars as $car) {
+                        if ($car->plan_title != $this->getActivePlanTitle()) {
+                            $car->expire_date = intval($car->create_date) + $adLifeTime * 24 * 60 * 60;
+                            $car->normalizePrice();
+                            // plan rules set
+                            $car->plan_title = $this->getActivePlanTitle();
+                            $car->plan_rules = $this->getActivePlanRules(true);
+                            $car->confirm_priority = $this->getActivePlanRule('confirmPriority');
+                            $car->show_in_top = $this->getActivePlanRule('showOnTop');
+                            @$car->save(false);
+                        }
+                    }
+            }
+        }
     }
 
     public function getActivePlanRule($name)

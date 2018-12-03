@@ -164,9 +164,9 @@ $(document).ready(function() {
         $(this).niceScroll(options);
     });
 
-    $(".datepicker").each(function () {
+    /*$(".datepicker").each(function () {
         $(this).persianDatepicker(eval($(this).data("config")));
-    });
+    });*/
 
     $(".is-carousel").each(function () {
         if ($(this).children().length > 0) {
