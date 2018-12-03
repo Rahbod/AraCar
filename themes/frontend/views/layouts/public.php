@@ -1,7 +1,3 @@
-<?php
-/* @var $this Controller */
-/* @var $content string */
-?>
 <!DOCTYPE html>
 <html lang="fa_ir">
 <head>
@@ -12,7 +8,7 @@
     <meta name="csrf-token" content="<?= Yii::app()->request->csrfToken ?>" />
     <meta name="keywords" content="<?= $this->keywords ?>">
     <meta name="description" content="<?= $this->description?> ">
-    <link rel="shortcut icon" href="<?php echo Yii::app()->theme->baseUrl.'/images/favicon.png';?>">
+    <link rel="shortcut icon" href="<?php echo Yii::app()->getBaseUrl(true).'/themes/frontend/images/favicon.ico';?>">
 
     <title><?= (!empty($this->pageTitle)?$this->pageTitle.' | ':'').$this->siteName ?></title>
 
