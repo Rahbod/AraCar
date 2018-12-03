@@ -24,8 +24,14 @@ class SimpleImage
             imagejpeg($this->image, $filename, $compression);
         elseif ($image_type == IMAGETYPE_GIF)
             imagegif($this->image, $filename);
-        elseif ($image_type == IMAGETYPE_PNG)
-            imagepng($this->image, $filename, $compression);
+        elseif ($image_type == IMAGETYPE_PNG) {
+            $q = 0;
+            if ($compression < 10)
+                $q = 9;
+            elseif ($compression >= 10 && $compression <= 100)
+                $q = (int)((100 - $compression) / 10);
+            imagepng($this->image, $filename, $q);
+        }
 
 
         if ($permissions != null)
