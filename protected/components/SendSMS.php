@@ -4,10 +4,10 @@
  */
 class SendSMS extends CComponent
 {
-    public $APIKey = "db6c1b9b35a09ca85721b9b";
+    public $APIKey = "91a3666b14ba10499a25666b";
     public $SecretKey = "!@#Rahbod1395";
     public $LineNumber = "30004505004844";
-    public $APIURL = "https://ws.sms.ir/";
+    public $APIURL = "https://RestfulSms.com/";
 
     public $messagePostfix = 'http://carcadeh.ir';
     private $_invalid_numbers = array();
@@ -28,12 +28,11 @@ class SendSMS extends CComponent
     {
         $token = $this->_getToken();
         if ($token != false) {
-            @$SendDateTime = date("Y-m-d") . "T" . date("H:i:s");
             $postData = array(
                 'Messages' => $this->getMessages(),
                 'MobileNumbers' => $this->getNumbers(),
                 'LineNumber' => $this->LineNumber,
-                'SendDateTime' => $SendDateTime,
+                'SendDateTime' => "",
                 'CanContinueInCaseOfError' => 'false'
             );
 
