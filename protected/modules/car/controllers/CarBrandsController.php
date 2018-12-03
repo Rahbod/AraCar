@@ -9,7 +9,7 @@ class CarBrandsController extends Controller
 	public $layout = '//layouts/column2';
 	public $logoPath = 'uploads/brands';
 	public $modelImagePath = 'uploads/brands/models';
-	public $fileOptions = ['thumbnail' => ['width' => 100, 'height' => 100], 'resize' => ['width' => 200, 'height' => 200]];
+	public $fileOptions = ['thumbnail' => ['width' => 100, 'height' => 100, 'quality' => 70], 'resize' => ['width' => 200, 'height' => 200]];
 	public $modelFileOptions = ['resize' => ['width' => 545, 'height' => 270]];
 
 	/**

@@ -2,7 +2,7 @@
 
 class Imager
 {
-    public function createThumbnail($imagePath, $width, $height, $faceDetection = true, $outputDirection = null)
+    public function createThumbnail($imagePath, $width, $height, $faceDetection = true, $outputDirection = null, $q = 75)
     {
         if (!file_exists($imagePath))
             throw new Exception("Image doesn't exists.");
@@ -26,7 +26,7 @@ class Imager
                         if (($x + $width) > $imageInfo[0])
                             $x = $imageInfo[0] - $width;
                         $y = 0;
-                        $this->crop($imagePath, $width, $height, 100, $x, $y);
+                        $this->crop($imagePath, $width, $height, $q, $x, $y);
                     } elseif ($face['w'] > $width)
                         $this->crop($imagePath, $width, $height);
                 } elseif ($imageInfo[0] < $imageInfo[1]) {
@@ -36,7 +36,7 @@ class Imager
                         $y = ($coordinate < 0) ? 0 : $coordinate;
                         if (($y + $height) > $imageInfo[1])
                             $y = $imageInfo[1] - $height;
-                        $this->crop($imagePath, $width, $height, 100, $x, $y);
+                        $this->crop($imagePath, $width, $height, $q, $x, $y);
                     } elseif ($face['w'] > $width)
                         $this->crop($imagePath, $width, $height);
                 } else
@@ -49,7 +49,7 @@ class Imager
         }
     }
 
-    public function resize($imagePath, $outputDirection, $width, $height)
+    public function resize($imagePath, $outputDirection, $width, $height, $quality = 75)
     {
         $simpleImage = new SimpleImage();
         $simpleImage->load($imagePath);
@@ -65,11 +65,11 @@ class Imager
             $simpleImage->resizeToHeight($height);
         else {
             $simpleImage->resizeToWidth($width);
-            $simpleImage->save($outputDirection);
+            $simpleImage->save($outputDirection, $quality);
             return $outputDirection;
         }
 
-        $simpleImage->save($outputDirection);
+        $simpleImage->save($outputDirection, $quality);
         return $outputDirection;
     }
 
@@ -143,7 +143,7 @@ class Imager
     {
         $simpleImage = new SimpleImage();
         $simpleImage->load($imagePath);
-        $info=array();
+        $info = array();
         $info['width'] = $simpleImage->getWidth();
         $info['height'] = $simpleImage->getHeight();
         return $info;
