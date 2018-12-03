@@ -440,7 +440,9 @@ class CarSearchController extends Controller
                     break;
 
                 case "special":
-                    $criteria->compare('car.show_in_top', 1);
+                    if($value == 1) {
+                        $criteria->compare('car.show_in_top', 1);
+                    }
                     break;
 
                 case "order":

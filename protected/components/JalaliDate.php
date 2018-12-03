@@ -597,8 +597,8 @@ class JalaliDate
             $str = 'یه ربع پیش';
         elseif ( time() - $time < 60 * 60 )
             $str = 'نیم ساعت پیش';
-        elseif ( time() - $time < 24 * 60 * 60 ) {
-            $hour = (int)JalaliDate::gDate( "H" ) - (int)JalaliDate::gDate( "H", $time );
+        elseif ( JalaliDate::gDate( "d", time()) === JalaliDate::gDate( "d", $time) && time() - $time < 24 * 60 * 60 ) {
+            $hour = (int)JalaliDate::gDate( "H", time()) - (int)JalaliDate::gDate( "H", $time );
             $str = self::convertNumbers( abs($hour) ) . ' ساعت پیش';
         } elseif ( time() - $time < 2 * 24 * 60 * 60 ) {
             $str = 'دیروز';

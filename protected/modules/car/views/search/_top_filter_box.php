@@ -93,7 +93,7 @@ $orderTypes = [
             filteredQueryStrings = [];
 
         $.each(queryStrings, function(index, item) {
-            if(!item.match(/model/) && !item.match(/min-year/) && !item.match(/max-year/) && !item.match(/min-distance/) && !item.match(/max-distance/) && !item.match(/purchase/) && !item.match(/has-image/) && !item.match(/order/))
+            if(!item.match(/model/) && !item.match(/min-year/) && !item.match(/max-year/) && !item.match(/min-distance/) && !item.match(/max-distance/) && !item.match(/purchase/) && !item.match(/has-image/) && !item.match(/special/) && !item.match(/order/))
                 filteredQueryStrings[filteredQueryStrings.length] = item;
         });
 
