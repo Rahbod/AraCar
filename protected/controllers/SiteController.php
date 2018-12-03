@@ -74,7 +74,7 @@ class SiteController extends Controller
 //        $topBrands = Brands::model()->findAll($criteria);
         $this->render('index', array(
             'slideShow' => $slideShow,
-            'topBrands' => $topBrands
+//            'topBrands' => $topBrands
         ));
     }
 
