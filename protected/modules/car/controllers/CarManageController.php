@@ -211,6 +211,19 @@ class CarManageController extends Controller
             $model->update_date = time();
             $model->normalizePrice();
             if($model->save(false)){
+                switch ($model->status){
+                    case Cars::STATUS_DELETED:
+                        $msg = "آگهی شما حذف گردید.";
+                        break;
+                    case Cars::STATUS_APPROVED:
+                        $msg = "آگهی شما تایید گردید.";
+                        break;
+                    case Cars::STATUS_REFUSED:
+                        $msg = "آگهی شما رد شد. لطفا جهت ویرایش اقدام فرمایید.";
+                        break;
+                }
+                if($model->user)
+                    Notify::Send($msg,$model->user->userDetails->mobile,$msg, $model->user->email);
                 echo CJSON::encode(array(
                     'status' => true,
                     'message' => 'با موفقیت انجام شد.'

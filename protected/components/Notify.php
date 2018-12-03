@@ -13,11 +13,11 @@ class Notify
      * @param $email
      * @param null $emailSubject
      */
-    public static function Send($text, $phone, $email, $emailSubject=null)
+    public static function Send($text, $phone, $emailText, $email, $emailSubject=null)
     {
         try {
             self::SendSms($text, $phone);
-            self::SendEmail($text, $email, $emailSubject);
+            self::SendEmail($emailText, $email, $emailSubject);
         } catch (CException $e) {
         }
     }
@@ -49,7 +49,7 @@ class Notify
             $html .= '<h1 style="direction:ltr;">اطلاعیه جدید</h1>';
             $html .= '<span>' . (CHtml::encode($message)) . '</span>';
             $html .= "</div>";
-            $subject = $emailSubject && !empty($emailSubject)?$emailSubject:'اطلاعیه جدید - وبسایت آوای شهیر';
+            $subject = $emailSubject && !empty($emailSubject)?$emailSubject:'وبسایت آراخودرو - اطلاعیه جدید';
             @(new Mailer())->mail($email, $subject, $html, Yii::app()->params['no-reply-email']);
         }
     }

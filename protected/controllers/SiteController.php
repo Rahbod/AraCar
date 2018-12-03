@@ -71,7 +71,7 @@ class SiteController extends Controller
         $criteria->with = array('cars');
         $criteria->group = 't.id';
         $criteria->order = 'c DESC';
-        $topBrands = Brands::model()->findAll($criteria);
+//        $topBrands = Brands::model()->findAll($criteria);
         $this->render('index', array(
             'slideShow' => $slideShow,
             'topBrands' => $topBrands

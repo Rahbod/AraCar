@@ -155,22 +155,22 @@ $cs->registerCssFile($baseUrl.'/css/owl.theme.default.min.css');
 $cs->registerScriptFile($baseUrl.'/js/owl.carousel.min.js', CClientScript::POS_END);
 ?>
 
-<div class="top-brands">
-    <div class="is-carousel" data-margin="10" data-dots="0" data-nav="1" data-mouse-drag="1" data-responsive='{"1920":{"items":"11"},"1200":{"items":"9"},"992":{"items":"7"},"768":{"items":"5"},"480":{"items":"4"},"360":{"items":"3"},"0":{"items":"2"}}'>
-        <?php
-        $logoPath = Yii::getPathOfAlias("webroot").'/uploads/brands/';
-        foreach($topBrands as $brand):
-            if($brand->logo && file_exists($logoPath.$brand->logo)):
-        ?>
-            <div class="item">
-                <a href="<?= Yii::app()->createUrl('/car/brand/'.$brand->slug) ?>"><img width="100px" height="100px" alt="<?= $brand->title ?>" src="<?= Yii::app()->getBaseUrl(true).'/uploads/brands/'.$brand->logo ?>" class="grayscale"><span><?= Controller::parseNumbers(number_format($brand->carsCount)) ?></span></a>
-            </div>
-        <?php
-            endif;
-        endforeach;
-        ?>
-    </div>
-</div>
+<!--<div class="top-brands">-->
+<!--    <div class="is-carousel" data-margin="10" data-dots="0" data-nav="1" data-mouse-drag="1" data-responsive='{"1920":{"items":"11"},"1200":{"items":"9"},"992":{"items":"7"},"768":{"items":"5"},"480":{"items":"4"},"360":{"items":"3"},"0":{"items":"2"}}'>-->
+<!--        --><?php
+//        $logoPath = Yii::getPathOfAlias("webroot").'/uploads/brands/';
+//        foreach($topBrands as $brand):
+//            if($brand->logo && file_exists($logoPath.$brand->logo)):
+//        ?>
+<!--            <div class="item">-->
+<!--                <a href="--><?//= Yii::app()->createUrl('/car/brand/'.$brand->slug) ?><!--"><img width="100px" height="100px" alt="--><?//= $brand->title ?><!--" src="--><?//= Yii::app()->getBaseUrl(true).'/uploads/brands/'.$brand->logo ?><!--" class="grayscale"><span>--><?//= Controller::parseNumbers(number_format($brand->carsCount)) ?><!--</span></a>-->
+<!--            </div>-->
+<!--        --><?php
+//            endif;
+//        endforeach;
+//        ?>
+<!--    </div>-->
+<!--</div>-->
 
 <?php
 endif;

@@ -117,6 +117,7 @@ class CarPublicController extends Controller
             if($model->save()){
                 $images->move($this->imagePath);
                 Yii::app()->user->setFlash('sells-success', '<span class="icon-check"></span>&nbsp;&nbsp;خودرو با موفقیت ثبت شد و پس از تایید توسط کارشناسان در سایت قرار خواهد گرفت.');
+                Notify::Send("خودرو با موفقیت ثبت شد.",$user->userDetails->mobile,"خودرو با موفقیت ثبت شد و پس از تایید توسط کارشناسان در سایت قرار خواهد گرفت.", $user->email);
                 $this->redirect(array('/dashboard'));
             }else
                 Yii::app()->user->setFlash('sells-failed', 'در ثبت اطلاعات خطایی رخ داده است! لطفا مجددا تلاش کنید.');
@@ -142,6 +143,7 @@ class CarPublicController extends Controller
             $model->create_date = time();
             if($model->save()){
                 Yii::app()->user->setFlash('alerts-success', '<span class="icon-check"></span>&nbsp;&nbsp;گوش به زنگ با موفقیت ثبت شد.');
+                Notify::Send("گوش به زنگ با موفقیت ثبت شد.",$user->userDetails->mobile,"گوش به زنگ با موفقیت ثبت شد.", $user->email);
                 $this->redirect(array('/dashboard#alerts-tab'));
             }else
                 Yii::app()->user->setFlash('alerts-failed', 'در ثبت اطلاعات خطایی رخ داده است! لطفا مجددا تلاش کنید.');
@@ -186,6 +188,7 @@ class CarPublicController extends Controller
                 }else
                     $images->update($model->oldImages, $model->images, $this->tempPath, true);
                 Yii::app()->user->setFlash('sells-success', '<span class="icon-check"></span>&nbsp;&nbsp;اطلاعات با موفقیت ذخیره شد.');
+                Notify::Send("آگهی شما با موفقیت ویرایش شد.",$user->userDetails->mobile,"آگهی شما با موفقیت ویرایش شد.", $user->email);
                 $this->redirect(array('/dashboard'));
             }else
                 Yii::app()->user->setFlash('sells-failed', 'در ثبت اطلاعات خطایی رخ داده است! لطفا مجددا تلاش کنید.');
@@ -223,16 +226,19 @@ class CarPublicController extends Controller
     {
         $model = $this->loadModel($id);
         $adsUpdateCount = $model->getCarPlanRule('adsUpdateCount');
-        if($model->expire_date < time() && $adsUpdateCount - $model->update_count > 0 && !Yii::app()->user->isGuest && (Yii::app()->user->type == 'admin' || (Yii::app()->user->type == 'user' && Yii::app()->user->getId() == $model->user_id))){
+        if($model->expire_date < time() && $adsUpdateCount - $model->update_count > 0 && !Yii::app()->user->isGuest && (Yii::app()->user->type == 'admin' || (Yii::app()->user->type == 'user' && Yii::app()->user->getId() == $model->user_id))) {
             $user = Users::model()->findByPk(Yii::app()->user->getId());
-            $model->plan_title = $model->plan_title?:$user->getActivePlanTitle();
-            $model->plan_rules = $model->plan_rules?:$user->getActivePlanRules(true);
-            $adLifeTime = $model->getCarPlanRule('adsDuration')?:$user->getActivePlanRule('adsDuration');
+            $model->plan_title = $model->plan_title ?: $user->getActivePlanTitle();
+            $model->plan_rules = $model->plan_rules ?: $user->getActivePlanRules(true);
+            $adLifeTime = $model->getCarPlanRule('adsDuration') ?: $user->getActivePlanRule('adsDuration');
             $model->expire_date = time() + $adLifeTime * 24 * 60 * 60;
             $model->normalizePrice();
             $model->update_count++;
-            if($model->save(false))
+            if ($model->save(false))
+            {
                 Yii::app()->user->setFlash('sells-success', 'خودروی شما با موفقیت به روزرسانی گردید.');
+                Notify::Send("آگهی شما با موفقیت به روزرسانی گردید.",$user->userDetails->mobile,"آگهی شما با موفقیت به روزرسانی گردید.", $user->email);
+            }
             else
                 Yii::app()->user->setFlash('sells-failed', 'متاسفانه در به روزرسانی آگهی مشکلی بوجود آمده است! لطفا مجددا بررسی فرمایید.');
         }else if($adsUpdateCount - $model->update_count <= 0)
