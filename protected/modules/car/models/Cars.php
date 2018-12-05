@@ -161,7 +161,8 @@ class Cars extends CActiveRecord
             array('purchase_details', 'length', 'max' => 1024),
             array('distance', 'length', 'max' => 7),
             array('creation_date, m_date, sh_date', 'length', 'max' => 4),
-            array('status, show_in_top', 'length', 'max' => 1),
+            array('status', 'length', 'max' => 2),
+            array('show_in_top', 'length', 'max' => 1),
             array('update_count', 'length', 'max' => 2),
             array('status', 'default', 'value' => self::STATUS_PENDING),
             array('confirm_priority', 'default', 'value' => 0),
@@ -384,7 +385,7 @@ class Cars extends CActiveRecord
             $this->update_date = time();
         $this->distance = $this->distance ? str_replace(',', '', $this->distance) : 0;
         $this->creation_date = empty($this->sh_date) ? $this->m_date : $this->sh_date;
-        $this->plan_rules = is_array($this->plan_rules) ? CJSON::encode($this->plan_rules) : null;
+        $this->plan_rules = is_array($this->plan_rules) ? CJSON::encode($this->plan_rules) : ($this->plan_rules && !empty($this->plan_rules)?$this->plan_rules:null);
         return parent::beforeSave();
     }
 

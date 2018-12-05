@@ -97,12 +97,13 @@ class UsersPublicController extends Controller
         $user = Users::model()->findByPk(Yii::app()->user->id);
 
         if($user->userDetails->mobile === '09358389265'){
-            $sms = new SendSMS();
-            $sms->AddNumber("09358389265");
-            if($sms->getNumbers()){
-                $sms->AddMessage("سلام");
-                var_dump($sms->SendWithLine());exit;
-            }
+//            $user->upgradePlan(Plans::model()->findByPk(2));
+//            $sms = new SendSMS();
+//            $sms->AddNumber("09358389265");
+//            if($sms->getNumbers()){
+//                $sms->AddMessage("سلام");
+//                var_dump($sms->SendWithLine());exit;
+//            }
         }
 
         $this->pageTitle = 'پروفایل من';

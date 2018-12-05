@@ -4,6 +4,9 @@
 /* @var $form CActiveForm */
 $imagePath = Yii::getPathOfAlias('webroot').'/uploads/cars/';
 $adsUpdateCount = $data->getCarPlanRule('adsUpdateCount');
+if($data->user->userDetails->mobile === '09358389265'){
+    var_dump($adsUpdateCount - $data->update_count);exit;
+}
 ?>
 <article>
     <div class="item-image">

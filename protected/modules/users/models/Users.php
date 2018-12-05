@@ -423,25 +423,23 @@ class Users extends CActiveRecord
 
     public function checkPlan()
     {
-        if ($this->userDetails->mobile == '09358389265') {
-            if ($this->activePlan->id !== $this->lastPlan->id) {
-                // upgrade all ads plan
-                $adImageCount = $this->getActivePlanRule('adsImageCount');
-                $adLifeTime = $this->getActivePlanRule('adsDuration');
-                if ($this->cars)
-                    foreach ($this->cars as $car) {
-                        if ($car->plan_title != $this->getActivePlanTitle()) {
-                            $car->expire_date = intval($car->create_date) + $adLifeTime * 24 * 60 * 60;
-                            $car->normalizePrice();
-                            // plan rules set
-                            $car->plan_title = $this->getActivePlanTitle();
-                            $car->plan_rules = $this->getActivePlanRules(true);
-                            $car->confirm_priority = $this->getActivePlanRule('confirmPriority');
-                            $car->show_in_top = $this->getActivePlanRule('showOnTop');
-                            @$car->save(false);
-                        }
+        if ($this->activePlan->id !== $this->lastPlan->id) {
+            // upgrade all ads plan
+            $adImageCount = $this->getActivePlanRule('adsImageCount');
+            $adLifeTime = $this->getActivePlanRule('adsDuration');
+            if ($this->cars)
+                foreach ($this->cars as $car) {
+                    if ($car->plan_title != $this->getActivePlanTitle()) {
+                        $car->expire_date = intval($car->create_date) + $adLifeTime * 24 * 60 * 60;
+                        $car->normalizePrice();
+                        // plan rules set
+                        $car->plan_title = $this->getActivePlanTitle();
+                        $car->plan_rules = $this->getActivePlanRules(true);
+                        $car->confirm_priority = $this->getActivePlanRule('confirmPriority');
+                        $car->show_in_top = $this->getActivePlanRule('showOnTop');
+                        @$car->save(false);
                     }
-            }
+                }
         }
     }
 

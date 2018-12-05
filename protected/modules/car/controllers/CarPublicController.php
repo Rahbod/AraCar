@@ -181,6 +181,8 @@ class CarPublicController extends Controller
             // set plan details if is null
             $model->plan_title = $model->plan_title?:$user->getActivePlanTitle();
             $model->plan_rules = $model->plan_rules?:$user->getActivePlanRules(true);
+            $model->confirm_priority = $user->getActivePlanRule('confirmPriority');
+            $model->show_in_top = $user->getActivePlanRule('showOnTop');
             if($model->save()){
                 if(!$images){
                     $images = new UploadedFiles($this->tempPath, $model->images,$this->fileOptions);
