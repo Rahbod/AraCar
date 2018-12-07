@@ -233,6 +233,7 @@ class CarPublicController extends Controller
             $model->plan_title = $model->plan_title ?: $user->getActivePlanTitle();
             $model->plan_rules = $model->plan_rules ?: $user->getActivePlanRules(true);
             $adLifeTime = $model->getCarPlanRule('adsDuration') ?: $user->getActivePlanRule('adsDuration');
+            $model->create_date = time();
             $model->expire_date = time() + $adLifeTime * 24 * 60 * 60;
             $model->normalizePrice();
             $model->update_count++;

@@ -149,7 +149,7 @@ $baseUrl = Yii::app()->theme->baseUrl;
 </div>
 
 <?php
-if($topBrands):
+if(isset($topBrands) && $topBrands):
 $cs->registerCssFile($baseUrl.'/css/owl.carousel.css');
 $cs->registerCssFile($baseUrl.'/css/owl.theme.default.min.css');
 $cs->registerScriptFile($baseUrl.'/js/owl.carousel.min.js', CClientScript::POS_END);

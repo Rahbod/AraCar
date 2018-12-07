@@ -96,16 +96,6 @@ class UsersPublicController extends Controller
         /* @var $user Users */
         $user = Users::model()->findByPk(Yii::app()->user->id);
 
-        if($user->userDetails->mobile === '09358389265'){
-//            $user->upgradePlan(Plans::model()->findByPk(2));
-//            $sms = new SendSMS();
-//            $sms->AddNumber("09358389265");
-//            if($sms->getNumbers()){
-//                $sms->AddMessage("سلام");
-//                var_dump($sms->SendWithLine());exit;
-//            }
-        }
-
         $this->pageTitle = 'پروفایل من';
         $this->pageHeader = $user->userDetails->getShowName();
         $this->pageDescription = $user->userDetails->getShowDescription();
@@ -118,7 +108,6 @@ class UsersPublicController extends Controller
         $criteria->addCondition('status <> :deleted');
         $criteria->params[':deleted'] = Cars::STATUS_DELETED;
         $sells = Cars::model()->findAll($criteria);
-
 
         $criteria = new CDbCriteria();
         $criteria->compare('user_id', $user->id);
