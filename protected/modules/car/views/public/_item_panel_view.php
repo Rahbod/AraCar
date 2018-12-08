@@ -51,7 +51,7 @@ $adsUpdateCount = $data->getCarPlanRule('adsUpdateCount');
             <span>نمایش خودرو</span>
             <i class="addon-icon icon icon-search"></i>
         </a>
-        <?php if($data->expire_date < time() && $adsUpdateCount - $data->update_count > 0): ?><a href="<?= $this->createUrl('/car/public/update/'.$data->id) ?>" class="btn btn-gray"><?php else: ?><a class="btn btn-gray" disabled="disabled" ><?php endif; ?>
+        <?php if($adsUpdateCount - $data->update_count > 0): ?><a href="<?= $this->createUrl('/car/public/update/'.$data->id) ?>" class="btn btn-gray"><?php else: ?><a class="btn btn-gray" disabled="disabled" ><?php endif; ?>
                 <span>به روزرسانی</span>
             <i class="addon-icon icon icon-refresh"></i>
         </a>

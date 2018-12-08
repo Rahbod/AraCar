@@ -228,7 +228,9 @@ class CarPublicController extends Controller
     {
         $model = $this->loadModel($id);
         $adsUpdateCount = $model->getCarPlanRule('adsUpdateCount');
-        if($model->expire_date < time() && $adsUpdateCount - $model->update_count > 0 && !Yii::app()->user->isGuest && (Yii::app()->user->type == 'admin' || (Yii::app()->user->type == 'user' && Yii::app()->user->getId() == $model->user_id))) {
+        if($adsUpdateCount - $model->update_count > 0 &&
+            !Yii::app()->user->isGuest &&
+            (Yii::app()->user->type == 'admin' || (Yii::app()->user->type == 'user' && Yii::app()->user->getId() == $model->user_id))) {
             $user = Users::model()->findByPk(Yii::app()->user->getId());
             $model->plan_title = $model->plan_title ?: $user->getActivePlanTitle();
             $model->plan_rules = $model->plan_rules ?: $user->getActivePlanRules(true);
