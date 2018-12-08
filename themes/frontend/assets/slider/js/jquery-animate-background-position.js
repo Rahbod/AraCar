@@ -1,10 +1,3 @@
-
-
-
-// animate backgroundPosition
-
-
-
 (function($) {
 if(!document.defaultView || !document.defaultView.getComputedStyle){
     var oldCSS = jQuery.css;
@@ -47,7 +40,7 @@ $.fx.step.backgroundPosition = function(fx) {
     if (!fx.bgPosReady) {
         var start = jQuery.css(fx.elem,'backgroundPosition');
 
-        if(!start){//FF2 no inline-style fallback
+        if(!start){
             start = '0px 0px';
         }
 

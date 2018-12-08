@@ -27,7 +27,7 @@
 
     $cs->registerScriptFile($baseUrl.'/js/bootstrap.min.js', CClientScript::POS_END);
     $cs->registerScriptFile($baseUrl.'/js/jquery.nicescroll.min.js', CClientScript::POS_END);
-    $cs->registerScriptFile($baseUrl.'/js/jquery.script.js?4.7', CClientScript::POS_END);
+    $cs->registerScriptFile($baseUrl.'/js/jquery.script.min.js', CClientScript::POS_END);
     ?>
 </head>
 <body>
@@ -35,5 +35,6 @@
 <?php echo $content;?>
 <?php $this->renderPartial('//partial-views/_login_popup');?>
 <?php $this->renderPartial('//partial-views/_footer');?>
+<script>function submitAjaxForm(form,url,loading,callback){loading=void 0!==loading?loading:null,callback=void 0!==callback?callback:null,$.ajax({type:"POST",url:url,data:form.serialize(),dataType:"json",beforeSend:function(){loading&&loading.show()},success:function(html){loading&&loading.hide(),"object"==typeof html&&void 0===html.status?$.each(html,function(l,a){$("#"+l+"_em_").show().html(a.toString()).parent().removeClass("success").addClass("error")}):eval(callback)}})}</script>
 </body>
 </html>

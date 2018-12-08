@@ -11,15 +11,10 @@ $baseUrl = Yii::app()->theme->baseUrl;
 
 
 <?php if($slideShow):?>
+    <script src="<?= $baseUrl.'/assets/slider/js/slider-combine-min.js' ?>"></script>
     <?php
     $cs->registerCssFile($baseUrl.'/assets/slider/css/layerslider.css');
-    $cs->registerCssFile($baseUrl.'/assets/slider/css/style-layerslider.css');
     $cs->registerCssFile($baseUrl.'/assets/slider/layerslider_skins/fullwidth/skin.css');
-    // scripts
-    $cs->registerScriptFile($baseUrl.'/assets/slider/js/greensock.js',CClientScript::POS_END);
-    $cs->registerScriptFile($baseUrl.'/assets/slider/js/jquery.layerslider.js',CClientScript::POS_END);
-    $cs->registerScriptFile($baseUrl.'/assets/slider/js/layerslider.transitions.js',CClientScript::POS_END);
-    $cs->registerScriptFile($baseUrl.'/assets/slider/js/jquery-animate-background-position.js',CClientScript::POS_END);
     ?>
     <div class="slideshow-container">
         <div class="slideshow" id="slider">

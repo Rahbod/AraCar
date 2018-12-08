@@ -1,5 +1,4 @@
 $(document).ready(function() {
-    // Csrf Token setup
     $.ajaxSetup({
         data: {
             'YII_CSRF_TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -31,7 +30,7 @@ $(document).ready(function() {
 
         for (var j = 0; j < ($('.range-max-input').val().match(/,/g) || []).length; j++)
             strMax = strMax.replace(/,/, '');
-        //$(this).parent().find('.range-slider').slider("option", "values", [parseInt(strMin), parseInt(strMax)]);
+        /*$(this).parent().find('.range-slider').slider("option", "values", [parseInt(strMin), parseInt(strMax)]);*/
         changePriceFilterBtnUrl(strMin ? parseInt(strMin) : null, strMax ? parseInt(strMax) : null);
     }).on('keyup', '.range-max-input', function () {
         var strMax = $(this).val(),
@@ -122,7 +121,6 @@ $(document).ready(function() {
     }).on("change", '.numberFormat', function () {
         $(this).numericFormat();
     }).on("click", function (e) {
-        // Hidden auto complete result box
         if ($(e.target).hasClass("autocomplete-item") || $(e.target).hasClass("auto-complete"))
             return;
         else
@@ -163,10 +161,6 @@ $(document).ready(function() {
 
         $(this).niceScroll(options);
     });
-
-    /*$(".datepicker").each(function () {
-        $(this).persianDatepicker(eval($(this).data("config")));
-    });*/
 
     $(".is-carousel").each(function () {
         if ($(this).children().length > 0) {
@@ -269,29 +263,4 @@ $.fn.numericFormat = function () {
 
 function clearAutoCompleteResult() {
     $('.autocomplete-result').addClass('hidden');
-}
-
-function submitAjaxForm(form ,url ,loading ,callback) {
-    loading = typeof loading !== 'undefined' ? loading : null;
-    callback = typeof callback !== 'undefined' ? callback : null;
-    $.ajax({
-        type: "POST",
-        url: url,
-        data: form.serialize(),
-        dataType: "json",
-        beforeSend: function () {
-            if(loading)
-                loading.show();
-        },
-        success: function (html) {
-            if(loading)
-                loading.hide();
-            if (typeof html === "object" && typeof html.status === 'undefined') {
-                $.each(html, function (key, value) {
-                    $("#" + key + "_em_").show().html(value.toString()).parent().removeClass('success').addClass('error');
-                });
-            }else
-                eval(callback);
-        }
-    });
 }

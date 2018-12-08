@@ -32,7 +32,7 @@
 
     $cs->registerScriptFile($baseUrl.'/js/bootstrap.min.js', CClientScript::POS_END);
     $cs->registerScriptFile($baseUrl.'/js/jquery.nicescroll.min.js', CClientScript::POS_END);
-    $cs->registerScriptFile($baseUrl.'/js/jquery.script.js?4.7', CClientScript::POS_END);
+    $cs->registerScriptFile($baseUrl.'/js/jquery.script.min.js', CClientScript::POS_END);
     ?>
 </head>
 <body class="blog-page">
