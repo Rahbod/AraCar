@@ -11,63 +11,19 @@ $baseUrl = Yii::app()->theme->baseUrl;
 
 
 <?php if($slideShow):?>
-    <script src="<?= $baseUrl.'/assets/slider/js/slider-combine-min.js' ?>"></script>
     <?php
     $cs->registerCssFile($baseUrl.'/assets/slider/css/layerslider.css');
-    $cs->registerCssFile($baseUrl.'/assets/slider/layerslider_skins/fullwidth/skin.css');
-    ?>
+    $cs->registerCssFile($baseUrl.'/assets/slider/layerslider_skins/fullwidth/skin.css'); ?>
     <div class="slideshow-container">
         <div class="slideshow" id="slider">
             <?php foreach ($slideShow as $item):
                 $this->renderPartial('//site/_slide_show_item_view',array('data' => $item));
             endforeach;
-            $skinPath = $baseUrl.'/assets/slider/layerslider_skins/';
-            $cs->registerScript('slider-js','
-                if($(window).width() > 768){
-                    if($("#slider").find(".ls-bg.hidden-xs").length ==0)
-                        $("#slider").addClass("hidden");
-                    else{
-                        var sh;
-                        sh = $(window).width() * 600 / 1920 - 5;
-                        $("#slider").css({height:sh});
-                    }
-                }else{
-                    if($("#slider").find(".ls-bg.hidden-lg.hidden-md.hidden-sm").length ==0)
-                        $("#slider").addClass("hidden");
-                }
-                $(window).resize(function(){
-                    if($(window).width() > 768){
-                        if($("#slider").find(".ls-bg.hidden-xs").length ==0)
-                            $("#slider").addClass("hidden");
-                        else{
-                            var sh;
-                            sh = $(window).width() * 600 / 1920 - 5;
-                            $("#slider").css({height:sh}).removeClass("hidden");
-                        }
-                    }else{
-                        if($("#slider").find(".ls-bg.hidden-lg.hidden-md.hidden-sm").length ==0)
-                            $("#slider").addClass("hidden");
-                        else
-                            $("#slider").removeClass("hidden");
-                    }
-                });
-                
-                $("#slider").layerSlider({
-                    startInViewport: false,
-                    responsive : true,
-                    responsiveUnder : 768,
-                    forceLoopNum: false,
-                    autoPlayVideos: false,
-                    skinsPath: \''.$skinPath.'\',
-                    skin: \'fullwidth\',
-                    navPrevNext: false,
-                    navStartStop: false,
-                    pauseOnHover: false,
-                    thumbnailNavigation: \'hover\'
-                });
-            ');
-            ?>
+            $skinPath = $baseUrl.'/assets/slider/layerslider_skins/'; ?>
         </div>
+        <script src="<?= $baseUrl.'/assets/slider/js/slider-combine-min.js' ?>"></script>
+        <script>var sh;$(window).width()>768?0==$("#slider").find(".ls-bg.hidden-xs").length?$("#slider").addClass("hidden"):(sh=600*$(window).width()/1920-5,$("#slider").css({height:sh})):0==$("#slider").find(".ls-bg.hidden-lg.hidden-md.hidden-sm").length&&$("#slider").addClass("hidden");$(window).resize(function(){var d;$(window).width()>768?0==$("#slider").find(".ls-bg.hidden-xs").length?$("#slider").addClass("hidden"):(d=600*$(window).width()/1920-5,$("#slider").css({height:d}).removeClass("hidden")):0==$("#slider").find(".ls-bg.hidden-lg.hidden-md.hidden-sm").length?$("#slider").addClass("hidden"):$("#slider").removeClass("hidden")}),$("#slider").layerSlider({startInViewport:!1,responsive:!0,responsiveUnder:768,forceLoopNum:!1,autoPlayVideos:!1,skinsPath:"<?= $skinPath ?>",skin:"fullwidth",navPrevNext:!1,navStartStop:!1,pauseOnHover:!1,thumbnailNavigation:"hover"});</script>
+
         <div class="ls-items">
             <div class="ls-item">
                 <i class="star-icon"></i>
