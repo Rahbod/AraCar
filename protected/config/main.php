@@ -44,6 +44,7 @@ return array(
 		'car',
 		'news',
 		'newsletters',
+        'advertises',
 		'comments'=>array(
 			//you may override default config for all connecting models
 			'defaultModelConfig' => array(
