@@ -15,6 +15,44 @@
  */
 class Advertises extends CActiveRecord
 {
+    const PLACE_HOME_SLIDER_STATICS_ABOVE = 1;
+    const PLACE_HOME_SLIDER_STATICS_BELOW = 2;
+    const PLACE_HOME_SLIDER_LEFT = 3;
+    const PLACE_HOME_LOGOS_LEFT = 4;
+    const PLACE_HOME_LOGOS_RIGHT = 5;
+    const PLACE_CAR_LIST_BETWEEN_CARS = 6;
+    const PLACE_CAR_LIST_LEFT = 7;
+    const PLACE_CAR_LIST_RIGHT = 8;
+    const PLACE_CAR_LIST_BELOW_FILTERS = 9;
+    const PLACE_NEWS_LIST_LEFT = 10;
+    const PLACE_NEWS_LIST_RIGHT = 11;
+    const PLACE_NEWS_LIST_HEADER_LEFT = 12;
+    const PLACE_NEWS_LIST_HEADER_CENTER = 13;
+
+    const STATUS_DISABLE = 0;
+    const STATUS_ENABLE = 1;
+
+    public $placementLabels = [
+        self::PLACE_HOME_SLIDER_STATICS_ABOVE => 'صفحه اصلی - روی اسلایدر - بالای آمار',
+        self::PLACE_HOME_SLIDER_STATICS_BELOW => 'صفحه اصلی - روی اسلایدر - زیر آمار',
+        self::PLACE_HOME_SLIDER_LEFT => 'صفحه اصلی - روی اسلایدر - سمت چپ',
+        self::PLACE_HOME_LOGOS_LEFT => 'صفحه اصلی - سمت چپ لوگوها',
+        self::PLACE_HOME_LOGOS_RIGHT => 'صفحه اصلی - سمت راست لوگوها',
+        self::PLACE_CAR_LIST_BETWEEN_CARS => 'صفحه آگهی ها - بین آگهی ها',
+        self::PLACE_CAR_LIST_LEFT => 'صفحه آگهی ها - سمت چپ صفحه',
+        self::PLACE_CAR_LIST_RIGHT => 'صفحه آگهی ها - سمت راست صفحه',
+        self::PLACE_CAR_LIST_BELOW_FILTERS => 'صفحه آگهی ها - زیر فیلترها',
+        self::PLACE_NEWS_LIST_LEFT => 'صفحه اخبار - سمت چپ صفحه',
+        self::PLACE_NEWS_LIST_RIGHT => 'صفحه اخبار - سمت راست صفحه',
+        self::PLACE_NEWS_LIST_HEADER_LEFT => 'صفحه اخبار - سمت چپ نوار بالا',
+        self::PLACE_NEWS_LIST_HEADER_CENTER => 'صفحه اخبار - وسط نوار بالا',
+    ];
+
+    public $statusLabels = [
+        self::STATUS_DISABLE => 'فعال',
+        self::STATUS_ENABLE => 'غیرفعال',
+    ];
+
 	/**
 	 * @return string the associated database table name
 	 */
@@ -59,7 +97,7 @@ class Advertises extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'title' => 'شناسه',
+			'title' => 'عنوان',
 			'banner' => 'تصویر',
 			'link' => 'لینک',
 			'placement' => 'مکان در سایت',
@@ -111,4 +149,33 @@ class Advertises extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+    public function getPlacementLabels($all = true)
+    {
+        if ($all)
+            return $this->placementLabels;
+        $exists = Yii::app()->db->createCommand()
+            ->select('placement')
+            ->from('{{advertises}}')
+            ->group('placement')
+            ->queryColumn();
+        $valids = array_filter($this->placementLabels, function ($k) use($exists){
+            return !in_array($k, $exists);
+        }, ARRAY_FILTER_USE_KEY);
+        return $valids?:['' => 'تمام مکان های تبلیغات پر هستند'];
+    }
+
+    public function getPlacementLabel()
+    {
+        return isset($this->placementLabels[$this->placement]) ? $this->placementLabels[$this->placement] : "";
+    }
+
+    public function getStatusLabels(){
+        return $this->statusLabels;
+    }
+
+    public function getStatusLabel()
+    {
+        return isset($this->statusLabels[$this->status]) ? $this->statusLabels[$this->status] : "";
+    }
 }

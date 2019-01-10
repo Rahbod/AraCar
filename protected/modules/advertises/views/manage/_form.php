@@ -1,9 +1,11 @@
 <?php
-/* @var $this AdvertisesManageControllerController */
+/* @var $this AdvertisesManageController */
 /* @var $model Advertises */
 /* @var $form CActiveForm */
+/* @var $banner UploadedFiles */
 ?>
-<?php $this->renderPartial("//partial-views/_flashMessage"); ?><?php $form=$this->beginWidget('CActiveForm', array(
+<?php $this->renderPartial("//partial-views/_flashMessage"); ?>
+<?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'advertises-form',
 	'enableAjaxValidation'=>false,
 	'enableClientValidation'=>true,
@@ -11,46 +13,67 @@
 		'validateOnSubmit' => true
 	)
 )); ?>
-
-	<div class="form-group">
-		<?php echo $form->labelEx($model,'title'); ?>
-		<?php echo $form->textField($model,'title',array('class'=>'form-control','size'=>60,'maxlength'=>255)); ?>
-		<?php echo $form->error($model,'title'); ?>
-	</div>
-
-	<div class="form-group">
-		<?php echo $form->labelEx($model,'banner'); ?>
-		<?php echo $form->textField($model,'banner',array('class'=>'form-control','size'=>60,'maxlength'=>255)); ?>
-		<?php echo $form->error($model,'banner'); ?>
-	</div>
+    <div class="form-group">
+        <?php echo $form->labelEx($model,'banner'); ?>
+        <?php $this->widget('ext.dropZoneUploader.dropZoneUploader', array(
+            'id' => 'uploaderBanner',
+            'model' => $model,
+            'name' => 'banner',
+            'maxFiles' => 1,
+            'maxFileSize' => 0.5, //MB
+            'url' => $this->createUrl('upload'),
+            'deleteUrl' => $this->createUrl('deleteUpload'),
+            'acceptedFiles' => '.jpg, .jpeg, .png',
+            'serverFiles' => $banner,
+            'onSuccess' => '
+                var responseObj = JSON.parse(res);
+                if(responseObj.status){
+                    {serverName} = responseObj.fileName;
+                    $(".uploader-message").html("");
+                }
+                else{
+                    $(".uploader-message").html(responseObj.message);
+                    this.removeFile(file);
+                }
+            ',
+        )); ?>
+        <?php echo $form->error($model,'banner'); ?>
+        <div class="uploader-message error"></div>
+    </div>
 
 	<div class="form-group">
 		<?php echo $form->labelEx($model,'link'); ?>
-		<?php echo $form->textField($model,'link',array('class'=>'form-control','size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->urlField($model,'link',array('class'=>'form-control ltr','size'=>60,'maxlength'=>255)); ?>
 		<?php echo $form->error($model,'link'); ?>
 	</div>
 
+    <div class="form-group">
+        <?php echo $form->labelEx($model,'title'); ?>
+        <?php echo $form->textField($model,'title',array('class'=>'form-control','size'=>60,'maxlength'=>255)); ?>
+        <?php echo $form->error($model,'title'); ?>
+    </div>
+
 	<div class="form-group">
 		<?php echo $form->labelEx($model,'placement'); ?>
-		<?php echo $form->textField($model,'placement',array('class'=>'form-control','size'=>2,'maxlength'=>2)); ?>
+		<?php echo $form->dropDownList($model,'placement', $model->getPlacementLabels(false), array('class'=>'form-control')); ?>
 		<?php echo $form->error($model,'placement'); ?>
 	</div>
 
-	<div class="form-group">
-		<?php echo $form->labelEx($model,'create_date'); ?>
-		<?php echo $form->textField($model,'create_date',array('class'=>'form-control','size'=>20,'maxlength'=>20)); ?>
-		<?php echo $form->error($model,'create_date'); ?>
-	</div>
-
-	<div class="form-group">
-		<?php echo $form->labelEx($model,'expire_date'); ?>
-		<?php echo $form->textField($model,'expire_date',array('class'=>'form-control','size'=>20,'maxlength'=>20)); ?>
-		<?php echo $form->error($model,'expire_date'); ?>
-	</div>
+<!--	<div class="form-group">-->
+<!--		--><?php //echo $form->labelEx($model,'create_date'); ?>
+<!--		--><?php //echo $form->textField($model,'create_date',array('class'=>'form-control','size'=>20,'maxlength'=>20)); ?>
+<!--		--><?php //echo $form->error($model,'create_date'); ?>
+<!--	</div>-->
+<!---->
+<!--	<div class="form-group">-->
+<!--		--><?php //echo $form->labelEx($model,'expire_date'); ?>
+<!--		--><?php //echo $form->textField($model,'expire_date',array('class'=>'form-control','size'=>20,'maxlength'=>20)); ?>
+<!--		--><?php //echo $form->error($model,'expire_date'); ?>
+<!--	</div>-->
 
 	<div class="form-group">
 		<?php echo $form->labelEx($model,'status'); ?>
-		<?php echo $form->textField($model,'status',array('class'=>'form-control','size'=>1,'maxlength'=>1)); ?>
+		<?php echo $form->dropDownList($model,'status', $model->statusLabels,array('class'=>'form-control')); ?>
 		<?php echo $form->error($model,'status'); ?>
 	</div>
 

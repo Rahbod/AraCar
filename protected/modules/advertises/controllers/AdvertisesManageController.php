@@ -7,17 +7,38 @@ class AdvertisesManageController extends Controller
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
 	public $layout='//layouts/column2';
-
+    public $bannerPath = 'uploads/advertises';
 	/**
 	 * @return array action filters
 	 */
 	public function filters()
 	{
 		return array(
-			'checkAccess', // perform access control for CRUD operations
+			'checkAccess - upload, deleteUpload', // perform access control for CRUD operations
 			'postOnly + delete', // we only allow deletion via POST request
 		);
 	}
+
+    public function actions()
+    {
+        return array(
+            'upload' => array( // brand logo upload
+                'class' => 'ext.dropZoneUploader.actions.AjaxUploadAction',
+                'attribute' => 'banner',
+                'rename' => 'random',
+                'validateOptions' => array(
+                    'acceptedTypes' => array('png', 'jpg', 'jpeg')
+                )
+            ),
+            'deleteUpload' => array( // delete brand logo uploaded
+                'class' => 'ext.dropZoneUploader.actions.AjaxDeleteUploadedAction',
+                'modelName' => 'Advertises',
+                'attribute' => 'banner',
+                'uploadDir' => "/$this->bannerPath/",
+                'storedMode' => 'field'
+            )
+        );
+    }
 
 	/**
 	* @return array actions type list
@@ -49,11 +70,13 @@ class AdvertisesManageController extends Controller
 	public function actionCreate()
 	{
 		$model=new Advertises;
-
+        $banner = [];
 		if(isset($_POST['Advertises']))
 		{
 			$model->attributes=$_POST['Advertises'];
+            $banner = new UploadedFiles($this->tempPath, $model->banner);
 			if($model->save()){
+                $banner->move($this->bannerPath);
 				Yii::app()->user->setFlash('success', '<span class="icon-check"></span>&nbsp;&nbsp;اطلاعات با موفقیت ذخیره شد.');
 				$this->redirect(array('admin'));
 			}else
@@ -61,7 +84,7 @@ class AdvertisesManageController extends Controller
 		}
 
 		$this->render('create',array(
-			'model'=>$model,
+			'model'=>$model, 'banner' => $banner
 		));
 	}
 
@@ -73,19 +96,21 @@ class AdvertisesManageController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
+        $banner = new UploadedFiles($this->bannerPath, $model->banner);
 
-		if(isset($_POST['Advertises']))
-		{
-			$model->attributes=$_POST['Advertises'];
-			if($model->save()){
-				Yii::app()->user->setFlash('success', '<span class="icon-check"></span>&nbsp;&nbsp;اطلاعات با موفقیت ذخیره شد.');
-				$this->redirect(array('admin'));
-			}else
-				Yii::app()->user->setFlash('failed', 'در ثبت اطلاعات خطایی رخ داده است! لطفا مجددا تلاش کنید.');
-		}
+		if(isset($_POST['Advertises'])) {
+            $old = $model->banner;
+            $model->attributes = $_POST['Advertises'];
+            if ($model->save()) {
+                $banner->update($old, $model->banner, $this->tempPath);
+                Yii::app()->user->setFlash('success', '<span class="icon-check"></span>&nbsp;&nbsp;اطلاعات با موفقیت ذخیره شد.');
+                $this->redirect(array('admin'));
+            } else
+                Yii::app()->user->setFlash('failed', 'در ثبت اطلاعات خطایی رخ داده است! لطفا مجددا تلاش کنید.');
+        }
 
 		$this->render('update',array(
-			'model'=>$model,
+			'model'=>$model, 'banner' => $banner
 		));
 	}
 
