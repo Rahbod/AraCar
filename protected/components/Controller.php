@@ -142,6 +142,16 @@ class Controller extends AuthController
                     )
                 ),
                 array(
+                    'label' => '<i class="fa fa-picture-o"></i><span>تبلیغات</span> <i class="fa fa-angle-left pull-left"></i>',
+                    'url' => '#',
+                    'itemOptions' => array('class' => 'treeview', 'tabindex' => "-1"),
+                    'submenuOptions' => array('class' => 'treeview-menu'),
+                    'items' => array(
+                        array('label' => '<i class="fa fa-circle-o"></i>مدیریت', 'url' => Yii::app()->createUrl('/advertises/manage/admin/')),
+                        array('label' => '<i class="fa fa-circle-o"></i>افزودن تبلیغ', 'url' => Yii::app()->createUrl('/advertises/manage/create')),
+                    )
+                ),
+                array(
                     'label' => '<i class="fa fa-bars"></i><span>لیست ها</span> <i class="fa fa-angle-left pull-left"></i>',
                     'url' => '#',
                     'itemOptions' => array('class' => 'treeview', 'tabindex' => "-1"),

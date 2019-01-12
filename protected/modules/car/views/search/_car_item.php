@@ -1,6 +1,7 @@
 <?php
 /* @var $data Cars */
 $imagePath = Yii::getPathOfAlias('webroot').'/uploads/cars/';
+global $counter;
 ?>
 <div class="advertising-item<?= $data->show_in_top?' special':'' ?>">
     <a href="<?php echo $data->getViewUrl(); ?>" class="link"></a>
@@ -47,3 +48,21 @@ $imagePath = Yii::getPathOfAlias('webroot').'/uploads/cars/';
         </div>
     </div>
 </div>
+
+
+<?php
+if($counter === 3 && isset($_GET['debug'])):
+    $ad = Advertises::GetInPlacement(Advertises::PLACE_CAR_LIST_BETWEEN_CARS);
+    if($ad && $ad->banner && is_file(Yii::getPathOfAlias('webroot')."/uploads/advertises/$ad->banner")):
+    ?>
+    <div class="advertise advertise-between-cars hidden-xs">
+        <a href="<?= $ad->link ?>" rel="nofollow" target="_blank">
+            <div class="advertise-image" style="background-image: url('<?= Yii::app()->getBaseUrl(true)."/uploads/advertises/$ad->banner" ?>');"></div>
+<!--            <img src="--><?//= Yii::app()->getBaseUrl(true)."/uploads/advertises/$ad->banner" ?><!--" alt="--><?//= $ad->title ?><!--">-->
+        </a>
+    </div>
+    <?php
+    endif;
+endif;
+$counter++;
+?>

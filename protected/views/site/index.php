@@ -25,6 +25,18 @@ $baseUrl = Yii::app()->theme->baseUrl;
         <script>var sh;$(window).width()>768?0==$("#slider").find(".ls-bg.hidden-xs").length?$("#slider").addClass("hidden"):(sh=600*$(window).width()/1920-5,$("#slider").css({height:sh})):0==$("#slider").find(".ls-bg.hidden-lg.hidden-md.hidden-sm").length&&$("#slider").addClass("hidden");$(window).resize(function(){var d;$(window).width()>768?0==$("#slider").find(".ls-bg.hidden-xs").length?$("#slider").addClass("hidden"):(d=600*$(window).width()/1920-5,$("#slider").css({height:d}).removeClass("hidden")):0==$("#slider").find(".ls-bg.hidden-lg.hidden-md.hidden-sm").length?$("#slider").addClass("hidden"):$("#slider").removeClass("hidden")}),$("#slider").layerSlider({startInViewport:!1,responsive:!0,responsiveUnder:768,forceLoopNum:!1,autoPlayVideos:!1,skinsPath:"<?= $skinPath ?>",skin:"fullwidth",navPrevNext:!1,navStartStop:!1,pauseOnHover:!1,thumbnailNavigation:"hover"});</script>
 
         <div class="ls-items">
+            <!--Render Advertise-->
+            <?php if(isset($_GET['debug']) && $ad = Advertises::GetInPlacement(Advertises::PLACE_HOME_SLIDER_STATICS_ABOVE)):
+                if($ad && $ad->banner && is_file(Yii::getPathOfAlias('webroot')."/uploads/advertises/$ad->banner")):?>
+                    <div class="advertise advertise-statics-above hidden-xs">
+                        <a href="<?= $ad->link ?>" rel="nofollow" target="_blank">
+                            <div class="advertise-image" style="background-image: url('<?= Yii::app()->getBaseUrl(true)."/uploads/advertises/$ad->banner" ?>');"></div>
+                        </a>
+                    </div>
+                <?php
+                endif;
+            endif; ?>
+
             <div class="ls-item">
                 <i class="star-icon"></i>
                 <h4><?= Controller::parseNumbers(Cars::ZeroKmCarCounts()); ?></h4>
@@ -40,6 +52,18 @@ $baseUrl = Yii::app()->theme->baseUrl;
                 <h4><?= Controller::parseNumbers(Cars::getDailySell()) ?></h4>
                 <span>آگهی امروز</span>
             </div>
+
+            <!--Render Advertise-->
+            <?php if(isset($_GET['debug']) && $ad = Advertises::GetInPlacement(Advertises::PLACE_HOME_SLIDER_STATICS_BELOW)):
+                if($ad && $ad->banner && is_file(Yii::getPathOfAlias('webroot')."/uploads/advertises/$ad->banner")):?>
+                    <div class="advertise advertise-statics-below hidden-xs">
+                        <a href="<?= $ad->link ?>" rel="nofollow" target="_blank">
+                            <div class="advertise-image" style="background-image: url('<?= Yii::app()->getBaseUrl(true)."/uploads/advertises/$ad->banner" ?>');"></div>
+                        </a>
+                    </div>
+                <?php
+                endif;
+            endif; ?>
         </div>
     </div>
 <?php endif;?>

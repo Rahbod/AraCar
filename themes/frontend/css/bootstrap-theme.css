@@ -4086,7 +4086,54 @@ footer .nav li:last-of-type a{
     font-size: 22px;
 }
 
+.advertise-image {
+    background: no-repeat scroll center transparent;
+    background-size: auto 100%;
+    /*border-radius: 5px;*/
+    display: block;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+.advertise-between-cars .advertise-image {
+    background: no-repeat scroll center #dedede;
+    background-size: auto 100%;
+    border-radius: 5px;
+    height: 160px;
+    margin-bottom: 5px;
+}
+.advertise-image,
+.advertise{
+    display: block;
+    overflow: hidden;
+}
 
+.advertise-below-filters{
+    margin-top: 30px;
+}
+.advertise-below-filters .advertise-image {
+    background: no-repeat scroll center #dedede;
+    background-size: auto 100%;
+    border-radius: 5px;
+    height: 200px;
+    margin-bottom: 5px;
+}
+
+.advertise-statics-below,
+.advertise-statics-above{
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 80px;
+}
+.advertise-statics-below{
+    top: 100%;
+    margin-top: 15px;
+}
+.advertise-statics-above{
+    bottom: 100%;
+    margin-bottom: 15px;
+}
 
 /*#endregion*/
 /******************************************** Responsive Theme ********************************************************/

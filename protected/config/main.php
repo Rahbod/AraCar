@@ -21,6 +21,7 @@ return array(
 		'application.modules.car.models.*',
 		'application.modules.setting.models.*',
 		'application.modules.news.models.*',
+		'application.modules.advertises.models.*',
 	),
 
 	'modules'=>array(

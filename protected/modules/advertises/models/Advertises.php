@@ -157,12 +157,15 @@ class Advertises extends CActiveRecord
         $exists = Yii::app()->db->createCommand()
             ->select('placement')
             ->from('{{advertises}}')
-            ->group('placement')
-            ->queryColumn();
-        $valids = array_filter($this->placementLabels, function ($k) use($exists){
-            return !in_array($k, $exists);
+            ->group('placement');
+
+        if(!$this->isNewRecord && $this->placement)
+            $exists->andWhere('placement != :placement', [':placement' => $this->placement]);
+
+        $validPlaces = array_filter($this->placementLabels, function ($k) use ($exists) {
+            return !in_array($k, $exists->queryColumn());
         }, ARRAY_FILTER_USE_KEY);
-        return $valids?:['' => 'تمام مکان های تبلیغات پر هستند'];
+        return $validPlaces ?: ['' => 'تمام مکان های تبلیغات پر هستند'];
     }
 
     public function getPlacementLabel()
@@ -177,5 +180,12 @@ class Advertises extends CActiveRecord
     public function getStatusLabel()
     {
         return isset($this->statusLabels[$this->status]) ? $this->statusLabels[$this->status] : "";
+    }
+
+    public static function GetInPlacement($placement)
+    {
+        $cr = new CDbCriteria();
+        $cr->compare('placement', $placement);
+        return self::model()->find($cr);
     }
 }

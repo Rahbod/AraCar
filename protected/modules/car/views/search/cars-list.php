@@ -2,6 +2,9 @@
 /* @var $this CarSearchController */
 /* @var $filters array */
 /* @var $dataProvider CActiveDataProvider */
+
+global $counter;
+$counter = 0;
 ?>
 
 <?php if(count($filters)):?>
