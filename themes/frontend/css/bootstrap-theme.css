@@ -855,7 +855,14 @@ input[type="checkbox"]:checked + label::before {
     line-height: 36px;
     position: absolute;
     left: 15px;
-    bottom: 15px;
+    bottom: 5px;
+    margin: 0 -10px;
+}
+.advertising-list .advertising-item .info-container .price > span{
+    display: block;
+    margin: 0 10px;
+    text-align: left;
+    line-height: 30px;
 }
 .advertising-list .advertising-item:not(.special):hover .info-container .price{
     color: #1272d1;
@@ -914,7 +921,7 @@ input[type="checkbox"]:checked + label::before {
 }
 .advertising-list .advertising-item .info-container .public-info{
     height: 88px;
-    padding-left: 110px;
+    padding-left: 200px;
 }
 .advertising-list .advertising-item:hover .info-container .public-info{
     display: none;
@@ -4088,35 +4095,64 @@ footer .nav li:last-of-type a{
 
 .advertise-image {
     background: no-repeat scroll center transparent;
-    background-size: auto 100%;
+    background-size: contain !important;
     /*border-radius: 5px;*/
     display: block;
     overflow: hidden;
     width: 100%;
     height: 100%;
 }
-.advertise-between-cars .advertise-image {
-    background: no-repeat scroll center #dedede;
-    background-size: auto 100%;
-    border-radius: 5px;
-    height: 160px;
+.advertise-between-cars {
     margin-bottom: 5px;
+}
+.advertise-between-cars .advertise-image {
+    background: no-repeat scroll center transparent;
+    /*background-size: auto 95%;*/
+    background-size: contain !important;
+    height: 160px;
+}
+.advertise{
+    padding: 10px;
+    background-color: #dedede;
+    border-radius: 5px;
 }
 .advertise-image,
 .advertise{
     display: block;
     overflow: hidden;
 }
+.advertise .advertise-close {
+    display: inline-block;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    z-index: 10;
+    width: 19px;
+    height: 19px;
+    background: url("../svg/close-black.svg") no-repeat scroll center rgba(255, 255, 255, 0.6);
+    background-size: 55%;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -ms-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+.advertise .advertise-close:hover{
+    border-color: #444;
+    background-color: #fff;
+}
 
 .advertise-below-filters{
     margin-top: 30px;
+    margin-bottom: 5px;
 }
 .advertise-below-filters .advertise-image {
-    background: no-repeat scroll center #dedede;
-    background-size: auto 100%;
-    border-radius: 5px;
+    background: no-repeat scroll center transparent;
+    background-size: contain !important;
     height: 200px;
-    margin-bottom: 5px;
 }
 
 .advertise-statics-below,
@@ -4133,6 +4169,51 @@ footer .nav li:last-of-type a{
 .advertise-statics-above{
     bottom: 100%;
     margin-bottom: 15px;
+}
+.advertise-abs-page-left,
+.advertise-abs-page-right {
+    padding: 0;
+    padding-top: 21.6666%;
+    position: absolute;
+    width: 90px;
+    top: 30px;
+    /*-webkit-transform: translateY(-50%);*/
+    /*-moz-transform: translateY(-50%);*/
+    /*-ms-transform: translateY(-50%);*/
+    /*-o-transform: translateY(-50%);*/
+    /*transform: translateY(-50%);*/
+    max-height: calc(100vh - 300);
+    z-index: 101;
+}
+
+.advertise-hover-shadow{
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+.advertise-hover-shadow:hover{
+    -webkit-box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    -moz-box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.advertise-abs-page-left{
+    left: 4px;
+}
+.advertise-abs-page-right{
+    right: 4px;
+}
+.advertise-abs-page-left > a,
+.advertise-abs-page-right > a{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 5px;
+    z-index: 1;
 }
 
 /*#endregion*/

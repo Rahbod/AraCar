@@ -130,7 +130,7 @@ class NewsManageController extends Controller
 
         $news = new CActiveDataProvider('News', [
             'criteria' => News::getValidNews(),
-            'pagination' => false
+            'pagination' => ['pageSize' => 50]
         ]);
 
         $this->render('list', array(

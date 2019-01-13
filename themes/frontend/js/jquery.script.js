@@ -20,7 +20,12 @@ $(document).ready(function() {
 
     $('.digitFormat').digitFormat();
 
-    $(document).on("click", ".content-box .filter-box .head .toggle-icon", function () {
+    $(document).on("click",".advertise .advertise-close",function() {
+        var p = $(this).parents(".advertise");
+        p.fadeOut(500, function () {
+            p.remove();
+        });
+    }).on("click", ".content-box .filter-box .head .toggle-icon", function () {
         $(this).toggleClass("plus").toggleClass("minus");
     }).on('keyup', '.range-min-input', function () {
         var strMin = $(this).val(),

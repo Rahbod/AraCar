@@ -26,6 +26,20 @@ $counter = 0;
     </div>
 <?php endif;?>
 <div class="content-box">
+
+    <!--Render Advertise-->
+    <?php $this->renderPartial('advertises.views.manage._advertise_item', [
+        'placement' => Advertises::PLACE_CAR_LIST_RIGHT,
+        'dismissible' => true,
+        'cssClass' => 'advertise-abs-page-right advertise-hover-shadow hidden-xs'
+    ]) ?>
+    <!--Render Advertise-->
+    <?php $this->renderPartial('advertises.views.manage._advertise_item', [
+        'placement' => Advertises::PLACE_CAR_LIST_LEFT,
+        'dismissible' => true,
+        'cssClass' => 'advertise-abs-page-left advertise-hover-shadow hidden-xs'
+    ]) ?>
+
     <div class="center-box">
         <a href="#" class="filter-btn floating-button left filter-box-trigger" data-title="فیلترها"></a>
         <div class="row">

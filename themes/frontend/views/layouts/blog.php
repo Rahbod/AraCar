@@ -28,7 +28,7 @@
     $cs->registerCssFile($baseUrl.'/css/bootstrap-rtl.min.css');
     $cs->registerCssFile($baseUrl.'/css/fontiran.css');
     $cs->registerCssFile($baseUrl.'/css/font-awesome.css');
-    $cs->registerCssFile($baseUrl.'/css/bootstrap-theme.css?4.7');
+    $cs->registerCssFile($baseUrl.'/css/bootstrap-theme.css?4.8');
 
     $cs->registerScriptFile($baseUrl.'/js/bootstrap.min.js', CClientScript::POS_END);
     $cs->registerScriptFile($baseUrl.'/js/jquery.nicescroll.min.js', CClientScript::POS_END);
@@ -41,6 +41,19 @@
     <?php $this->renderPartial('//partial-views/_breadcrumb');?>
 <?php endif; ?>
 <div class="content-box page-view">
+    <!--Render Advertise-->
+    <?php $this->renderPartial('advertises.views.manage._advertise_item', [
+        'placement' => Advertises::PLACE_NEWS_LIST_RIGHT,
+        'dismissible' => true,
+        'cssClass' => 'advertise-abs-page-right advertise-hover-shadow hidden-xs'
+    ]) ?>
+    <!--Render Advertise-->
+    <?php $this->renderPartial('advertises.views.manage._advertise_item', [
+        'placement' => Advertises::PLACE_NEWS_LIST_LEFT,
+        'dismissible' => true,
+        'cssClass' => 'advertise-abs-page-left advertise-hover-shadow hidden-xs'
+    ]) ?>
+
     <div class="center-box relative">
         <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">

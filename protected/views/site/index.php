@@ -26,16 +26,11 @@ $baseUrl = Yii::app()->theme->baseUrl;
 
         <div class="ls-items">
             <!--Render Advertise-->
-            <?php if(isset($_GET['debug']) && $ad = Advertises::GetInPlacement(Advertises::PLACE_HOME_SLIDER_STATICS_ABOVE)):
-                if($ad && $ad->banner && is_file(Yii::getPathOfAlias('webroot')."/uploads/advertises/$ad->banner")):?>
-                    <div class="advertise advertise-statics-above hidden-xs">
-                        <a href="<?= $ad->link ?>" rel="nofollow" target="_blank">
-                            <div class="advertise-image" style="background-image: url('<?= Yii::app()->getBaseUrl(true)."/uploads/advertises/$ad->banner" ?>');"></div>
-                        </a>
-                    </div>
-                <?php
-                endif;
-            endif; ?>
+            <?php $this->renderPartial('advertises.views.manage._advertise_item', [
+                'dismissible' => true,
+                'placement' => Advertises::PLACE_HOME_SLIDER_STATICS_ABOVE,
+                'cssClass' => 'advertise-statics-above advertise-hover-shadow hidden-xs'
+            ]) ?>
 
             <div class="ls-item">
                 <i class="star-icon"></i>
@@ -54,16 +49,11 @@ $baseUrl = Yii::app()->theme->baseUrl;
             </div>
 
             <!--Render Advertise-->
-            <?php if(isset($_GET['debug']) && $ad = Advertises::GetInPlacement(Advertises::PLACE_HOME_SLIDER_STATICS_BELOW)):
-                if($ad && $ad->banner && is_file(Yii::getPathOfAlias('webroot')."/uploads/advertises/$ad->banner")):?>
-                    <div class="advertise advertise-statics-below hidden-xs">
-                        <a href="<?= $ad->link ?>" rel="nofollow" target="_blank">
-                            <div class="advertise-image" style="background-image: url('<?= Yii::app()->getBaseUrl(true)."/uploads/advertises/$ad->banner" ?>');"></div>
-                        </a>
-                    </div>
-                <?php
-                endif;
-            endif; ?>
+            <?php $this->renderPartial('advertises.views.manage._advertise_item', [
+                'dismissible' => true,
+                'placement' => Advertises::PLACE_HOME_SLIDER_STATICS_BELOW,
+                'cssClass' => 'advertise-statics-below advertise-hover-shadow hidden-xs'
+            ]) ?>
         </div>
     </div>
 <?php endif;?>

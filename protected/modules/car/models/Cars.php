@@ -364,7 +364,7 @@ class Cars extends CActiveRecord
      */
     public static function getDailySell()
     {
-        $cr = new CDbCriteria();
+        $cr = self::duplicateQuery();
         $startDate = JalaliDate::toGregorian(JalaliDate::date('Y', time(), false), JalaliDate::date('m', time(), false), JalaliDate::date('d', time(), false));
         $startTime = strtotime($startDate[0] . '/' . $startDate[1] . '/' . $startDate[2]);
         $endTime = strtotime($startDate[0] . '/' . $startDate[1] . '/' . $startDate[2] . ' 23:59:59');
@@ -514,7 +514,9 @@ class Cars extends CActiveRecord
 
     public static function ZeroKmCarCounts()
     {
-        return self::model()->count('distance = 0');
+        $cr = self::duplicateQuery();
+        $cr->addCondition('distance = 0');
+        return self::model()->count($cr);
     }
 
     public static function ResearchCounts()

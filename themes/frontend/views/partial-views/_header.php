@@ -33,6 +33,7 @@
                         </ul>
                     </div>
                 </li>
+                <? /*
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">شاسی <i class="caret"></i></a>
                     <div class="dropdown-menu">
@@ -64,7 +65,7 @@
                             <li><a href="<?= $this->createUrl('/car/search/all?plate=' . str_replace(' ', '-', 'گذر موقت') . '&def=plate')?>">گذر موقت</a></li>
                         </ul>
                     </div>
-                </li>
+                </li> */?>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">نمایشگاه <i class="caret"></i></a>
                     <div class="dropdown-menu special-menu">

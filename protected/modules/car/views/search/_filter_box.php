@@ -203,13 +203,7 @@ if(isset($filters['price'])) {
 
 
 <!--Render Advertise-->
-<?php if(isset($_GET['debug']) && $ad = Advertises::GetInPlacement(Advertises::PLACE_CAR_LIST_BELOW_FILTERS)):
-    if($ad && $ad->banner && is_file(Yii::getPathOfAlias('webroot')."/uploads/advertises/$ad->banner")):?>
-        <div class="advertise advertise-below-filters hidden-xs">
-            <a href="<?= $ad->link ?>" rel="nofollow" target="_blank">
-                <div class="advertise-image" style="background-image: url('<?= Yii::app()->getBaseUrl(true)."/uploads/advertises/$ad->banner" ?>');"></div>
-            </a>
-        </div>
-    <?php
-    endif;
-endif; ?>
+<?php $this->renderPartial('advertises.views.manage._advertise_item', [
+    'placement' => Advertises::PLACE_CAR_LIST_BELOW_FILTERS,
+    'cssClass' => 'advertise-below-filters'
+]) ?>
