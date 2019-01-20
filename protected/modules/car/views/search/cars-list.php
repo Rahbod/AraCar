@@ -47,7 +47,7 @@ $counter = 0;
                 <div class="close-container hidden-lg hidden-md col-md-12"><i class="menu-close-icon filter-box-trigger"></i><h4>فیلتر های خودرو</h4></div>
                 <?php $this->renderPartial('_filter_box', array('filters' => $filters));?>
             </div>
-            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 list-container">
+            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 list-container">
                 <?php $this->renderPartial('_top_filter_box', array('filters' => $filters));?>
                 <?php $this->widget('zii.widgets.CListView', array(
                     'id' => 'advertising-list',

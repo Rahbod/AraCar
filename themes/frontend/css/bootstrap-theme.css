@@ -851,7 +851,6 @@ input[type="checkbox"]:checked + label::before {
     text-overflow: ellipsis;
 }
 .advertising-list .advertising-item .info-container .price{
-    font-weight: bold;
     line-height: 36px;
     position: absolute;
     left: 15px;
@@ -862,7 +861,10 @@ input[type="checkbox"]:checked + label::before {
     display: block;
     margin: 0 10px;
     text-align: left;
-    line-height: 30px;
+    line-height: 28px;
+}
+.advertising-list .advertising-item .info-container .price > span:last-of-type{
+    font-weight: bold;
 }
 .advertising-list .advertising-item:not(.special):hover .info-container .price{
     color: #1272d1;
@@ -4121,6 +4123,18 @@ footer .nav li:last-of-type a{
     display: block;
     overflow: hidden;
 }
+.advertise.advertise-script {
+    display: inline-block;
+    padding: 0;
+    height: auto !important;
+    overflow: visible;
+    width: auto;
+    background-color: transparent;
+}
+.advertise.advertise-script .advertise-image{
+    border-radius: 0;
+    background-color: transparent;
+}
 .advertise .advertise-close {
     display: inline-block;
     position: absolute;
@@ -4198,7 +4212,12 @@ footer .nav li:last-of-type a{
     -moz-box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 }
-
+.advertise.advertise-script,
+.advertise.advertise-script:hover{
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    box-shadow: none !important;
+}
 .advertise-abs-page-left{
     left: 4px;
 }
@@ -4616,6 +4635,16 @@ footer .nav li:last-of-type a{
     }
 }
 @media screen and (max-width: 768px){
+
+    .advertising-list .advertising-item .info-container .price{
+        line-height: 20px;
+        bottom: 5px;
+        left: 5px;
+    }
+    .advertising-list .advertising-item .info-container .price > span{
+        line-height: 18px;
+        font-size: 11px;
+    }
     .news-view-box .head{
         height: auto !important;
     }
@@ -4937,6 +4966,12 @@ footer .nav li:last-of-type a{
         bottom: 15px;
         right: 10px;
         width: 120px;
+        z-index: 10;
+    }
+    .car-item .instalment-box {
+        bottom: 15px;
+        right: 10px;
+        width: auto;
     }
     .advertising-list .advertising-item .info-container{
         padding-right: 5px;
@@ -4946,11 +4981,6 @@ footer .nav li:last-of-type a{
         font-size: 11px;
         height: auto;
         padding-bottom: 10px;
-    }
-    .advertising-list .advertising-item .info-container .price{
-        line-height: 20px;
-        bottom: 5px;
-        left: 5px;
     }
     .btn-blue,
     .select-field .btn.dropdown-toggle.btn-default,

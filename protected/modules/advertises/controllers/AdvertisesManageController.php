@@ -141,6 +141,10 @@ class AdvertisesManageController extends Controller
 	 */
 	public function actionAdmin()
 	{
+//        Yii::app()->db->createCommand('UPDATE `ym_advertises` SET `type`=2;')->execute();
+//	    Yii::app()->db->createCommand('ALTER TABLE `ym_advertises`
+//ADD COLUMN `script`  text NULL AFTER `status`,
+//ADD COLUMN `type`  decimal(1,0) UNSIGNED NULL DEFAULT 1 AFTER `script`;')->execute();
 		$model=new Advertises('search');
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['Advertises']))

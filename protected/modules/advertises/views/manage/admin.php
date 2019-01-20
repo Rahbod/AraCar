@@ -45,7 +45,7 @@ $this->menu=array(
                 'columns'=>array(
                     'title',
 //                    'banner',
-                    'link',
+//                    'link',
                     [
                         'name' => 'placement',
                         'filter' => $model->getPlacementLabels(),
@@ -55,6 +55,11 @@ $this->menu=array(
                         'name' => 'status',
                         'filter' => $model->statusLabels,
                         'value' => '$data->statusLabel'
+                    ],
+                    [
+                        'name' => 'type',
+                        'filter' => $model->typeLabels,
+                        'value' => '$data->typeLabel'
                     ],
 //                    'create_date',
                     /*

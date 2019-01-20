@@ -12,6 +12,8 @@
  * @property string $create_date
  * @property string $expire_date
  * @property string $status
+ * @property string $script
+ * @property string $type
  */
 class Advertises extends CActiveRecord
 {
@@ -31,6 +33,9 @@ class Advertises extends CActiveRecord
 
     const STATUS_DISABLE = 0;
     const STATUS_ENABLE = 1;
+
+    const TYPE_SCRIPT = 1;
+    const TYPE_BANNER = 2;
 
     public $placementLabels = [
         self::PLACE_HOME_SLIDER_STATICS_ABOVE => 'صفحه اصلی - روی اسلایدر - بالای آمار',
@@ -53,6 +58,11 @@ class Advertises extends CActiveRecord
         self::STATUS_ENABLE => 'غیرفعال',
     ];
 
+    public $typeLabels = [
+        self::TYPE_SCRIPT => 'کد تبلیغ',
+        self::TYPE_BANNER => 'تصویر و لینک',
+    ];
+
 	/**
 	 * @return string the associated database table name
 	 */
@@ -72,10 +82,12 @@ class Advertises extends CActiveRecord
 			array('title, banner, link', 'length', 'max'=>255),
 			array('placement', 'length', 'max'=>2),
 			array('create_date, expire_date', 'length', 'max'=>20),
-			array('status', 'length', 'max'=>1),
+			array('status, type', 'length', 'max'=>1),
+//			array('script', 'filter', 'filter' => 'strip_tags'),
+			array('script', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, title, banner, link, placement, create_date, expire_date, status', 'safe', 'on'=>'search'),
+			array('id, title, banner, link, placement, create_date, expire_date, status, type', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -104,6 +116,8 @@ class Advertises extends CActiveRecord
 			'create_date' => 'تاریخ ثبت',
 			'expire_date' => 'تاریخ انقضا',
 			'status' => 'وضعیت',
+			'type' => 'نوع تبلیغ',
+			'script' => 'کد تبلیغ',
 		);
 	}
 
@@ -133,6 +147,7 @@ class Advertises extends CActiveRecord
 		$criteria->compare('create_date',$this->create_date,true);
 		$criteria->compare('expire_date',$this->expire_date,true);
 		$criteria->compare('status',$this->status,true);
+		$criteria->compare('type',$this->type);
 		$criteria->order = 'id DESC';
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -180,6 +195,15 @@ class Advertises extends CActiveRecord
     public function getStatusLabel()
     {
         return isset($this->statusLabels[$this->status]) ? $this->statusLabels[$this->status] : "";
+    }
+
+    public function getTypeLabels(){
+        return $this->typeLabels;
+    }
+
+    public function getTypeLabel()
+    {
+        return isset($this->typeLabels[$this->type]) ? $this->typeLabels[$this->type] : "";
     }
 
     public static function GetInPlacement($placement)

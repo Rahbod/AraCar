@@ -13,7 +13,15 @@
 		'validateOnSubmit' => true
 	)
 )); ?>
+
+
     <div class="form-group">
+        <?php echo $form->labelEx($model,'type'); ?>
+        <?php echo $form->dropDownList($model,'type', $model->typeLabels,array('class'=>'form-control', 'id' => 'type-trigger')); ?>
+        <?php echo $form->error($model,'type'); ?>
+    </div>
+
+    <div class="form-group banner-field">
         <?php echo $form->labelEx($model,'banner'); ?>
         <?php $this->widget('ext.dropZoneUploader.dropZoneUploader', array(
             'id' => 'uploaderBanner',
@@ -41,10 +49,16 @@
         <div class="uploader-message error"></div>
     </div>
 
-	<div class="form-group">
+	<div class="form-group banner-field">
 		<?php echo $form->labelEx($model,'link'); ?>
 		<?php echo $form->urlField($model,'link',array('class'=>'form-control ltr','size'=>60,'maxlength'=>255)); ?>
 		<?php echo $form->error($model,'link'); ?>
+	</div>
+
+	<div class="form-group script-field">
+		<?php echo $form->labelEx($model,'script'); ?>
+		<?php echo $form->textArea($model,'script',array('class'=>'form-control ltr','rows' => 5)); ?>
+		<?php echo $form->error($model,'script'); ?>
 	</div>
 
     <div class="form-group">
@@ -82,3 +96,27 @@
 	</div>
 
 <?php $this->endWidget(); ?>
+
+
+<?php
+Yii::app()->clientScript->registerScript('type-trigger','
+    var typeval = $("#type-trigger").val();
+    if(typeval == 1){ // script
+        $(".banner-field").fadeOut();
+        $(".script-field").fadeIn();
+    }else if(typeval == 2){ // banner
+        $(".banner-field").fadeIn();
+        $(".script-field").fadeOut();
+    }
+        
+    $("body").on("change", "#type-trigger", function(){
+        var typeval = $("#type-trigger").val();
+        if(typeval == 1){ // script
+            $(".banner-field").fadeOut();
+            $(".script-field").fadeIn();
+        }else if(typeval == 2){ // banner
+            $(".banner-field").fadeIn();
+            $(".script-field").fadeOut();
+        }
+    });
+');

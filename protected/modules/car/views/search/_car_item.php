@@ -3,7 +3,7 @@
 $imagePath = Yii::getPathOfAlias('webroot').'/uploads/cars/';
 global $counter;
 ?>
-<div class="advertising-item<?= $data->show_in_top?' special':'' ?><?= $data->purchase_type_id == Cars::PURCHASE_TYPE_INSTALMENT?' instalment-item':'' ?>">
+<div class="car-item advertising-item<?= $data->show_in_top?' special':'' ?><?= $data->purchase_type_id == Cars::PURCHASE_TYPE_INSTALMENT?' instalment-item':'' ?>">
     <a href="<?php echo $data->getViewUrl(); ?>" class="link"></a>
     <div class="image-container">
         <?php
@@ -40,10 +40,10 @@ global $counter;
                     $perTime = (int)$data->getPurchaseDetail('numberOfMonth');
                     $monthly = $eachPay/$perTime;
                     ?>
-                    <span>پیش پرداخت <?= Controller::normalizeNumber($data->getPurchaseDetail('downPayment')) ?></span>
-                    <span>ماهیانه <?= Controller::normalizeNumber($monthly) ?></span>
+                    <span>پیش <span class="hidden-xs">پرداخت</span> <?= Controller::normalizeNumber($data->getPurchaseDetail('downPayment'),true, true, '<span class="hidden-xs">تومان</span>') ?></span>
+                    <span>ماهیانه <?= Controller::normalizeNumber($monthly,true, true, '<span class="hidden-xs">تومان</span>') ?></span>
                 <?php endif;?>
-                <span><?php if($data->purchase_type_id == Cars::PURCHASE_TYPE_INSTALMENT) echo 'قیمت تمام شده '?><?= $data->getPrice() ?></span>
+                <span><?php if($data->purchase_type_id == Cars::PURCHASE_TYPE_INSTALMENT) echo '<span class="hidden-xs">قیمت</span> تمام شده '?><?= $data->getPrice(true, '<span class="hidden-xs">تومان</span>') ?></span>
             </span>
         </div>
         <div class="full-info">
