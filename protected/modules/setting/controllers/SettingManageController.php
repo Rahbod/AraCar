@@ -51,6 +51,7 @@ class SettingManageController extends Controller
         }
         $criteria = new CDbCriteria();
         $criteria->addCondition('name NOT REGEXP \'\\([^\\)]*gateway_.*\\)\'');
+        $criteria->order = 'id';
         $model = SiteSetting::model()->findAll($criteria);
         $this->render('_general', array(
             'model' => $model

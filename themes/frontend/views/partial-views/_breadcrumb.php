@@ -3,6 +3,18 @@
 ?>
 <div class="page-header inner-page">
     <div class="top">
+        <!--Render Advertise-->
+        <?php $this->renderPartial('advertises.views.manage._advertise_item', [
+            'dismissible' => true,
+            'placement' => Advertises::PLACE_NEWS_LIST_HEADER_LEFT,
+            'cssClass' => 'advertise-news-header-left hidden-xs'
+        ]) ?>
+        <!--Render Advertise-->
+        <?php $this->renderPartial('advertises.views.manage._advertise_item', [
+            'dismissible' => true,
+            'placement' => Advertises::PLACE_NEWS_LIST_HEADER_CENTER,
+            'cssClass' => 'advertise-news-header-center hidden-xs'
+        ]) ?>
         <div class="center-box">
             <?php if($this->pageLogo):?><img src="<?= $this->pageLogo ?>" class="brand-logo" alt="<?= strip_tags($this->pageHeader) ?>"><?php endif; ?>
             <h2 class="brand-name<?= $this->layout == '//layouts/panel'?' user-detail':'' ?>"><?php echo $this->pageHeader ?><small><?php echo $this->pageDescription ?></small></h2>

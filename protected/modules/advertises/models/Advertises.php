@@ -30,6 +30,7 @@ class Advertises extends CActiveRecord
     const PLACE_NEWS_LIST_RIGHT = 11;
     const PLACE_NEWS_LIST_HEADER_LEFT = 12;
     const PLACE_NEWS_LIST_HEADER_CENTER = 13;
+    const PLACE_NEWS_TOP = 14;
 
     const STATUS_DISABLE = 0;
     const STATUS_ENABLE = 1;
@@ -47,6 +48,7 @@ class Advertises extends CActiveRecord
         self::PLACE_CAR_LIST_LEFT => 'صفحه آگهی ها - سمت چپ صفحه',
         self::PLACE_CAR_LIST_RIGHT => 'صفحه آگهی ها - سمت راست صفحه',
         self::PLACE_CAR_LIST_BELOW_FILTERS => 'صفحه آگهی ها - زیر فیلترها',
+        self::PLACE_NEWS_TOP => 'صفحه اخبار - بالای لیست',
         self::PLACE_NEWS_LIST_LEFT => 'صفحه اخبار - سمت چپ صفحه',
         self::PLACE_NEWS_LIST_RIGHT => 'صفحه اخبار - سمت راست صفحه',
         self::PLACE_NEWS_LIST_HEADER_LEFT => 'صفحه اخبار - سمت چپ نوار بالا',

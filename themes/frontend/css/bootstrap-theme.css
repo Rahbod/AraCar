@@ -415,6 +415,7 @@ a:focus{
     border: none;
 }
 .page-header .top{
+    position: relative;
     padding: 20px 0;
 }
 .page-header .top .brand-logo{
@@ -4106,6 +4107,8 @@ footer .nav li:last-of-type a{
 }
 .advertise-between-cars {
     margin-bottom: 5px;
+    width: 100% !important;
+    text-align: center;
 }
 .advertise-between-cars .advertise-image {
     background: no-repeat scroll center transparent;
@@ -4234,7 +4237,62 @@ footer .nav li:last-of-type a{
     padding: 5px;
     z-index: 1;
 }
+.advertise-logos-left,
+.advertise-logos-right{
+    float: left;
+    margin-top: 50px;
+}
 
+.advertise-news-top{
+    /*display: block !important;*/
+    /*width: 100% !important;*/
+    text-align: center;
+    margin-bottom: 30px;
+}
+.advertise-news-header-center,
+.advertise-news-header-left{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    overflow: hidden !important;
+    max-height: 100% !important;
+    background-color: #eee;
+}
+.advertise-news-header-center{
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%);
+}
+.advertise-news-header-left{
+    left: 5px;
+}
+
+.advertise-slider-left{
+    position: absolute;
+    left: 30px;
+    top: 50%;
+    z-index: 10;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.pagination > li > a {
+    background: #fafafa;
+    color: #666;
+}
+.pagination > li.selected > a {
+    background: #eee;
+}
+.pagination.pagination-flat > li > a {
+    border-radius: 0 !important;
+}
 /*#endregion*/
 /******************************************** Responsive Theme ********************************************************/
 /*#region Responsive */

@@ -15,6 +15,13 @@ $baseUrl = Yii::app()->theme->baseUrl;
     $cs->registerCssFile($baseUrl.'/assets/slider/css/layerslider.css');
     $cs->registerCssFile($baseUrl.'/assets/slider/layerslider_skins/fullwidth/skin.css'); ?>
     <div class="slideshow-container">
+        <!--Render Advertise-->
+        <?php $this->renderPartial('advertises.views.manage._advertise_item', [
+            'dismissible' => true,
+            'placement' => Advertises::PLACE_HOME_SLIDER_LEFT,
+            'cssClass' => 'advertise-slider-left advertise-hover-shadow hidden-xs'
+        ]) ?>
+
         <div class="slideshow" id="slider">
             <?php foreach ($slideShow as $item):
                 $this->renderPartial('//site/_slide_show_item_view',array('data' => $item));
@@ -99,6 +106,13 @@ $baseUrl = Yii::app()->theme->baseUrl;
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 enamad-logo">
 <!--        samandehi-->
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-left">
+            <!--Render Advertise-->
+            <?php $this->renderPartial('advertises.views.manage._advertise_item', [
+                'dismissible' => true,
+                'placement' => Advertises::PLACE_HOME_LOGOS_RIGHT,
+                'cssClass' => 'advertise-logos-right advertise-hover-shadow hidden-xs'
+            ]) ?>
+
             <img id='jxlzesgtfukzfukznbqefukz' style='cursor:pointer' onclick='window.open("https://logo.samandehi.ir/Verify.aspx?id=106626&p=rfthobpdgvkagvkauiwkgvka", "Popup","toolbar=no, scrollbars=no, location=no, statusbar=no, menubar=no, resizable=0, width=450, height=630, top=30")' alt='logo-samandehi' src='https://logo.samandehi.ir/logo.aspx?id=106626&p=nbpdlymawlbqwlbqodrfwlbq'/>
             <img src="https://trustseal.enamad.ir/logo.aspx?id=78522&amp;p=yAB3wY5aHpIEuczA" alt="" onclick="window.open(&quot;https://trustseal.enamad.ir/Verify.aspx?id=78522&amp;p=yAB3wY5aHpIEuczA&quot;, &quot;Popup&quot;,&quot;toolbar=no, location=no, statusbar=no, menubar=no, scrollbars=1, resizable=0, width=580, height=600, top=30&quot;)" style="cursor:pointer" id="yAB3wY5aHpIEuczA">
         </div>
@@ -109,6 +123,12 @@ $baseUrl = Yii::app()->theme->baseUrl;
                 <a class="app-logo ios-logo"></a>
                 <h3>به زودی ...</h3>
             </div>
+            <!--Render Advertise-->
+            <?php $this->renderPartial('advertises.views.manage._advertise_item', [
+                'dismissible' => true,
+                'placement' => Advertises::PLACE_HOME_LOGOS_LEFT,
+                'cssClass' => 'advertise-logos-left advertise-hover-shadow hidden-xs'
+            ]) ?>
         </div>
     </div>
 </div>
