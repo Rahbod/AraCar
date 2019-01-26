@@ -364,14 +364,21 @@ class Cars extends CActiveRecord
      */
     public static function getDailySell()
     {
-        $cr = self::duplicateQuery();
         $startDate = JalaliDate::toGregorian(JalaliDate::date('Y', time(), false), JalaliDate::date('m', time(), false), JalaliDate::date('d', time(), false));
         $startTime = strtotime($startDate[0] . '/' . $startDate[1] . '/' . $startDate[2]);
         $endTime = strtotime($startDate[0] . '/' . $startDate[1] . '/' . $startDate[2] . ' 23:59:59');
-        $cr->addCondition('create_date >= :start_date AND create_date <= :end_date');
-        $cr->params[':start_date'] = $startTime;
-        $cr->params[':end_date'] = $endTime;
-        return self::model()->count($cr);
+
+        $criteria = new CDbCriteria();
+        $criteria->alias = 'car';
+        $criteria->addCondition('expire_date >= :now');
+        $criteria->addCondition('create_date >= :start_date AND create_date <= :end_date');
+        $criteria->params = [
+            ':now' => time(),
+            ':start_date' => $startTime,
+            ':end_date' => $endTime,
+        ];
+        $criteria->order = 'car.create_date DESC';
+        return self::model()->count($criteria);
     }
 
     public function getStatusLabel()
