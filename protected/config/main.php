@@ -91,13 +91,15 @@ return array(
 
 	// application components
 	'components'=>array(
-		'request'=>array(
-			'class' => 'YMHttpRequest',
-			'enableCsrfValidation'=>true,
-			'noValidationRoutes'=>array(
-				'users/public/verifyPlan'
-			),
-		),
+        'request'=>array(
+            'class' => 'YMHttpRequest',
+            'enableCsrfValidation'=>true,
+            'noValidationRoutes'=>array(
+                'users/public/verifyPlan',
+                'api/',
+                'oauth/',
+            ),
+        ),
 		'JWT' => array(
 			'class' => 'ext.jwt.JWT',
 			'key' => base64_encode(md5('Rahbod-AraKhodro-1396')),
@@ -119,6 +121,13 @@ return array(
 			'class'=> 'ZarinPal',
 			'merchant_id' => ''
 		),
+        'session' => array(
+            'class' => 'YmDbHttpSession',
+            'autoStart' => false,
+            'connectionID' => 'db',
+            'sessionTableName' => 'ym_sessions',
+            'timeout' => 1800
+        ),
 		'userCounter' => array(
 			'class' => 'application.components.UserCounter',
 			'tableUsers' => 'ym_counter_users',
