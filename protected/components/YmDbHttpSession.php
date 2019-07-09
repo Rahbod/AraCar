@@ -112,6 +112,7 @@ class YmDbHttpSession extends CHttpSession
             'id'=>'CHAR(32) PRIMARY KEY',
             'expire'=>'integer',
             'data'=>$blob,
+            'device_type'=>'VARCHAR(50)',
         ));
     }
 

@@ -153,6 +153,15 @@ return array(
 			'showScriptName'=>false,
 			'appendParams'=>true,
 			'rules'=>array(
+                // REST patterns
+                array('api/options', 'pattern'=>'api/options', 'verb'=>'GET'),
+                array('api/options', 'pattern'=>'api/options/<name:\w+>', 'verb'=>'GET'),
+                array('api/list', 'pattern'=>'api/<model:\w+>', 'verb'=>'GET'),
+                array('api/view', 'pattern'=>'api/<model:\w+>/<id:\d+>', 'verb'=>'GET'),
+                array('api/update', 'pattern'=>'api/<model:\w+>/<id:\d+>', 'verb'=>'PUT'),
+                array('api/delete', 'pattern'=>'api/<model:\w+>/<id:\d+>', 'verb'=>'DELETE'),
+                array('api/create', 'pattern'=>'api/<model:\w+>', 'verb'=>'POST'),
+				// other patterns
 				'sitemap'=>'site/sitemap',
 				'sitemap.xml'=>'site/sitemapxml',
 				'news'=>'news/manage/all',

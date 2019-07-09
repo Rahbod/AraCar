@@ -1,4 +1,5 @@
 <?php
+
 class ApiController extends ApiBaseController
 {
     protected $request = null;
@@ -9,8 +10,8 @@ class ApiController extends ApiBaseController
     public function filters()
     {
         return array(
-            'RestAccessControl + register, verify',
-            'RestAuthControl - register, verify',
+            'RestAccessControl + register, verify, list, options',
+            'RestAuthControl - register, verify, list, options',
         );
     }
 
@@ -123,7 +124,7 @@ class ApiController extends ApiBaseController
                     $reagentDetails->credit += $reagentReward;
                     if ($reagentDetails->save()) {
                         PushNotification::sendNotificationToUser($reagentDetails->push_token, 'افزایش اعتبار', 'مبلغ ' . number_format($reagentReward) . ' تومان بابت معرفی "' . $userDetails->first_name . '" به کیف پول شما اضافه گردید.');
-                        Notify::SendSms( 'مبلغ ' . number_format($reagentReward) . ' تومان بابت معرفی "' . $userDetails->first_name . '" به کیف پول شما اضافه گردید.', $reagent->username);
+                        Notify::SendSms('مبلغ ' . number_format($reagentReward) . ' تومان بابت معرفی "' . $userDetails->first_name . '" به کیف پول شما اضافه گردید.', $reagent->username);
                     }
                 }
 
@@ -196,247 +197,6 @@ class ApiController extends ApiBaseController
         ]));
     }
 
-    /**
-     * Get list of user addresses
-     */
-    public function actionAddresses()
-    {
-        $addresses = [];
-
-        foreach ($this->user->addresses as $address)
-            $addresses[] = [
-                'id' => intval($address->id),
-                'telephone' => $address->emergency_tel,
-                'address' => $address->postal_address,
-            ];
-
-        $this->_sendResponse(200, CJSON::encode([
-            'status' => true,
-            'list' => $addresses
-        ]));
-    }
-
-    /**
-     * Insert new address
-     */
-    public function actionNewAddress()
-    {
-        if (isset($this->request['telephone']) and isset($this->request['address'])) {
-            /* @var $address UserAddresses */
-            $address = new UserAddresses();
-            $address->user_id = $this->user->id;
-            $address->town_id = 19;
-            $address->place_id = 274;
-            $address->emergency_tel = $this->request['telephone'];
-            $address->postal_address = $this->request['address'];
-            $address->map_lat = isset($this->request['map_lat']) ? $this->request['map_lat'] : "";
-            $address->map_lng = isset($this->request['map_lng']) ? $this->request['map_lng'] : "";
-            $address->map_zoom = isset($this->request['map_zoom']) ? $this->request['map_zoom'] : 15;
-
-            if ($address->save())
-                $this->_sendResponse(200, CJSON::encode([
-                    'status' => true,
-                    'message' => 'اطلاعات با موفقیت ثبت شد.',
-                    'address' => [
-                        'id' => intval($address->id),
-                        'telephone' => $address->emergency_tel,
-                        'address' => $address->postal_address,
-                    ]
-                ]));
-            else
-                $this->_sendResponse(400, CJSON::encode(['status' => false, 'message' => 'در ثبت اطلاعات خطایی رخ داده است. لطفا مجددا تلاش کنید.']));
-        } else
-            $this->_sendResponse(400, CJSON::encode(['status' => false, 'message' => 'Telephone and Address variables is required.']));
-    }
-
-    public function actionUpdateAddress()
-    {
-        if (isset($this->request['id']) and isset($this->request['telephone']) and isset($this->request['address'])) {
-            /* @var $address UserAddresses */
-            $address = UserAddresses::model()->findByPk($this->request['id']);
-            $address->emergency_tel = $this->request['telephone'];
-            $address->postal_address = $this->request['address'];
-            $address->map_lat = isset($this->request['map_lat']) ? $this->request['map_lat'] : $address->map_lat;
-            $address->map_lng = isset($this->request['map_lng']) ? $this->request['map_lng'] : $address->map_lng;
-            $address->map_zoom = isset($this->request['map_zoom']) ? $this->request['map_zoom'] : $address->map_zoom;
-
-            if ($address->save())
-                $this->_sendResponse(200, CJSON::encode([
-                    'status' => true,
-                    'message' => 'اطلاعات با موفقیت ثبت شد.',
-                    'address' => [
-                        'id' => intval($address->id),
-                        'telephone' => $address->emergency_tel,
-                        'address' => $address->postal_address,
-                    ]
-                ]));
-            else
-                $this->_sendResponse(400, CJSON::encode(['status' => false, 'message' => 'در ثبت اطلاعات خطایی رخ داده است. لطفا مجددا تلاش کنید.']));
-        } else
-            $this->_sendResponse(400, CJSON::encode(['status' => false, 'message' => 'ID, Telephone and Address variables is required.']));
-    }
-
-    /**
-     * Insert new request
-     */
-    public function actionRequest()
-    {
-        if (isset($this->request['deviceID'])
-            and isset($this->request['addressID'])
-            and isset($this->request['description'])
-            and isset($this->request['date'])
-            and isset($this->request['time'])
-        ) {
-            Yii::app()->getModule('requests');
-
-            $jDate = explode('/', $this->request['date']);
-            $gDate = JalaliDate::toGregorian($jDate[0], $jDate[1], $jDate[2]);
-
-            $request = new Requests();
-            $request->setScenario('request_by_app');
-            $request->category_id = $this->request['deviceID'];
-            $request->user_id = $this->user->id;
-            $request->user_address_id = $this->request['addressID'];
-            $request->description = $this->request['description'];
-            $request->requested_date = strtotime($gDate[0] . '/' . $gDate[1] . '/' . $gDate[2]);
-            $request->requested_time = $this->request['time'];
-            $request->status = Requests::STATUS_PENDING;
-            $request->request_type = Requests::REQUEST_FROM_APP_ANDROID;
-
-            if ($request->save())
-                $this->_sendResponse(200, CJSON::encode([
-                    'status' => true,
-                    'message' => 'اطلاعات با موفقیت ثبت شد.',
-                ]));
-            else
-                $this->_sendResponse(400, CJSON::encode(['status' => false, 'message' => 'در ثبت اطلاعات خطایی رخ داده است. لطفا مجددا تلاش کنید.']));
-        } else
-            $this->_sendResponse(400, CJSON::encode([
-                'status' => false,
-                'message' => 'Device ID, Address ID, Description, Date and Time variables is required.']));
-    }
-
-    /**
-     * Get list of user requests
-     */
-    public function actionRequests()
-    {
-        $requests = [];
-
-        foreach ($this->user->requests as $request) {
-            $date = $request->service_date ?: $request->requested_date;
-
-            $temp = [
-                'id' => intval($request->id),
-                'device' => $request->category->title,
-                'date' => JalaliDate::date("d F Y", $date),
-                'status' => intval($request->status),
-            ];
-
-            $requests[] = $temp;
-        }
-
-        $this->_sendResponse(200, CJSON::encode([
-            'status' => true,
-            'list' => $requests,
-        ]));
-    }
-
-    /**
-     * Get request model
-     */
-    public function actionRequestInfo()
-    {
-        if (isset($this->request['id'])) {
-            /* @var Requests $request */
-            $request = Requests::model()->find('id = :id AND user_id = :userID', [':id' => $this->request['id'], ':userID' => $this->user->id]);
-
-            if (!$request)
-                $this->_sendResponse(404, CJSON::encode([
-                    'status' => false,
-                    'message' => 'Request not found.'
-                ]));
-
-            $temp = [
-                'id' => intval($request->id),
-                'deviceID' => intval($request->category_id),
-                'device' => $request->category->title,
-                'address' => null,
-                'phone' => null,
-                'serviceDate' => null,
-                'serviceTime' => null,
-                'createDate' => JalaliDate::date("d F Y - H:i", $request->create_date),
-                'description' => $request->description,
-                'requestedDate' => JalaliDate::date("d F Y", ($request->requested_date ?: $request->service_date)),
-                'requestedTime' => $request->requested_time ?: $request->service_time,
-                'status' => $request->status,
-                'repairMan' => null,
-                'invoice' => null,
-                'rating' => null,
-            ];
-
-            if ($request->user_address_id) {
-                $temp['address'] = $request->userAddress->postal_address;
-                $temp['phone'] = $request->userAddress->emergency_tel;
-            }
-
-            if ($request->service_date) {
-                $temp['serviceDate'] = JalaliDate::date("d F Y", $request->service_date);
-                $temp['serviceTime'] = $request->service_time;
-            }
-
-            if ($request->repairman_id) {
-                $temp['repairMan'] = [
-                    'name' => $request->repairman->userDetails->getShowName(false),
-                    'code' => $request->repairman->id,
-                    'avatar' => $request->repairman->avatar ? Yii::app()->getBaseUrl(true) . '/uploads/users/avatar/' . $request->repairman->avatar : '',
-                ];
-            }
-
-            if ($request->rate) {
-                $temp['rating'] = [
-                    'rates' => $request->rate->rates,
-                    'comment' => $request->rate->comment,
-                ];
-            }
-
-            if ($invoice = $request->getLastInvoice(true) and $request->status != Requests::STATUS_DELETED) {
-                $tariffs = [];
-
-                foreach ($invoice->items as $item)
-                    $tariffs[] = [
-                        'title' => $item->tariff->title,
-                        'cost' => number_format($item->cost) . ' تومان',
-                    ];
-
-                if ($invoice->additional_cost)
-                    $tariffs[] = [
-                        'title' => 'هزینه اضافی',
-                        'cost' => number_format($invoice->additional_cost) . ' تومان',
-                    ];
-
-                $temp['invoice'] = [
-                    'id' => intval($invoice->id),
-                    'sum' => number_format($invoice->totalCost()) . ' تومان',
-                    'finalCost' => number_format($invoice->finalCost()) . ' تومان',
-                    'finalCostInt' => intval($invoice->finalCost()),
-                    'discountPercent' => $invoice->discount_percent ? '('.$invoice->discount_percent . '%)' : 0,
-                    'discount' => $invoice->total_discount ? number_format($invoice->total_discount) . ' تومان' : 0,
-                    'additionalCost' => $invoice->additional_cost ? number_format($invoice->additional_cost) . ' تومان' : 0,
-                    'description' => $invoice->additional_description,
-                    'status' => $invoice->status,
-                    'tariffs' => $tariffs,
-                    'decreaseCredit' => boolval($invoice->decrease_credit),
-                    'decreasedCreditInt' => intval($invoice->decreased_credit),
-                    'decreasedCredit' => number_format($invoice->decreased_credit) . ' تومان',
-                ];
-            }
-
-            $this->_sendResponse(200, CJSON::encode($temp));
-        } else
-            $this->_sendResponse(400, CJSON::encode(['status' => false, 'message' => 'ID variable is required.']));
-    }
-
     public function actionTransactions()
     {
         $transactions = [];
@@ -455,69 +215,6 @@ class ApiController extends ApiBaseController
         $this->_sendResponse(200, CJSON::encode([
             'status' => true,
             'list' => $transactions,
-        ]));
-    }
-
-    public function actionCooperation()
-    {
-        if (isset($this->request['name']) and isset($this->request['phone']) and isset($this->request['expertise']) and isset($this->request['experience'])) {
-            $model = new CooperationRequests();
-            $model->name = $this->request['name'];
-            $model->mobile = $this->request['phone'];
-            $model->expertise = $this->request['expertise'];
-            $model->experience_level = $this->request['experience'];
-            $model->status = CooperationRequests::STATUS_PENDING;
-
-            if ($model->save())
-                $this->_sendResponse(200, CJSON::encode(['status' => true, 'message' => 'درخواست شما با موفقیت ثبت شد. این درخواست به زودی توسط کارشناسان ما رسیدگی خواهد شد.']));
-            else
-                $this->_sendResponse(400, CJSON::encode(['status' => false, 'message' => 'در ثبت اطلاعات خطایی رخ داده است. لطفا مجددا تلاش کنید.']));
-        } else
-            $this->_sendResponse(400, CJSON::encode(['status' => false, 'message' => 'Name and Phone and Expertise and Experience variables is required.']));
-    }
-
-    public function actionRepairman($id)
-    {
-        $user = Users::model()->findByPk($id);
-        if ($user)
-            $this->_sendResponse(200, CJSON::encode([
-                'code' => $user->id,
-                'name' => $user->userDetails->getShowName(false),
-                'mobile' => $user->mobile,
-                'avatar' => $user->avatar ? Yii::app()->getBaseUrl(true) . '/uploads/users/avatar/' . $user->avatar : '',
-                'expertise' => $user->getAdditionalDetails('expertise'),
-                'experience' => $user->getAdditionalDetails('experience'),
-                'description' => $user->getAdditionalDetails('description')
-            ]));
-        $this->_sendResponse(400, CJSON::encode(['status' => false, 'message' => 'Repairman not found.']));
-    }
-
-    public function actionRate()
-    {
-        $requestId = $this->request['requestID'];
-        $comment = isset($this->request['comment']) ? strip_tags($this->request['comment']) : "";
-        $rates = isset($this->request['rates']) ? $this->request['rates'] : [];
-        /** @var $request Requests */
-        $request = Requests::model()->findByPk($requestId);
-        if ($request) {
-            $rate = new RepairmanRatings();
-            $rate->request_id = $request->id;
-            $rate->repairman_id = $request->repairman_id;
-            $rate->rates = $rates;
-            $rate->comment = $comment;
-            if ($rate->save())
-                $this->_sendResponse(200, CJSON::encode([
-                    'status' => true,
-                    'message' => 'نظر شما با موفقیت ثبت شد.',
-                ]));
-            else
-                $this->_sendResponse(200, CJSON::encode([
-                    'status' => false,
-                    'message' => 'ثبت نظر با مشکل مواجه شد، لطفا بعدا تلاش فرمایید.',
-                ]));
-        }
-        $this->_sendResponse(200, CJSON::encode([
-            'status' => true
         ]));
     }
 
@@ -652,84 +349,72 @@ class ApiController extends ApiBaseController
             ]));
     }
 
-    public function actionSetPaymentMethod()
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    public function actionOptions()
     {
-        if (isset($this->request['id']) and isset($this->request['method'])) {
-            /* @var Invoices $invoice */
-            $invoice = Invoices::model()->findByPk($this->request['id']);
-
-            $invoice->payment_method = $this->request['method'];
-            $invoice->status = Invoices::STATUS_PAID;
-
-            $decreasedCredit = 0;
-            if(isset($this->request['decreaseCredit'])){
-                if($this->user->userDetails->credit <= $invoice->finalCost())
-                    $decreasedCredit = $this->user->userDetails->credit;
-                else
-                    $decreasedCredit = $this->user->userDetails->credit - $invoice->finalCost();
-
-                $invoice->decrease_credit = 1;
-                $invoice->decreased_credit = $decreasedCredit;
-            }
-
-            if ($invoice->save()) {
-                $invoice->request->status = Requests::STATUS_PAID;
-                $invoice->request->save();
-
-                if($invoice->decrease_credit) {
-                    $this->user->userDetails->credit = $this->user->userDetails->credit - $decreasedCredit;
-                    $this->user->userDetails->save();
+        Yii::app()->getModule('lists');
+        $rows = array();
+        /** @var Lists[] $models */
+        $models = Lists::getRoots();
+        // Did we get some results?
+        if (empty($models)) {
+            // No
+            $this->_sendResponse(200,
+                sprintf('No items where found for model <b>%s</b>', $_GET['model']));
+        } else {
+            if (!$rows) {
+                // Prepare response
+                foreach ($models as $model) {
+                    $rows[] = [
+                        "name" => $model->name,
+                        "title" => $model->title,
+                        "description" => $model->description,
+                        "options" => $model->getOptions(false, 'id, title')
+                    ];
                 }
-
-                $this->_sendResponse(200, CJSON::encode([
-                    'status' => true,
-                    'message' => 'عملیات با موفقیت انجام شد.'
-                ]));
-            }else
-                $this->_sendResponse(200, CJSON::encode([
-                    'status' => false,
-                    'message' => 'در ثبت اطلاعات خطایی رخ داده است لطفا مجددا تلاش کنید.'
-                ]));
-        } else
+            }
+            // Send the response
             $this->_sendResponse(200, CJSON::encode([
-                'status' => false,
-                'message' => 'ID and Method variables is required.'
+                'status' => true,
+                'lists' => $rows
             ]));
+        }
     }
 
-    public function actionCancelRequest()
+    public function actionList()
     {
-        if (isset($this->request['id'])) {
-            /* @var Requests $request */
-            $request = Requests::model()->findByPk($this->request['id']);
 
-            if($request->user_id != $this->user->id)
-                $this->_sendResponse(200, CJSON::encode([
-                    'status' => false,
-                    'message' => 'شما اجازه انصراف از این درخواست را ندارید.'
-                ]));
-
-            if($request->status < Requests::STATUS_INVOICING){
-                $request->status = Requests::STATUS_CANCELED;
-                if($request->save())
-                    $this->_sendResponse(200, CJSON::encode([
-                        'status' => true,
-                        'message' => 'عملیات با موفقیت انجام شد.'
-                    ]));
-                else
-                    $this->_sendResponse(200, CJSON::encode([
-                        'status' => false,
-                        'message' => 'در انجام عملیات خطایی رخ داده است. لطفا مجددا تلاش کنید.'
-                    ]));
-            } else
-                $this->_sendResponse(200, CJSON::encode([
-                    'status' => false,
-                    'message' => 'امکان انصراف از این درخواست وجود ندارد.'
-                ]));
-        } else
+        $rows = array();
+        // Get the respective model instance
+        switch ($_GET['model']) {
+            case 'cars':
+                Yii::app()->getModule('car');
+                $models = Cars::model()->findAll(Cars::getValidQuery());
+                break;
+            default:
+                // Model not implemented error
+                $this->_sendResponse(501, sprintf(
+                    'Error: Mode <b>list</b> is not implemented for model <b>%s</b>',
+                    $_GET['model']));
+                Yii::app()->end();
+        }
+        // Did we get some results?
+        if (empty($models)) {
+            // No
+            $this->_sendResponse(200,
+                sprintf('No items where found for model <b>%s</b>', $_GET['model']));
+        } else {
+            if (!$rows) {
+                // Prepare response
+                foreach ($models as $model)
+                    $rows[] = $model->attributes;
+            }
+            // Send the response
             $this->_sendResponse(200, CJSON::encode([
-                'status' => false,
-                'message' => 'ID variable is required.'
+                'status' => true,
+                'rows' => $rows
             ]));
+        }
     }
 }
