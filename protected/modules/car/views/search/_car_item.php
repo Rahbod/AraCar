@@ -59,9 +59,10 @@ global $counter;
     </div>
 </div>
 
-<!--Render Advertise-->
 <?php
-if($counter === 3):
+if($counter === 3):?>
+    <!--Render Advertise-->
+<?php
     $this->renderPartial('advertises.views.manage._advertise_item', [
         'placement' => Advertises::PLACE_CAR_LIST_BETWEEN_CARS,
         'cssClass' => 'advertise-between-cars'

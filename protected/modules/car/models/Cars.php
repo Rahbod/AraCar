@@ -572,7 +572,7 @@ class Cars extends CActiveRecord
         //
     }
 
-    public function getYears($type = 'miladi', $mode = 'list')
+    public static function getYears($type = 'miladi', $mode = 'list')
     {
         $list = [];
         if ($type == 'shamsi') {

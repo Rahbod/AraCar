@@ -91,13 +91,15 @@ return array(
 
 	// application components
 	'components'=>array(
-		'request'=>array(
-			'class' => 'YMHttpRequest',
-			'enableCsrfValidation'=>true,
-			'noValidationRoutes'=>array(
-				'users/public/verifyPlan'
-			),
-		),
+        'request'=>array(
+            'class' => 'YMHttpRequest',
+            'enableCsrfValidation'=>true,
+            'noValidationRoutes'=>array(
+                'users/public/verifyPlan',
+                'api/',
+                'oauth/',
+            ),
+        ),
 		'JWT' => array(
 			'class' => 'ext.jwt.JWT',
 			'key' => base64_encode(md5('Rahbod-AraKhodro-1396')),
@@ -119,6 +121,13 @@ return array(
 			'class'=> 'ZarinPal',
 			'merchant_id' => ''
 		),
+        'session' => array(
+            'class' => 'YmDbHttpSession',
+            'autoStart' => false,
+            'connectionID' => 'db',
+            'sessionTableName' => 'ym_sessions',
+            'timeout' => 1800
+        ),
 		'userCounter' => array(
 			'class' => 'application.components.UserCounter',
 			'tableUsers' => 'ym_counter_users',
@@ -144,6 +153,15 @@ return array(
 			'showScriptName'=>false,
 			'appendParams'=>true,
 			'rules'=>array(
+                // REST patterns
+                array('api/options', 'pattern'=>'api/options', 'verb'=>'GET'),
+                array('api/options', 'pattern'=>'api/options/<name:\w+>', 'verb'=>'GET'),
+                array('api/list', 'pattern'=>'api/<model:\w+>', 'verb'=>'GET'),
+                array('api/view', 'pattern'=>'api/<model:\w+>/<id:\d+>', 'verb'=>'GET'),
+                array('api/update', 'pattern'=>'api/<model:\w+>/<id:\d+>', 'verb'=>'PUT'),
+                array('api/delete', 'pattern'=>'api/<model:\w+>/<id:\d+>', 'verb'=>'DELETE'),
+                array('api/create', 'pattern'=>'api/<model:\w+>', 'verb'=>'POST'),
+				// other patterns
 				'sitemap'=>'site/sitemap',
 				'sitemap.xml'=>'site/sitemapxml',
 				'news'=>'news/manage/all',
