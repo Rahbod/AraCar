@@ -293,7 +293,7 @@ class Cars extends CActiveRecord
         $criteria->compare('visit_district', $this->visit_district, true);
         $criteria->compare('description', $this->description, true);
         $criteria->compare('creation_date', $this->creation_date, true);
-        if($this->titleSearch){
+        if ($this->titleSearch) {
             $criteria->with[] = 'brand';
             $criteria->with[] = 'model';
             $criteria->addCondition('brand.title LIKE :title OR model.title LIKE :title OR creation_date LIKE :title');
@@ -392,7 +392,7 @@ class Cars extends CActiveRecord
             $this->update_date = time();
         $this->distance = $this->distance ? str_replace(',', '', $this->distance) : 0;
         $this->creation_date = empty($this->sh_date) ? $this->m_date : $this->sh_date;
-        $this->plan_rules = is_array($this->plan_rules) ? CJSON::encode($this->plan_rules) : ($this->plan_rules && !empty($this->plan_rules)?$this->plan_rules:null);
+        $this->plan_rules = is_array($this->plan_rules) ? CJSON::encode($this->plan_rules) : ($this->plan_rules && !empty($this->plan_rules) ? $this->plan_rules : null);
         return parent::beforeSave();
     }
 
@@ -417,7 +417,7 @@ class Cars extends CActiveRecord
         }
 
         // send alerts to users
-        if($this->status == Cars::STATUS_APPROVED)
+        if ($this->status == Cars::STATUS_APPROVED)
             $this->SendCarAlerts();
         parent::afterSave();
     }
@@ -548,7 +548,7 @@ class Cars extends CActiveRecord
         if ($blank)
             return $p;
 
-        $p = !is_array($p) && doubleval($p) != 0? number_format(doubleval($p)) : ($this->getPurchaseDetail('totalPrice') ?: 0);
+        $p = !is_array($p) && doubleval($p) != 0 ? number_format(doubleval($p)) : ($this->getPurchaseDetail('totalPrice') ?: 0);
         $p = $postfix ? $p . ' ' . $postfix : $p;
         return $convert ? Controller::parseNumbers($p) : $p;
     }
@@ -577,7 +577,7 @@ class Cars extends CActiveRecord
         $list = [];
         if ($type == 'shamsi') {
             $start = 1340;
-            $end = (int)JalaliDate::date('Y', time(), false)+1;
+            $end = (int)JalaliDate::date('Y', time(), false) + 1;
             for ($i = $end; $i >= $start; $i--)
                 if ($mode == 'list')
                     $list[$i] = Controller::parseNumbers($i);
@@ -585,7 +585,7 @@ class Cars extends CActiveRecord
                     $list[] = array('id' => $i, 'title' => Controller::parseNumbers($i));
         } else {
             $start = 1930;
-            $end = (int)date('Y')+1;
+            $end = (int)date('Y') + 1;
             for ($i = $end; $i >= $start; $i--)
                 if ($mode == 'list')
                     $list[$i] = Controller::parseNumbers($i);
@@ -603,7 +603,7 @@ class Cars extends CActiveRecord
         $criteria->addCondition("(from_year IS NULL OR from_year = '' OR from_year <= :creation) AND (to_year IS NULL OR to_year = '' OR to_year >= :creation) AND 
 	        (from_price IS NULL OR from_price = 0 OR from_price <= :price) AND (to_price IS NULL OR to_price = 0 OR to_price >= :price)");
         $criteria->params[':creation'] = $this->creation_date;
-        $criteria->params[':price'] = (int) ($this->getPrice(true, '', true) /1000/1000);
+        $criteria->params[':price'] = (int)($this->getPrice(true, '', true) / 1000 / 1000);
         $alerts = CarAlerts::model()->findAll($criteria);
         $phones = [];
         foreach ($alerts as $alert) {
@@ -624,5 +624,271 @@ class Cars extends CActiveRecord
             @$smsObj->SendWithLine();
         } catch (CException $e) {
         }
+    }
+
+    private $_restExceptAttributes = ['status', 'plan_rules', 'plan_title', 'confirm_priority', 'show_in_top', 'update_count'];
+    private $_restFillAttributes = ['price'];
+
+    public function getRestAttributes($userID = false)
+    {
+        $obj = $this->attributes;
+        $relations = $this->relations();
+        Yii::app()->getModule('users');
+        Yii::app()->getModule('lists');
+        Yii::app()->getModule('places');
+        Yii::app()->getModule('towns');
+        Yii::app()->getModule('models');
+        Yii::app()->getModule('brands');
+
+        // unset attributes
+        foreach ($this->_restExceptAttributes as $attr)
+            unset($obj[$attr]);
+
+        // set attributes
+        $obj['title'] = $this->getTitle(false);
+        $obj['secure_mobile'] = $this->getSecureMobile();
+        $obj['mobile'] = $this->user && $this->user->userDetails && $this->user->userDetails->mobile ? $this->user->userDetails->mobile : null;
+
+        // fill images
+        $imagePath = Yii::getPathOfAlias('webroot') . DIRECTORY_SEPARATOR . 'uploads/cars' . DIRECTORY_SEPARATOR;
+        $imageUrl = Yii::app()->getBaseUrl(true) . '/uploads/cars/';
+        $thumbPath = 'thumbs/180x140';
+        $images = [];
+        foreach ($this->carImages as $image) {
+            if ($image && $image->filename && is_file($imagePath . $thumbPath . DIRECTORY_SEPARATOR . $image->filename)) {
+                $url = $imageUrl . $image->filename;
+                $thumbUrl = $imageUrl . $thumbPath . DIRECTORY_SEPARATOR . $image->filename;
+                $images[] = compact('url', 'thumbUrl');
+            }
+        }
+        $obj['images'] = $images;
+        $parked = $userID && UserParking::model()->findByAttributes(['user_id' => $userID, 'car_id' => $this->id]) ? true : false;
+        $obj['parked'] = $parked;
+
+        foreach ($this->_restFillAttributes as $attr)
+            $obj[$attr] = $this->$attr;
+
+        foreach ($obj as $key => $value) {
+            $relVal = null;
+            if (($pos = strpos($key, '_id', 0)) === strlen($key) - 3) {
+                $relName = substr($key, 0, $pos);
+                $rel = Controller::camelCase($relName);
+                if (isset($relations[$rel])) {
+                    switch ($relations[$rel][1]) {
+                        case 'Users':
+                            $relVal = $this->$rel && $this->$rel->userDetails ? $this->$rel->userDetails->getShowName() : null;
+                            break;
+                        case 'Towns':
+                        case 'Places':
+                            $relVal = $this->$rel ? $this->$rel->name : null;
+                            break;
+                        case 'Lists':
+                        case 'Models':
+                        case 'Brands':
+                            $relVal = $this->$rel ? $this->$rel->title : null;
+                            break;
+                        default:
+                            $relVal = null;
+                    }
+                }
+                unset($obj[$key]);
+                $obj[$key] = $value;
+                $obj[$relName] = $relVal;
+            }
+        }
+
+        return $obj;
+    }
+
+    /**
+     * Return array of filters that exists in query string.
+     * @return array
+     */
+    public static function getFilters()
+    {
+        $filters = [];
+        if ($queryString = Yii::app()->request->getQueryString()) {
+            $queryStrings = explode('&', $queryString);
+            foreach ($queryStrings as $queryString) {
+                $arr = explode('=', $queryString);
+                $filters[$arr[0]] = $arr[1];
+            }
+        }
+
+        return $filters;
+    }
+
+    /**
+     * Apply selected filters to search car query.
+     * @param CDbCriteria $criteria
+     * @param array $filters
+     * @return CDbCriteria
+     */
+    public static function applyFilter($criteria, $filters)
+    {
+        foreach ($filters as $filter => $value) {
+            switch ($filter) {
+                case "brand":
+                    $criteria->with[] = 'brand';
+                    $criteria->compare('brand.slug', $value, true);
+                    break;
+                case "state":
+                    $criteria->with[] = 'state';
+                    $criteria->compare('state.slug', $value, true);
+                    break;
+
+                case "body_type":
+                case "body":
+                    $criteria->with[] = 'bodyType';
+                    $criteria->addCondition('(bodyType.id = :bodyTypeID OR bodyType.title LIKE :bodyTypeTitle)');
+                    $criteria->params[':bodyTypeID'] = urldecode($value);
+                    $criteria->params[':bodyTypeTitle'] = str_replace('-', ' ', urldecode($value));
+                    break;
+
+                case "car_type":
+                    $criteria->addCondition('car.car_type_id = :carTypeID');
+                    $criteria->params[':carTypeID'] = $value;
+                    break;
+
+                case "gearbox":
+                    $criteria->addCondition('car.gearbox_id = :gearboxID');
+                    $criteria->params[':gearboxID'] = $value;
+                    break;
+
+                case "body_state":
+                    $criteria->addCondition('car.body_state_id = :bodyStateID');
+                    $criteria->params[':bodyStateID'] = $value;
+                    break;
+
+                case "fuel":
+                    $criteria->addCondition('car.fuel_id = :fuelID');
+                    $criteria->params[':fuelID'] = $value;
+                    break;
+
+                case "plate":
+                    $criteria->with[] = 'plateType';
+                    $criteria->addCondition('(plateType.id = :plateTypeID OR plateType.title LIKE :plateTypeTitle)');
+                    $criteria->params[':plateTypeID'] = urldecode($value);
+                    $criteria->params[':plateTypeTitle'] = str_replace('-', ' ', urldecode($value));
+                    break;
+
+                case "color":
+                    $criteria->addCondition('car.body_color_id = :bodyColorID');
+                    $criteria->params[':bodyColorID'] = $value;
+                    break;
+
+                case "model":
+                    $criteria->with[] = 'model';
+                    $criteria->compare('model.slug', $value, true);
+                    break;
+
+                case "price":
+                    $prices = explode('-', $value);
+                    if (isset($prices[0], $prices[1]) && !empty((float)$prices[0]) && !empty((float)$prices[1])) {
+                        $p0 = (float)$prices[0];
+                        $p1 = (float)$prices[1];
+                        $p0 = $p0 * 1000000;
+                        $p1 = $p1 * 1000000;
+                        $criteria->compare('car.purchase_type_id', Cars::PURCHASE_TYPE_CASH, false);
+                        $criteria->addCondition("car.purchase_details >= {$p0} AND car.purchase_details <= {$p1}");
+                    } else if (isset($prices[0])) {
+                        $p0 = (float)$prices[0];
+                        $p0 = $p0 * 1000000;
+                        $criteria->compare('car.purchase_type_id', Cars::PURCHASE_TYPE_CASH, false);
+                        $criteria->addCondition("car.purchase_details >= {$p0}");
+                    } else if (isset($prices[1])) {
+                        $p0 = (float)$prices[1];
+                        $p0 = $p0 * 1000000;
+                        $criteria->compare('car.purchase_type_id', Cars::PURCHASE_TYPE_CASH, false);
+                        $criteria->addCondition("car.purchase_details <= {$p0}");
+                    }
+                    break;
+
+                case "min-year":
+                    $criteria->addCondition('car.creation_date >= :minYear');
+                    $criteria->params[':minYear'] = $value;
+                    break;
+
+                case "max-year":
+                    $criteria->addCondition('car.creation_date <= :maxYear');
+                    $criteria->params[':maxYear'] = $value;
+                    break;
+
+                case "min-distance":
+                    $criteria->addCondition('car.distance >= :minDistance');
+                    $criteria->params[':minDistance'] = $value * 1000;
+                    break;
+
+                case "max-distance":
+                    $criteria->addCondition('car.distance <= :maxDistance');
+                    $criteria->params[':maxDistance'] = $value * 1000;
+                    break;
+
+                case "purchase":
+                    $criteria->addCondition('car.purchase_type_id = :purchase');
+                    $criteria->params[':purchase'] = $value;
+                    break;
+
+                case "has-image":
+                    if ($value == 1) {
+                        $criteria->with[] = 'carImages';
+                        $criteria->together = true;
+                        $criteria->addCondition('carImages.id IS NOT NULL');
+                    }
+                    break;
+
+                case "special":
+                    if ($value == 1) {
+                        $criteria->compare('car.show_in_top', 1);
+                    }
+                    break;
+
+                case "order":
+                    $field = $order = "";
+                    switch ($value) {
+                        case "time":
+                            $field = "create_date";
+                            $order = "DESC";
+                            break;
+
+                        case "max-cast":
+                            $criteria->addCondition("CAST(car.purchase_details AS SIGNED) > 0");
+                            $criteria->order = "CAST(car.purchase_details AS SIGNED) DESC";
+                            break;
+
+                        case "min-cast":
+                            $criteria->addCondition("CAST(car.purchase_details AS SIGNED) > 0");
+                            $criteria->order = "CAST(car.purchase_details AS SIGNED) ASC";
+                            break;
+
+                        case "new-year":
+                            $field = "creation_date";
+                            $order = "DESC";
+                            break;
+
+                        case "old-year":
+                            $field = "creation_date";
+                            $order = "ASC";
+                            break;
+
+                        case "min-dist":
+                            $field = "distance";
+                            $order = "ASC";
+                            break;
+
+                        case "max-dist":
+                            $field = "distance";
+                            $order = "DESC";
+                            break;
+                    }
+                    if ($field)
+                        $criteria->order = "car.{$field} {$order}";
+                    break;
+            }
+        }
+
+        if (!isset($filters['order']))
+            $criteria->order = "car.create_date DESC";
+        return $criteria;
     }
 }

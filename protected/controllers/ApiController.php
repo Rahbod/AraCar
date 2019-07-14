@@ -10,7 +10,7 @@ class ApiController extends ApiBaseController
     public function filters()
     {
         return array(
-            'RestAccessControl + register, verify, list, options',
+            'RestAccessControl + register, verify,  options',
             'RestAuthControl - register, verify, list, options',
         );
     }
@@ -384,26 +384,44 @@ class ApiController extends ApiBaseController
 
     public function actionList()
     {
+        // pagination
+        $offset = 0;
+        $limit = -1;
+        if (isset($_GET['page'])) {
+            $page = (int)$_GET['page'];
+            $limit = isset($_GET['limit']) ? $_GET['limit'] : 20;
+            $offset = $limit * ($page - 1);
+        }
 
         $rows = array();
         // Get the respective model instance
         switch ($_GET['model']) {
             case 'cars':
                 Yii::app()->getModule('car');
-                $models = Cars::model()->findAll(Cars::getValidQuery());
+                $filters = Cars::getFilters();
+                $criteria = Cars::duplicateQuery();
+                $criteria = Cars::applyFilter($criteria, $filters);
+                $criteria->limit = $limit;
+                $criteria->offset = $offset;
+                $models = Cars::model()->findAll($criteria);
+                foreach ($models as $model)
+                    $rows[] = $model->getRestAttributes();
                 break;
             default:
                 // Model not implemented error
-                $this->_sendResponse(501, sprintf(
-                    'Error: Mode <b>list</b> is not implemented for model <b>%s</b>',
-                    $_GET['model']));
+                $this->_sendResponse(501, CJSON::encode([
+                    'status' => false,
+                    'message' => "invalid request."
+                ]));
                 Yii::app()->end();
         }
         // Did we get some results?
         if (empty($models)) {
             // No
-            $this->_sendResponse(200,
-                sprintf('No items where found for model <b>%s</b>', $_GET['model']));
+            $this->_sendResponse(200, CJSON::encode([
+                'status' => true,
+                'rows' => []
+            ]));
         } else {
             if (!$rows) {
                 // Prepare response

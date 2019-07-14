@@ -18,6 +18,7 @@ class CarModule extends CWebModule
 		$this->setImport(array(
 			'car.models.*',
 			'car.components.*',
+			'car.controllers.*',
 		));
 	}
 

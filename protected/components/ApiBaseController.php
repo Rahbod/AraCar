@@ -10,7 +10,7 @@ class ApiBaseController extends CController
 {
     public $user;
 
-    private $_client_id = '78750f054qqBa1bd9acd7ff1b07bc21c066';
+        private $_client_id = '78750f054qqBa1bd9acd7ff1b07bc21c066';
     private $_client_secret = 'a74b4aeqgq34dfc21ec893fa86edd13384';
 
     protected function _sendResponse($status = 200, $body = '', $content_type = 'application/json')
